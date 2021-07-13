@@ -167,7 +167,7 @@ export default {
         alert("약관에 동의해주세요");
       }else if(this.isSubmit){
         alert("회원가입 완료!");
-        this.$router.push("/");
+        this.$router.push("/"); 
       }else{
         alert("회원가입 양식을 지켜주세요");
       }
