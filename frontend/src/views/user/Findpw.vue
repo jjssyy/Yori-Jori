@@ -5,32 +5,8 @@
  -->
 <template>
   <div class="user join wrapC">
-    <h1>가입하기</h1>
+    <h1>비밀번호 변경</h1>
     <div class="form-wrap">
-      <div class="input-with-label">
-        <input
-          v-model="nickName"
-          id="nickname"
-          placeholder="닉네임을 입력하세요."
-          v-bind:class="{error : error.nickName, complete:!error.nickName&&nickName.length!==0}"
-          type="text"
-        />
-        <label for="nickname">닉네임</label>
-        <div class="error-text" v-if="error.nickName">{{error.nickName}}</div>
-      </div>
-
-      <div class="input-with-label">
-        <input
-          v-model="email"
-          id="email"
-          placeholder="이메일을 입력하세요."
-          v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
-          type="text"
-        />
-        <label for="email">이메일</label>
-        <div class="error-text" v-if="error.email">{{error.email}}</div>
-      </div>
-
       <div class="input-with-label">
         <input
           v-model="password"
@@ -56,16 +32,9 @@
       </div>
     </div>
 
-    <label>
-      <input v-model="isTerm" type="checkbox" id="term" />
-      <span>약관을 동의합니다.</span>
-    </label>
-
-    <span @click="termPopup = true">약관보기</span>
-
     <button class="btn-bottom"
 
-    @click="join">가입하기</button>
+    @click="join">저장</button>
   </div>
 </template>
 
@@ -110,30 +79,19 @@ export default {
       .letters();
   },
   watch: {
-    nickName: function(v) {
-      this.check();
-    },
+  
     password: function(v) {
       this.check();
     },
     passwordConfirm: function(v) {
       this.check();
     },
-    email: function(v) {
-      this.check();
-    }
+
   },
   methods: {
     check(){
-      
-      if ((this.nickName.length <= 0 || this.nickName.length < 2))
-        this.error.nickName = "닉네임은 두자리 이상이어야 합니다.";
-      else this.error.nickName = false;
-  
-      if (this.email.length >= 0 && !EmailValidator.validate(this.email))
-        this.error.email = "이메일 형식이 아닙니다.";
-      else this.error.email = false;
-
+     
+     
       if(this.email.charCodeAt(0) === this.email.toUpperCase().charCodeAt(0)){
         this.error.email = "첫글자가 대문자입니다.";
       }
@@ -161,13 +119,11 @@ export default {
     },
     join(){
       
-      if(this.isTerm == false){
-        alert("약관에 동의해주세요");
-      }else if(this.isSubmit){
-        alert("회원가입 완료!");
-        this.$router.push("/user/joinsuccess"); 
+      if(this.isSubmit){
+        alert("비밀번호 변경 완료!");
+        this.$router.push("/"); 
       }else{
-        alert("회원가입 양식을 지켜주세요");
+        alert("양식을 지켜주세요");
       }
     }
   },
