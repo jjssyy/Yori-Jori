@@ -61,6 +61,10 @@
           <p>아직 회원이 아니신가요?</p>
           <router-link to="/user/join" class="btn--text">가입하기</router-link>
         </div>
+        <div class="wrap">
+          <p>404에러 확인하기</p>
+          <router-link to="/user/join2" class="btn--text">확인</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -150,10 +154,9 @@ export default {
             //요청이 끝나면 버튼 활성화
             this.isSubmit = true;
             alert("로그인에 에러가 발생했습니다.");
+            this.$router.push("/error/error");
           }
         );
-      }else{
-        alert("로그인 입력조건이 충족하지 않았습니다.");
       }
     }
   },

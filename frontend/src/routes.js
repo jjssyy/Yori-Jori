@@ -6,7 +6,8 @@ import FeedMain from './views/feed/IndexFeed.vue'
 import Joinsuccess from './views/user/Joinsuccess.vue'
 import Components from './views/Components.vue'
 import Findpw from './views/user/Findpw.vue'
-
+import Pagenotfound from './views/errror/404.vue'
+import Errorpage from './views/errror/error.vue'
 export default [
 
 
@@ -25,6 +26,7 @@ export default [
         name : 'Joinsuccess',
         component : Joinsuccess
     },
+    
     {
         path : '/user/findpw',
         name : 'Findpw',
@@ -39,5 +41,19 @@ export default [
         path : '/components',
         name : 'Components',
         component : Components
-    }
+    },
+    {
+        path: '*',
+        redirect:'/404'
+    },
+    {
+        path: '/404',
+        component:Pagenotfound
+    },
+    {
+        path : '/error/error',
+        name : 'Error',
+        component : Errorpage
+    },
+
 ]
