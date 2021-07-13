@@ -106,6 +106,10 @@ export default {
         this.error.email = "이메일 형식이 아닙니다.";
       else this.error.email = false;
 
+      if(this.email.charCodeAt(0) === this.email.toUpperCase().charCodeAt(0)){
+        this.error.email = "첫글자가 대문자입니다.";
+      }
+
       if (
         this.password.length >= 0 &&
         !this.passwordSchema.validate(this.password)
@@ -116,6 +120,7 @@ export default {
       let isSubmit = true;
       Object.values(this.error).map(v => {
         if (v) isSubmit = false;
+        
       });
       this.isSubmit = isSubmit;
     },
@@ -144,8 +149,11 @@ export default {
           error => {
             //요청이 끝나면 버튼 활성화
             this.isSubmit = true;
+            alert("로그인에 에러가 발생했습니다.");
           }
         );
+      }else{
+        alert("로그인 입력조건이 충족하지 않았습니다.");
       }
     }
   },
