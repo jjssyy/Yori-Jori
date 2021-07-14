@@ -14,7 +14,9 @@ page not found 페이지 에러발생 핸들링 구현<br>
 error페이지만 제작<br>
 
 7월 14일<br>
-
+vue axios연결 확인<br>
+프론트 백엔드 연동 확인<br>
+유저 테이블 생성<br>
 
 
 
