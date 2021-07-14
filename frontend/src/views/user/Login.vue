@@ -4,8 +4,7 @@
   <div class="user" id="login">
     <div class="wrapC">
       <h1>
-        로그인을 하고 나면
-        <br />좋은 일만 있을 거예요.
+        로그인
       </h1>
 
       <div class="input-with-label">
@@ -55,11 +54,16 @@
           <div class="bar"></div>
         </div>
         <div class="wrap">
-          <p>비밀번호를 잊으셨나요?</p>
+          <p>비밀번호를 바꾸시겠어요?</p>
+          <router-link to="/user/findpw" class="btn--text">비밀번호변경</router-link>
         </div>
         <div class="wrap">
           <p>아직 회원이 아니신가요?</p>
           <router-link to="/user/join" class="btn--text">가입하기</router-link>
+        </div>
+        <div class="wrap">
+          <p>404에러 확인하기</p>
+          <router-link to="/user/join2" class="btn--text">확인</router-link>
         </div>
       </div>
     </div>
@@ -72,7 +76,9 @@ import PV from "password-validator";
 import * as EmailValidator from "email-validator";
 import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
 import GoogleLogin from "../../components/user/snsLogin/Google.vue";
-import UserApi from "../../api/UserApi";
+
+
+import {mapActions} from 'vuex';
 
 export default {
   components: {
@@ -101,6 +107,9 @@ export default {
     }
   },
   methods: {
+
+    ...mapActions(['user_login']),
+
     checkForm() {
       if (this.email.length >= 0 && !EmailValidator.validate(this.email))
         this.error.email = "이메일 형식이 아닙니다.";
@@ -126,34 +135,14 @@ export default {
     },
     onLogin() {
       if (this.isSubmit) {
-        let { email, password } = this;
-        let data = {
-          email,
-          password
-        };
-
-        //요청 후에는 버튼 비활성화
-        this.isSubmit = false;
-
-        UserApi.requestLogin(
-          data,
-          res => {
-            //통신을 통해 전달받은 값 콘솔에 출력
-            //console.log(res);
-
-            //요청이 끝나면 버튼 활성화
-            this.isSubmit = true;
-
-            this.$router.push("/main");
-          },
-          error => {
-            //요청이 끝나면 버튼 활성화
-            this.isSubmit = true;
-            alert("로그인에 에러가 발생했습니다.");
-          }
-        );
-      }else{
-        alert("로그인 입력조건이 충족하지 않았습니다.");
+            let check = this.user_login({
+                email : this.email,
+                pw : this.pw,
+            });
+ 
+            if(check == false){
+              console.log("!");
+            }
       }
     }
   },
