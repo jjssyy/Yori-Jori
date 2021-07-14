@@ -39,7 +39,7 @@ public class AccountController {
     @GetMapping("/login")
 	public ResponseEntity<User> login(@RequestParam Map map){
 		
-		return new ResponseEntity<User>(HttpStatus.OK);
+		return new ResponseEntity<User>(HttpStatus.OK); 
 
 	}
 
