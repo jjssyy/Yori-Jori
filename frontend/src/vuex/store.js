@@ -10,20 +10,17 @@ Vue.use(Vuex);
 let store = new Vuex.Store({
   state: {
     user: {
-      id: { type: String },
+      uid: { type: String },
       pw: { type: String },
-      user_name: { type: String },
-      age: { type: Number },
       email: { type: String },
-      role: { type: String },
+      nickName: {type:String}
     },
     login: {
-      id: { type: String },
+      uid: { type: String },
       pw: { type: String },
-      user_name: { type: String },
-      age: { type: Number },
       email: { type: String },
-      role: { type: String },
+      nickName: {type:String},
+   
     },
    
   },
@@ -31,14 +28,17 @@ let store = new Vuex.Store({
   
   },
   mutations: {
-    REGISTER_USER(state, data) {
+    JOIN_USER(state, data) {
       state.user = data;
     },
 
     LOGIN_USER(state, data) {
       state.login = data;
-      store._vm.$session.set("user", data);
-      console.log(store._vm.$session.get("user"));
+      
+    },
+    CHANGE_USER(state, data) {
+      state.login = data;
+      
     },
 
    
@@ -65,20 +65,20 @@ let store = new Vuex.Store({
       user_login({ commit }, data) {
       
       http
-        .get("/login", {
+        .get("/account/login", {
           params: {
             email: data.email,
-            pw: data.pw,
+            password: data.password,
           },
         })
         .then((response) => {
-          if (response.data.email === data.email) {
-            console.log(response.data.role);
+          if (response.data.object === data.email) {
+            
             alert("로그인 성공!");
             commit("LOGIN_USER", response.data);
               router.push({ name: "Login" });
           } else {
-              alert("로그인 실패!");
+              alert("아이디나 비번이 틀렸습니다!");
               router.push("/error/error");
               
           }
@@ -90,6 +90,59 @@ let store = new Vuex.Store({
             router.push("/error/error");
            
         });
+
+    },
+      
+    user_join({ commit }, data) {
+      http
+        .post("/account/signup", data
+        )
+        .then((response) => { 
+          if (response.data.data == "success") {
+            
+            alert("회원가입 성공!");
+            commit("nickName", response.data);
+            router.push("/user/joinsuccess");
+          } else {
+              alert("아이디중복 되었습니다.");
+              router.push("/error/error");
+              
+          }
+           
+        })
+        .catch((error) => {
+          console.dir(error);
+            alert("회원가입에 문제가 생겼습니다.");
+            router.push("/error/error");
+           
+        });
+
+    },
+
+    user_changepassword({ commit }, data) {
+      http
+        .put("/account/changepassword", data
+        )
+        .then((response) => { 
+          if (response.data.data == "success") {
+            
+            alert("변경 성공!");
+            commit("CHANGE_USER", response.data);
+            router.push("/");
+          } else {
+              alert("변경에 실패하였습니다.");
+              router.push("/error/error");
+              
+          }
+           
+        })
+        .catch((error) => {
+          console.dir(error);
+            alert("변경하는데 오류가 발생했습니다..");
+            router.push("/error/error");
+           
+        });
+
     },
 
    
