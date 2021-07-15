@@ -72,7 +72,7 @@
 <script>
 import * as EmailValidator from "email-validator";
 import PV from "password-validator";
-
+import {mapActions} from 'vuex';
 export default {
   data: () => {
     return {
@@ -124,6 +124,7 @@ export default {
     }
   },
   methods: {
+     ...mapActions(['user_join']),
     check(){
       
       if ((this.nickName.length <= 0 || this.nickName.length < 2))
@@ -166,8 +167,12 @@ export default {
       }else if(this.isTerm == false){
         alert("약관에 동의해주세요");
       }else if(this.isSubmit){
-        alert("회원가입 완료!");
-        this.$router.push("/user/joinsuccess"); 
+        this.user_join({
+                 nickname: this.nickName,
+                email : this.email,
+                password : this.password,
+          });
+         
       } 
     }
   },

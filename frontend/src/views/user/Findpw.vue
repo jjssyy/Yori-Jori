@@ -7,6 +7,18 @@
   <div class="user join wrapC">
     <h1>비밀번호 변경</h1>
     <div class="form-wrap">
+       <div class="input-with-label">
+        <input
+          v-model="email"
+          v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
+          @keyup.enter="Login"
+          id="email"
+          placeholder="이메일을 입력하세요."
+          type="text"
+        />
+        <label for="email">이메일</label>
+        <div class="error-text" v-if="error.email">{{error.email}}</div>
+      </div>
       <div class="input-with-label">
         <input
           v-model="password"
@@ -34,13 +46,14 @@
 
     <button class="btn-bottom"
 
-    @click="join">저장</button>
+    @click="change">저장</button>
   </div>
 </template>
 
 <script>
 import * as EmailValidator from "email-validator";
 import PV from "password-validator";
+import {mapActions} from 'vuex';
 
 export default {
   data: () => {
@@ -79,7 +92,9 @@ export default {
       .letters();
   },
   watch: {
-  
+    email: function(v) {
+      this.check();
+    },
     password: function(v) {
       this.check();
     },
@@ -89,9 +104,14 @@ export default {
 
   },
   methods: {
+    ...mapActions(['user_changepassword']),
     check(){
      
      
+      if (this.email.length >= 0 && !EmailValidator.validate(this.email))
+        this.error.email = "이메일 형식이 아닙니다.";
+      else this.error.email = false;
+
       if(this.email.charCodeAt(0) === this.email.toUpperCase().charCodeAt(0)){
         this.error.email = "첫글자가 대문자입니다.";
       }
@@ -117,11 +137,13 @@ export default {
       this.isSubmit = isSubmit;
 
     },
-    join(){
+    change(){
       
       if(this.isSubmit){
-        alert("비밀번호 변경 완료!");
-        this.$router.push("/"); 
+        this.user_changepassword({
+                email : this.email,
+                newPassword : this.password,
+            });
       }else{
         alert("양식을 지켜주세요");
       }
