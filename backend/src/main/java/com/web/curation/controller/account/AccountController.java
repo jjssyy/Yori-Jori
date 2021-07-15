@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.BasicResponse;
+import com.web.curation.model.UserVO;
+import com.web.curation.model.service.UserService;
 import com.web.curation.model.user.SignupRequest;
 import com.web.curation.model.user.User;
 
@@ -34,12 +36,24 @@ public class AccountController {
 
     @Autowired
     UserDao userDao;
+    
+    @Autowired
+    UserService userservice;
 
     @ApiOperation(value = "로그인")
     @GetMapping("/login")
-	public ResponseEntity<User> login(@RequestParam Map map){
+	public ResponseEntity<UserVO> login(@RequestParam Map map){
+    	
+    	System.out.println(map.get("email"));
+    	System.out.println(map);
+    	UserVO user = userservice.getuser(map);
+    	
+    	if(user != null) {
+ 
+    		return new ResponseEntity<UserVO>(user,HttpStatus.OK); 
+    	}
+    	return new ResponseEntity<UserVO>(HttpStatus.NO_CONTENT); 
 		
-		return new ResponseEntity<User>(HttpStatus.OK); 
 
 	}
 
