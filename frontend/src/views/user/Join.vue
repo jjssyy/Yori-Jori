@@ -161,14 +161,14 @@ export default {
     },
     join(){
       
-      if(this.isTerm == false){
+      if(!this.isSubmit){
+        alert("회원가입 양식을 지켜주세요");
+      }else if(this.isTerm == false){
         alert("약관에 동의해주세요");
       }else if(this.isSubmit){
         alert("회원가입 완료!");
         this.$router.push("/user/joinsuccess"); 
-      }else{
-        alert("회원가입 양식을 지켜주세요");
-      }
+      } 
     }
   },
 };

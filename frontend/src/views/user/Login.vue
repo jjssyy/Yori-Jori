@@ -137,7 +137,7 @@ export default {
       if (this.isSubmit) {
             let check = this.user_login({
                 email : this.email,
-                pw : this.pw,
+                password : this.password,
             });
  
             if(check == false){

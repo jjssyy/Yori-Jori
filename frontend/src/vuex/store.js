@@ -10,7 +10,7 @@ Vue.use(Vuex);
 let store = new Vuex.Store({
   state: {
     user: {
-      id: { type: String },
+      uid: { type: String },
       pw: { type: String },
       user_name: { type: String },
       age: { type: Number },
@@ -18,7 +18,7 @@ let store = new Vuex.Store({
       role: { type: String },
     },
     login: {
-      id: { type: String },
+      uid: { type: String },
       pw: { type: String },
       user_name: { type: String },
       age: { type: Number },
@@ -37,8 +37,7 @@ let store = new Vuex.Store({
 
     LOGIN_USER(state, data) {
       state.login = data;
-      store._vm.$session.set("user", data);
-      console.log(store._vm.$session.get("user"));
+      
     },
 
    
@@ -68,7 +67,7 @@ let store = new Vuex.Store({
         .get("/login", {
           params: {
             email: data.email,
-            pw: data.pw,
+            password: data.password,
           },
         })
         .then((response) => {
@@ -78,7 +77,7 @@ let store = new Vuex.Store({
             commit("LOGIN_USER", response.data);
               router.push({ name: "Login" });
           } else {
-              alert("로그인 실패!");
+              alert("아이디나 비번이 틀렸습니다!");
               router.push("/error/error");
               
           }
