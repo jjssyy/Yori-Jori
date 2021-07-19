@@ -10,15 +10,15 @@
 
       <div class="input-with-label">
         <input
-          v-model="email"
-          v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
+          v-model="id"
+          v-bind:class="{error : error.id, complete:!error.id&&id.length!==0}"
           @keyup.enter="onLogin"
-          id="email"
-          placeholder="이메일을 입력하세요."
+          id="id"
+          placeholder="아이디를 입력하세요."
           type="text"
         />
-        <label for="email">이메일</label>
-        <div class="error-text" v-if="error.email">{{error.email}}</div>
+        <label for="id">아이디</label>
+        <div class="error-text" v-if="error.id">{{error.id}}</div>
       </div>
 
       <div class="input-with-label">
@@ -55,8 +55,12 @@
           <div class="bar"></div>
         </div>
         <div class="wrap">
-          <p>비밀번호를 잊으셨나요?</p>
-          <router-link to="/user/password" class="btn--text">비밀번호 찾기</router-link>
+          <p>비밀번호를 바꾸시겠어요?</p>
+          <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
+        </div>
+        <div class="wrap">
+          <p>내정보를 변경하시겠어요?</p>
+          <router-link to="/user/update" class="btn--text">내정보 변경</router-link>
         </div>
         <div class="wrap">
           <p>아직 회원이 아니신가요?</p>
@@ -100,20 +104,17 @@ export default {
     password: function(v) {
       this.checkForm();
     },
-    email: function(v) {
+    id: function(v) {
       this.checkForm();
-      this.lowercase();
-      // console.log(v);
+      
     }
   },
   methods: {
-    lowercase(){
-      this.email= this.email.toLowerCase();
-    },
+    
     checkForm() {
-      if (this.email.length >= 0 && !EmailValidator.validate(this.email))
-        this.error.email = "이메일 형식이 아닙니다.";
-      else this.error.email = false;
+      if (this.id.length == 0 )
+        this.error.id = "아이디를 입력하십시오.";
+      else this.error.id = false;
 
       if (
         this.password.length >= 0 &&
@@ -129,19 +130,34 @@ export default {
       this.isSubmit = isSubmit;
     },
     onLogin() {
-      if (this.isSubmit) {
-        let { email, password } = this;
+      
+        
         let data = {
-          email,
-          password
+          id : this.id,
+          pw : this.password
         };
 
         UserApi.requestLogin(
           data,
           res => {
-            if(res.data.data=="success") alert("환영합니다");
-            this.$store.dispatch('login', res)
-            this.$router.push({name:'FeedMain'})
+            console.log(res);
+             if(res.data.result == "success"){
+            alert("로그인 되었습니다.");
+           this.$session.set("user",data);
+           console.log(res.data.resultmap);
+         
+
+
+          }else if(res.data.result == "fail"){
+            alert("로그인 실패.");
+          
+          }else{
+
+            alert("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.");
+
+            this.$router.push("/error");
+          
+          }
           },
           error => {
             //요청이 끝나면 버튼 활성화
@@ -150,16 +166,16 @@ export default {
             this.$router.push("/error");
           }
         );
-      }
+      
     }
   },
   data: () => {
     return {
-      email: "",
+      id: "",
       password: "",
       passwordSchema: new PV(),
       error: {
-        email: false,
+        id: false,
         passowrd: false
       },
       isSubmit: false,

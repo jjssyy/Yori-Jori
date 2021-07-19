@@ -9,6 +9,7 @@ import Components from './views/Components.vue'
 import Pagenotfound from './views/error/PageNotFound.vue'
 import ErrorPage from './views/error/ErrorPage.vue'
 import MyPage from './views/profile/MyPage.vue'
+import Update from './views/user/Update.vue'
 
 export default [
 
@@ -24,6 +25,11 @@ export default [
         component : Join
     },
     {
+        path : '/user/update',
+        name : 'Update',
+        component : Update
+    },
+    {
         path : '/feed/main',
         name : 'FeedMain',
         component : FeedMain
@@ -34,7 +40,7 @@ export default [
         component : Components
     },
     {
-        path:'/user/password',
+        path:'/user/changepassword',
         name:'ChangePassword',
         component:ChangePassword
     },
@@ -61,4 +67,5 @@ export default [
         name:'ErrorPage',
         component:ErrorPage
     },
+  
 ]

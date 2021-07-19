@@ -1,50 +1,56 @@
 
+<!--
+    가입하기는 기본적인 폼만 제공됩니다
+    기능명세에 따라 개발을 진행하세요.
+    Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
+ -->
 <template>
-  <div class="user changePassword wrapC">
-    <h1>비밀번호 찾기</h1>
-    <div class="form-wrap">
-
+  <div class="user join wrapC">
+    <h1>비밀번호 변경</h1>
+   
       <div class="input-with-label">
-        <input v-model="email" 
-        v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
-        id="email" 
-        placeholder="이메일을 입력하세요." 
-        type="text" 
+        <input v-model="oldpw" 
+        v-bind:class="{error : error.oldpw, complete:!error.oldpw&&oldpw.length!==0}"
+        id="oldpw" 
+        placeholder="현재 비밀번호를 입력하세요." 
+        :type="passwordType"  
         />
-        <label for="email">이메일</label>
-        <div class="error-text" v-if="error.email">{{error.email}}</div>
+        <label for="oldpw">현재 비밀번호</label>
+        <div class="error-text" v-if="error.oldpw">{{error.oldpw}}</div>
       </div>
 
       <div class="input-with-label">
         <input 
-        v-model="password" 
-        id="password" 
+        v-model="newpw" 
+        id="newpw" 
         :type="passwordType" 
-        v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
-        placeholder="새로운 비밀번호를 입력하세요." />
-        <label for="password">비밀번호</label>
-        <div class="error-text" v-if="error.password">{{error.password}}</div>
+        v-bind:class="{error : error.newpw, complete:!error.newpw&&newpw.length!==0}"
+        placeholder="비밀번호를 입력하세요." />
+        <label for="newpw">비밀번호</label>
+        <div class="error-text" v-if="error.newpw">{{error.newpw}}</div>
       </div>
 
       <div class="input-with-label">
         <input
           v-model="passwordConfirm"
           :type="passwordConfirmType"
-          v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
+          v-bind:class="{error : error.passwordConfirm, complete:!error.passwordConfirm&&passwordConfirm.length!==0}"
           id="password-confirm"
           placeholder="비밀번호를 다시한번 입력하세요."
         />
         <label for="password-confirm">비밀번호 확인</label>
         <div class="error-text" v-if="error.passwordConfirm">{{error.passwordConfirm}}</div>
       </div>
-    </div>
+    
+
 
     <button class="btn-bottom"
-    @click="onJoin"
+    @click="changepw"
     :disabled="!isSubmit"
     :class="{disabled : !isSubmit}"
     >변경하기</button>
   </div>
+ 
 </template>
 
 <script>
@@ -65,19 +71,19 @@ export default {
   },
   data: () => {
     return {
-      email: "",
-      password: "",
+      id:"",
+      oldpw:"",
+      newpw: "",
       passwordConfirm: "",
       passwordSchema: new PV(),
-      nickName: "",
+      nickname: "",
       isTerm: false,
       isLoading: false,
       error: {
-        email: false,
-        password: false,
-        nickName: false,
+        newpw: false,
+        oldpw: false,
         passwordConfirm: false,
-        term: false
+      
       },
       isSubmit: false,
       passwordType: "password",
@@ -85,14 +91,16 @@ export default {
       termPopup: false
     };
   },
-  watch:{
-    password: function(v) {
+  watch:{ 
+
+    oldpw: function(v) {
       this.checkForm();
     },
-    email: function(v) {
+
+    newpw: function(v) {
       this.checkForm();
-      this.lowercase();
     },
+  
     passwordConfirm:function(v) {
       this.checkForm();
     }
@@ -101,20 +109,57 @@ export default {
     lowercase(){
       this.email= this.email.toLowerCase();
     },
-    checkForm() {
-      if (this.email.length >= 0 && !EmailValidator.validate(this.email))
-        this.error.email = "이메일 형식이 아닙니다.";
-      else this.error.email = false;
 
+    checkid(){
+
+         let data = {
+        id:this.id,
+     
+      };
+         
+        UserApi.checkid(
+        data,
+        res=>{
+          console.log(res);
+          if(res.data == "success"){
+            alert("사용가능합니다.");
+            this.error.id = false;
+          }else if(res.data == "fail"){
+            alert("중복된 아이디입니다.");
+            this.error.id = true;
+          }else{
+            alert("에러가 발생하였습니다.");
+            this.error.id = true;
+          }
+        },
+        error=>{
+          alert("사용불가");
+          this.error.id = true;
+          
+        }
+      );
+    },
+
+   
+
+    checkForm() {
+      
       if (
-        this.password.length >= 0 &&
-        !this.passwordSchema.validate(this.password)
+        this.oldpw.length >= 0 &&
+        !this.passwordSchema.validate(this.oldpw)
       )
-        this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
-      else this.error.password = false;
+        this.error.oldpw = "영문,숫자 포함 8 자리이상이어야 합니다.";
+      else this.error.oldpw = false;
+     
+      if (
+        this.newpw.length >= 0 &&
+        !this.passwordSchema.validate(this.newpw)
+      )
+        this.error.newpw = "영문,숫자 포함 8 자리이상이어야 합니다.";
+      else this.error.newpw = false;
 
       if(
-        this.password!=this.passwordConfirm
+        this.newpw!=this.passwordConfirm
       )this.error.passwordConfirm="두 비밀번호가 일치하지 않습니다.";
       else this.error.passwordConfirm=false;
 
@@ -124,27 +169,35 @@ export default {
       });
       this.isSubmit = isSubmit;
     },
-    onJoin(){
+    changepw(){
       if(this.isSubmit){
         let data = {
-        email:this.email,
-        password:this.password,
+        id:"12",
+        oldpw:this.oldpw,
+        newpw:this.newpw,
         passwordConfirm:this.passwordConfirm,
-        nickname:this.nickName
       };
       this.isSubmit=false;
-
-      UserApi.requestChangePassword(
+  
+      UserApi.changepw(
         data,
         res=>{
-          console.log(res);
-          if(res.data.data=="success")alert("비밀번호 변경 완료!");
           
-          this.isSubmit=true;
-          this.$router.push("/");
+          if(res.data =="success"){
+            alert("비밀번호 변경에 성공하였습니다!");
+            this.$router.push("/");
+          }else if(res.data =="fail"){
+            alert("비밀번호 변경에 실패하셨습니다.!");
+          }else{
+            alert("에러발생");
+         
+          this.$router.push("/error");
+          }
+
+          
         },
         error=>{
-          alert("비밀번호 변경에 실패하였습니다.");
+          alert("에러발생");
           this.isSubmit = true;
           this.$router.push("/error");
         }
