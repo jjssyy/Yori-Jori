@@ -74,6 +74,9 @@ import * as EmailValidator from "email-validator";
 import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
 import GoogleLogin from "../../components/user/snsLogin/Google.vue";
 import UserApi from "../../api/UserApi";
+import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
+
 
 export default {
   components: {
@@ -126,31 +129,25 @@ export default {
       this.isSubmit = isSubmit;
     },
     onLogin() {
-      console.log("login 버튼 클릭");
       if (this.isSubmit) {
         let { email, password } = this;
         let data = {
           email,
           password
         };
-        //요청 후에는 버튼 비활성화
-        this.isSubmit = false;
 
         UserApi.requestLogin(
           data,
           res => {
-            //통신을 통해 전달받은 값 콘솔에 출력
-            console.log(res);
             if(res.data.data=="success") alert("환영합니다");
-            //요청이 끝나면 버튼 활성화
-            this.isSubmit = true;
-            this.$router.push("/")
-            // this.$router.push("/main");
+            this.$store.dispatch('login', res)
+
+            this.$router.push({name:'FeedMain'})
           },
           error => {
             //요청이 끝나면 버튼 활성화
             alert("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.");
-            this.isSubmit = true;
+            
             this.$router.push("/error");
           }
         );

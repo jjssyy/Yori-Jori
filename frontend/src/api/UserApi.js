@@ -2,6 +2,9 @@
  User API 예시
  */
 import http from "@/util/http-common";
+import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
+
 
 const requestLogin = (data,callback,errorCallback) => {
     //백앤드와 로그인 통신하는 부분
@@ -10,11 +13,9 @@ const requestLogin = (data,callback,errorCallback) => {
             email:data.email,
             password:data.password
         }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    );
+    })
+    .then(res=>callback(res))
+    .catch(err=>errorCallback(err));
 }
 
 const requestJoin = (data,callback,errorCallback)=>{
