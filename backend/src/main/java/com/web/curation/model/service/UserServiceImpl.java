@@ -21,4 +21,12 @@ public class UserServiceImpl implements UserService{
 		return sqlsession.getMapper(UserDao.class).join(map);
 	}
 
+	@Override
+	public UserVO login(Map<String, String> map) throws Exception {
+		
+		if(map.get("email") == null || map.get("password") == null) return null;
+		
+		return sqlsession.getMapper(UserDao.class).login(map);
+	}
+
 }

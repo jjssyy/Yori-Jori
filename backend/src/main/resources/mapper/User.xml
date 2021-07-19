@@ -8,4 +8,10 @@
 		insert into user(id,pw,nickname,email) values(#{id},#{pw},#{nickname},#{email});
 	</insert>
 	
+	<select id="login" parameterType="map" resultType="UserVO">
+		SELECT id, pw, nickname, email, des, address1, address2, address3, birthday, cellphone, sns, role, regdate
+		FROM user
+		WHERE id = #{id} and pw = #{pw}
+	</select>
+	
 </mapper>
