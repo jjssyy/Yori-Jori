@@ -16,9 +16,9 @@ public class UserServiceImpl implements UserService{
 	SqlSession sqlsession;
 
 	@Override
-	public UserVO getuser(Map map) {
+	public boolean join(Map map) throws Exception {
 		
-		return sqlsession.getMapper(UserDao.class).getuser(map);
+		return sqlsession.getMapper(UserDao.class).join(map);
 	}
 
 }

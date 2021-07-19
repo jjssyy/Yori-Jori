@@ -26,12 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin("*")
 @RestController
-public class AccountController {
+public class UserController {
 
-    @Autowired
-   
-    JwtService jwtService;
-   
+    
 	 
 
    
