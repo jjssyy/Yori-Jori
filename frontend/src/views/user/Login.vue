@@ -141,13 +141,12 @@ export default {
           res => {
             if(res.data.data=="success") alert("환영합니다");
             this.$store.dispatch('login', res)
-
             this.$router.push({name:'FeedMain'})
           },
           error => {
             //요청이 끝나면 버튼 활성화
             alert("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.");
-            
+
             this.$router.push("/error");
           }
         );
