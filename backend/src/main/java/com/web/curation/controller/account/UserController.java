@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.curation.model.Changepw;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.service.JwtService;
 import com.web.curation.model.service.UserService;
@@ -37,25 +38,29 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
-	private JwtService jwtservice;
+	
+	@Autowired
+	JwtService jwtservice;
 	
 	@GetMapping("/login")
 	public ResponseEntity<?> login(@RequestParam Map map){
 		
 		String result = "";
+		 
 		
 		Map resultmap = new HashMap<>();
 		
-		try {
-			System.out.println(map.get("id")+" "+map.get("pw"));
+		try { 
+			
 			UserVO user = userservice.login(map);
 	
-			if(user != null) {
-				//String token = jwtservice.create("user_id", "111", "access-token");
-				//resultmap.put("access-token", token);
+			if(user.getId() != null && user.getPw() != null) {
+				String token = jwtservice.create("user_id", user.getId(), "access-token");
+				resultmap.put("access-token", token);
 				
 				result = "success";
 				resultmap.put("result", result);
+			
 				
 			}else {
 				result = "fail";
@@ -175,21 +180,27 @@ public class UserController {
 	   return new ResponseEntity<String>(HttpStatus.OK);
    }
    
-   @PutMapping("/updatepw")
-   public ResponseEntity<String> updatepw(@RequestParam Map map){
+   @PostMapping("/updatepw")
+   public ResponseEntity<String> updatepw(@RequestBody Changepw changepw){
 	   
 	   String result = "";
-	   
+	  
 	try {
 		
-		String old = userservice.oldpw(map);
-		boolean newpw = false;
+		String old = userservice.oldpw(changepw);
 		
-		if(old == map.get("oldpw")) {
-			newpw = userservice.updatepw(map);
-			result = "success";
+		if(old.equals(changepw.getOldpw())) {
+			
+			if(userservice.updatepw(changepw) == true) {
+				result = "success";
+				System.out.println("??");
+			}else {
+				result = "fail";
+			}
+			
 		}else {
 			result = "fail";
+			
 		}
 		
 	} catch (Exception e) {
@@ -197,7 +208,7 @@ public class UserController {
 		result = "error";
 	}
 	   
-	   return new ResponseEntity<String>(HttpStatus.OK);
+	   return new ResponseEntity<String>(result,HttpStatus.OK);
    }
    
 

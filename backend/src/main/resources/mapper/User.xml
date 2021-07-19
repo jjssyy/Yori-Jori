@@ -21,16 +21,16 @@
 	</select>
 	
 	<update id="updateuser" parameterType="UserVO">
-		update user set nickname = #{nickname}, des = #{des}, cellphone = #{cellphone},
+		update user set nickname = #{nickname}, des = #{des}, cellphone = #{cellphone}, birthday = #{birthday},
 		address1 = #{address1}, address2 = #{address2}, address3 = #{address3} where id = #{id}
 	</update>
 	
-	<select id="oldpw" parameterType="String">
+	<select id="oldpw" parameterType="Changepw" resultType="String">
 		select pw from user where id = #{id}
 	</select>
 	
-	<update id="updatepw" parameterType="Map">
-		update user set pw = #{newpw} where id = #{id};
+	<update id="updatepw" parameterType="Changepw">
+		update user set pw = #{newpw} where id = #{id}
 	</update>
 	
 </mapper>

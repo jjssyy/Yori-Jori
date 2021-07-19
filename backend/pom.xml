@@ -79,6 +79,8 @@
 		    <version>0.9.1</version>
 		</dependency>
 		
+	
+		
 		<!-- JSON Converter(컨트롤러에서 전달한 VO데이터를 JSON으로 변경하기 위해 사용) -->
 		<dependency>
 		   <groupId>com.fasterxml.jackson.core</groupId>

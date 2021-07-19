@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.web.curation.model.Changepw;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.dao.UserDao;
 
@@ -46,15 +47,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean updatepw(Map map) throws Exception {
+	public boolean updatepw(Changepw changepw) throws Exception {
 		
-		return sqlsession.getMapper(UserDao.class).updatepw(map);
+		return sqlsession.getMapper(UserDao.class).updatepw(changepw);
 	}
 
 	@Override
-	public String oldpw(Map map) throws Exception {
+	public String oldpw(Changepw changepw) throws Exception {
 		
-		return sqlsession.getMapper(UserDao.class).oldpw(map);
+		return sqlsession.getMapper(UserDao.class).oldpw(changepw);
 	}
 
 }
