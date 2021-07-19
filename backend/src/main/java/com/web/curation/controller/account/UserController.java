@@ -54,7 +54,7 @@ public class UserController {
 		} catch (Exception e) {
 			result = "error";
 			e.printStackTrace();
-		}
+		} 
     	
 		return new ResponseEntity<String>(result,HttpStatus.OK);
     }
