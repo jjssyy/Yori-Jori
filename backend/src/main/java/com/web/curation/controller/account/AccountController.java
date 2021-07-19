@@ -4,8 +4,10 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+
 import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.BasicResponse;
+import com.web.curation.model.service.JwtService;
 import com.web.curation.model.user.ChangePassword;
 import com.web.curation.model.user.SignupRequest;
 import com.web.curation.model.user.User;
@@ -36,6 +38,9 @@ public class AccountController {
 
     @Autowired
     UserDao userDao;
+    JwtService jwtService;
+   
+	 
 
     @GetMapping("/account/login")
     @ApiOperation(value = "로그인")
@@ -95,7 +100,7 @@ public class AccountController {
     @PutMapping("/account/changepassword")
     @ApiOperation(value = "비밀번호 변경하기")
     public Object changePassword(@Valid @RequestBody ChangePassword request) {
-    	System.out.println("왔음?");
+    	
        final BasicResponse result = new BasicResponse();
        ResponseEntity response = null;
        User user = userDao.getUserByEmail(request.getEmail());
