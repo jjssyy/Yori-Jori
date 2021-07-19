@@ -15,7 +15,7 @@ const requestLogin = (data,callback,errorCallback) => {
             password:data.password
         }
     })
-    .then(res=>callback(res))
+    .then(res=>callback(res)) 
     .catch(err=>errorCallback(err));
 }
 
