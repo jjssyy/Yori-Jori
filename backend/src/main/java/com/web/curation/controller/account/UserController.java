@@ -1,5 +1,6 @@
 package com.web.curation.controller.account;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -22,13 +23,21 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @CrossOrigin("*")
+@RequestMapping("/user")
 @RestController
 public class UserController {
 
-    
+    @PostMapping("/join")
+    public ResponseEntity join(@RequestParam Map map){
+    	
+    	
+    	
+		return new ResponseEntity(HttpStatus.OK);
+    }
 	 
 
    
