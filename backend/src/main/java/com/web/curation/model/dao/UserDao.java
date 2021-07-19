@@ -6,6 +6,6 @@ import com.web.curation.model.UserVO;
 
 public interface UserDao {
 	
-	public UserVO getuser(Map map);
+	public boolean join(Map map) throws Exception;
 
 }
