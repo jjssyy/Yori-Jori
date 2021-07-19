@@ -8,7 +8,9 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.curation.model.UserVO;
 import com.web.curation.model.service.JwtService;
+import com.web.curation.model.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +32,89 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 @RestController
 public class UserController {
+	
+	@Autowired
+	private UserService userservice;
 
     @PostMapping("/join")
-    public ResponseEntity join(@RequestParam Map map){
+    public ResponseEntity<String> join(@RequestBody UserVO user){
     	
+    	String result = "";
     	
+    	try {
+    		
+    		boolean join = userservice.join(user);
+    		if(join == true) {
+    			result = "success";
+    		}else {
+    			result = "fail";
+    		}
+    		
+			
+		} catch (Exception e) {
+			result = "error";
+			e.printStackTrace();
+		}
     	
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+    }
+    
+    @GetMapping("/checkid")
+    public ResponseEntity<String> checkid(@RequestParam Map map){
+    	
+    	String result = "success";
+    	
+    	try {
+    		
+    		String findid = userservice.checkid(map);
+    		
+    		if(findid == null) {
+    			
+    		}else {
+    			
+    			result = "fail";
+    			
+    			
+    		}
+    		
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "error";
+			
+		}
+    	
+    	return new ResponseEntity<String>(result,HttpStatus.OK);
+    }
+    
+    @GetMapping("/checknickname")
+    public ResponseEntity<String> checknickname(@RequestParam Map map){
+    	
+    	String result = "success";
+    	System.out.println(map.get("nickname"));
+    	try {
+    		
+    		String findnickname = userservice.checknickname(map);
+    		System.out.println(findnickname);
+    		if(findnickname == null) {
+    			
+    			result = "success";
+    			
+    		}else {
+    			
+    			result = "fail";
+    			
+    			
+    		}
+    		
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "error";
+			
+		}
+    	
+    	return new ResponseEntity<String>(result,HttpStatus.OK);
     }
 	 
 

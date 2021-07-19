@@ -4,8 +4,16 @@
 	
 <mapper namespace="com.web.curation.model.dao.UserDao">
 	
-	<insert id="join" parameterType="Map">
+	<insert id="join" parameterType="UserVO">
 		insert into user(id,pw,nickname,email) values(#{id},#{pw},#{nickname},#{email});
 	</insert>
+	
+	<select id="checkid" parameterType="Map" resultType="String">
+		select id from user where id = #{id}
+	</select>
+	
+	<select id="checknickname" parameterType="Map" resultType="String">
+		select nickname from user where nickname = #{nickname}
+	</select>
 	
 </mapper>
