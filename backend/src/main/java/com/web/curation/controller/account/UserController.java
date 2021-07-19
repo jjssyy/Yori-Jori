@@ -1,5 +1,6 @@
 package com.web.curation.controller.account;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,6 +37,40 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
+	private JwtService jwtservice;
+	
+	@GetMapping("/login")
+	public ResponseEntity<?> login(@RequestParam Map map){
+		
+		String result = "";
+		
+		Map resultmap = new HashMap<>();
+		
+		try {
+			System.out.println(map.get("id")+" "+map.get("pw"));
+			UserVO user = userservice.login(map);
+	
+			if(user != null) {
+				//String token = jwtservice.create("user_id", "111", "access-token");
+				//resultmap.put("access-token", token);
+				
+				result = "success";
+				resultmap.put("result", result);
+				
+			}else {
+				result = "fail";
+				resultmap.put("result", result);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "error";
+			resultmap.put("result", result);
+		}
+		
+		
+		return new ResponseEntity<Map>(resultmap,HttpStatus.OK);
+	}
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody UserVO user){
@@ -46,6 +82,7 @@ public class UserController {
     		boolean join = userservice.join(user);
     		if(join == true) {
     			result = "success";
+    			
     		}else {
     			result = "fail";
     		}
@@ -95,7 +132,7 @@ public class UserController {
     	try {
     		
     		String findnickname = userservice.checknickname(map);
-    		System.out.println(findnickname);
+   
     		if(findnickname == null) {
     			
     			result = "success";
@@ -117,7 +154,51 @@ public class UserController {
     	return new ResponseEntity<String>(result,HttpStatus.OK);
     }
 	 
-
+   @PutMapping("/updateuser")
+   public ResponseEntity<String> updatename(@RequestBody UserVO user){
+	   
+	   String result = "";
+	   
+	try {
+		
+		if(userservice.updateuser(user) == true) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		result = "error";
+	}
+	   
+	   return new ResponseEntity<String>(HttpStatus.OK);
+   }
+   
+   @PutMapping("/updatepw")
+   public ResponseEntity<String> updatepw(@RequestParam Map map){
+	   
+	   String result = "";
+	   
+	try {
+		
+		String old = userservice.oldpw(map);
+		boolean newpw = false;
+		
+		if(old == map.get("oldpw")) {
+			newpw = userservice.updatepw(map);
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		result = "error";
+	}
+	   
+	   return new ResponseEntity<String>(HttpStatus.OK);
+   }
    
 
 }
