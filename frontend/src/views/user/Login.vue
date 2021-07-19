@@ -144,7 +144,7 @@ export default {
             if(res.data.data=="success") alert("환영합니다");
             //요청이 끝나면 버튼 활성화
             this.isSubmit = true;
-            this.$router.push("/")
+            this.$router.push("/feed/main")
             // this.$router.push("/main");
           },
           error => {
