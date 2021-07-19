@@ -8,6 +8,8 @@ import FeedMain from './views/feed/IndexFeed.vue'
 import Components from './views/Components.vue'
 import Pagenotfound from './views/error/PageNotFound.vue'
 import ErrorPage from './views/error/ErrorPage.vue'
+import MyPage from './views/profile/MyPage.vue'
+
 export default [
 
 
@@ -40,6 +42,11 @@ export default [
         path:'/user/join/complete',
         name:'JoinComplete',
         component:JoinComplete
+    },
+    {
+        path: '/user/mypage',
+        name: 'MyPage',
+        component: MyPage
     },
     {
         path: '*',
