@@ -111,7 +111,7 @@ export default {
       termPopup: false
     };
   },
-  watch:{
+  watch:{ 
 
     password: function(v) {
       this.checkForm();
