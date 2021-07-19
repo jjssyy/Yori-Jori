@@ -1,6 +1,7 @@
 <template>
   <div class="feed newsfeed">
     <div class="wrapB">
+      <router-link to="/user/mypage">My Page</router-link>
       <h1>뉴스피드</h1>
 
       <FeedItem />

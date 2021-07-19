@@ -10,15 +10,13 @@
 
       <div class="input-with-label">
         <input
-          v-model="email"
-          v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
+          v-model="id"
           @keyup.enter="onLogin"
-          id="email"
-          placeholder="이메일을 입력하세요."
+          id="id"
+          placeholder="아이디를 입력하세요."
           type="text"
         />
-        <label for="email">이메일</label>
-        <div class="error-text" v-if="error.email">{{error.email}}</div>
+        <label for="id">아이디</label>
       </div>
 
       <div class="input-with-label">
@@ -70,10 +68,12 @@
 <script>
 import "../../components/css/user.scss";
 import PV from "password-validator";
-import * as EmailValidator from "email-validator";
 import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
 import GoogleLogin from "../../components/user/snsLogin/Google.vue";
 import UserApi from "../../api/UserApi";
+import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
+
 
 export default {
   components: {
@@ -97,26 +97,15 @@ export default {
     password: function(v) {
       this.checkForm();
     },
-    email: function(v) {
-      this.checkForm();
-      this.lowercase();
-      // console.log(v);
-    }
   },
   methods: {
-    lowercase(){
-      this.email= this.email.toLowerCase();
-    },
     checkForm() {
-      if (this.email.length >= 0 && !EmailValidator.validate(this.email))
-        this.error.email = "이메일 형식이 아닙니다.";
-      else this.error.email = false;
 
       if (
         this.password.length >= 0 &&
         !this.passwordSchema.validate(this.password)
       )
-        this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
+      this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
       else this.error.password = false;
 
       let isSubmit = true;
@@ -126,31 +115,24 @@ export default {
       this.isSubmit = isSubmit;
     },
     onLogin() {
-      console.log("login 버튼 클릭");
       if (this.isSubmit) {
-        let { email, password } = this;
+        let { id, password } = this;
         let data = {
-          email,
+          id,
           password
         };
-        //요청 후에는 버튼 비활성화
-        this.isSubmit = false;
 
         UserApi.requestLogin(
           data,
           res => {
-            //통신을 통해 전달받은 값 콘솔에 출력
-            console.log(res);
             if(res.data.data=="success") alert("환영합니다");
-            //요청이 끝나면 버튼 활성화
-            this.isSubmit = true;
-            this.$router.push("/")
-            // this.$router.push("/main");
+            this.$store.dispatch('login', res)
+            this.$router.push({name:'FeedMain'})
           },
           error => {
             //요청이 끝나면 버튼 활성화
             alert("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.");
-            this.isSubmit = true;
+
             this.$router.push("/error");
           }
         );
@@ -159,11 +141,10 @@ export default {
   },
   data: () => {
     return {
-      email: "",
+      id: "",
       password: "",
       passwordSchema: new PV(),
       error: {
-        email: false,
         passowrd: false
       },
       isSubmit: false,

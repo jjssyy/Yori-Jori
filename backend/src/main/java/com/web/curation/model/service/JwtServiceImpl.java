@@ -18,7 +18,7 @@ import io.jsonwebtoken.*;
 @Component
 public class JwtServiceImpl implements JwtService {
 
-	public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
+	//public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
 
 	private static final String TK = "ssafySecret";
 	private static final int EXPIRE_MINUTES = 60;
@@ -36,11 +36,11 @@ public class JwtServiceImpl implements JwtService {
 		try {
 			key = TK.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			if (logger.isInfoEnabled()) {
+//			if (logger.isInfoEnabled()) {
 				e.printStackTrace();
-			} else {
-				logger.error("Making JWT Key Error ::: {}", e.getMessage());
-			}
+//			} else {
+//				logger.error("Making JWT Key Error ::: {}", e.getMessage());
+//			}
 		}
 
 		return key;
@@ -69,7 +69,7 @@ public class JwtServiceImpl implements JwtService {
 //			if (logger.isInfoEnabled()) {
 //				e.printStackTrace();
 //			} else {
-				logger.error(e.getMessage());
+				//logger.error(e.getMessage());
 //			}
 			throw new UnauthorizedException();
 //			개발환경
@@ -78,7 +78,7 @@ public class JwtServiceImpl implements JwtService {
 //			return testMap;
 		}
 		Map<String, Object> value = claims.getBody();
-		logger.info("value : {}", value);
+		//logger.info("value : {}", value);
 		return value;
 	}
 

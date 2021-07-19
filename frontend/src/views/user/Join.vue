@@ -9,8 +9,16 @@
     <h1>가입하기</h1>
     <div class="form-wrap">
       <div class="input-with-label">
-        <input v-model="nickName" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+        <input v-model="id" id="id" placeholder="닉네임을 입력하세요." type="text" />
+        <label for="id">아이디</label>
+        <button @click="checkid">중복체크</button>
+        <div class="error-text" v-if="error.id"></div>
+      </div>
+      <div class="input-with-label">
+        <input v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
         <label for="nickname">닉네임</label>
+        <button @click="checknickname">중복체크</button>
+        <div class="error-text" v-if="error.nickname"></div>
       </div>
 
       <div class="input-with-label">
@@ -51,6 +59,7 @@
     <label>
       <input v-model="isTerm" type="checkbox" id="term" />
       <span>약관을 동의합니다.</span>
+      <div class="error-text" v-if="error.rule"></div>
     </label>
 
     <span @click="termPopup=true">약관보기</span>
@@ -81,17 +90,18 @@ export default {
   },
   data: () => {
     return {
+      id:"",
       email: "",
       password: "",
       passwordConfirm: "",
       passwordSchema: new PV(),
-      nickName: "",
+      nickname: "",
       isTerm: false,
       isLoading: false,
       error: {
         email: false,
         password: false,
-        nickName: false,
+        nickname: false,
         passwordConfirm: false,
         term: false
       },
@@ -101,7 +111,8 @@ export default {
       termPopup: false
     };
   },
-  watch:{
+  watch:{ 
+
     password: function(v) {
       this.checkForm();
     },
@@ -117,7 +128,69 @@ export default {
     lowercase(){
       this.email= this.email.toLowerCase();
     },
+
+    checkid(){
+
+         let data = {
+        id:this.id,
+     
+      };
+         
+        UserApi.checkid(
+        data,
+        res=>{
+          console.log(res);
+          if(res.data == "success"){
+            alert("사용가능합니다.");
+            this.error.id = false;
+          }else if(res.data == "fail"){
+            alert("중복된 아이디입니다.");
+            this.error.id = true;
+          }else{
+            alert("에러가 발생하였습니다.");
+            this.error.id = true;
+          }
+        },
+        error=>{
+          alert("사용불가");
+          this.error.id = true;
+          
+        }
+      );
+    },
+
+    checknickname(){
+
+         let data = {
+        nickname:this.nickname,
+     
+      };
+         
+        UserApi.checknickname(
+        data,
+        res=>{
+          console.log(res);
+          if(res.data == "success"){
+            alert("사용가능합니다.");
+            this.error.nickname = false;
+          }else if(res.data == "fail"){
+            alert("중복된 닉네임입니다.");
+            this.error.nickname = true;
+          }else{
+            alert("에러가 발생하였습니다.");
+            this.error.nickname = true;
+          }
+        },
+        error=>{
+          alert("사용불가");
+          this.error.nickname = true;
+          
+        }
+      );
+    },
+
     checkForm() {
+      
       if (this.email.length >= 0 && !EmailValidator.validate(this.email))
         this.error.email = "이메일 형식이 아닙니다.";
       else this.error.email = false;
@@ -143,10 +216,11 @@ export default {
     onJoin(){
       if(this.isSubmit){
         let data = {
+        id:this.id,
+        nickname: this.nickname,
         email:this.email,
-        password:this.password,
+        pw:this.password,
         passwordConfirm:this.passwordConfirm,
-        nickname:this.nickName
       };
       this.isSubmit=false;
 
@@ -154,13 +228,21 @@ export default {
         data,
         res=>{
           console.log(res);
-          if(res.data.data=="success")alert("회원가입에 성공하였습니다!");
+          if(res.data =="success"){
+            alert("회원가입에 성공하였습니다!");
+            this.$router.push("/user/join/complete");
+          }else if(res.data =="fail"){
+            alert("회원가입에 실패하셨습니다.!");
+          }else{
+            alert("에러발생");
+         
+          this.$router.push("/error");
+          }
+
           
-          this.isSubmit=true;
-          this.$router.push("/user/join/complete");
         },
         error=>{
-          alert("이미 존재하는 이메일입니다.");
+          alert("에러발생");
           this.isSubmit = true;
           this.$router.push("/error");
         }
