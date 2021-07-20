@@ -2,8 +2,12 @@ package com.web.curation.model.service;
 
 import java.util.Map;
 
+import javax.mail.internet.MimeMessage;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.Changepw;
@@ -45,19 +49,7 @@ public class UserServiceImpl implements UserService{
 		
 		return sqlsession.getMapper(UserDao.class).updateuser(user);
 	}
-
-	@Override
-
-	public boolean updatepw(Map map) throws Exception {
-		
-		return sqlsession.getMapper(UserDao.class).updatepw(map);
-	}
-
-	@Override
-	public String oldpw(Map map) throws Exception {
-		
-		return sqlsession.getMapper(UserDao.class).oldpw(map);
-	}
+	
 
 	public boolean updatepw(Changepw changepw) throws Exception {
 		
@@ -69,7 +61,54 @@ public class UserServiceImpl implements UserService{
 		
 		return sqlsession.getMapper(UserDao.class).oldpw(changepw);
 	}
+	
+	@Autowired
+	JavaMailSender mailsender;
+	
+	@Override
+	public void emailsend(String email, String pass) throws Exception {
+		
+		MimeMessage mimeMessage = mailsender.createMimeMessage();
+		MimeMessageHelper message = new MimeMessageHelper(mimeMessage,true,"UTF-8");
+		
+		String title="임시비밀번호입니다.";
+		String from = "rko3507@gmail.com";
+		
+		message.setFrom(from);
+		message.setTo(email);
+		message.setSubject(title);
+		String content=
+				 System.getProperty("line.separator")+ System.getProperty("line.separator")+
+				 "발급된 비밀번호는"+pass+"입니다."+ System.getProperty("line.separator")+
+				  System.getProperty("line.separator");
+		message.setText(content);
+		mailsender.send(mimeMessage);
+		
+	}
 
+	@Override
+	public boolean findpw(Map map) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).findpw(map);
+	}
+	
+	@Override
+	public UserVO userInfo(String id) throws Exception {
 
+		return sqlsession.getMapper(UserDao.class).userInfo(id);
+	}
 
+	@Override
+	public Integer countfollower(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).countfollower(id);
+	}
+
+	@Override
+	public Integer countfollowing(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).countfollowing(id);
+	}
+
+	
 }

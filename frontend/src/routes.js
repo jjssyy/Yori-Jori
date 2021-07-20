@@ -8,8 +8,12 @@ import FeedMain from './views/feed/Main.vue'
 import Components from './views/Components.vue'
 import Pagenotfound from './views/error/PageNotFound.vue'
 import ErrorPage from './views/error/ErrorPage.vue'
-import MyPage from './views/profile/MyPage.vue'
+import Profile from './views/profile/Profile.vue'
 import Update from './views/user/Update.vue'
+import Findpw from './views/user/Findpw.vue'
+import Recipewrite from './views/recipe/Write.vue'
+import FollowingList from './views/profile/FollowingList.vue'
+import FollowerList from './views/profile/FollowerList.vue'
 
 export default [
 
@@ -50,9 +54,29 @@ export default [
         component:JoinComplete
     },
     {
-        path: '/user/mypage',
-        name: 'MyPage',
-        component: MyPage
+        path:'/user/findpw',
+        name:'Findpw',
+        component:Findpw
+    },
+    {
+        path: '/recipe/write',
+        name: 'Recipewrite',
+        component: Recipewrite
+    },
+    {
+        path: '/user/followerlist',
+        name: 'FollowerList',
+        component: FollowerList
+    },
+    {
+        path: '/user/followinglist',
+        name: 'FollowingList',
+        component: FollowingList
+    },
+    {
+        path: '/user/profile/:user_id',
+        name: 'Profile',
+        component: Profile
     },
     {
         path: '*',

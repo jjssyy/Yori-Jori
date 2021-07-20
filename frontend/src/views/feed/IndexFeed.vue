@@ -1,7 +1,8 @@
 <template>
   <div class="feed newsfeed">
     <div class="wrapB">
-      <router-link to="/user/mypage">My Page</router-link>
+      
+      <router-link :to="{name:'Profile', params: {user_id: userId}}">My Page</router-link>
       <h1>뉴스피드</h1>
 
       <FeedItem />
@@ -21,7 +22,13 @@ import FeedItem from "../../components/feed/FeedItem.vue";
 export default {
   props: ["keyword"],
 
-  components: { FeedItem }
+  components: { FeedItem },
+
+  computed: {
+    ...mapState([
+      'userId',
+    ]),
+  }
 };
 </script>
 

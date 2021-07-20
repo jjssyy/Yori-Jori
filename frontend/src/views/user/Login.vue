@@ -17,7 +17,7 @@
         />
         <label for="id">아이디</label>
       </div> 
-
+      <button class="btn btn-primary">안녕</button>
       <div class="input-with-label">
         <input
           v-model="password"
@@ -63,11 +63,20 @@
           <p>회원정보 변경</p>
           <router-link to="/user/update" class="btn--text">변경하기</router-link>
         </div>
+        <div class="wrap">
+          <p>비밀번호 찾기</p>
+          <router-link to="/user/findpw" class="btn--text">찾아보기</router-link>
+        </div>
+        <div class="wrap">
+          <p>글쓰기</p>
+          <router-link to="/recipe/write" class="btn--text">쓰기</router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/resource/js/bootstrap.js"></script>
 <script>
 import "../../components/css/user.scss";
 import PV from "password-validator";
@@ -133,6 +142,7 @@ export default {
        UserApi.requestLogin(
           data,
           res => {
+<<<<<<< HEAD
             if(res.data.result == "success"){
               alert("로그인 되었습니다.");
 
@@ -143,6 +153,20 @@ export default {
               this.$router.push({name:'FeedMain'});
             }else if(res.data.result == "fail"){
               alert("로그인 실패.");
+=======
+            console.log(res);
+             if(res.data.result == "success"){
+            alert("로그인 되었습니다.");
+           this.$store.dispatch("login",res);
+              this.$store.state.userId = data.id
+              console.log(this.$store.state.userId)
+              this.$router.push({ name: 'FeedMain'})
+         
+
+
+          }else if(res.data.result == "fail"){
+            alert("로그인 실패.");
+>>>>>>> 98c8d36aef68802007aa364805540e8c06f67bd5
           
             }else{
               alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
