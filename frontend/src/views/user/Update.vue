@@ -107,7 +107,6 @@ export default {
         address2:this.address.address2,
         address3:this.address.address3,
       };
-      console.log(data)
       UserApi.requestUpdate(
         data,
         res=>{
