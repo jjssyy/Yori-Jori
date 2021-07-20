@@ -11,14 +11,20 @@
       <div class="input-with-label">
         <input
           v-model="id"
+<<<<<<< HEAD
           v-bind:class="{error : error.id, complete:!error.id&&id.length!==0}"
+=======
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
           @keyup.enter="onLogin"
           id="id"
           placeholder="아이디를 입력하세요."
           type="text"
         />
         <label for="id">아이디</label>
+<<<<<<< HEAD
         <div class="error-text" v-if="error.id">{{error.id}}</div>
+=======
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
       </div>
 
       <div class="input-with-label">
@@ -74,7 +80,6 @@
 <script>
 import "../../components/css/user.scss";
 import PV from "password-validator";
-import * as EmailValidator from "email-validator";
 import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
 import GoogleLogin from "../../components/user/snsLogin/Google.vue";
 import UserApi from "../../api/UserApi";
@@ -104,6 +109,7 @@ export default {
     password: function(v) {
       this.checkForm();
     },
+<<<<<<< HEAD
     id: function(v) {
       this.checkForm();
       
@@ -115,12 +121,17 @@ export default {
       if (this.id.length == 0 )
         this.error.id = "아이디를 입력하십시오.";
       else this.error.id = false;
+=======
+  },
+  methods: {
+    checkForm() {
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
 
       if (
         this.password.length >= 0 &&
         !this.passwordSchema.validate(this.password)
       )
-        this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
+      this.error.password = "영문,숫자 포함 8 자리이상이어야 합니다.";
       else this.error.password = false;
 
       let isSubmit = true;
@@ -130,11 +141,19 @@ export default {
       this.isSubmit = isSubmit;
     },
     onLogin() {
+<<<<<<< HEAD
       
         
         let data = {
           id : this.id,
           pw : this.password
+=======
+      if (this.isSubmit) {
+        let { id, password } = this;
+        let data = {
+          id,
+          password
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
         };
 
         UserApi.requestLogin(
@@ -175,7 +194,10 @@ export default {
       password: "",
       passwordSchema: new PV(),
       error: {
+<<<<<<< HEAD
         id: false,
+=======
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
         passowrd: false
       },
       isSubmit: false,

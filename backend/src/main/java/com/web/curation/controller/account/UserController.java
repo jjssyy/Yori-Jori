@@ -9,6 +9,10 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
+=======
+import com.web.curation.model.Changepw;
+>>>>>>> refs/remotes/origin/master
 import com.web.curation.model.UserVO;
 import com.web.curation.model.service.JwtService;
 import com.web.curation.model.service.UserService;
@@ -37,12 +41,19 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
+<<<<<<< HEAD
 	private JwtService jwtservice;
+=======
+	
+	@Autowired
+	JwtService jwtservice;
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
 	
 	@GetMapping("/login")
 	public ResponseEntity<?> login(@RequestParam Map map){
 		
 		String result = "";
+<<<<<<< HEAD
 		
 		Map resultmap = new HashMap<>();
 		
@@ -56,6 +67,23 @@ public class UserController {
 				
 				result = "success";
 				resultmap.put("result", result);
+=======
+		 
+		
+		Map resultmap = new HashMap<>();
+		
+		try { 
+			
+			UserVO user = userservice.login(map);
+	
+			if(user.getId() != null && user.getPw() != null) {
+				String token = jwtservice.create("user_id", user.getId(), "access-token");
+				resultmap.put("access-token", token);
+				
+				result = "success";
+				resultmap.put("result", result);
+			
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
 				
 			}else {
 				result = "fail";
@@ -72,6 +100,15 @@ public class UserController {
 		return new ResponseEntity<Map>(resultmap,HttpStatus.OK);
 	}
 
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private JwtService jwtService;
+	
+	final String SUCCESS = "success";
+	final String FAIL = "fail";
+	
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody UserVO user){
     	
@@ -154,6 +191,29 @@ public class UserController {
     	return new ResponseEntity<String>(result,HttpStatus.OK);
     }
 	 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody Map map) throws Exception {
+    	Map<String, Object> resultMap = new HashMap<>();
+    	
+    	UserVO user = userService.login(map);
+    	HttpStatus status = null;
+    	
+    	if(user.getId() != null && user.getPw() != null) {
+    		String token = jwtService.create("user_id", user.getId(), "access-token");
+    		resultMap.put("access-token", token);
+    		resultMap.put("message", SUCCESS);
+    		status = HttpStatus.ACCEPTED;
+    	} else {
+    		resultMap.put("message", FAIL);
+    		status = HttpStatus.NOT_FOUND;
+    	}
+    	return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+=======
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
    @PutMapping("/updateuser")
    public ResponseEntity<String> updatename(@RequestBody UserVO user){
 	   
@@ -175,6 +235,7 @@ public class UserController {
 	   return new ResponseEntity<String>(HttpStatus.OK);
    }
    
+<<<<<<< HEAD
    @PutMapping("/updatepw")
    public ResponseEntity<String> updatepw(@RequestParam Map map){
 	   
@@ -190,6 +251,29 @@ public class UserController {
 			result = "success";
 		}else {
 			result = "fail";
+=======
+   @PostMapping("/updatepw")
+   public ResponseEntity<String> updatepw(@RequestBody Changepw changepw){
+	   
+	   String result = "";
+	  
+	try {
+		
+		String old = userservice.oldpw(changepw);
+		
+		if(old.equals(changepw.getOldpw())) {
+			
+			if(userservice.updatepw(changepw) == true) {
+				result = "success";
+				System.out.println("??");
+			}else {
+				result = "fail";
+			}
+			
+		}else {
+			result = "fail";
+			
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
 		}
 		
 	} catch (Exception e) {
@@ -197,8 +281,14 @@ public class UserController {
 		result = "error";
 	}
 	   
+<<<<<<< HEAD
 	   return new ResponseEntity<String>(HttpStatus.OK);
    }
+=======
+	   return new ResponseEntity<String>(result,HttpStatus.OK);
+   }
+>>>>>>> refs/remotes/origin/master
+>>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
    
 
 }
