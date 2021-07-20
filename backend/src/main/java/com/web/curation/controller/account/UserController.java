@@ -51,7 +51,7 @@ public class UserController {
 		String result = "";
 
 		Map resultmap = new HashMap<>();
-		
+		 
 	
 		
 		try { 
@@ -138,7 +138,7 @@ public class UserController {
     public ResponseEntity<String> checknickname(@RequestParam Map map){
     	
     	String result = "success";
-    	System.out.println(map.get("nickname"));
+    	//System.out.println(map.get("nickname"));
     	try {
     		
     		String findnickname = userservice.checknickname(map);
