@@ -16,7 +16,7 @@
           type="text"
         />
         <label for="id">아이디</label>
-      </div>
+      </div> 
 
       <div class="input-with-label">
         <input
