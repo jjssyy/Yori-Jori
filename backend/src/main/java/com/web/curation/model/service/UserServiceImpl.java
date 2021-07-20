@@ -92,4 +92,23 @@ public class UserServiceImpl implements UserService{
 		return sqlsession.getMapper(UserDao.class).findpw(map);
 	}
 	
+	@Override
+	public UserVO userInfo(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).userInfo(id);
+	}
+
+	@Override
+	public Integer countfollower(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).countfollower(id);
+	}
+
+	@Override
+	public Integer countfollowing(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).countfollowing(id);
+	}
+
+	
 }

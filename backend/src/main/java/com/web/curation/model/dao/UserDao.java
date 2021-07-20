@@ -25,5 +25,10 @@ public interface UserDao {
 	public String oldpw(Changepw changepw) throws Exception;
 	
 	public boolean findpw(Map map) throws Exception;
+	
+	public UserVO userInfo(String id) throws Exception;
+	
+	public Integer countfollowing(String id) throws Exception;
+	public Integer countfollower(String id) throws Exception;
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.web.curation.model.Changepw;
+import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.service.JwtService;
 import com.web.curation.model.service.UserService;
@@ -265,6 +266,27 @@ public class UserController {
 	   
 	   return new ResponseEntity<String>(result,HttpStatus.OK);
    }
+   
+   @GetMapping("/profile")
+	public ResponseEntity<UserInfo> profile(@RequestParam String id) throws Exception {
+		UserInfo result = new UserInfo();
+
+		UserVO user = userservice.userInfo(id);
+		Integer follower = userservice.countfollower(id);
+		Integer following = userservice.countfollowing(id);
+
+		result.setNickname(user.getNickname());
+		result.setDes(user.getDes());
+		result.setRegdate(user.getRegdate());
+		result.setRole(user.getRole());
+		result.setFollower(follower);
+		result.setFollowing(following);
+		
+		System.out.println(result.getNickname());
+
+		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
+
+	}
 
 
 }

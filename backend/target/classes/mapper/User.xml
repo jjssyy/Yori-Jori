@@ -39,5 +39,21 @@
 	<update id="findpw" parameterType="Map">
 		update user set pw = #{newpw} where id = #{id}
 	</update>
+	
+	<select id="userInfo" parameterType="String" resultType="UserVO">
+		select * from user where id =#{id}
+	</select>
+
+	<select id="countfollower" parameterType="String" resultType="integer">
+		select count(*) from follow where follower=#{id}
+	</select>
+	
+	<select id="countfollowing" parameterType="String" resultType="integer">
+		select count(*) from follow where following=#{id}
+	</select>
+	
+	<select id="followinglist" parameterType="String" resultType="UserVO">
+		select * from user where id in ( select following from follow where follower=#{id});
+	</select>
 
 </mapper>
