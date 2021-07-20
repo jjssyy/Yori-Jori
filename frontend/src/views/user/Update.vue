@@ -24,7 +24,7 @@
         <input v-model="cellphone"
         id="cellphone" 
         placeholder="전화번호를 입력하세요." 
-        type="text" 
+        type="text"
         />
         <label for="cellphone">전화번호</label>
       </div>

@@ -142,7 +142,6 @@ export default {
        UserApi.requestLogin(
           data,
           res => {
-<<<<<<< HEAD
             if(res.data.result == "success"){
               alert("로그인 되었습니다.");
 
@@ -153,20 +152,6 @@ export default {
               this.$router.push({name:'FeedMain'});
             }else if(res.data.result == "fail"){
               alert("로그인 실패.");
-=======
-            console.log(res);
-             if(res.data.result == "success"){
-            alert("로그인 되었습니다.");
-           this.$store.dispatch("login",res);
-              this.$store.state.userId = data.id
-              console.log(this.$store.state.userId)
-              this.$router.push({ name: 'FeedMain'})
-         
-
-
-          }else if(res.data.result == "fail"){
-            alert("로그인 실패.");
->>>>>>> 98c8d36aef68802007aa364805540e8c06f67bd5
           
             }else{
               alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
