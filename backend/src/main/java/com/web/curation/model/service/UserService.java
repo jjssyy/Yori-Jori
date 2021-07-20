@@ -16,14 +16,13 @@ public interface UserService {
 	public String checknickname(Map map) throws Exception;
 	
 	public boolean updateuser(UserVO user) throws Exception;
-	
-
-	public boolean updatepw(Map map) throws Exception;
-	
-	public String oldpw(Map map) throws Exception;
 
 	public boolean updatepw(Changepw changepw) throws Exception;
 	
 	public String oldpw(Changepw changepw) throws Exception;
+	
+	public void emailsend(String email, String pass) throws Exception;
+	
+	public boolean findpw(Map map) throws Exception;
 
 }

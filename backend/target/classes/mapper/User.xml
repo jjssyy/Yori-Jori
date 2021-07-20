@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="login" parameterType="Map" resultType="UserVO">
-		select * from user where id = #{id} and pw = #{pw}
+		select * from user where id = #{id}
 	</select>
 	
 	<update id="updateuser" parameterType="UserVO">
@@ -33,6 +33,10 @@
 	</select>
 	
 	<update id="updatepw" parameterType="Changepw">
+		update user set pw = #{newpw} where id = #{id}
+	</update>
+	
+	<update id="findpw" parameterType="Map">
 		update user set pw = #{newpw} where id = #{id}
 	</update>
 
