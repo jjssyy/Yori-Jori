@@ -41,3 +41,7 @@ $git merge origin {브랜치 이름}
 
 ```bash
 $git push origin master
+
+```
+
+살짝수정
