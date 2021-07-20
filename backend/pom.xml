@@ -67,7 +67,7 @@
 		</dependency>
 
 		<!-- 디비 셋팅 주석 -->
-	
+		
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>

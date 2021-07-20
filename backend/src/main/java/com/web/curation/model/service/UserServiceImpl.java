@@ -33,4 +33,28 @@ public class UserServiceImpl implements UserService{
 		return sqlsession.getMapper(UserDao.class).checknickname(map);
 	}
 
+	@Override
+	public UserVO login(Map map) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).login(map);
+	}
+
+	@Override
+	public boolean updateuser(UserVO user) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).updateuser(user);
+	}
+
+	@Override
+	public boolean updatepw(Map map) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).updatepw(map);
+	}
+
+	@Override
+	public String oldpw(Map map) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).oldpw(map);
+	}
+
 }

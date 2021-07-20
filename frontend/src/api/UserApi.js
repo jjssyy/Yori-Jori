@@ -78,6 +78,26 @@ const requestUpdate = (data, callback, errorCallback)=>{
     );
 }
 
+const getFollow = (data, callback, errorCallback)=>{
+    http.get('/follow', data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const getUser = (data, callback, errorCallback)=>{
+    http.get('/user/mypage', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
     requestJoin:(data,callback,errorCallback)=>requestJoin(data,callback,errorCallback),
@@ -86,6 +106,8 @@ const UserApi = {
     checknickname: (data, callback, errorCallback) => checknickname(data, callback, errorCallback),
     changepw: (data, callback, errorCallback) => changepw(data, callback, errorCallback),
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
+    getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
+    getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
 }
 
 export default UserApi
