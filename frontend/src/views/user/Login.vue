@@ -1,5 +1,4 @@
 
-
 <template>
   <div class="user" id="login">
     <div class="wrapC">
@@ -11,20 +10,12 @@
       <div class="input-with-label">
         <input
           v-model="id"
-<<<<<<< HEAD
-          v-bind:class="{error : error.id, complete:!error.id&&id.length!==0}"
-=======
->>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
           @keyup.enter="onLogin"
           id="id"
           placeholder="아이디를 입력하세요."
           type="text"
         />
         <label for="id">아이디</label>
-<<<<<<< HEAD
-        <div class="error-text" v-if="error.id">{{error.id}}</div>
-=======
->>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
       </div>
 
       <div class="input-with-label">
@@ -61,16 +52,16 @@
           <div class="bar"></div>
         </div>
         <div class="wrap">
-          <p>비밀번호를 바꾸시겠어요?</p>
+          <p>비밀번호를 변경하시겠습니까</p>
           <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
-        </div>
-        <div class="wrap">
-          <p>내정보를 변경하시겠어요?</p>
-          <router-link to="/user/update" class="btn--text">내정보 변경</router-link>
         </div>
         <div class="wrap">
           <p>아직 회원이 아니신가요?</p>
           <router-link to="/user/join" class="btn--text">가입하기</router-link>
+        </div>
+        <div class="wrap">
+          <p>회원정보 변경</p>
+          <router-link to="/user/update" class="btn--text">변경하기</router-link>
         </div>
       </div>
     </div>
@@ -109,23 +100,9 @@ export default {
     password: function(v) {
       this.checkForm();
     },
-<<<<<<< HEAD
-    id: function(v) {
-      this.checkForm();
-      
-    }
-  },
-  methods: {
-    
-    checkForm() {
-      if (this.id.length == 0 )
-        this.error.id = "아이디를 입력하십시오.";
-      else this.error.id = false;
-=======
   },
   methods: {
     checkForm() {
->>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
 
       if (
         this.password.length >= 0 &&
@@ -141,22 +118,14 @@ export default {
       this.isSubmit = isSubmit;
     },
     onLogin() {
-<<<<<<< HEAD
+      if (this.isSubmit) {
       
-        
         let data = {
           id : this.id,
           pw : this.password
-=======
-      if (this.isSubmit) {
-        let { id, password } = this;
-        let data = {
-          id,
-          password
->>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
         };
 
-        UserApi.requestLogin(
+       UserApi.requestLogin(
           data,
           res => {
             console.log(res);
@@ -172,7 +141,7 @@ export default {
           
           }else{
 
-            alert("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.");
+            alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
 
             this.$router.push("/error");
           
@@ -180,12 +149,12 @@ export default {
           },
           error => {
             //요청이 끝나면 버튼 활성화
-            alert("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.");
+            alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
 
             this.$router.push("/error");
           }
         );
-      
+      }
     }
   },
   data: () => {
@@ -194,10 +163,6 @@ export default {
       password: "",
       passwordSchema: new PV(),
       error: {
-<<<<<<< HEAD
-        id: false,
-=======
->>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
         passowrd: false
       },
       isSubmit: false,
