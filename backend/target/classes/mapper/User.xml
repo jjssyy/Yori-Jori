@@ -7,14 +7,14 @@
 	<insert id="join" parameterType="UserVO">
 		insert into user(id,pw,nickname,email) values(#{id},#{pw},#{nickname},#{email});
 	</insert>
-	
-<<<<<<< HEAD
+
 	<select id="login" parameterType="map" resultType="UserVO">
 		SELECT id, pw, nickname, email, des, address1, address2, address3, birthday, cellphone, sns, role, regdate
 		FROM user
 		WHERE id = #{id} and pw = #{pw}
 	</select>
-=======
+
+
 	<select id="checkid" parameterType="Map" resultType="String">
 		select id from user where id = #{id}
 	</select>
@@ -28,23 +28,12 @@
 	</select>
 	
 	<update id="updateuser" parameterType="UserVO">
-<<<<<<< HEAD
+
 		update user set nickname = #{nickname}, des = #{des}, cellphone = #{cellphone},
 		address1 = #{address1}, address2 = #{address2}, address3 = #{address3} where id = #{id}
+		
 	</update>
-	
-	<select id="oldpw" parameterType="String">
-		select pw from user where id = #{id}
-	</select>
-	
-	<update id="updatepw" parameterType="Map">
-		update user set pw = #{newpw} where id = #{id};
-	</update>
-=======
-		update user set nickname = #{nickname}, des = #{des}, cellphone = #{cellphone}, birthday = #{birthday},
-		address1 = #{address1}, address2 = #{address2}, address3 = #{address3} where id = #{id}
-	</update>
-	
+
 	<select id="oldpw" parameterType="Changepw" resultType="String">
 		select pw from user where id = #{id}
 	</select>
@@ -52,7 +41,5 @@
 	<update id="updatepw" parameterType="Changepw">
 		update user set pw = #{newpw} where id = #{id}
 	</update>
->>>>>>> refs/remotes/origin/master
->>>>>>> 45f6d2a50bd41fa48167cdf3a2e52f6e6130fa98
-	
+
 </mapper>
