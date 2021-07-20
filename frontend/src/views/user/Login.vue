@@ -95,6 +95,11 @@ export default {
       .digits()
       .has()
       .letters();
+
+    // 토큰이 있는 경우(=로그인 된 사용자) 메인페이지로 redirect
+    if (this.$store.state.token){
+      this.$router.push({name:'FeedMain'})
+    }
   },
   watch: {
     password: function(v) {
@@ -128,30 +133,28 @@ export default {
        UserApi.requestLogin(
           data,
           res => {
-            console.log(res);
-             if(res.data.result == "success"){
-            alert("로그인 되었습니다.");
-           this.$session.set("user",data);
-           console.log(res.data.resultmap);
-         
+            if(res.data.result == "success"){
+              alert("로그인 되었습니다.");
 
-
-          }else if(res.data.result == "fail"){
-            alert("로그인 실패.");
+              //vuex store에 저장
+              this.$store.dispatch("login",res);
+              this.$store.state.userId = data.id
+              console.log(this.$store.state.userId)
+              this.$router.push({name:'FeedMain'});
+            }else if(res.data.result == "fail"){
+              alert("로그인 실패.");
           
-          }else{
+            }else{
+              alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
+              this.$router.push({name:'ErrorPage'});
 
-            alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
-
-            this.$router.push("/error");
-          
-          }
+            }
           },
           error => {
             //요청이 끝나면 버튼 활성화
             alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
 
-            this.$router.push("/error");
+            this.$router.push({name:'ErrorPage'});
           }
         );
       }

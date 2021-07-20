@@ -1,6 +1,7 @@
 export default {
   LOGIN: function(state, res){
-    const token = res.data.token
+    console.log(res.data['access-token'])
+    const token = res.data['access-token']
     state.token = token
   },
   LOGOUT: function(state){
