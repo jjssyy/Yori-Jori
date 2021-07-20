@@ -38,9 +38,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 	
 	@Autowired
-	private UserService userservice;
+	UserService userservice;
 
-	
 	@Autowired
 	JwtService jwtservice;
 
