@@ -71,6 +71,14 @@ const changepw = (data, callback, errorCallback) => {
     );
 }
 
+const requestUser = (config, callback, errorCallback)=>{
+    http.get("/user/updateuser", config).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    );
+}
+
 const requestUpdate = (data, callback, errorCallback)=>{
     http.put("/user/updateuser", data).then(
         res=>callback(res)
@@ -170,6 +178,7 @@ const UserApi = {
     checknickname: (data, callback, errorCallback) => checknickname(data, callback, errorCallback),
     changepw: (data, callback, errorCallback) => changepw(data, callback, errorCallback),
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
+    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
     getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
     emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
     getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
