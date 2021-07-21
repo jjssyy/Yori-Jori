@@ -282,8 +282,6 @@ public class UserController {
 		result.setRole(user.getRole());
 		result.setFollower(follower);
 		result.setFollowing(following);
-		
-		System.out.println(result.getNickname());
 
 		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 
