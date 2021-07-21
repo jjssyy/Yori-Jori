@@ -142,6 +142,18 @@ const Follow = (data, callback, errorCallback) =>{
     )
 }
 
+const fileupload = (data, callback, errorCallback) =>{
+    http.post('/user/fileupload', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
     requestJoin:(data,callback,errorCallback)=>requestJoin(data,callback,errorCallback),
@@ -156,6 +168,7 @@ const UserApi = {
     getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
+    fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
 }
 
 export default UserApi
