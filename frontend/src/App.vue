@@ -4,6 +4,8 @@
     <router-view></router-view>
   </div>
 </template>
+
+
 <script>
 import "./components/css/style.scss";
 import Navbar from '@/components/nav/Navbar.vue'

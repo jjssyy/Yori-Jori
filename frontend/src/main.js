@@ -7,6 +7,7 @@ import VueSession from "vue-session";
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import firebase from 'firebase';
 
 Vue.use(BootstrapVue)
 
@@ -14,6 +15,18 @@ Vue.config.productionTip = false
 Vue.use(VueSession, { persist: true });
 
 Vue.use(VueRouter)
+
+var firebaseConfig = {
+    apiKey: "AIzaSyByJs9HYDo22JOmuffA7s6aEYsILgHwDyc",
+    authDomain: "websns-5f1d6.firebaseapp.com",
+    projectId: "websns-5f1d6",
+    storageBucket: "websns-5f1d6.appspot.com",
+    messagingSenderId: "351362417253",
+    appId: "1:351362417253:web:6854606b89e8f946767c8c"
+  };
+  // Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
 
 const router = new VueRouter({
     routes,

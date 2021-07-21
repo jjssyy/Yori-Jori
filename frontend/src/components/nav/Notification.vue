@@ -1,13 +1,30 @@
 <template>
-  <a class="notification">
+  <a class="notification" @click="Add">
     <span>알림</span>
     <span class="badge">3</span>
   </a>
 </template>
 
 <script>
+import firebase from 'firebase';
 export default {
+  methods:{
+    Add(){
+      const db = firebase.firestore();
 
+      db.collection("users").add({
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815
+      })
+      .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+      })
+      .catch((error) => {
+          console.error("Error adding document: ", error);
+      });
+    }
+  }
 }
 </script>
 
