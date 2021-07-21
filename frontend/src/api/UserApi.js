@@ -71,14 +71,6 @@ const changepw = (data, callback, errorCallback) => {
     );
 }
 
-const requestUser = (config, callback, errorCallback)=>{
-    http.get("/user/updateuser", config).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    );
-}
-
 const requestUpdate = (data, callback, errorCallback)=>{
     http.put("/user/updateuser", data).then(
         res=>callback(res)
@@ -170,6 +162,20 @@ const fileupload = (data, callback, errorCallback) =>{
     )
 }
 
+const searchByNickname = (data, callback, errorCallback) =>{
+    http.get('/search/nickname',{
+        params:{
+            nickname:data.nickname,
+        }
+    } 
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
     requestJoin:(data,callback,errorCallback)=>requestJoin(data,callback,errorCallback),
@@ -186,7 +192,7 @@ const UserApi = {
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
-    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
+    searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
 }
 
 export default UserApi
