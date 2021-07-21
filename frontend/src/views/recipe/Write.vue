@@ -14,7 +14,7 @@
           type="text"
         />
         <label for="title">제목</label>
-            <button type="button">등록</button>
+            
         </form>
       
       </div> 
@@ -23,17 +23,14 @@
         <button @click="addimagedes">+</button>
       </div>
       <div class="" id="image-des">
-        <ul>
-          <li v-for="t in test" v-bind:key="t">
-            {{t}}
-          </li>
-        </ul>
         
-          <write-form v-for="(data, idx) in fields" :key="idx"></write-form>
+        
+          <write-form @childs-event="imgsrc" v-for="(data, idx) in fields" :key="idx"></write-form>
 
         </div>
           
       </div>
+      <button @click="check">등록</button>
     </div>
  
 </template>
@@ -63,6 +60,13 @@ export default {
         })
         
       
+    },
+   imgsrc:function(file){
+     console.log(file);
+   },
+
+    check(){
+      console.log(this.fields);
     }
 
   },

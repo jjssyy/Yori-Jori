@@ -50,10 +50,10 @@ export default {
   },
   methods: {
     showFollowerList: function() {
-      this.$router.push({ name: 'FollowerList' })
+      this.$router.push({ name: 'FollowerList' , params: {profileId: this.profileId}})
     },
     showFollowingList: function() {
-      this.$router.push({ name: 'FollowingList' })
+      this.$router.push({ name: 'FollowingList' , params: {profileId: this.profileId}})
     },
   },
   computed: {
