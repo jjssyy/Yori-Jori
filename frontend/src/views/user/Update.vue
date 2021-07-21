@@ -24,7 +24,7 @@
         <input v-model="cellphone"
         id="cellphone" 
         placeholder="전화번호를 입력하세요." 
-        type="text" 
+        type="text"
         />
         <label for="cellphone">전화번호</label>
       </div>
@@ -92,9 +92,40 @@ export default {
       isSubmit: false,
     };
   },
+  created() {
+    if (this.$store.state.token === ''){
+      this.$router.push({name:'Login'})
+    }
+    this.getUser()
+  },
   watch:{
   },
   methods:{
+    getUser(){
+      console.log(this.$store.state.token)
+      const config = {
+        headers:{
+          'access-token': this.$store.state.token,
+          'id':this.$store.state.userId
+        }
+      }
+      UserApi.requestUser(
+        config,
+        res=>{
+          console.log(res.data.userInfo);
+          this.userId = res.data.userInfo.id
+          this.nickName = res.data.userInfo.nickname
+          this.des = res.data.userInfo.des
+          this.cellphone = res.data.userInfo.cellphone
+          this.birthday = res.data.userInfo.birthday
+          this.email = res.data.userInfo.email
+          
+        },
+        error=>{
+          alert('회원정보 요청에 실패하였습니다.')
+        }
+      )
+    },
     update(){
       let data = {
         email:this.email,
@@ -111,6 +142,9 @@ export default {
         data,
         res=>{
           console.log(res);
+          alert('회원수정이 완료 되었습니다.')
+          this.$router.push(`/user/profile/${this.$store.state.userId}`);
+          
           
         },
         error=>{

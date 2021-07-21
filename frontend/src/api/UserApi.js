@@ -129,6 +129,14 @@ const getUser = (data, callback, errorCallback)=>{
     )
 }
 
+const requestUser = (config, callback, errorCallback)=>{
+    http.get("/user/updateuser", config).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    );
+}
+
 const Follow = (data, callback, errorCallback) =>{
     http.post('/user/profile',{
         params:{
@@ -169,6 +177,7 @@ const UserApi = {
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
+    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
 }
 
 export default UserApi
