@@ -93,11 +93,7 @@ export default {
     };
   },
   created() {
-<<<<<<< HEAD
     if (this.$store.state.token === ''){
-=======
-    if (this.$store.state.token === null){
->>>>>>> 73fb7665421217fea509d977d129e3fe9a8588f8
       this.$router.push({name:'Login'})
     }
     this.getUser()
@@ -115,7 +111,6 @@ export default {
       UserApi.requestUser(
         config,
         res=>{
-<<<<<<< HEAD
           console.log(res.data.userInfo);
           this.userId = res.data.userInfo.id
           this.nickName = res.data.userInfo.nickname
@@ -124,9 +119,6 @@ export default {
           this.birthday = res.data.userInfo.birthday
           this.email = res.data.userInfo.email
           
-=======
-          console.log(res);
->>>>>>> 73fb7665421217fea509d977d129e3fe9a8588f8
         },
         error=>{
           alert('회원정보 요청에 실패하였습니다.')
