@@ -23,6 +23,7 @@ export default {
 
   methods: {
     deleteFollowing: function(following, idx) {
+      const newFollowings = this.followings
       let data = {
         loginId : this.profileId,
         followingId : following.id
@@ -32,12 +33,14 @@ export default {
       res => {
         console.log(res)
         console.log(data)
+        newFollowings.splice(idx,1)
         console.log('삭제성공')
       },
       error=>{
         console.log(error)
       }
     )
+    this.followings = newFollowings
     }
   },
     computed: {

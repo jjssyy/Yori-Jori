@@ -113,6 +113,18 @@ const getFollower= (data, callback, errorCallback)=>{
     )
 }
 
+const getWaiter = (data, callback, errorCallback)=>{
+    http.get('/user/profile/waitlist', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const getFollowing = (data, callback, errorCallback)=>{
     http.get('/user/profile/followinglist', {
         params:{
@@ -138,6 +150,8 @@ const deleteFollower= (data, callback, errorCallback)=>{
     )
 }
 
+
+
 const deleteFollowing= (data, callback, errorCallback)=>{
     http.delete('/user/profile/followinglist', {
         params:{
@@ -145,6 +159,24 @@ const deleteFollowing= (data, callback, errorCallback)=>{
             followingid: data.followingId,
         }
     }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const enrollWaiting = (data, callback, errorCallback) => {
+    
+    http.post('/user/profile/enrollwaiting', data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const deleteWaiting = (data, callback, errorCallback) => {
+    
+    http.post('/user/profile/deletewaiting', data).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -209,11 +241,14 @@ const UserApi = {
     getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
     getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
+    getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     deleteFollowing: (data, callback, errorCallback) => deleteFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
     requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
+    enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
+    deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
 }
 
 export default UserApi

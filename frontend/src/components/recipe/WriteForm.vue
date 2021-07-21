@@ -34,7 +34,7 @@ export default {
 
       };
       frm.append("file",file[0]);
-    this.$emit("imgsrc",this.file);
+    
       
     },
 
