@@ -1,5 +1,6 @@
 package com.web.curation.controller.account;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -8,7 +9,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.Changepw;
 import com.web.curation.model.UserInfo;
@@ -287,6 +288,25 @@ public class UserController {
 		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 
 	}
+   
+   @PostMapping("/fileupload")
+   public ResponseEntity<String> fileupload(@RequestParam("file") MultipartFile[] multipartFiles){
+	   
+	   String result = "";
+	  
+	   
+	try {
+		
+		result = "success";
+	} catch (Exception e) {
+		e.printStackTrace();
+		result = "error";
+	}
+	   
+
+
+	   return new ResponseEntity<String>(result,HttpStatus.OK);
+   }
 
 
 }
