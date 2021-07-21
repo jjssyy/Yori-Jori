@@ -2,15 +2,8 @@
   <div class="feed-item">
     <div class="top">
       <div class="user-info">
-<<<<<<< HEAD
-        <div class="user-name">
-          <button>SSAFY</button>
-          &nbsp;
-          <button>Follow</button>
-=======
         <div class="user-img">
           <img :src="defaultProfile" height="30px" alt="">
->>>>>>> 73fb7665421217fea509d977d129e3fe9a8588f8
         </div>
         <div class="user-name">작성자</div>
       </div>

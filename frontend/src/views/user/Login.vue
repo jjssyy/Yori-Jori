@@ -16,11 +16,7 @@
           type="text"
         />
         <label for="id">아이디</label>
-<<<<<<< HEAD
-      </div> 
-=======
       </div>
->>>>>>> 73fb7665421217fea509d977d129e3fe9a8588f8
       <div class="input-with-label">
         <input
           v-model="password"
