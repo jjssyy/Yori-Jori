@@ -17,6 +17,7 @@ import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
+import com.web.curation.model.Waiting;
 import com.web.curation.model.service.JwtService;
 import com.web.curation.model.service.UserService;
 
@@ -279,6 +280,7 @@ public class UserController {
 		UserVO user = userservice.userInfo(id);
 		Integer follower = userservice.countfollower(id);
 		Integer following = userservice.countfollowing(id);
+		Integer waiting = userservice.countwaiting(id);
 
 		result.setNickname(user.getNickname());
 		result.setDes(user.getDes());
@@ -286,6 +288,7 @@ public class UserController {
 		result.setRole(user.getRole());
 		result.setFollower(follower);
 		result.setFollowing(following);
+		result.setWaiting(waiting);
 
 		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 
@@ -375,6 +378,64 @@ public class UserController {
 			return new ResponseEntity<String>("Success", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/profile/waitlist")
+	public ResponseEntity<List<FollowInfo>> waitlist(@RequestParam String id) throws Exception{
+		
+		List<FollowInfo> result = userservice.waitlist(id);
+		System.out.println("--신청자 리스트--");
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping("/profile/enrollwaiting")
+	public ResponseEntity<?> enrollwaiting(@RequestBody Waiting wait) {
+		
+			String result = "";
+		
+			try {
+				
+				if(userservice.deletewait(wait) == true && userservice.enrollfollower(wait) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		
+		
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+	}
+	
+	@PostMapping("/profile/deletewaiting")
+	public ResponseEntity<String> deletewaiting(@RequestBody Waiting wait) {
+		
+			String result = "";
+
+			try {
+				
+				if(userservice.deletewait(wait) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		
+		
+		return new ResponseEntity<String>(result,HttpStatus.OK);
 	}
 
 

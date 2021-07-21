@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.UserVO;
+import com.web.curation.model.Waiting;
 import com.web.curation.model.dao.UserDao;
 
 @Service
@@ -113,6 +114,12 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public Integer countwaiting(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).countwaiting(id);
+	}
+	
+	@Override
 	public List<FollowInfo> followinglist(String id) throws Exception {
 
 		return sqlsession.getMapper(UserDao.class).followinglist(id);
@@ -133,6 +140,24 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int followerdelete(Map map) throws Exception {
 		return sqlsession.getMapper(UserDao.class).followerdelete(map);
+	}
+
+	@Override
+	public List<FollowInfo> waitlist(String id) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).waitlist(id);
+	}
+
+	@Override
+	public boolean enrollfollower(Waiting wait) throws Exception {
+	
+		return sqlsession.getMapper(UserDao.class).enrollfollower(wait);
+	}
+
+	@Override
+	public boolean deletewait(Waiting wait) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).deletewait(wait);
 	}
 
 	

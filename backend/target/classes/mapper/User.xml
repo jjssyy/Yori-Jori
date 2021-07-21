@@ -52,6 +52,10 @@
 		select count(*) from follow where follower=#{id}
 	</select>
 	
+	<select id="countwaiting" parameterType="String" resultType="integer">
+		select count(*) from follow_wait where follow_recipient=#{id}
+	</select>
+	
 	<select id="followinglist" parameterType="String" resultType="FollowInfo">
 		select id, nickname from user where id in ( select following from follow where follower=#{id})
 	</select>
@@ -60,12 +64,24 @@
 		select id, nickname from user where id in ( select follower from follow where following=#{id})
 	</select>
 	
+	<select id="waitlist" parameterType="String" resultType="FollowInfo">
+		select follow_waiter as id, (select nickname from user where id = follow_waiter) as nickname from follow_wait where follow_recipient = #{id};
+	</select>
+	
 	<delete id="followingdelete" parameterType="Map">
 		delete from follow where follower=#{loginid} and following=#{followingid}
 	</delete>
 	
 	<delete id="followerdelete" parameterType="Map">
 		delete from follow where follower=#{followerid} and following=#{loginid}
+	</delete>
+	
+	<insert id="enrollfollower" parameterType="Waiting">
+		insert into follow(follower,following) values(#{waitingid},#{loginid});
+	</insert>
+	
+	<delete id="deletewait" parameterType="Waiting">
+		delete from follow_wait where follow_recipient = #{loginid} and follow_waiter = #{waitingid}
 	</delete>
 
 </mapper>
