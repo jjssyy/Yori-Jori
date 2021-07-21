@@ -172,7 +172,7 @@ export default {
     changepw(){
       if(this.isSubmit){
         let data = {
-        id:"12",
+        id:"1",
         oldpw:this.oldpw,
         newpw:this.newpw,
         passwordConfirm:this.passwordConfirm,
@@ -186,9 +186,13 @@ export default {
           if(res.data =="success"){
             alert("비밀번호 변경에 성공하였습니다!");
             this.$router.push("/");
-          }else if(res.data =="fail"){
-            alert("비밀번호 변경에 실패하셨습니다.!");
-          }else{
+          }else if(res.data =="fail2"){
+            alert("비밀번호 변경에 실패하셨습니다!");
+          }
+          else if(res.data =="fail1"){
+            alert("현재 비밀번호가 아닙니다.");
+          }
+          else{
             alert("에러발생");
          
           this.$router.push("/error");

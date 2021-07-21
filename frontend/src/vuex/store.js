@@ -10,6 +10,7 @@ Vue.use(Vuex)
 const state = {
     isUser: false,
     token:'',
+    userId:''
 }
 
 export default new Vuex.Store({

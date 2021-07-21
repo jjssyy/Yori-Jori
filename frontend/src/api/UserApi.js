@@ -71,6 +71,14 @@ const changepw = (data, callback, errorCallback) => {
     );
 }
 
+const requestUser = (config, callback, errorCallback)=>{
+    http.get("/user/updateuser", config).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    );
+}
+
 const requestUpdate = (data, callback, errorCallback)=>{
     http.put("/user/updateuser", data).then(
         res=>callback(res)
@@ -87,10 +95,53 @@ const getFollow = (data, callback, errorCallback)=>{
     )
 }
 
+const emailfindpw = (data, callback, errorCallback)=>{
+    http.get("/user/findpw", {
+        params: {
+            id: data.id,
+            email: data.email
+        }
+    }).then(
+        res => callback(res),
+        
+    ).catch(
+        err=>errorCallback(err)
+    );
+}
+
+const getFollower= (data, callback, errorCallback)=>{
+    http.get('/user/followerlist', data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const getFollowing = (data, callback, errorCallback)=>{
+    http.get('/user/followinglist', data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const getUser = (data, callback, errorCallback)=>{
-    http.get('/user/mypage', {
+    http.get('/user/profile', {
         params:{
             id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const Follow = (data, callback, errorCallback) =>{
+    http.post('/user/profile',{
+        params:{
+            loginId: data.loginId,
+            profileId: data.profileId,
         }
     }).then(
         res=>callback(res)
@@ -107,8 +158,13 @@ const UserApi = {
     checknickname: (data, callback, errorCallback) => checknickname(data, callback, errorCallback),
     changepw: (data, callback, errorCallback) => changepw(data, callback, errorCallback),
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
-    getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
+    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
     getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
+    emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
+    getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
+    getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
+    getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
+    Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
 }
 
 export default UserApi
