@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.Changepw;
+import com.web.curation.model.FollowInfo;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.dao.UserDao;
 
@@ -112,13 +113,13 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public List<String> followinglist(String id) throws Exception {
+	public List<FollowInfo> followinglist(String id) throws Exception {
 
 		return sqlsession.getMapper(UserDao.class).followinglist(id);
 	}
 
 	@Override
-	public List<String> followerlist(String id) throws Exception {
+	public List<FollowInfo> followerlist(String id) throws Exception {
 
 		return sqlsession.getMapper(UserDao.class).followerlist(id);
 	}

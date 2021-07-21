@@ -52,12 +52,12 @@
 		select count(*) from follow where follower=#{id}
 	</select>
 	
-	<select id="followinglist" parameterType="String" resultType="String">
-		select nickname from user where id in ( select following from follow where follower=#{id})
+	<select id="followinglist" parameterType="String" resultType="FollowInfo">
+		select id, nickname from user where id in ( select following from follow where follower=#{id})
 	</select>
 	
-	<select id="followerlist" parameterType="String" resultType="String">
-		select nickname from user where id in ( select follower from follow where following=#{id})
+	<select id="followerlist" parameterType="String" resultType="FollowInfo">
+		select id, nickname from user where id in ( select follower from follow where following=#{id})
 	</select>
 	
 	<delete id="followingdelete" parameterType="Map">

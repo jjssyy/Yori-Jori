@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.Changepw;
+import com.web.curation.model.FollowInfo;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.service.JwtService;
@@ -329,26 +330,28 @@ public class UserController {
 	   }
 	   
 	   return new ResponseEntity<Map<String, Object>>(resultMap, status);
-   }@GetMapping("/profile/followinglist")
-	public ResponseEntity<List<String>> followinglist(@RequestParam String id) throws Exception {
-		List<String> result = userservice.followinglist(id);
+   }
+   @GetMapping("/profile/followinglist")
+	public ResponseEntity<List<FollowInfo>> followinglist(@RequestParam String id) throws Exception {
+		List<FollowInfo> result = userservice.followinglist(id);
 		System.out.println("팔로잉 리스트");
-		for (String s : result) {
-			System.out.println(s);
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
+			
 		}
 		System.out.println("-------------");
-		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/profile/followerlist")
-	public ResponseEntity<List<String>> followerlist(@RequestParam String id) throws Exception {
-		List<String> result = userservice.followerlist(id);
+	public ResponseEntity<List<FollowInfo>> followerlist(@RequestParam String id) throws Exception {
+		List<FollowInfo> result = userservice.followerlist(id);
 		System.out.println("--팔로워 리스트--");
-		for (String s : result) {
-			System.out.println(s);
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
 		}
 		System.out.println("-------------");
-		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/profile/followinglist")
