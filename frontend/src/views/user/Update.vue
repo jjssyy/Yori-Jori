@@ -92,9 +92,32 @@ export default {
       isSubmit: false,
     };
   },
+  created() {
+    if (this.$store.state.token === null){
+      this.$router.push({name:'Login'})
+    }
+    this.getUser()
+  },
   watch:{
   },
   methods:{
+    getUser(){
+      const config = {
+        headers:{
+          'access-token': this.$store.state.token,
+          'id':this.$store.state.userId
+        }
+      }
+      UserApi.requestUser(
+        config,
+        res=>{
+          console.log(res);
+        },
+        error=>{
+          alert('회원정보 요청에 실패하였습니다.')
+        }
+      )
+    },
     update(){
       let data = {
         email:this.email,

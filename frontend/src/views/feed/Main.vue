@@ -1,9 +1,8 @@
 <template>
   <div class="feed newsfeed">
     <div class="wrapB">
-      <router-link to="/user/mypage">My Page</router-link>
-        <h1>메인페이지</h1>
-
+      <FeedItem />
+      <FeedItem />
       <FeedItem />
     </div>
   </div>

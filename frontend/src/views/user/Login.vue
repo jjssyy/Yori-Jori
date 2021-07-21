@@ -16,8 +16,7 @@
           type="text"
         />
         <label for="id">아이디</label>
-      </div> 
-      <button class="btn btn-primary">안녕</button>
+      </div>
       <div class="input-with-label">
         <input
           v-model="password"
