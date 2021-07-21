@@ -5,6 +5,8 @@
       <div class="user-info">
         <div class="user-name">
           <button>SSAFY</button>
+          &nbsp;
+          <button>Follow</button>
         </div>
         <p class="date">9시간 후</p>
       </div>

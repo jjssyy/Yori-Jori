@@ -17,7 +17,6 @@
         />
         <label for="id">아이디</label>
       </div> 
-      <button class="btn btn-primary">안녕</button>
       <div class="input-with-label">
         <input
           v-model="password"
@@ -89,7 +88,7 @@ import { mapActions } from 'vuex'
 
 export default {
   components: {
-    KakaoLogin,
+    KakaoLogin, 
     GoogleLogin
   },
   created() {

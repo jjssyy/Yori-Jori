@@ -14,6 +14,7 @@ import Findpw from './views/user/Findpw.vue'
 import Recipewrite from './views/recipe/Write.vue'
 import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
+import Fileupload from './views/recipe/Fileupload.vue'
 
 export default [
 
@@ -77,6 +78,11 @@ export default [
         path: '/user/profile/:user_id',
         name: 'Profile',
         component: Profile
+    },
+    {
+        path: '/recipe/fileupload/:user_id',
+        name: 'Fileupload',
+        component: Fileupload
     },
     {
         path: '*',
