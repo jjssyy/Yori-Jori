@@ -2,6 +2,7 @@ package com.web.curation.controller.account;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -327,7 +329,50 @@ public class UserController {
 	   }
 	   
 	   return new ResponseEntity<Map<String, Object>>(resultMap, status);
-   }
+   }@GetMapping("/profile/followinglist")
+	public ResponseEntity<List<String>> followinglist(@RequestParam String id) throws Exception {
+		List<String> result = userservice.followinglist(id);
+		System.out.println("팔로잉 리스트");
+		for (String s : result) {
+			System.out.println(s);
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/profile/followerlist")
+	public ResponseEntity<List<String>> followerlist(@RequestParam String id) throws Exception {
+		List<String> result = userservice.followerlist(id);
+		System.out.println("--팔로워 리스트--");
+		for (String s : result) {
+			System.out.println(s);
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/profile/followinglist")
+	public ResponseEntity<String> followingdelete(@RequestParam String loginid, String followingid) throws Exception {
+		Map map = new HashMap<>();
+		map.put("loginid",loginid);
+		map.put("followingid", followingid);
+		if (userservice.followingdelete(map)== 1) {
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping("/profile/followerlist")
+	public ResponseEntity<String> followerdelete(@RequestParam String loginid, String followerid) throws Exception {
+		Map map = new HashMap<>();
+		map.put("loginid",loginid);
+		map.put("followerid", followerid);
+		if (userservice.followerdelete(map)== 1) {
+			System.out.println("삭제성공");
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+	}
 
 
 }

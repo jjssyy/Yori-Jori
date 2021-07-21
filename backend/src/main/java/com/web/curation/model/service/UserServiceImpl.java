@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -108,6 +109,29 @@ public class UserServiceImpl implements UserService{
 	public Integer countfollowing(String id) throws Exception {
 
 		return sqlsession.getMapper(UserDao.class).countfollowing(id);
+	}
+	
+	@Override
+	public List<String> followinglist(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).followinglist(id);
+	}
+
+	@Override
+	public List<String> followerlist(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).followerlist(id);
+	}
+
+	@Override
+	public int followingdelete(Map map) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).followingdelete(map);
+	}
+
+	@Override
+	public int followerdelete(Map map) throws Exception {
+		return sqlsession.getMapper(UserDao.class).followerdelete(map);
 	}
 
 	

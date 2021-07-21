@@ -45,15 +45,27 @@
 	</select>
 
 	<select id="countfollower" parameterType="String" resultType="integer">
-		select count(*) from follow where follower=#{id}
-	</select>
-	
-	<select id="countfollowing" parameterType="String" resultType="integer">
 		select count(*) from follow where following=#{id}
 	</select>
 	
-	<select id="followinglist" parameterType="String" resultType="UserVO">
-		select * from user where id in ( select following from follow where follower=#{id});
+	<select id="countfollowing" parameterType="String" resultType="integer">
+		select count(*) from follow where follower=#{id}
 	</select>
+	
+	<select id="followinglist" parameterType="String" resultType="String">
+		select nickname from user where id in ( select following from follow where follower=#{id})
+	</select>
+	
+	<select id="followerlist" parameterType="String" resultType="String">
+		select nickname from user where id in ( select follower from follow where following=#{id})
+	</select>
+	
+	<delete id="followingdelete" parameterType="Map">
+		delete from follow where follower=#{loginid} and following=#{followingid}
+	</delete>
+	
+	<delete id="followerdelete" parameterType="Map">
+		delete from follow where follower=#{followerid} and following=#{loginid}
+	</delete>
 
 </mapper>
