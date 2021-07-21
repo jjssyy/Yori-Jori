@@ -1,5 +1,6 @@
 package com.web.curation.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.web.curation.model.Changepw;
@@ -30,5 +31,11 @@ public interface UserDao {
 	
 	public Integer countfollowing(String id) throws Exception;
 	public Integer countfollower(String id) throws Exception;
-
+	
+	public List<String> followinglist(String id) throws Exception;
+	public List<String> followerlist(String id) throws Exception;
+	
+	public int followingdelete(Map map) throws Exception;
+	public int followerdelete(Map map) throws Exception;
+	
 }
