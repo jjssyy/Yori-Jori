@@ -185,5 +185,17 @@ public class UserServiceImpl implements UserService{
 		return sqlsession.getMapper(UserDao.class).follow_already(map);
 	}
 
+	@Override
+	public boolean requestdeletefollow(Requestfollow rf) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).requestdeletefollow(rf);
+	}
+
+	@Override
+	public boolean deletefollowing(Requestfollow rf) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).deletefollowing(rf);
+	}
+
 	
 }
