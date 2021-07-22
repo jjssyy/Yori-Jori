@@ -253,6 +253,32 @@ const sendfollowrequest = (data, callback, errorCallback) => {
     )
 }
 
+const sendfollowdeleterequest = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowdeleterequest', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const sendfollowdelete = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowdelete', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const follow_wait = (data, callback, errorCallback) =>{
     http.get('/user/follow_wait', {
         params:{
@@ -302,6 +328,9 @@ const UserApi = {
     sendfollowrequest: (data, callback, errorCallback) => sendfollowrequest(data, callback, errorCallback),
     follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
     follow_wait: (data, callback, errorCallback) => follow_wait(data, callback, errorCallback),
+    sendfollowdeleterequest: (data, callback, errorCallback) => sendfollowdeleterequest(data, callback, errorCallback),
+    sendfollowdelete: (data, callback, errorCallback) => sendfollowdelete(data, callback, errorCallback),
+
 }
 
 export default UserApi

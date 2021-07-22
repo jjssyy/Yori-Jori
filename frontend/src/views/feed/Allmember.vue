@@ -5,10 +5,10 @@
      
       <h1>유저 목록</h1>
       <div v-for="(member, idx) in members" :key="idx">
-        <span>닉네임 : {{member.nickname}}</span>&nbsp;
-        <span><button class="btn btn-secondary" v-if="follow_already.includes(member.id) && !follow_wait.includes(member.id)">이미 등록됨</button></span>
+        <span><router-link :to="{name:'Profile', params: {user_id: member.id}}">닉네임 : {{member.nickname}}</router-link></span>&nbsp;
+        <span><button class="btn btn-secondary" v-if="follow_already.includes(member.id) && !follow_wait.includes(member.id)" @click="senddeletefollow(member)">이미 등록됨</button></span>
         <span><button class="btn btn-primary" v-if="!follow_already.includes(member.id) && !follow_wait.includes(member.id)" @click="sendrequest(member)">신청</button></span>
-        <span><button class="btn btn-danger" v-if="!follow_already.includes(member.id) && follow_wait.includes(member.id)">승인 대기중</button></span>
+        <span><button class="btn btn-danger" v-if="!follow_already.includes(member.id) && follow_wait.includes(member.id)" @click="senddeleterequest(member)">승인 대기중</button></span>
       </div>
 
       
@@ -68,6 +68,56 @@ export default {
           alert("팔로우 신청을 보냈습니다.")
         }else if(res.data == "fail"){
           alert("팔로우 신청이 보내지지 않았습니다.")
+        }else{
+          alert("에러발생");
+        }
+      },
+      error=>{
+         alert("에러발생");
+      }
+    )
+     
+    },
+
+    senddeleterequest(member){
+
+      let data = {
+        loginid : this.userId,
+        memberid : member.id,
+        
+      }
+      UserApi.sendfollowdeleterequest(
+      data,
+      res => {
+        if(res.data == "success"){
+          alert("팔로우신청 취소했습니다..")
+        }else if(res.data == "fail"){
+          alert("팔로우신청 취소신청이 보내지지 않았습니다.")
+        }else{
+          alert("에러발생");
+        }
+      },
+      error=>{
+         alert("에러발생");
+      }
+    )
+     
+    },
+
+    senddeletefollow(member){
+
+      let data = {
+        loginid : this.userId,
+        memberid : member.id,
+        
+      }
+      UserApi.sendfollowdelete(
+      data,
+      res => {
+        if(res.data == "success"){
+          alert("팔로우를 취소했습니다..")
+        }else if(res.data == "fail"){
+          alert("팔로우 취소신청이 보내지지 않았습니다.")
         }else{
           alert("에러발생");
         }
