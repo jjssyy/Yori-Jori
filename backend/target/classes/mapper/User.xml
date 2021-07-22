@@ -99,5 +99,13 @@
 	<select id="follow_already" parameterType="Map" resultType="String">
 		select following from follow where follower = #{id}
 	</select>
+	
+	<delete id="requestdeletefollow" parameterType="Requestfollow">
+		delete from follow_wait where follow_waiter = #{loginid} and follow_recipient = #{memberid}
+	</delete>
+	
+	<delete id="deletefollowing" parameterType="Requestfollow">
+		delete from follow where follower = #{loginid} and following = #{memberid}
+	</delete>
 
 </mapper>

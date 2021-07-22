@@ -54,4 +54,8 @@ public interface UserDao {
 	
 	public boolean requestfollow(Requestfollow rf) throws Exception;
 	
+	public boolean requestdeletefollow(Requestfollow rf) throws Exception;
+	
+	public boolean deletefollowing(Requestfollow rf) throws Exception;
+	
 }

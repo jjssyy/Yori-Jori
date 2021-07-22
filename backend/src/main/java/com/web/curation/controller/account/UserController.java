@@ -279,10 +279,12 @@ public class UserController {
 		UserInfo result = new UserInfo();
 
 		UserVO user = userservice.userInfo(id);
+		
 		Integer follower = userservice.countfollower(id);
 		Integer following = userservice.countfollowing(id);
 		Integer waiting = userservice.countwaiting(id);
-
+		
+		result.setId(user.getId());
 		result.setNickname(user.getNickname());
 		result.setDes(user.getDes());
 		result.setRegdate(user.getRegdate());
@@ -506,6 +508,54 @@ public class UserController {
 				try {
 					
 					if(userservice.requestfollow(rf) == true) {
+						result = "success";
+					}else {
+						result = "fail";
+					}
+					 
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					result = "error";
+				}
+			
+			
+			return new ResponseEntity<String>(result,HttpStatus.OK);
+		}
+	 	
+	 	@PostMapping("/sendfollowdeleterequest")
+		public ResponseEntity<String> sendfollowdeleterequest(@RequestBody Requestfollow rf) {
+			
+				String result = "";
+				System.out.println(rf.getLoginid()+" "+rf.getMemberid());
+
+				try {
+					
+					if(userservice.requestdeletefollow(rf) == true) {
+						result = "success";
+					}else {
+						result = "fail";
+					}
+					 
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					result = "error";
+				}
+			
+			
+			return new ResponseEntity<String>(result,HttpStatus.OK);
+		}
+	 	
+	 	@PostMapping("/sendfollowdelete")
+		public ResponseEntity<String> sendfollowdelete(@RequestBody Requestfollow rf) {
+			
+				String result = "";
+				System.out.println(rf.getLoginid()+" "+rf.getMemberid());
+
+				try {
+					
+					if(userservice.deletefollowing(rf) == true) {
 						result = "success";
 					}else {
 						result = "fail";
