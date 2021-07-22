@@ -262,7 +262,6 @@ const UserApi = {
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
     searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
-    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
     enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
     deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
 }
