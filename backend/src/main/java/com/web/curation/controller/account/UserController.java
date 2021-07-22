@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
+import com.web.curation.model.Requestfollow;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
+import com.web.curation.model.Waiting;
 import com.web.curation.model.service.JwtService;
 import com.web.curation.model.service.UserService;
 
@@ -279,6 +281,7 @@ public class UserController {
 		UserVO user = userservice.userInfo(id);
 		Integer follower = userservice.countfollower(id);
 		Integer following = userservice.countfollowing(id);
+		Integer waiting = userservice.countwaiting(id);
 
 		result.setNickname(user.getNickname());
 		result.setDes(user.getDes());
@@ -286,6 +289,7 @@ public class UserController {
 		result.setRole(user.getRole());
 		result.setFollower(follower);
 		result.setFollowing(following);
+		result.setWaiting(waiting);
 
 		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 
@@ -311,7 +315,9 @@ public class UserController {
    
    @GetMapping("/updateuser") 
    public ResponseEntity<Map<String, Object>> updateinfo(HttpServletRequest request) {
-	   
+
+	   System.out.println();
+
 	   Map<String, Object> resultMap = new HashMap<>();
 	   HttpStatus status = HttpStatus.ACCEPTED;
 	   if(jwtservice.isUsable(request.getHeader("access-token"))) {
@@ -376,6 +382,144 @@ public class UserController {
 		}
 		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
 	}
+	
+	@GetMapping("/profile/waitlist")
+	public ResponseEntity<List<FollowInfo>> waitlist(@RequestParam String id) throws Exception{
+		
+		List<FollowInfo> result = userservice.waitlist(id);
+		System.out.println("--신청자 리스트--");
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping("/profile/enrollwaiting")
+	public ResponseEntity<?> enrollwaiting(@RequestBody Waiting wait) {
+		
+			String result = "";
+		
+			try {
+				
+				if(userservice.deletewait(wait) == true && userservice.enrollfollower(wait) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		
+		
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+	}
+	
+	@PostMapping("/profile/deletewaiting")
+	public ResponseEntity<String> deletewaiting(@RequestBody Waiting wait) {
+		
+			String result = "";
+
+			try {
+				
+				if(userservice.deletewait(wait) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		
+		
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+	}
+	
+	 	@GetMapping("/getallmember")
+	    public ResponseEntity<List<UserVO>> getallmember(@RequestParam Map map){
+	    	
+	    	String result = "success";
+	    	List<UserVO> list = null;
+	    	try {
+	    		
+	    		list = userservice.getallmember(map);
+	    		
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+				
+			}
+	    	
+	    	return new ResponseEntity<List<UserVO>>(list,HttpStatus.OK);
+	    }
+	 	
+	 	@GetMapping("/follow_already")
+	    public ResponseEntity<List<String>> follow_already(@RequestParam Map map){
+	    	
+	  
+	    	List<String> result = null;
+	    	try {
+	    		
+	    		result = userservice.follow_already(map);
+	    		
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+			
+				
+			}
+	    	
+	    	return new ResponseEntity<List<String>>(result,HttpStatus.OK);
+	    }
+	 	
+	 	@GetMapping("/follow_wait")
+	    public ResponseEntity<List<String>> follow_wait(@RequestParam Map map){
+	    	
+	    	String result = "success";
+	    	List<String> list = null;
+	    	try {
+	    		
+	    		list = userservice.follow_wait(map);
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+				
+			}
+	    	
+	    	return new ResponseEntity<List<String>>(list,HttpStatus.OK);
+	    }
+	 
+	 	@PostMapping("/sendfollowrequest")
+		public ResponseEntity<String> sendfollowrequest(@RequestBody Requestfollow rf) {
+			
+				String result = "";
+
+
+				try {
+					
+					if(userservice.requestfollow(rf) == true) {
+						result = "success";
+					}else {
+						result = "fail";
+					}
+					 
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					result = "error";
+				}
+			
+			
+			return new ResponseEntity<String>(result,HttpStatus.OK);
+		}
 
 
 }

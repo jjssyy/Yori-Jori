@@ -5,7 +5,9 @@ import java.util.Map;
 
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
+import com.web.curation.model.Requestfollow;
 import com.web.curation.model.UserVO;
+import com.web.curation.model.Waiting;
 
 public interface UserService {
 	
@@ -31,11 +33,24 @@ public interface UserService {
 	
 	public Integer countfollowing(String id) throws Exception;
 	public Integer countfollower(String id) throws Exception;
+	public Integer countwaiting(String id) throws Exception;
 	
 	public List<FollowInfo> followinglist(String id) throws Exception;
 	public List<FollowInfo> followerlist(String id) throws Exception;
+	public List<FollowInfo> waitlist(String id) throws Exception;
 	
 	public int followingdelete(Map map) throws Exception;
 	public int followerdelete(Map map) throws Exception;
+	
+	public boolean enrollfollower(Waiting wait) throws Exception;
+	public boolean deletewait(Waiting wait) throws Exception;
+	
+	public List<UserVO> getallmember(Map map) throws Exception;
+	
+	public List<String> follow_wait(Map map) throws Exception;
+	
+	public List<String> follow_already(Map map) throws Exception;
+	
+	public boolean requestfollow(Requestfollow rf) throws Exception;
 	
 }

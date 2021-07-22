@@ -10,6 +10,14 @@ public class UserInfo {
 	
 	private Integer follower;
 	private Integer following;
+	private Integer waiting;
+	
+	public Integer getWaiting() {
+		return waiting;
+	}
+	public void setWaiting(Integer waiting) {
+		this.waiting = waiting;
+	}
 	public String getNickname() {
 		return nickname;
 	}

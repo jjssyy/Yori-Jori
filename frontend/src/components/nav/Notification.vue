@@ -1,27 +1,44 @@
 <template>
   <a class="notification" @click="Add">
     <span>알림</span>
-    <span class="badge">3</span>
+    <span class="badge" >{{notice}}</span>
+    <span>{{request}}</span>
   </a>
 </template>
 
 <script>
 import firebase from 'firebase';
+import FirebaseApi from '../../api/FirebaseApi';
+
 export default {
+  data:()=>{
+    return {
+      notice:0,
+      request:0,
+      items:[]
+    }
+  },
+  created(){
+    this.onSnapshot()
+  },
   methods:{
     Add(){
+      let data = {
+        user:this.$store.state.userId,
+        ReqUser:'unKnown'
+      }
+      FirebaseApi.noticeAdd(data)
+    },
+    onSnapshot(){
       const db = firebase.firestore();
-
-      db.collection("users").add({
-          first: "Ada",
-          last: "Lovelace",
-          born: 1815
-      })
-      .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
-      })
-      .catch((error) => {
-          console.error("Error adding document: ", error);
+      db.collection("notice"+this.$store.state.userId)
+        .onSnapshot((doc) => {
+          this.notice = doc.docs.length
+          this.items = doc.docs.map(v=>{
+            return {
+              requser:v.data().ReqUser
+            }
+          })
       });
     }
   }
