@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -11,7 +12,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.Changepw;
+import com.web.curation.model.FollowInfo;
 import com.web.curation.model.UserVO;
+import com.web.curation.model.Waiting;
 import com.web.curation.model.dao.UserDao;
 
 @Service
@@ -108,6 +111,53 @@ public class UserServiceImpl implements UserService{
 	public Integer countfollowing(String id) throws Exception {
 
 		return sqlsession.getMapper(UserDao.class).countfollowing(id);
+	}
+	
+	@Override
+	public Integer countwaiting(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).countwaiting(id);
+	}
+	
+	@Override
+	public List<FollowInfo> followinglist(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).followinglist(id);
+	}
+
+	@Override
+	public List<FollowInfo> followerlist(String id) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).followerlist(id);
+	}
+
+	@Override
+	public int followingdelete(Map map) throws Exception {
+
+		return sqlsession.getMapper(UserDao.class).followingdelete(map);
+	}
+
+	@Override
+	public int followerdelete(Map map) throws Exception {
+		return sqlsession.getMapper(UserDao.class).followerdelete(map);
+	}
+
+	@Override
+	public List<FollowInfo> waitlist(String id) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).waitlist(id);
+	}
+
+	@Override
+	public boolean enrollfollower(Waiting wait) throws Exception {
+	
+		return sqlsession.getMapper(UserDao.class).enrollfollower(wait);
+	}
+
+	@Override
+	public boolean deletewait(Waiting wait) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).deletewait(wait);
 	}
 
 	

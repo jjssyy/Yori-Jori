@@ -1,6 +1,8 @@
 package com.web.curation.controller.account;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -9,11 +11,13 @@ import javax.validation.Valid;
 
 
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.Changepw;
+import com.web.curation.model.FollowInfo;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
+import com.web.curation.model.Waiting;
 import com.web.curation.model.service.JwtService;
 import com.web.curation.model.service.UserService;
 
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -275,6 +280,7 @@ public class UserController {
 		UserVO user = userservice.userInfo(id);
 		Integer follower = userservice.countfollower(id);
 		Integer following = userservice.countfollowing(id);
+		Integer waiting = userservice.countwaiting(id);
 
 		result.setNickname(user.getNickname());
 		result.setDes(user.getDes());
@@ -282,16 +288,33 @@ public class UserController {
 		result.setRole(user.getRole());
 		result.setFollower(follower);
 		result.setFollowing(following);
-		
-		System.out.println(result.getNickname());
+		result.setWaiting(waiting);
 
 		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 
 	}
+   
+   @PostMapping("/fileupload")
+   public ResponseEntity<String> fileupload(@RequestParam("file") MultipartFile[] multipartFiles){
+	   
+	   String result = "";
+	  
+	try {
+		
+		result = "success";
+	} catch (Exception e) {
+		e.printStackTrace();
+		result = "error";
+	}
+	   
 
+
+	   return new ResponseEntity<String>(result,HttpStatus.OK);
+   }
+   
    @GetMapping("/updateuser") 
    public ResponseEntity<Map<String, Object>> updateinfo(HttpServletRequest request) {
-	   System.out.println(request.getHeader("access-token"));
+	   
 	   Map<String, Object> resultMap = new HashMap<>();
 	   HttpStatus status = HttpStatus.ACCEPTED;
 	   if(jwtservice.isUsable(request.getHeader("access-token"))) {
@@ -311,4 +334,109 @@ public class UserController {
 	   
 	   return new ResponseEntity<Map<String, Object>>(resultMap, status);
    }
+   @GetMapping("/profile/followinglist")
+	public ResponseEntity<List<FollowInfo>> followinglist(@RequestParam String id) throws Exception {
+		List<FollowInfo> result = userservice.followinglist(id);
+		System.out.println("팔로잉 리스트");
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
+			
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/profile/followerlist")
+	public ResponseEntity<List<FollowInfo>> followerlist(@RequestParam String id) throws Exception {
+		List<FollowInfo> result = userservice.followerlist(id);
+		System.out.println("--팔로워 리스트--");
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/profile/followinglist")
+	public ResponseEntity<String> followingdelete(@RequestParam String loginid, String followingid) throws Exception {
+		Map map = new HashMap<>();
+		map.put("loginid",loginid);
+		map.put("followingid", followingid);
+		if (userservice.followingdelete(map)== 1) {
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping("/profile/followerlist")
+	public ResponseEntity<String> followerdelete(@RequestParam String loginid, String followerid) throws Exception {
+		Map map = new HashMap<>();
+		map.put("loginid",loginid);
+		map.put("followerid", followerid);
+		if (userservice.followerdelete(map)== 1) {
+			System.out.println("삭제성공");
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/profile/waitlist")
+	public ResponseEntity<List<FollowInfo>> waitlist(@RequestParam String id) throws Exception{
+		
+		List<FollowInfo> result = userservice.waitlist(id);
+		System.out.println("--신청자 리스트--");
+		for (FollowInfo s : result) {
+			System.out.println(s.getNickname()+" "+s.getId());
+		}
+		System.out.println("-------------");
+		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
+	}
+	
+	@PostMapping("/profile/enrollwaiting")
+	public ResponseEntity<?> enrollwaiting(@RequestBody Waiting wait) {
+		
+			String result = "";
+		
+			try {
+				
+				if(userservice.deletewait(wait) == true && userservice.enrollfollower(wait) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		
+		
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+	}
+	
+	@PostMapping("/profile/deletewaiting")
+	public ResponseEntity<String> deletewaiting(@RequestBody Waiting wait) {
+		
+			String result = "";
+
+			try {
+				
+				if(userservice.deletewait(wait) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		
+		
+		return new ResponseEntity<String>(result,HttpStatus.OK);
+	}
+
+
 }
