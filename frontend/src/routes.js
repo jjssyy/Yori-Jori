@@ -16,6 +16,7 @@ import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
 import WaitList from './views/profile/WaitList.vue'
+import Allmember from './views/feed/Allmember.vue'
 
 export default [
 
@@ -89,6 +90,11 @@ export default [
         path: '/recipe/fileupload/:user_id',
         name: 'Fileupload',
         component: Fileupload
+    },
+    {
+        path: '/feed/allmember',
+        name: 'Allmember',
+        component: Allmember
     },
     {
         path: '*',

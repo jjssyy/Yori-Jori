@@ -228,6 +228,55 @@ const fileupload = (data, callback, errorCallback) =>{
     )
 }
 
+const getAllmember = (data, callback, errorCallback) =>{
+    http.get('/user/getallmember', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const sendfollowrequest = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowrequest', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const follow_wait = (data, callback, errorCallback) =>{
+    http.get('/user/follow_wait', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const follow_already = (data, callback, errorCallback) =>{
+    http.get('/user/follow_already', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
     requestJoin:(data,callback,errorCallback)=>requestJoin(data,callback,errorCallback),
@@ -249,6 +298,10 @@ const UserApi = {
     requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
     enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
     deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
+    getAllmember: (data, callback, errorCallback) => getAllmember(data, callback, errorCallback),
+    sendfollowrequest: (data, callback, errorCallback) => sendfollowrequest(data, callback, errorCallback),
+    follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
+    follow_wait: (data, callback, errorCallback) => follow_wait(data, callback, errorCallback),
 }
 
 export default UserApi

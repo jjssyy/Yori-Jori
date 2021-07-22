@@ -136,7 +136,7 @@ export default {
        UserApi.requestLogin(
           data,
           res => {
-            console.log(res);
+           
              if(res.data.result == "success"){
             alert("로그인 되었습니다.");
            this.$store.dispatch("login",res);
