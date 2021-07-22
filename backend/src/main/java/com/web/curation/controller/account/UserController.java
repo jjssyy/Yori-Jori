@@ -315,11 +315,9 @@ public class UserController {
    
    @GetMapping("/updateuser") 
    public ResponseEntity<Map<String, Object>> updateinfo(HttpServletRequest request) {
-<<<<<<< HEAD
-	   
-=======
+
 	   System.out.println();
->>>>>>> refs/heads/ryu
+
 	   Map<String, Object> resultMap = new HashMap<>();
 	   HttpStatus status = HttpStatus.ACCEPTED;
 	   if(jwtservice.isUsable(request.getHeader("access-token"))) {
