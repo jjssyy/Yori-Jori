@@ -1,22 +1,22 @@
 <template lang="">
   <div>
     <p @click="backBack">뒤로가기</p>
-    <h1> 팔로워 리스트 </h1>
-    <FollowItem v-for="(follower, idx) in followers" :key="idx" :follower="follower" :idx="idx" :followers="followers" :profileId="profileId"/>
+    <h1> 팔로우 신청 리스트 </h1>
+    <WaitItem v-for="(waiting, idx) in waitings" :key="idx" :waiting="waiting" :idx="idx" :waitings="waitings" :profileId="profileId"/>
   </div>
 </template>
 <script>
 import UserApi from '../../api/UserApi';
-import FollowItem from "../../components/profile/FollowItem.vue";
+import WaitItem from "../../components/profile/WaitItem.vue";
 
 export default {
   data: () => {
     return {
       profileId: null,
-      followers: null,
+      waitings: null,
     }
   },
-  components: { FollowItem },
+  components: { WaitItem },
   methods: {
     backBack: function() {
       history.back();
@@ -27,11 +27,11 @@ export default {
     let data = {
       id: this.profileId
     }
-    UserApi.getFollower(
+    UserApi.getWaiter(
       data,
       res => {
         console.log(res.data)
-        this.followers = res.data
+        this.waitings = res.data
       },
       error=>{
         console.log(error)

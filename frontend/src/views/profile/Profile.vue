@@ -12,6 +12,7 @@
       <p>회원가입일 : {{ profileUser.regdate }}</p>
       <div @click="showFollowerList">팔로워 : {{ profileUser.follower }}</div>
       <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
+      <div @click="showWaitList">대기자 수 : {{ profileUser.waiting }}</div>
       <div></div>
     </div>
   </div>
@@ -28,6 +29,7 @@ export default {
       profileId: null,
       follower: null,
       following: null,
+      waiting: null,
     }
   },
   created: function() {
@@ -42,6 +44,7 @@ export default {
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following
+        this.waiting = res.data.waiting
       },
       error=>{
         console.log(error)
@@ -50,10 +53,13 @@ export default {
   },
   methods: {
     showFollowerList: function() {
-      this.$router.push({ name: 'FollowerList' })
+      this.$router.push({ name: 'FollowerList' , params: {profileId: this.profileId}})
     },
     showFollowingList: function() {
-      this.$router.push({ name: 'FollowingList' })
+      this.$router.push({ name: 'FollowingList' , params: {profileId: this.profileId}})
+    },
+    showWaitList: function() {
+      this.$router.push({ name: 'WaitList' , params: {profileId: this.profileId}})
     },
   },
   computed: {

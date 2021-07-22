@@ -102,7 +102,23 @@ const emailfindpw = (data, callback, errorCallback)=>{
 }
 
 const getFollower= (data, callback, errorCallback)=>{
-    http.get('/user/followerlist', data).then(
+    http.get('/user/profile/followerlist', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const getWaiter = (data, callback, errorCallback)=>{
+    http.get('/user/profile/waitlist', {
+        params:{
+            id : data.id
+        }
+    }).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -110,7 +126,57 @@ const getFollower= (data, callback, errorCallback)=>{
 }
 
 const getFollowing = (data, callback, errorCallback)=>{
-    http.get('/user/followinglist', data).then(
+    http.get('/user/profile/followinglist', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const deleteFollower= (data, callback, errorCallback)=>{
+    http.delete('/user/profile/followerlist', {
+        params:{
+            loginid : data.loginId,
+            followerid: data.followerId
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+
+
+const deleteFollowing= (data, callback, errorCallback)=>{
+    http.delete('/user/profile/followinglist', {
+        params:{
+            loginid : data.loginId,
+            followingid: data.followingId,
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const enrollWaiting = (data, callback, errorCallback) => {
+    
+    http.post('/user/profile/enrollwaiting', data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const deleteWaiting = (data, callback, errorCallback) => {
+    
+    http.post('/user/profile/deletewaiting', data).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -190,9 +256,15 @@ const UserApi = {
     getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
     getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
+    getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
+    deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
+    deleteFollowing: (data, callback, errorCallback) => deleteFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
     searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
+    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
+    enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
+    deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
 }
 
 export default UserApi
