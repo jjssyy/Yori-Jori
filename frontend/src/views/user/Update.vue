@@ -102,7 +102,6 @@ export default {
   },
   methods:{
     getUser(){
-      console.log(this.$store.state.token)
       const config = {
         headers:{
           'access-token': this.$store.state.token,

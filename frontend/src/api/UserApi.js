@@ -228,6 +228,20 @@ const fileupload = (data, callback, errorCallback) =>{
     )
 }
 
+const searchByNickname = (data, callback, errorCallback) =>{
+    http.get('/search/nickname',{
+        params:{
+            nickname:data.nickname,
+        }
+    } 
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
     requestJoin:(data,callback,errorCallback)=>requestJoin(data,callback,errorCallback),
@@ -236,6 +250,7 @@ const UserApi = {
     checknickname: (data, callback, errorCallback) => checknickname(data, callback, errorCallback),
     changepw: (data, callback, errorCallback) => changepw(data, callback, errorCallback),
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
+    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
     getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
     emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
     getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
@@ -246,7 +261,7 @@ const UserApi = {
     deleteFollowing: (data, callback, errorCallback) => deleteFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
-    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
+    searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
     enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
     deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
 }
