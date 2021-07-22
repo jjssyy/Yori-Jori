@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
+import com.web.curation.model.Requestfollow;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.Waiting;
@@ -437,6 +438,86 @@ public class UserController {
 		
 		return new ResponseEntity<String>(result,HttpStatus.OK);
 	}
+	
+	 	@GetMapping("/getallmember")
+	    public ResponseEntity<List<UserVO>> getallmember(@RequestParam Map map){
+	    	
+	    	String result = "success";
+	    	List<UserVO> list = null;
+	    	try {
+	    		
+	    		list = userservice.getallmember(map);
+	    		
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+				
+			}
+	    	
+	    	return new ResponseEntity<List<UserVO>>(list,HttpStatus.OK);
+	    }
+	 	
+	 	@GetMapping("/follow_already")
+	    public ResponseEntity<List<String>> follow_already(@RequestParam Map map){
+	    	
+	  
+	    	List<String> result = null;
+	    	try {
+	    		
+	    		result = userservice.follow_already(map);
+	    		
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+			
+				
+			}
+	    	
+	    	return new ResponseEntity<List<String>>(result,HttpStatus.OK);
+	    }
+	 	
+	 	@GetMapping("/follow_wait")
+	    public ResponseEntity<List<String>> follow_wait(@RequestParam Map map){
+	    	
+	    	String result = "success";
+	    	List<String> list = null;
+	    	try {
+	    		
+	    		list = userservice.follow_wait(map);
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+				
+			}
+	    	
+	    	return new ResponseEntity<List<String>>(list,HttpStatus.OK);
+	    }
+	 
+	 	@PostMapping("/sendfollowrequest")
+		public ResponseEntity<String> sendfollowrequest(@RequestBody Requestfollow rf) {
+			
+				String result = "";
+
+
+				try {
+					
+					if(userservice.requestfollow(rf) == true) {
+						result = "success";
+					}else {
+						result = "fail";
+					}
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					result = "error";
+				}
+			
+			
+			return new ResponseEntity<String>(result,HttpStatus.OK);
+		}
 
 
 }
