@@ -33,8 +33,8 @@ public class SearchController {
 	JwtService jwtservice;
 	
 	@GetMapping("/nickname")
-	public ResponseEntity<Map<String, Object>> searchByNickname(@RequestParam String nickname) {
-		
+	public ResponseEntity<Map<String, Object>> searchByNickname(@RequestParam Map map) {
+		String nickname = (String)map.get("nickname");
 		String result = "SUCCESS";
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
