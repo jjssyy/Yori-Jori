@@ -10,7 +10,7 @@
       <FeedItem />
       <FeedItem />
       <FeedItem />
-      <FeedItem />
+      <FeedItem /> 
     </div>
   </div>
 </template>
