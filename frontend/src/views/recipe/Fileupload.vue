@@ -28,9 +28,6 @@ export default {
     }
   },
 
-  
-
-  
   methods: {
     upload(e){
       let file = e.target.files;
@@ -42,7 +39,7 @@ export default {
 
       };
       frm.append("file",file[0]);
-
+      console.log(frm)
       UserApi.fileupload(
           frm,
           res => {

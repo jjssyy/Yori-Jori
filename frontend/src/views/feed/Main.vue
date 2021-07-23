@@ -1,6 +1,10 @@
 <template>
   <div class="feed newsfeed">
     <div class="wrapB">
+
+           
+      <router-link :to="{name:'Profile', params: {user_id: userId}}">My Page</router-link>
+      <router-link :to="{name:'Recipewrite', params: {user_id: userId}}">글쓰기</router-link>
       <FeedItem />
       <FeedItem />
       <FeedItem />
