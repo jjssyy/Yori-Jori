@@ -77,7 +77,7 @@ export default [
         component: FollowingList
     },
     {
-        path: '/user/profile/:user_id',
+        path: '/user/profile',
         name: 'Profile',
         component: Profile
     },
