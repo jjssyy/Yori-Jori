@@ -9,4 +9,27 @@
 		select * from recipe_content where recipe_idx = #{recipe_idx}
 	</select>
 
+	<!-- <resultMap type="RecipeContent" id="RecipeContent">
+		<result property="idx" column="recipe.idx"/>
+		<result property="title" column="recipe.title"/>
+		<result property="regdate" column="recipe.regdate"/>
+		<result property="id" column="recipe.id"/>
+		<result property="recipeContent" column="list"/>
+	</resultMap>
+	
+	<select id="getLatestFeed" parameterType="String" resultType="RecipeContent">
+		select recipe.idx, recipe.title, recipe.regdate, recipe.id, (select * from recipe_content where recipe_idx = recipe.idx) as list 
+		from recipe, recipe_content 
+		where recipe.id in (select following from follow where follower = #{id}) 
+	</select> -->
+	
+	<select id="getLatestFeed" parameterType="String" resultType="RecipeContent">
+		select idx, title, regdate, id 
+		from recipe
+		where id in (select following from follow where follower = #{id}) 
+	</select>
+	
+	<select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
+		select * from recipe where id = #{id}
+	</select>
 </mapper>
