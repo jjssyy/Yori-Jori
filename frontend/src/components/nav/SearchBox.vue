@@ -1,7 +1,14 @@
 <template>
-  <div>
-    <input type="text" v-model="InputText" @keyup="searchInput">
-    <button>검색</button>
+  <div class="navigation-search-container">
+    <i class="fa fa-search"></i>
+    <input class="search-field" type="text" placeholder="Search">
+    <div class="search-container">
+      <div class="search-container-box">
+        <div class="search-results">
+
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,6 +16,7 @@
 import UserApi from '../../api/UserApi';
 
 export default {
+  name:'searchbox',
   data:()=>{
     return {
       InputText:''
@@ -32,7 +40,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
