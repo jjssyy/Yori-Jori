@@ -89,7 +89,7 @@
 	</select>
 	
 	<insert id="requestfollow" parameterType="Requestfollow">
-		insert into follow_wait(follow_waiter,follow_recipient) values(#{loginid},#{memberid})
+		insert into follow(follower,following) values(#{loginid},#{memberid});
 	</insert>
 	
 	<select id="follow_wait" parameterType="Map" resultType="String">
