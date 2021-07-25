@@ -12,9 +12,8 @@
       </div>
       <p>회원가입일 : {{ profileUser.regdate }}</p>
       <div v-if="profileUser.id != userId">
-        <span><button class="btn btn-secondary" v-if="follow_already.includes(profileUser.id) && !follow_wait.includes(profileUser.id)" @click="senddeletefollow(profileUser)">이미 등록됨</button></span>
-        <span><button class="btn btn-primary" v-if="!follow_already.includes(profileUser.id) && !follow_wait.includes(profileUser.id)" @click="sendrequest(profileUser)">신청</button></span>
-        <span><button class="btn btn-danger" v-if="!follow_already.includes(profileUser.id) && follow_wait.includes(profileUser.id)"  @click="senddeleterequest(profileUser)">승인 대기중</button></span>
+        <span><button class="btn btn-danger" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button></span>
+        <span><button class="btn btn-primary" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">신청</button></span>
       </div>
       <div v-if="profileUser.id != userId">
         <div >팔로워 : {{ profileUser.follower }}</div>
@@ -124,30 +123,6 @@ export default {
      
     },
 
-    senddeleterequest(member){
-
-      let data = {
-        loginid : this.userId,
-        memberid : member.id,
-        
-      }
-      UserApi.sendfollowdeleterequest(
-      data,
-      res => {
-        if(res.data == "success"){
-          alert("팔로우신청 취소했습니다..")
-        }else if(res.data == "fail"){
-          alert("팔로우신청 취소신청이 보내지지 않았습니다.")
-        }else{
-          alert("에러발생");
-        }
-      },
-      error=>{
-         alert("에러발생");
-      }
-    )
-     
-    },
 
      senddeletefollow(member){
 
