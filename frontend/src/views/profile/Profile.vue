@@ -22,10 +22,19 @@
       <div v-if="profileUser.id == userId">
         <div @click="showFollowerList">팔로워 : {{ profileUser.follower }}</div>
         <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
-        <div @click="showWaitList">대기자 수 : {{ profileUser.waiting }}</div>
       </div>
       
-      <div></div>
+      <div>
+
+        <div class="wrap">
+          <p>비밀번호를 변경하시겠습니까</p>
+          <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
+        </div>
+        <div class="wrap">
+          <p>회원정보 변경</p>
+          <router-link to="/user/update" class="btn--text">변경하기</router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,7 +60,10 @@ export default {
     let data = {
       id: this.profileId
     }
-    UserApi.getUser(
+    
+     const config =  this.$store.state.token;
+     console.log(config);
+    UserApi.getUser(config,
       data,
       res => {
         console.log(res)
@@ -67,19 +79,6 @@ export default {
     data = {
       id: this.userId
     }
-    UserApi.follow_wait(
-      
-      data,
-      res => {
-        
-        this.follow_wait = res.data;
-      
-     
-      },
-      error=>{
-        console.log(error)
-      }
-    )
 
     
 
@@ -103,6 +102,7 @@ export default {
       let data = {
         loginid : this.userId,
         memberid : member.id,
+        token : this.$store.state.token,
         
       }
       UserApi.sendfollowrequest(
@@ -129,6 +129,7 @@ export default {
       let data = {
         loginid : this.userId,
         memberid : member.id,
+        token : this.$store.state.token,
         
       }
       UserApi.sendfollowdelete(

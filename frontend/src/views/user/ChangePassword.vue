@@ -54,9 +54,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import PV from "password-validator";
-import * as EmailValidator from "email-validator";
+
 export default {
   created(){
     this.passwordSchema
@@ -110,37 +111,6 @@ export default {
       this.email= this.email.toLowerCase();
     },
 
-    checkid(){
-
-         let data = {
-        id:this.id,
-     
-      };
-         
-        UserApi.checkid(
-        data,
-        res=>{
-          console.log(res);
-          if(res.data == "success"){
-            alert("사용가능합니다.");
-            this.error.id = false;
-          }else if(res.data == "fail"){
-            alert("중복된 아이디입니다.");
-            this.error.id = true;
-          }else{
-            alert("에러가 발생하였습니다.");
-            this.error.id = true;
-          }
-        },
-        error=>{
-          alert("사용불가");
-          this.error.id = true;
-          
-        }
-      );
-    },
-
-   
 
     checkForm() {
       
@@ -172,14 +142,16 @@ export default {
     changepw(){
       if(this.isSubmit){
         let data = {
-        id:"1",
+        id:this.userId,
         oldpw:this.oldpw,
         newpw:this.newpw,
-        passwordConfirm:this.passwordConfirm,
+        token:this.$store.state.token,
       };
       this.isSubmit=false;
-  
-      UserApi.changepw(
+
+      const config =  this.$store.state.token;
+     
+      UserApi.changepw(config,
         data,
         res=>{
           
@@ -211,6 +183,11 @@ export default {
      
     }
 
+  },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
   }
 };
 </script>

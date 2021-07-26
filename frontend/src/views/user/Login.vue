@@ -51,16 +51,8 @@
           <div class="bar"></div>
         </div>
         <div class="wrap">
-          <p>비밀번호를 변경하시겠습니까</p>
-          <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
-        </div>
-        <div class="wrap">
           <p>아직 회원이 아니신가요?</p>
           <router-link to="/user/join" class="btn--text">가입하기</router-link>
-        </div>
-        <div class="wrap">
-          <p>회원정보 변경</p>
-          <router-link to="/user/update" class="btn--text">변경하기</router-link>
         </div>
         <div class="wrap">
           <p>비밀번호 찾기</p>

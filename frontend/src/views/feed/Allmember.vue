@@ -54,11 +54,14 @@ export default {
   },
 
   methods: {
-    sendrequest(member){
 
+    
+    sendrequest(member){
+    
       let data = {
         loginid : this.$route.params.user_id,
         memberid : member.id,
+        token : this.$store.state.token,
         
       }
       UserApi.sendfollowrequest(
@@ -85,6 +88,7 @@ export default {
       let data = {
         loginid : this.userId,
         memberid : member.id,
+        token : this.$store.state.token,
         
       }
       UserApi.sendfollowdelete(
