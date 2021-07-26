@@ -15,5 +15,8 @@ export default {
   },
   UPLOADIMG: function(state, res){
     state.img[res.idx] = res.file
+  },
+  CHOICETHUMBNAIL(state, res){
+    state.thumbnailNumber = res
   }
 }

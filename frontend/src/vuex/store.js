@@ -13,6 +13,7 @@ const state = {
     userId:'',
     recipeItems: [],
     img: [],
+    thumbnailNumber: null,
 }
 
 export default new Vuex.Store({

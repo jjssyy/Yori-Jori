@@ -239,6 +239,30 @@
          err=>errorCallback(err)
      )
  }
+
+ const singleRecipe = (data, callback, errorCallback) => {
+     http.get('/feed/content', {
+         params: {
+             recipe_idx : data.recipeIdx
+         }
+     }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+ }
+
+ const latestFeed = (data, callback, errorCallback) => {
+    http.get('/feed/latestfeed', {
+        params: {
+            id: data.id
+        }
+    }).then(
+       res=>callback(res)
+   ).catch(
+       err=>errorCallback(err)
+   )
+}
  
  const UserApi = {
      requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -262,6 +286,8 @@
      enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
      deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
      createRecipe: (data, callback, errorCallback) => createRecipe(data, callback, errorCallback),
+     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
+     latestFeed: (data, callback, errorCallback) => latestFeed(data, callback, errorCallback),
  }
  
  export default UserApi

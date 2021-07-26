@@ -46,8 +46,6 @@ export default {
             console.log(res);
              if(res.data == "success"){
            alert("일단감")
-
-
           }
           },
           error => {

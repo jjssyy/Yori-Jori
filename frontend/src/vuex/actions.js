@@ -10,5 +10,8 @@ export default {
   },
   uploadImg({commit}, res){
     commit('UPLOADIMG',res)
+  },
+  choiceThumbnail({commit}, res){
+    commit('CHOICETHUMBNAIL',res)
   }
 }

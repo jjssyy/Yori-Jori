@@ -2,6 +2,7 @@
 
 <template>
   <div>
+    <button @click="isThumbnail">썸네일</button>
     <div>
       <img v-bind:src="newImgSrc">
       <input type="file" id="file" class="inputfile" v-on:change="uploadImg">
@@ -47,7 +48,11 @@ export default {
 
     uploadDes: function() {
       this.$store.dispatch('writeRecipeItem', {des: this.recipeItemDes, idx: this.idx});
-    }
+    },
+
+    isThumbnail() {
+      this.$store.dispatch('choiceThumbnail', this.idx);
+    },
     
   },
 }

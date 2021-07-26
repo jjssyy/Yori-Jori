@@ -22,7 +22,6 @@
       </div>
 
       <div class="" id="image-des"  >
-        <button @click="isThumbNail">썸네일</button>
         <write-form @childs-event="imgsrc" v-for="(data, idx) in fields" :key="idx" :idx="idx"></write-form>
       </div>
           
@@ -51,9 +50,6 @@ export default {
     WriteForm,
   },
   methods: {
-    isThumbNail(){
-      this.ThumbNailList[0]= true
-    },
     addimagedes(){
         this.fields.push({
           idx : this.count++,
@@ -66,8 +62,14 @@ export default {
 
     check(){
       for (let i=0;i<this.recipeItems.length; i++){
-        this.ThumbNailList.push('false')
+        if( this.thumbnailNumber == i){
+          this.ThumbNailList.push('true')
+        }
+        else{
+          this.ThumbNailList.push('false')
+        }
       }
+      console.log(this.ThumbNailList)
       frm.append("title", this.title)
       frm.append("id", this.userId)
       for (let i=0; i< this.recipeItems.length; i++){
@@ -104,6 +106,7 @@ export default {
       'userId',
       'recipeItems',
       'img',
+      'thumbnailNumber',
     ]),
   }
 }
