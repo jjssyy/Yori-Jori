@@ -13,15 +13,18 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 
+
 const noticeAdd = (data) => {
+  const now = Date.now()
   console.log("notice"+data.user)
-  db.collection("notice"+data.user).add({
+  db.collection("notice"+data.user).doc(now.toString()).set({
+    date:now,
     ReqUser: data.ReqUser,
     isRead: 0,
-    msg:''
+    msg:'',
   })
   .then((docRef) => {
-    console.log("Document written with ID: ", docRef.id);
+    console.log("Document written");
   })
 }
 

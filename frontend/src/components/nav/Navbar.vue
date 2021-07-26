@@ -10,14 +10,29 @@
   </div>
 </template>
 
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script>
-import Notification from './Notification.vue'
-import SearchBox from './SearchBox.vue'
+import SearchBox from './Search.vue'
+import Notification from './Notice.vue'
 
 export default {
   components:{
+    SearchBox,
     Notification,
-    SearchBox
+  },
+  mounted(){
+    $(".fa-heart").dblclick(function () {
+      $(".notification-bubble").show(400);
+    });
+    $(document).on("scroll", function () {
+      if ($(document).scrollTop() > 50) {
+        $(".navigation").addClass("shrink");
+      } else {
+        $(".navigation").removeClass("shrink");
+      }
+    });
   },
   methods: {
     backBack: function() {
@@ -27,19 +42,9 @@ export default {
 }
 </script>
 
-<script>
-$(document).on("scroll", function () {
-  if ($(document).scrollTop() > 50) {
-    $(".navigation").addClass("shrink");
-  } else {
-    $(".navigation").removeClass("shrink");
-  }
-});
 
-</script>
-
-
-<style scoped>
+<style>
+@import url('http://fonts.cdnfonts.com/css/billabong');
 .navigation {
   background-color: #ffffff;
   height: 80px;
@@ -102,15 +107,11 @@ $(document).on("scroll", function () {
     justify-content: space-between;
   }
   .navigation-search-container {
-    /* display: none; */
+    display: none;
   }
-  .navigation-icons {
-    /* display: flex; */
+  .notification {
+    display: flex;
   }
-}
-
-.navigation-icons {
-  display: flex;
 }
 
 .navigation-search-container input:focus {
@@ -121,35 +122,5 @@ $(document).on("scroll", function () {
   text-align: center;
 }
 
-.navigation-icons a {
-  text-decoration: none;
-}
 
-.navigation-link i {
-  margin-left: 30px;
-  color: black;
-  text-decoration: none;
-  font-size: 22px;
-}
-
-.notification-bubble-wrapper {
-  position: relative;
-  top: -30px;
-  left: 17px;
-}
-
-.notification-bubble {
-  position: absolute;
-  min-width: 20px;
-  min-height: 20px;
-  border-radius: 50%;
-  background: #ff2c74;
-  color: #fff;
-  text-align: center;
-  font-size: 13px;
-  padding: 5px 5px 3px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-weight: 500;
-}
 </style>
