@@ -62,15 +62,14 @@ export default {
     }
     
      const config =  this.$store.state.token;
-     console.log(config);
+     
     UserApi.getUser(config,
       data,
       res => {
-        console.log(res)
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following
-        this.waiting = res.data.waiting
+        
       },
       error=>{
         console.log(error)
