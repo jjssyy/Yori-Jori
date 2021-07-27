@@ -1,7 +1,7 @@
 <template>
     <div id="kakao-login">
 
-        <button>
+        <button @click="kakaologin">
             <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55">
                 <g id="그룹_247" data-name="그룹 247" transform="translate(-237 -406)">
                     <g id="구성_요소_2" data-name="구성 요소 2" transform="translate(237 406)">
@@ -24,5 +24,69 @@
 </template>
 
 <script>
-    export default {}
+import UserApi from "../../../api/UserApi";
+    export default {
+       
+        methods: {
+            kakaologin(){
+                window.Kakao.Auth.login({
+                    scope: 'profile_nickname, account_email,birthday',
+                    success: this.getprofile
+                })
+            },
+
+            getprofile(authobj){
+
+                
+                window.Kakao.API.request({
+                    url:'/v2/user/me',
+                    success: res=> {
+                        const kakao_account = res.kakao_account;
+                        console.log(kakao_account.profile.nickname);
+                        console.log(kakao_account.email);
+                        console.log(kakao_account.birthday);
+
+                        let data = {
+                            email : kakao_account.email,
+                            nickname : kakao_account.profile.nickname
+                            };
+
+                        UserApi.snsLogin(
+                            data,
+                            res => {
+
+                                if(res.data.result == "success"){
+                                alert("로그인 되었습니다.");
+                                this.$store.dispatch("login",res);
+                                console.log(this.$store.state.token);
+                                //this.$store.state.email = data.email
+                                this.$router.push({name:'FeedMain'});
+                                }else if(res.data.result == "fail"){
+                                alert("로그인 실패.");
+                            
+                                }else{
+                                alert("회원가입 되어있지않습니다.");
+                                this.$router.push({name:'ErrorPage'});
+
+                                }
+                            },
+                            error => {
+                                //요청이 끝나면 버튼 활성화
+                                alert("회원가입 되어있지않습니다.");
+
+                                this.$router.push({name:'ErrorPage'});
+                            }
+                            );
+
+
+                        
+
+                        
+                    } 
+                });
+
+            },
+        },
+
+    }
 </script>
