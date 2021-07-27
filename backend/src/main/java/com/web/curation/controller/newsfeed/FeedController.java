@@ -1,4 +1,4 @@
-package com.web.curation.controller.feed;
+package com.web.curation.controller.newsfeed;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +24,7 @@ import com.web.curation.model.service.UserService;
 @RequestMapping("/feed")
 @RestController
 public class FeedController {
+	
 	@Autowired
 	FeedService feedService;
 	
