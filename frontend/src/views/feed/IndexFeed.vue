@@ -1,15 +1,17 @@
 <template>
-  <div class="feed newsfeed">
-    <div class="wrapB">
+  <div class="feed newsfeed" style="margin-top:100px;">
+    <div class="wrapB" >
       
-      <router-link :to="{name:'Profile', params: {user_id: userId}}">My Page</router-link>
-      <router-link :to="{name:'Recipewrite', params: {user_id: userId}}">글쓰기</router-link>
-      <h1>뉴스피드</h1>
-
+      
+      
+      <div>
+        
+      </div>
+      
       <FeedItem />
       <FeedItem />
       <FeedItem />
-      <FeedItem />
+      <FeedItem />  
     </div>
   </div>
 </template>
@@ -32,4 +34,11 @@ export default {
   }
 };
 </script>
+
+<style>
+
+
+</style>
+
+
 

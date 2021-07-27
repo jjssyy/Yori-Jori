@@ -5,6 +5,14 @@ public class Changepw {
 	private String id;
 	private String newpw;
 	private String oldpw;
+	private String token;
+	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public String getId() {
 		return id;
 	}

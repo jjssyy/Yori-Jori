@@ -62,7 +62,7 @@ const requestChangePassword = (data, callback, errorCallback)=>{
     );
 }
 
-const changepw = (data, callback, errorCallback) => {
+const changepw = (config,data, callback, errorCallback) => {
     
     http.post("/user/updatepw",data).then(
         res=>callback(res)
@@ -165,30 +165,20 @@ const deleteFollowing= (data, callback, errorCallback)=>{
     )
 }
 
-const enrollWaiting = (data, callback, errorCallback) => {
-    
-    http.post('/user/profile/enrollwaiting', data).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
 
-const deleteWaiting = (data, callback, errorCallback) => {
-    
-    http.post('/user/profile/deletewaiting', data).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
 
-const getUser = (data, callback, errorCallback)=>{
+const getUser = (config,data, callback, errorCallback) => {
+    
     http.get('/user/profile', {
-        params:{
+        
+        headers: {
+            'access-token':config
+        },
+         params:{
             id : data.id
-        }
-    }).then(
+        }} 
+       
+    ).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -228,6 +218,56 @@ const fileupload = (data, callback, errorCallback) =>{
     )
 }
 
+const getAllmember = (data, callback, errorCallback) =>{
+    http.get('/user/getallmember', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const sendfollowrequest = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowrequest', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const sendfollowdelete = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowdelete', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const follow_already = (data, callback, errorCallback) =>{
+    http.get('/user/follow_already', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const searchByNickname = (data, callback, errorCallback) =>{
     http.get('/search/nickname',{
         params:{
@@ -250,7 +290,6 @@ const UserApi = {
     checknickname: (data, callback, errorCallback) => checknickname(data, callback, errorCallback),
     changepw: (data, callback, errorCallback) => changepw(data, callback, errorCallback),
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
-    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
     getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
     emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
     getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
@@ -261,9 +300,13 @@ const UserApi = {
     deleteFollowing: (data, callback, errorCallback) => deleteFollowing(data, callback, errorCallback),
     Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
     fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
+    requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
+    getAllmember: (data, callback, errorCallback) => getAllmember(data, callback, errorCallback),
+    sendfollowrequest: (data, callback, errorCallback) => sendfollowrequest(data, callback, errorCallback),
+    follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
+    sendfollowdelete: (data, callback, errorCallback) => sendfollowdelete(data, callback, errorCallback),
     searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
-    enrollWaiting: (data, callback, errorCallback) => enrollWaiting(data, callback, errorCallback),
-    deleteWaiting: (data, callback, errorCallback) => deleteWaiting(data, callback, errorCallback),
+
 }
 
 export default UserApi

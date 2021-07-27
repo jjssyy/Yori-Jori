@@ -2,6 +2,10 @@
   <div class="navigation-search-container">
     <i class="fa fa-search"></i>
     <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput">
+<<<<<<< HEAD
+=======
+     <router-link :to="{name:'Allmember', params: {searchname: InputText,user_id: userId}}">검색</router-link>
+>>>>>>> 29ba1b9c46fbbdca99d3a381f1e32e32d65a55dd
     <div class="search-container">
       <div class="search-container-box">
         <div class="search-results">
