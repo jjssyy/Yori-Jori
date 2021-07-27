@@ -295,6 +295,17 @@ const snsLogin = (data, callback, errorCallback) =>{
     )
 }
 
+const snsregister = (data, callback, errorCallback) => {
+    console.log(data.sns);
+    console.log(data.email);
+    console.log(data.nickname);
+    
+    http.post('/user/snsregister',data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
 
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -321,6 +332,7 @@ const UserApi = {
     sendfollowdelete: (data, callback, errorCallback) => sendfollowdelete(data, callback, errorCallback),
     searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
     snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
+    snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
 
 }
 
