@@ -6,6 +6,7 @@ import java.util.Map;
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.Requestfollow;
+import com.web.curation.model.Snsreg;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.Waiting;
 
@@ -15,8 +16,10 @@ public interface UserDao {
 	public boolean join(Map map) throws Exception;
 	
 	public UserVO login(Map map) throws Exception;
-
+	
 	public boolean join(UserVO user) throws Exception;
+	
+	public boolean kakaoreg(Snsreg sns) throws Exception;
 	
 	public String checkid(Map map) throws Exception;
 	

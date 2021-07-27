@@ -17,6 +17,7 @@ import com.google.common.net.HttpHeaders;
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.Requestfollow;
+import com.web.curation.model.Snsreg;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.Waiting;
@@ -100,20 +101,22 @@ public class UserController {
 		String result = "";
 
 		Map resultmap = new HashMap<>();
-		System.out.println(map.get("email"));
-		System.out.println(map.get("nickname"));
 		try { 
-			
-			String email = (String) map.get("email");
-			
+			map.put("id", map.get("email"));
+			UserVO user = userservice.login(map);
+			System.out.println(map.get("id"));
+			if(user.getSns().equals("kakao")) {
+				String email = (String) map.get("email");
+				
 				String token = jwtservice.create("user_email", email, "access-token");
 				resultmap.put("access-token", token);
 				
 				result = "success";
 				resultmap.put("result", result);
-				
-				
-			
+			}else {
+				result = "fail";
+				resultmap.put("result", result);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -588,6 +591,29 @@ public class UserController {
 			
 			return new ResponseEntity<String>(result,HttpStatus.OK);
 		}
+	 	
+	 	  @PostMapping("/snsregister")
+	 	   public ResponseEntity<String> snsregister(@RequestBody Snsreg sns){
+	 		   
+	 		   String result = "";
+	 		   
+	 			  try {
+	 					if(userservice.kakaoreg(sns) == true) {
+	 						result = "success";
+	 					}else {
+	 						result = "fail";
+	 					}
+	 						
+	 					
+	 				} catch (Exception e) {
+	 					e.printStackTrace();
+	 					result = "error";
+	 				}
+	 				
+	 		    
+	 		  
+	 		   return new ResponseEntity<String>(result,HttpStatus.OK);
+	 	   }
 
 
 }

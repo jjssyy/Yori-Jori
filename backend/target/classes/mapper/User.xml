@@ -107,5 +107,9 @@
 	<delete id="deletefollowing" parameterType="Requestfollow">
 		delete from follow where follower = #{loginid} and following = #{memberid}
 	</delete>
+	
+	<insert id="kakaoreg" parameterType="Snsreg">
+		insert into user(id,pw,nickname,email,sns) values(#{email},#{birthday},#{nickname},#{email},#{sns})
+	</insert>
 
 </mapper>
