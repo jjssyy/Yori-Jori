@@ -13,11 +13,26 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 
+
 const noticeAdd = (data) => {
+  const now = Date.now()
   console.log("notice"+data.user)
-  db.collection("notice"+data.user).add({
+  db.collection("notice"+data.user).doc(now.toString()).set({
+    date:now,
     ReqUser: data.ReqUser,
-    isRead: 0
+    isRead: 0,
+    msg:'',
+  })
+  .then((docRef) => {
+    console.log("Document written");
+  })
+}
+
+const requestAdd = (data) =>{
+  db.collection("request"+data.user).add({
+    user: data.permitUser,
+    isRead: 0,
+    msg:''
   })
   .then((docRef) => {
     console.log("Document written with ID: ", docRef.id);
@@ -26,5 +41,7 @@ const noticeAdd = (data) => {
 
 const FirebaseApi = {
   noticeAdd:(data)=>noticeAdd(data),
+  requestAdd:(data)=>requestAdd(data),
+
 }
 export default FirebaseApi

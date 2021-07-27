@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.web.curation.model.dao.FeedDao">
+
+	<!-- title, id -->
+	<insert id="writeRecipeInfo" parameterType="Map">
+		insert into recipe(title,id) values(#{title},#{id})
+	</insert>
+	
+	<select id="getRecipe_idx" parameterType="Map" resultType="integer">
+		select idx from recipe where id=#{id} and title = #{title} order by regdate desc limit 1
+	</select>
+	
+	<!-- img, des, thumbnail, recipe_idx -->
+	<insert id="writeRecipeContent" parameterType="RecipeContent">
+		insert into recipe_content(img, des, thumbnail, recipe_idx)
+		values(#{img}, #{des}, #{thumbnail}, #{recipe_idx})
+	</insert>
+
+</mapper>

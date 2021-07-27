@@ -89,7 +89,7 @@
 	</select>
 	
 	<insert id="requestfollow" parameterType="Requestfollow">
-		insert into follow_wait(follow_waiter,follow_recipient) values(#{loginid},#{memberid})
+		insert into follow(follower,following) values(#{loginid},#{memberid});
 	</insert>
 	
 	<select id="follow_wait" parameterType="Map" resultType="String">
@@ -99,5 +99,13 @@
 	<select id="follow_already" parameterType="Map" resultType="String">
 		select following from follow where follower = #{id}
 	</select>
+	
+	<delete id="requestdeletefollow" parameterType="Requestfollow">
+		delete from follow_wait where follow_waiter = #{loginid} and follow_recipient = #{memberid}
+	</delete>
+	
+	<delete id="deletefollowing" parameterType="Requestfollow">
+		delete from follow where follower = #{loginid} and following = #{memberid}
+	</delete>
 
 </mapper>
