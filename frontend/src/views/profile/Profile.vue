@@ -57,16 +57,17 @@ export default {
   },
   created: function() {
     this.profileId = this.$route.params.user_id
+    console.log(this.profileId)
     let data = {
       id: this.profileId
     }
-    
-     const config =  this.$store.state.token;
-     console.log(config);
+    const config =  this.$store.state.token;
+ 
     UserApi.getUser(config,
       data,
       res => {
         console.log(res)
+        
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following

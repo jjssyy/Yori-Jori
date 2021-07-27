@@ -174,7 +174,7 @@ const getUser = (config,data, callback, errorCallback) => {
         headers: {
             'access-token':config
         },
-         params:{
+        params:{
             id : data.id
         }} 
        
@@ -292,7 +292,7 @@ const UserApi = {
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
     getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
     emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
-    getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
+    getUser: (config,data, callback, errorCallback) => getUser(config,data, callback, errorCallback),
     getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
     getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
