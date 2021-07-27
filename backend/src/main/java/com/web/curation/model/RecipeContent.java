@@ -1,15 +1,12 @@
 package com.web.curation.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 public class RecipeContent {
 	private int idx;
 	private String title;
 	private Timestamp regdate;
 	private String id;
-//	private List<RecipeSingleContent> content;
 	
 	public int getIdx() {
 		return idx;
@@ -35,12 +32,4 @@ public class RecipeContent {
 	public void setId(String id) {
 		this.id = id;
 	}
-//	public List<RecipeSingleContent> getContent() {
-//		return content;
-//	}
-//	public void setContent(List<RecipeSingleContent> content) {
-//		this.content = content;
-//	}
-	
-	
 }
