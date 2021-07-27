@@ -25,16 +25,7 @@ import com.web.curation.model.service.UserService;
 @RestController
 public class FeedController {
 	@Autowired
-	UserService userservice;
-
-	@Autowired
 	FeedService feedService;
-	
-	@Autowired
-	JwtService jwtservice;
-	
-	@Autowired
-	PasswordEncoder passwordencoder;
 	
 	@GetMapping("/content")
 	public ResponseEntity<Map<String, Object>> feedList(@RequestParam String recipe_idx) {
