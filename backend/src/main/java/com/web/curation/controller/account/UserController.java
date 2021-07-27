@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.net.HttpHeaders;
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.Requestfollow;
@@ -40,6 +41,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -184,21 +186,27 @@ public class UserController {
    public ResponseEntity<String> updatename(@RequestBody UserVO user){
 	   
 	   String result = "";
+	  
+	   if(jwtservice.isUsable(user.getToken())) {
+		   try {
+				
+				if(userservice.updateuser(user) == true) {
+					result = "success";
+				}else {
+					result = "fail";
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+	   }else {
+		   result = "error";
+	   }
 	   
-	try {
-		
-		if(userservice.updateuser(user) == true) {
-			result = "success";
-		}else {
-			result = "fail";
-		}
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-		result = "error";
-	}
+	
 	   
-	   return new ResponseEntity<String>(HttpStatus.OK);
+	   return new ResponseEntity<String>(result,HttpStatus.OK);
    }
    
 
@@ -206,39 +214,42 @@ public class UserController {
    @PostMapping("/updatepw")
    public ResponseEntity<String> updatepw(@RequestBody Changepw changepw){
 	   
-	   String result = "";
-	  
-	try {
-		String old = userservice.oldpw(changepw);
+	   String result = "error";
+	   
+	  if(jwtservice.isUsable(changepw.getToken())) {
+		  try {
+				String old = userservice.oldpw(changepw);
 
-		boolean match = passwordencoder.matches(changepw.getOldpw(),old);
-	
-		if(match == true) {
+				boolean match = passwordencoder.matches(changepw.getOldpw(),old);
 			
-			String newpassword = passwordencoder.encode(changepw.getNewpw());
-			
-			changepw.setNewpw(newpassword);
-			
-			if(userservice.updatepw(changepw) == true) {
-				result = "success";
+				if(match == true) {
+					
+					String newpassword = passwordencoder.encode(changepw.getNewpw());
+					
+					changepw.setNewpw(newpassword);
+					
+					if(userservice.updatepw(changepw) == true) {
+						result = "success";
+						
+					}else {
+						result = "fail2";
+					}
+					
+				}else {
+					result = "fail1";
+					
+
+				}
 				
-			}else {
-				result = "fail2";
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
 			}
 			
-		}else {
-			result = "fail1";
-			
-
-		}
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-		result = "error";
-	}
-	   
-
-
+	   } else {
+		   result = "error";
+	   }
+	  
 	   return new ResponseEntity<String>(result,HttpStatus.OK);
    }
    
@@ -275,23 +286,34 @@ public class UserController {
    }
    
    @GetMapping("/profile")
-	public ResponseEntity<UserInfo> profile(@RequestParam String id) throws Exception {
-		UserInfo result = new UserInfo();
+	public ResponseEntity<UserInfo> profile(@RequestParam String id,HttpServletRequest request) throws Exception {
+		
+	   if(jwtservice.isUsable(request.getHeader("access-token"))) {
+		   UserInfo result = new UserInfo();
 
-		UserVO user = userservice.userInfo(id);
-		Integer follower = userservice.countfollower(id);
-		Integer following = userservice.countfollowing(id);
-		Integer waiting = userservice.countwaiting(id);
+			UserVO user = userservice.userInfo(id);
+			
+			Integer follower = userservice.countfollower(id);
+			Integer following = userservice.countfollowing(id);
+			Integer waiting = userservice.countwaiting(id);
+			
+			result.setId(user.getId());
+			result.setNickname(user.getNickname());
+			result.setDes(user.getDes());
+			result.setRegdate(user.getRegdate());
+			result.setRole(user.getRole());
+			result.setFollower(follower);
+			result.setFollowing(following);
+			result.setWaiting(waiting);
+			return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
+	   } else {
+		   return new ResponseEntity<UserInfo>(HttpStatus.BAD_REQUEST);
+	   }
+	   
+	  
+	   
 
-		result.setNickname(user.getNickname());
-		result.setDes(user.getDes());
-		result.setRegdate(user.getRegdate());
-		result.setRole(user.getRole());
-		result.setFollower(follower);
-		result.setFollowing(following);
-		result.setWaiting(waiting);
-
-		return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
+		
 
 	}
    
@@ -315,8 +337,6 @@ public class UserController {
    
    @GetMapping("/updateuser") 
    public ResponseEntity<Map<String, Object>> updateinfo(HttpServletRequest request) {
-
-	   System.out.println();
 
 	   Map<String, Object> resultMap = new HashMap<>();
 	   HttpStatus status = HttpStatus.ACCEPTED;
@@ -479,43 +499,59 @@ public class UserController {
 	    	return new ResponseEntity<List<String>>(result,HttpStatus.OK);
 	    }
 	 	
-	 	@GetMapping("/follow_wait")
-	    public ResponseEntity<List<String>> follow_wait(@RequestParam Map map){
-	    	
-	    	String result = "success";
-	    	List<String> list = null;
-	    	try {
-	    		
-	    		list = userservice.follow_wait(map);
-	    		
-			} catch (Exception e) {
-				e.printStackTrace();
-				result = "error";
-				
-			}
-	    	
-	    	return new ResponseEntity<List<String>>(list,HttpStatus.OK);
-	    }
-	 
 	 	@PostMapping("/sendfollowrequest")
 		public ResponseEntity<String> sendfollowrequest(@RequestBody Requestfollow rf) {
 			
 				String result = "";
-
-
-				try {
-					
-					if(userservice.requestfollow(rf) == true) {
-						result = "success";
-					}else {
-						result = "fail";
+			
+				if(jwtservice.isUsable(rf.getToken())) {
+					try {
+						
+						if(userservice.requestfollow(rf) == true) {
+							result = "success";
+						}else {
+							result = "fail";
+						}
+						 
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+						result = "error";
 					}
-					 
-					
-				} catch (Exception e) {
-					e.printStackTrace();
+				}else {
 					result = "error";
 				}
+
+				
+			
+			
+			return new ResponseEntity<String>(result,HttpStatus.OK);
+		}
+	 	
+	 	
+	 	@PostMapping("/sendfollowdelete")
+		public ResponseEntity<String> sendfollowdelete(@RequestBody Requestfollow rf) {
+			
+				String result = "";
+				
+				if(jwtservice.isUsable(rf.getToken())) {
+					try {
+						
+						if(userservice.deletefollowing(rf) == true) {
+							result = "success";
+						}else {
+							result = "fail";
+						}
+						 
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+						result = "error";
+					}
+				}else {
+					result = "error";
+				}
+				
 			
 			
 			return new ResponseEntity<String>(result,HttpStatus.OK);

@@ -6,7 +6,7 @@
 <mapper namespace="com.web.curation.model.dao.SearchDao">
 	
 	<select id="searchByNickname" parameterType="String" resultType="UserVO">
-		select * from user where nickname LIKE '#{nickname}%'
+		select * from user where nickname LIKE concat(#{nickname},'%')
 	</select>
 
 </mapper>

@@ -36,13 +36,31 @@
         />
         <label for="birthday">생일</label>
       </div>
-      <div class="input-with-label">
-        <input v-model="address.address1"
+      
+      <div id="daumaddress">
+        <!-- <input v-model="address.address1"
         id="address.address1" 
         placeholder="주소를 입력하세요." 
         type="text" 
+        /> -->
+        <div>
+          <label>주소</label>
+          <button v-show="addresscheck" @click="saveaddressopen">저장</button>
+          <button v-show="!addresscheck" @click="saveaddressopen">열기</button>
+          
+        </div>
+        <div>
+          <DaumPostcode v-show="addresscheck"
+          :on-complete=handleAddress
+          />
+        </div>
+      </div>
+      <div class="input-with-label">
+      <input v-model="address2" 
+        id="address2" 
+        type="text" 
         />
-        <label for="address.address1">주소</label>
+        <label for="address2">상세주소</label>
       </div>
       <div class="input-with-label">
         <input v-model="email" 
@@ -69,21 +87,26 @@
 
 <script>
 import UserApi from '../../api/UserApi';
+import DaumPostcode from 'vuejs-daum-postcode'
+
+
+
 
 export default {
   data: () => {
     return {
+      addresscheck: true,
       email: "",
       nickName: "",
       userId:"",
       des:"",
       birthday:"",
       cellphone:"",
-      address:{
+      
         address1:"",
         address2:"",
         address3:"",
-      },
+      
       isLoading: false,
       error: {
         email: false,
@@ -91,6 +114,10 @@ export default {
       },
       isSubmit: false,
     };
+  },
+  components: {
+    DaumPostcode,
+    
   },
   created() {
     if (this.$store.state.token === ''){
@@ -101,6 +128,34 @@ export default {
   watch:{
   },
   methods:{
+
+      saveaddressopen(){
+       
+        this.addresscheck = !this.addresscheck;
+        console.log(this.addresscheck);
+      },
+
+      saveaddressclose(){
+        
+        this.addresscheck = !this.addresscheck;
+        console.log(this.addresscheck);
+      },
+
+     handleAddress(data) {
+      let fullAddress = data.address
+      let extraAddress = ''
+      if (data.addressType === 'R') {
+        if (data.bname !== '') {
+          extraAddress += data.bname
+        }
+        if (data.buildingName !== '') {
+          extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName)
+        }
+        fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '')
+      }
+      this.address1 = fullAddress
+      console.log(this.address1) // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    },
     getUser(){
       console.log(this.$store.state.token)
       const config = {
@@ -109,6 +164,7 @@ export default {
           'id':this.$store.state.userId
         }
       }
+
       UserApi.requestUser(
         config,
         res=>{
@@ -134,16 +190,17 @@ export default {
         des:this.des,
         birthday:this.birthday,
         cellphone:this.cellphone,
-        address1:this.address.address1,
-        address2:this.address.address2,
-        address3:this.address.address3,
+        address1:this.address1,
+        address2:this.address2,
+        address3:this.address3,
+        token : this.$store.state.token,
       };
       UserApi.requestUpdate(
         data,
         res=>{
           console.log(res);
           alert('회원수정이 완료 되었습니다.')
-          this.$router.push(`/user/profile/${this.$store.state.userId}`);
+          this.$router.push(`/user/profile/`);
           
           
         },

@@ -1,6 +1,7 @@
 package com.web.curation.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,29 @@ import org.springframework.stereotype.Service;
 
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeSingleContent;
+import com.web.curation.model.SaveRecipeContent;
 import com.web.curation.model.dao.FeedDao;
 
 @Service
 public class FeedServiceImpl implements FeedService {
 
 	@Autowired
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
+	
+	@Override
+	public int writeRecipeInfo(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).writeRecipeInfo(map);
+	}
+
+	@Override
+	public int writeRecipeContent(SaveRecipeContent recipeContent) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).writeRecipeContent(recipeContent);
+	}
+
+	@Override
+	public Integer getRecipe_idx(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getRecipe_idx(map);
+	}
 	
 	@Override
 	public List<RecipeSingleContent> getRecipeContents(String recipe_idx) throws Exception {
@@ -30,4 +47,5 @@ public class FeedServiceImpl implements FeedService {
 	public List<RecipeContent> getAllRecipes(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getAllRecipes(id);
 	}
+
 }

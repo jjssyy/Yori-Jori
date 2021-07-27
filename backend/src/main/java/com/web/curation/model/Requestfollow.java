@@ -4,6 +4,15 @@ public class Requestfollow {
 	
 	private String loginid;
 	private String memberid;
+	private String token;
+	
+	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public String getLoginid() {
 		return loginid;
 	}

@@ -15,7 +15,8 @@ import Recipewrite from './views/recipe/Write.vue'
 import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
-import WaitList from './views/profile/WaitList.vue'
+import RecipeDetail from './views/recipe/RecipeDetail.vue'
+import Allmember from './views/feed/Allmember.vue'
 
 export default [
 
@@ -76,19 +77,24 @@ export default [
         component: FollowingList
     },
     {
-        path: '/user/profile/:user_id',
+        path: '/user/profile',
         name: 'Profile',
         component: Profile
-    },
-    {
-        path: '/user/waitlist',
-        name: 'WaitList',
-        component: WaitList
     },
     {
         path: '/recipe/fileupload/:user_id',
         name: 'Fileupload',
         component: Fileupload
+    },
+    {
+        path: '/recipe/:recipe_idx',
+        name: 'RecipeDetail',
+        component: RecipeDetail
+    },
+    {
+        path: '/feed/allmember',
+        name: 'Allmember',
+        component: Allmember
     },
     {
         path: '*',
