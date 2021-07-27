@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Recipeitem {
 <<<<<<< HEAD
+<<<<<<< HEAD
    private String title;
    private String id;
    private List<MultipartFile> img;
@@ -52,6 +53,8 @@ public class Recipeitem {
       this.thumbnail = thumbnail;
    }
 =======
+=======
+>>>>>>> dev
 	private String title;
 	private String id;
 	private List<MultipartFile> img;
@@ -97,6 +100,9 @@ public class Recipeitem {
 	public void setThumbnail(List<String> thumbnail) {
 		this.thumbnail = thumbnail;
 	}
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
 
 }

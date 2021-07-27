@@ -1,6 +1,7 @@
 package com.web.curation.controller.newsfeed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.Recipeitem;
 =======
+=======
+>>>>>>> dev
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,12 +45,16 @@ import com.web.curation.model.service.FeedService;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
 
 @CrossOrigin("*")
 @RequestMapping("/feed")
 @RestController
 public class FeedController {
+<<<<<<< HEAD
 <<<<<<< HEAD
    //글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
    //임시 - 제목, 아이디, 설명
@@ -74,6 +81,8 @@ public class FeedController {
    }
 }
 =======
+=======
+>>>>>>> dev
 
 	@Autowired
 	FeedService feedService;
@@ -145,4 +154,7 @@ public class FeedController {
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
 }
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
