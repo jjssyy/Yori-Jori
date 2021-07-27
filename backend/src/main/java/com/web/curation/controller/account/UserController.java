@@ -93,6 +93,38 @@ public class UserController {
 		
 		return new ResponseEntity<Map>(resultmap,HttpStatus.OK);
 	}
+	
+	@GetMapping("/snslogin")
+	public ResponseEntity<?> snslogin(@RequestParam Map map){
+		
+		String result = "";
+
+		Map resultmap = new HashMap<>();
+		System.out.println(map.get("email"));
+		System.out.println(map.get("nickname"));
+		try { 
+			
+			String email = (String) map.get("email");
+			
+				String token = jwtservice.create("user_email", email, "access-token");
+				resultmap.put("access-token", token);
+				
+				result = "success";
+				resultmap.put("result", result);
+				
+				
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "error";
+			resultmap.put("result", result);
+		}
+		
+		
+		return new ResponseEntity<Map>(resultmap,HttpStatus.OK);
+	}
+
 
 	
     @PostMapping("/join")
