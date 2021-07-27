@@ -301,8 +301,9 @@ const follow_already = (data, callback, errorCallback) =>{
     http.get('/user/follow_already', {
         params:{
             id : data.id
-        }
-    }).then(
+        }} 
+       
+    ).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
