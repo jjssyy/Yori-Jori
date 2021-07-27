@@ -310,6 +310,56 @@ const follow_already = (data, callback, errorCallback) =>{
     )
 }
 
+const getAllmember = (data, callback, errorCallback) =>{
+    http.get('/user/getallmember', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const sendfollowrequest = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowrequest', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const sendfollowdelete = (data, callback, errorCallback) => {
+    
+    http.post('/user/sendfollowdelete', 
+       data
+    
+     
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const follow_already = (data, callback, errorCallback) =>{
+    http.get('/user/follow_already', {
+        params:{
+            id : data.id
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const searchByNickname = (data, callback, errorCallback) =>{
     http.get('/search/nickname',{
         params:{

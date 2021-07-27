@@ -21,6 +21,7 @@ import LatestFeed from "../../components/feed/LatestFeed.vue";
 
 export default {
   props: ["keyword"],
+<<<<<<< HEAD
   data:() => {
     return {
       latestFeeds: [],
@@ -45,11 +46,21 @@ export default {
       }
     )
   },
+=======
+
+>>>>>>> dev
   computed: {
     ...mapState([
       'userId',
     ]),
+<<<<<<< HEAD
   }
 }
+=======
+  },
+
+  components: { FeedItem }
+};
+>>>>>>> dev
 </script>
 

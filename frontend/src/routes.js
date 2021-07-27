@@ -15,10 +15,7 @@ import Recipewrite from './views/recipe/Write.vue'
 import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
-<<<<<<< HEAD
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
-=======
->>>>>>> dev
 import Allmember from './views/feed/Allmember.vue'
 
 export default [
@@ -90,14 +87,11 @@ export default [
         component: Fileupload
     },
     {
-<<<<<<< HEAD
         path: '/recipe/:recipe_idx',
         name: 'RecipeDetail',
         component: RecipeDetail
     },
     {
-=======
->>>>>>> dev
         path: '/feed/allmember',
         name: 'Allmember',
         component: Allmember
