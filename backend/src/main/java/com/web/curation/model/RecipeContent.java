@@ -1,34 +1,35 @@
 package com.web.curation.model;
 
-public class RecipeContent {
+import java.sql.Timestamp;
 
-	private String img;
-	private String des;
-	private String thumbnail;
-	private int recipe_idx;
+public class RecipeContent {
+	private int idx;
+	private String title;
+	private Timestamp regdate;
+	private String id;
 	
-	public String getImg() {
-		return img;
+	public int getIdx() {
+		return idx;
 	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setIdx(int idx) {
+		this.idx = idx;
 	}
-	public String getDes() {
-		return des;
+	public String getTitle() {
+		return title;
 	}
-	public void setDes(String des) {
-		this.des = des;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getThumbnail() {
-		return thumbnail;
+	public Timestamp getRegdate() {
+		return regdate;
 	}
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
 	}
-	public int getRecipe_idx() {
-		return recipe_idx;
+	public String getId() {
+		return id;
 	}
-	public void setRecipe_idx(int recipe_idx) {
-		this.recipe_idx = recipe_idx;
+	public void setId(String id) {
+		this.id = id;
 	}
 }

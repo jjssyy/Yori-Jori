@@ -23,9 +23,11 @@
         <div @click="showFollowerList">팔로워 : {{ profileUser.follower }}</div>
         <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
       </div>
-      
       <div>
-
+        <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
+        </my-recipe-item>
+      </div>
+      <div>
         <div class="wrap">
           <p>비밀번호를 변경하시겠습니까</p>
           <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
@@ -42,14 +44,17 @@
 <script>
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
+import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
 
 export default {
+  components: { MyRecipeItem },
   data: () => {
     return {
       profileUser: null,
       profileId: null,
       follower: null,
       following: null,
+      myRecipes: null,
       waiting: null,
       follow_wait:[],
       follow_already:[],
@@ -71,7 +76,17 @@ export default {
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following
-        this.waiting = res.data.waiting
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+
+    UserApi.myAllRecipes(
+      data,
+      res => {
+        console.log(res.data.latestFeed)
+        this.myRecipes = res.data.latestFeed
       },
       error=>{
         console.log(error)
@@ -156,9 +171,6 @@ export default {
     },
     showFollowingList: function() {
       this.$router.push({ name: 'FollowingList' , params: {profileId: this.profileId}})
-    },
-    showWaitList: function() {
-      this.$router.push({ name: 'WaitList' , params: {profileId: this.profileId}})
     },
   },
   computed: {
