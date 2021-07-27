@@ -1,6 +1,6 @@
 package com.web.curation.model;
 
-public class RecipeContent {
+public class SaveRecipeContent {
 
 	private String img;
 	private String des;

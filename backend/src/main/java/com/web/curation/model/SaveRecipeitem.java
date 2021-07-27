@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class Recipeitem {
+public class SaveRecipeitem {
 	private String title;
 	private String id;
 	private List<MultipartFile> img;

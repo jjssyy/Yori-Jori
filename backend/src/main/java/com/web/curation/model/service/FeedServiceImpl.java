@@ -6,8 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.curation.model.RecipeContent;
-import com.web.curation.model.Recipeitem;
+import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 import com.web.curation.model.dao.FeedDao;
 
 @Service
@@ -22,7 +22,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public int writeRecipeContent(RecipeContent recipeContent) throws Exception {
+	public int writeRecipeContent(SaveRecipeContent recipeContent) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).writeRecipeContent(recipeContent);
 	}
 

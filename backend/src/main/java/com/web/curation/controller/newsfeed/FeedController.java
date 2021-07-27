@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.web.curation.model.RecipeContent;
-import com.web.curation.model.Recipeitem;
+import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 import com.web.curation.model.service.FeedService;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
@@ -41,7 +41,7 @@ public class FeedController {
 	// 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
 	// 임시 - 제목, 아이디, 설명
 	@PostMapping("/write")
-	public ResponseEntity<String> writeRecipe(Recipeitem data) throws Exception {
+	public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
 		String id = data.getId();
 		String title = data.getTitle();
 		List<MultipartFile> imgList = data.getImg();
@@ -90,7 +90,7 @@ public class FeedController {
 			file = new File(lastpath);
 			img.transferTo(file);
 
-			RecipeContent content = new RecipeContent();
+			SaveRecipeContent content = new SaveRecipeContent();
 			content.setImg(lastpath);
 			content.setDes(desList.get(i));
 			content.setThumbnail(thumbnailList.get(i));
