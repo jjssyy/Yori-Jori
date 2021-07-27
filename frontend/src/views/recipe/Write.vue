@@ -61,6 +61,7 @@ export default {
     },
 
     check(){
+      var frm = new FormData();
       for (let i=0;i<this.recipeItems.length; i++){
         if( this.thumbnailNumber == i){
           this.ThumbNailList.push('true')
@@ -69,6 +70,7 @@ export default {
           this.ThumbNailList.push('false')
         }
       }
+
       console.log(this.ThumbNailList)
       frm.append("title", this.title)
       frm.append("id", this.userId)
@@ -91,12 +93,11 @@ export default {
         frm,
         res => {
           console.log('성공')
+          this.$router.push({ name: 'FeedMain'})
         },
         error=> {
           console.log(error)
-          this.recipeItems = [],
-          this.img = [],
-          this.ThumbNailList = []
+          frm = new FormData()
         }
       )
     }

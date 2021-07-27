@@ -262,7 +262,19 @@
    ).catch(
        err=>errorCallback(err)
    )
-}
+ }
+
+   const myAllRecipes = (data, callback, errorCallback) => {
+    http.get('/feed/allrecipes', {
+        params: {
+            id: data.id
+        }
+    }).then(
+       res=>callback(res)
+   ).catch(
+       err=>errorCallback(err)
+   )
+   }
  
  const UserApi = {
      requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -288,6 +300,7 @@
      createRecipe: (data, callback, errorCallback) => createRecipe(data, callback, errorCallback),
      singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
      latestFeed: (data, callback, errorCallback) => latestFeed(data, callback, errorCallback),
+     myAllRecipes: (data, callback, errorCallback) => myAllRecipes(data, callback, errorCallback),
  }
  
  export default UserApi

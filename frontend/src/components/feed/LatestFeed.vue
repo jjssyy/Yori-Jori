@@ -3,12 +3,12 @@
     <div class="top">
       <div class="user-info">
         <div class="user-img">
-          <img :src="defaultProfile" height="30px" alt="">
+          <img :src="defaultProfile" height="30px" alt="" @click="goUserProfile">
         </div>
-        <div class="user-name">{{ latestFeed.id }}</div>
+        <div class="user-name" @click="goUserProfile">{{ latestFeed.id }}</div>
       </div>
       <div class="title">
-        <h1>{{ latestFeed.title }}</h1>
+        <h1 @click="goRecipeDetail">{{ latestFeed.title }}</h1>
       </div>
       <div class="btn-group">
         <div class="like">
@@ -43,6 +43,14 @@ export default {
     },
     idx: Number,
   },
+  methods: {
+    goRecipeDetail() {
+      this.$router.push({name:'RecipeDetail', params: {recipe_idx:this.latestFeed.idx}})
+    },
+    goUserProfile() {
+      this.$router.push({name:'Profile', params: {user_id: this.latestFeed.id}})
+    }
+  }
 }
 </script>
 <style scoped>
