@@ -15,6 +15,7 @@ import Recipewrite from './views/recipe/Write.vue'
 import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
+import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
 
 export default [
@@ -84,6 +85,11 @@ export default [
         path: '/recipe/fileupload/:user_id',
         name: 'Fileupload',
         component: Fileupload
+    },
+    {
+        path: '/recipe/:recipe_idx',
+        name: 'RecipeDetail',
+        component: RecipeDetail
     },
     {
         path: '/feed/allmember',

@@ -10,7 +10,10 @@ Vue.use(Vuex)
 const state = {
     isUser: false,
     token:'',
-    userId:''
+    userId:'',
+    recipeItems: [],
+    img: [],
+    thumbnailNumber: 0,
 }
 
 export default new Vuex.Store({
