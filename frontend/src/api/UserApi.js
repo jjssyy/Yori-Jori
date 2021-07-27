@@ -281,6 +281,20 @@ const searchByNickname = (data, callback, errorCallback) =>{
     )
 }
 
+const snsLogin = (data, callback, errorCallback) =>{
+    http.get('/user/snslogin',{
+        params:{
+            nickname: data.nickname,
+            email: data.email
+        }
+    } 
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -306,6 +320,7 @@ const UserApi = {
     follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
     sendfollowdelete: (data, callback, errorCallback) => sendfollowdelete(data, callback, errorCallback),
     searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
+    snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
 
 }
 
