@@ -24,7 +24,7 @@
         <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
       </div>
       
-      <div>
+      <div v-if="profileUser.id == userId">
 
         <div class="wrap">
           <p>비밀번호를 변경하시겠습니까</p>
