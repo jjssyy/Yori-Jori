@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div class="wrapC">
+     <div class="wrapC" v-if="profileUser">
       <h1>프로필</h1>
       <div>
       <p>아이디 : {{profileUser.id}}</p>
@@ -60,7 +60,7 @@ export default {
       follow_already:[],
     }
   },
-  created: function() {
+  mounted: function() {
     this.profileId = this.$route.params.user_id
     let data = {
       id: this.profileId
@@ -71,7 +71,6 @@ export default {
     UserApi.getUser(config,
       data,
       res => {
-     
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following

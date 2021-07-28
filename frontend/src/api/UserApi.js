@@ -166,18 +166,23 @@
  }
  
  
- const getUser = (data, callback, errorCallback)=>{
-     http.get('/user/profile', {
-         params:{
-             id : data.id
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
+ const getUser = (config,data, callback, errorCallback) => {
+    
+    http.get('/user/profile', {
+        
+        headers: {
+            'access-token':config
+        },
+        params:{
+            id : data.id
+        }} 
+       
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
  const requestUser = (config, callback, errorCallback)=>{
      http.get("/user/updateuser", config).then(
          res=>callback(res)
@@ -250,7 +255,8 @@
 const myAllRecipes = (data, callback, errorCallback) => {
     http.get('/feed/allrecipes', {
         params: {
-            id: data.id
+            id: data.id,
+            email: data.email
         }
     }).then(
        res=>callback(res)
@@ -360,7 +366,7 @@ const UserApi = {
     requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
     getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
     emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
-    getUser: (data, callback, errorCallback) => getUser(data, callback, errorCallback),
+    getUser: (config,data, callback, errorCallback) => getUser(config,data, callback, errorCallback),
     getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
     getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
@@ -380,6 +386,7 @@ const UserApi = {
     myAllRecipes: (data, callback, errorCallback) => myAllRecipes(data, callback, errorCallback),
     snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
     snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
+    
 }
 
 export default UserApi

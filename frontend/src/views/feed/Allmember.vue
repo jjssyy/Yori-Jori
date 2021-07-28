@@ -5,14 +5,12 @@
      
       <h1>유저 목록</h1>
       <div v-for="(member, idx) in members" :key="idx">
-        <div v-if="member.nickname.includes(searchnickname)">
-            <span><router-link :to="{name:'Profile', params: {user_id: member.id}}">닉네임 : {{member.nickname}}</router-link></span>&nbsp;
-            <span><button class="btn btn-danger" v-if="follow_already.includes(member.id) " @click="senddeletefollow(member)">이미 등록됨</button></span>
-            <span><button class="btn btn-primary" v-if="!follow_already.includes(member.id) " @click="sendrequest(member)">신청</button></span>
-           </div>
-     </div>
-
-      
+        <div v-if="member && member.nickname.includes(searchnickname)">
+          <span><router-link :to="{name:'Profile', params: {user_id: member.id}}">닉네임 : {{member.nickname}}</router-link></span>&nbsp;
+          <span><button class="btn btn-danger" v-if="follow_already.includes(member.id) " @click="senddeletefollow(member)">이미 등록됨</button></span>
+          <span><button class="btn btn-primary" v-if="!follow_already.includes(member.id) " @click="sendrequest(member)">신청</button></span>
+        </div>
+      </div>
     </div>
   </div>
 </template>

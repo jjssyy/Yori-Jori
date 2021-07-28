@@ -1,5 +1,6 @@
 <template lang="">
   <div class="feed-item">
+     {{latestFeed}}
     <div class="top">
       <div class="user-info">
         <div class="user-img">
