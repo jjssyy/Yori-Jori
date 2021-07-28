@@ -75,7 +75,7 @@ public class UserController {
 			if(match == true) {
 				String token = jwtservice.create("user_id", user.getId(), "access-token");
 				resultmap.put("access-token", token);
-				
+				resultmap.put("id", user.getId());
 				result = "success";
 				resultmap.put("result", result);
 				
@@ -579,18 +579,17 @@ public class UserController {
 		public ResponseEntity<?> snslogin(@RequestParam Map map){
 			
 			String result = "";
-
+	
 			Map resultmap = new HashMap<>();
 			try { 
 				map.put("id", map.get("email"));
 				UserVO user = userservice.login(map);
-				System.out.println(map.get("id"));
 				if(user.getSns().equals("kakao")) {
 					String email = (String) map.get("email");
 					
-					String token = jwtservice.create("user_email", email, "access-token");
+					String token = jwtservice.create("user_id", email, "access-token");
 					resultmap.put("access-token", token);
-					
+					resultmap.put("id", user.getId());
 					result = "success";
 					resultmap.put("result", result);
 				}else {
