@@ -1,6 +1,7 @@
 <template lang="">
   <div>
     {{ recipe }}
+    <img :src='recipe.recipeContent[0].img'/>
   </div>
 </template>
 

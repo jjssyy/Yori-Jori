@@ -1,9 +1,9 @@
 <template>
 <div class="navigation">
   <div class="logo">
-    <a class="no-underline" href="#">
+    <router-link class="no-underline" :to="{name:'FeedMain'}">
       logo here
-    </a>
+    </router-link>
   </div>
   <SearchBox/>
   <Notification/>

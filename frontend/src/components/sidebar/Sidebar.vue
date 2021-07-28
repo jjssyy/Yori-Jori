@@ -21,7 +21,7 @@
           Likes
         </div>
       </router-link>
-      <router-link :to="`user/profile/${userId}`" active-class="active" tag="button">
+      <router-link :to="{name:'Profile',params: {user_id: userId}}" active-class="active" tag="button">
         <div class="link-container">
           Profile
         </div>
@@ -50,6 +50,7 @@ export default {
 .menu-items{
   display: flex;
   flex-direction: column;
+  background-color: rgb(255, 255, 255);
 }
 .link-container{
   background-color: rgb(255, 255, 255);

@@ -140,7 +140,6 @@ export default {
            this.$store.dispatch("login",res);
 
               this.$store.state.userId = data.id
-              console.log(this.$store.state.userId)
               this.$router.push({name:'FeedMain'});
             }else if(res.data.result == "fail"){
               alert("로그인 실패.");

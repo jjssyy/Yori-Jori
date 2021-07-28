@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Navbar/>
-    <Sidebar />
+    <Navbar v-if="userId"/>
+    <Sidebar v-if="userId"/>
     <div class="main">
       <router-view></router-view>
     </div>
@@ -18,6 +18,11 @@ export default {
   components:{
     Navbar,
     Sidebar
+  },
+  computed:{
+    userId(){
+      return this.$store.state.userId
+    }
   },
   name: "app"
 };

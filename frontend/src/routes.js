@@ -67,12 +67,12 @@ export default [
         component: Recipewrite
     },
     {
-        path: '/user/followerlist',
+        path: '/user/followerlist/:user_id',
         name: 'FollowerList',
         component: FollowerList
     },
     {
-        path: '/user/followinglist',
+        path: '/user/followinglist/:user_id',
         name: 'FollowingList',
         component: FollowingList
     },

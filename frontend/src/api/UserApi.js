@@ -148,58 +148,9 @@
      ).catch(
          err=>errorCallback(err)
      )
- }
+}
  
- 
- 
- const deleteFollowing= (data, callback, errorCallback)=>{
-     http.delete('/user/profile/followinglist', {
-         params:{
-             loginid : data.loginId,
-             followingid: data.followingId,
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- 
- const getUser = (data, callback, errorCallback)=>{
-     http.get('/user/profile', {
-         params:{
-             id : data.id
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const requestUser = (config, callback, errorCallback)=>{
-     http.get("/user/updateuser", config).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const Follow = (data, callback, errorCallback) =>{
-     http.post('/user/profile',{
-         params:{
-             loginId: data.loginId,
-             profileId: data.profileId,
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const fileupload = (data, callback, errorCallback) =>{
+const fileupload = (data, callback, errorCallback) =>{
      http.post('/user/fileupload', data, {
          headers: {
              'Content-Type': 'multipart/form-data'
@@ -261,72 +212,6 @@ const myAllRecipes = (data, callback, errorCallback) => {
     );
 }
 
-const getFollower= (data, callback, errorCallback)=>{
-    http.get('/user/profile/followerlist', {
-        params:{
-            id : data.id
-        }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-const getWaiter = (data, callback, errorCallback)=>{
-    http.get('/user/profile/waitlist', {
-        params:{
-            id : data.id
-        }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-const getFollowing = (data, callback, errorCallback)=>{
-    http.get('/user/profile/followinglist', {
-        params:{
-            id : data.id
-        }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-const deleteFollower= (data, callback, errorCallback)=>{
-    http.delete('/user/profile/followerlist', {
-        params:{
-            loginid : data.loginId,
-            followerid: data.followerId
-        }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-
-
-const deleteFollowing= (data, callback, errorCallback)=>{
-    http.delete('/user/profile/followinglist', {
-        params:{
-            loginid : data.loginId,
-            followingid: data.followingId,
-        }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-
-
 const getUser = (config,data, callback, errorCallback) => {
     
     http.get('/user/profile', {
@@ -351,31 +236,6 @@ const requestUser = (config, callback, errorCallback)=>{
     ).catch(
         err=>errorCallback(err)
     );
-}
-
-const Follow = (data, callback, errorCallback) =>{
-    http.post('/user/profile',{
-        params:{
-            loginId: data.loginId,
-            profileId: data.profileId,
-        }
-    }).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-const fileupload = (data, callback, errorCallback) =>{
-    http.post('/user/fileupload', data, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).then(
-       res=>callback(res)
-    ).catch(
-       err=>errorCallback(err)
-    )
 }
 
 const getAllmember = (data, callback, errorCallback) =>{
@@ -458,19 +318,15 @@ const UserApi = {
     getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
     getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
-    deleteFollowing: (data, callback, errorCallback) => deleteFollowing(data, callback, errorCallback),
-    Follow: (data, callback, errorCallback) => Follow(data, callback, errorCallback),
-    fileupload: (data, callback, errorCallback) => fileupload(data, callback, errorCallback),
     requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
+    latestFeed: (data, callback, errorCallback) => latestFeed(data, callback, errorCallback),
+    createRecipe: (data, callback, errorCallback) => createRecipe(data, callback, errorCallback),
+    searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
     getAllmember: (data, callback, errorCallback) => getAllmember(data, callback, errorCallback),
     sendfollowrequest: (data, callback, errorCallback) => sendfollowrequest(data, callback, errorCallback),
-    follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
     sendfollowdelete: (data, callback, errorCallback) => sendfollowdelete(data, callback, errorCallback),
-    searchByNickname: (data, callback, errorCallback) => searchByNickname(data, callback, errorCallback),
-    createRecipe: (data, callback, errorCallback) => createRecipe(data, callback, errorCallback),
-    singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
-    latestFeed: (data, callback, errorCallback) => latestFeed(data, callback, errorCallback),
+    follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
     myAllRecipes: (data, callback, errorCallback) => myAllRecipes(data, callback, errorCallback),
+    singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
 }
-
 export default UserApi
