@@ -1,8 +1,7 @@
 import UserApi from '../api/UserApi';
 export default {
-  LOGIN: function(state, res){
-    const userId = res.config.params.id
-    console.log(res.data['access-token'])
+  LOGIN: function (state, res) {
+    const userId = res.data['id']
     const token = res.data['access-token']
     state.token = token
     state.userId = userId

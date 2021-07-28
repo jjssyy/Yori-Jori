@@ -133,7 +133,8 @@ export default {
       res => {
         this.follow_already = res.kdata;
         follow_alreadylist = res.data;
-        console.log(this.follow_already);
+            
+     
       },
       error=>{
         console.log(error)

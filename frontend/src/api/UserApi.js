@@ -345,9 +345,6 @@ const snsLogin = (data, callback, errorCallback) =>{
 }
 
 const snsregister = (data, callback, errorCallback) => {
-    console.log(data.sns);
-    console.log(data.email);
-    console.log(data.nickname);
     
     http.post('/user/snsregister',data).then(
         res=>callback(res)

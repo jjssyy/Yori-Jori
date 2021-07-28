@@ -19,7 +19,7 @@ import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
 
 export default [
-
+    
 
     {
         path : '/',

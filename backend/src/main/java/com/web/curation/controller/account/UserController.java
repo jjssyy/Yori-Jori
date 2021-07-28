@@ -73,7 +73,7 @@ public class UserController {
 			if (match == true) {
 				String token = jwtservice.create("user_id", user.getId(), "access-token");
 				resultmap.put("access-token", token);
-
+				resultmap.put("id", user.getId());
 				result = "success";
 				resultmap.put("result", result);
 
