@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.curation.model.RecipeContent;
+import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.service.FeedService;
 
@@ -39,155 +40,140 @@ import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 @RestController
 public class FeedController {
 
-	@Autowired
-	FeedService feedService;
+   @Autowired
+   FeedService feedService;
 
-	@Autowired
-	ResourceLoader rsLoader;
+   @Autowired
+   ResourceLoader rsLoader;
 
-	// 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
-	// 임시 - 제목, 아이디, 설명
-	@PostMapping("/write")
-	public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
-		String id = data.getId();
-		String title = data.getTitle();
-		List<MultipartFile> imgList = data.getImg();
-		List<String> desList = data.getDes();
-		List<String> thumbnailList = data.getThumbnail();
+   // 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
+   // 임시 - 제목, 아이디, 설명
+   @PostMapping("/write")
+   public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
+      String id = data.getId();
+      String title = data.getTitle();
+      String nickname = data.getNickname();
+      List<String> imgList = data.getImg();
+      List<String> desList = data.getDes();
+      List<String> thumbnailList = data.getThumbnail();
+      
+      if(id==null) {
+         return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+      }
+      if(title==null || imgList.isEmpty() || desList.isEmpty()) {
+         return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+      }
+      
+      RecipeInfo recipeInfo = new RecipeInfo();
+      recipeInfo.setId(id);
+      recipeInfo.setNickname(nickname);
+      recipeInfo.setTitle(title);
+      
+      Map<String, String> map = new HashMap<>();
+      map.put("title", title);
+      map.put("id", id);
 
-		Map<String, String> map = new HashMap<>();
-		map.put("title", title);
-		map.put("id", id);
+      // recipe_info 저장 (title, id, regdate)
+      feedService.writeRecipeInfo(recipeInfo);
 
-		// recipe_info 저장 (title, id, regdate)
-		feedService.writeRecipeInfo(map);
+      // recipe_idx 가져오기
+      int recipe_idx = feedService.getRecipe_idx(map);
 
-		// recipe_idx 가져오기
-		int recipe_idx = feedService.getRecipe_idx(map);
+      //recipe_content 저장
+      for (int i = 0; i < imgList.size(); i++) {
+         SaveRecipeContent content = new SaveRecipeContent();
+         content.setImg(imgList.get(i));
+         content.setDes(desList.get(i));
+         content.setThumbnail(thumbnailList.get(i));
+         content.setRecipe_idx(recipe_idx);
 
-		// recipe_content 저장 (img, des, thumbnail, recipe_idx)
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-		String current_date = simpleDateFormat.format(new Date());
+         feedService.writeRecipeContent(content);
+      }
 
-		String absolutePath = new File("").getAbsolutePath() + "\\";
+      return new ResponseEntity<String>("Success", HttpStatus.OK);
+   }
+   
+   //레시피 하나의 내용 보여주기
+   @GetMapping("/content")
+   public ResponseEntity<Map<String, Object>> feedList(@RequestParam String recipe_idx) {
+      String result = "SUCCESS";
+      Map<String, Object> resultMap = new HashMap<>();
+      HttpStatus status = HttpStatus.ACCEPTED;
 
-		String path = "images/" + current_date;
-		File file = new File(path);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
+      try {
+         List<RecipeSingleContent> recipeContents = feedService.getRecipeContents(recipe_idx);
 
-		for (int i = 0; i < imgList.size(); i++) {
-			MultipartFile img = imgList.get(i);
-			String contentType = img.getContentType();
-			String originalFileExtension;
-			if (contentType.contains("image/jpeg")) {
-				originalFileExtension = ".jpg";
-			} else if (contentType.contains("image/png")) {
-				originalFileExtension = ".png";
-			} else if (contentType.contains("image/gif")) {
-				originalFileExtension = ".gif";
-			}
-			else {
-				break;
-			}
-			
-			String new_file_name = Long.toString(System.nanoTime()) + img.getOriginalFilename()+originalFileExtension;
-			String lastpath= absolutePath + path + "/" + new_file_name;
-			file = new File(lastpath);
-			img.transferTo(file);
+         resultMap.put("recipeContent", recipeContents);
 
-			SaveRecipeContent content = new SaveRecipeContent();
-			content.setImg(lastpath);
-			content.setDes(desList.get(i));
-			content.setThumbnail(thumbnailList.get(i));
-			content.setRecipe_idx(recipe_idx);
+         if (recipeContents == null) {
+            result = "FAIL";
+         } else {
+            result = "SUCCESS";
+         }
 
-			feedService.writeRecipeContent(content);
-		}
+         resultMap.put("message", result);
+         status = HttpStatus.ACCEPTED;
 
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
-	}
-	
-	@GetMapping("/content")
-	public ResponseEntity<Map<String, Object>> feedList(@RequestParam String recipe_idx) {
-		String result = "SUCCESS";
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
+      } catch (Exception e) {
+         e.printStackTrace();
+         resultMap.put("message", e.getMessage());
+         status = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
 
-		try {
-			List<RecipeSingleContent> recipeContents = feedService.getRecipeContents(recipe_idx);
+   //최신피드 (메인)
+   @GetMapping("/latestfeed")
+   public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
+      Map<String, Object> resultMap = new HashMap<>();
+      HttpStatus status = HttpStatus.ACCEPTED;
+      String result = "SUCCESS";
+      try {
+         List<RecipeContent> recipe = feedService.getLatestFeed(id);
+         resultMap.put("latestFeed", recipe);
 
-			resultMap.put("recipeContent", recipeContents);
+         if (recipe == null) {
+            result = "FAIL";
+         } else {
+            result = "SUCCESS";
+         }
 
-			if (recipeContents == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
-			}
+         resultMap.put("message", result);
+         status = HttpStatus.ACCEPTED;
 
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
+      } catch (Exception e) {
+         e.printStackTrace();
+         resultMap.put("message", e.getMessage());
+         status = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
+   //프로필 - 자기 레시피
+   @GetMapping("/allrecipes")
+   public ResponseEntity<Map<String, Object>> getAllRecipes(@RequestParam String id) {
+      Map<String, Object> resultMap = new HashMap<>();
+      HttpStatus status = HttpStatus.ACCEPTED;
+      String result = "SUCCESS";
+      try {
+         List<RecipeContent> recipe = feedService.getAllRecipes(id);
 
-	@GetMapping("/latestfeed")
-	public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		String result = "SUCCESS";
-		try {
-			List<RecipeContent> recipe = feedService.getLatestFeed(id);
+         resultMap.put("latestFeed", recipe);
 
-			resultMap.put("latestFeed", recipe);
+         if (recipe == null) {
+            result = "FAIL";
+         } else {
+            result = "SUCCESS";
+         }
 
-			if (recipe == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
-			}
+         resultMap.put("message", result);
+         status = HttpStatus.ACCEPTED;
 
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
-
-	@GetMapping("/allrecipes")
-	public ResponseEntity<Map<String, Object>> getAllRecipes(@RequestParam String id) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		String result = "SUCCESS";
-		try {
-			List<RecipeContent> recipe = feedService.getAllRecipes(id);
-
-			resultMap.put("latestFeed", recipe);
-
-			if (recipe == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
-			}
-
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
+      } catch (Exception e) {
+         e.printStackTrace();
+         resultMap.put("message", e.getMessage());
+         status = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
 }
