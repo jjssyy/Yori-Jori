@@ -330,7 +330,6 @@ public class UserController {
 			
 			Integer follower = userservice.countfollower(id);
 			Integer following = userservice.countfollowing(id);
-			Integer waiting = userservice.countwaiting(id);
 			
 			result.setId(user.getId());
 			result.setNickname(user.getNickname());
@@ -339,7 +338,7 @@ public class UserController {
 			result.setRole(user.getRole());
 			result.setFollower(follower);
 			result.setFollowing(following);
-			result.setWaiting(waiting);
+			
 			return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 	   } else {
 		   return new ResponseEntity<UserInfo>(HttpStatus.BAD_REQUEST);
