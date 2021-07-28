@@ -19,6 +19,11 @@ export default {
     Navbar,
     Sidebar
   },
+  computed:{
+    userId(){
+      return this.$store.state.userId
+    }
+  },
   name: "app"
 };
 </script>
