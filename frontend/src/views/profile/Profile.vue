@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div class="wrapC" v-if="profileUser">
+     <div class="wrapC" v-if="profileUser">
       <h1>프로필</h1>
       <div>
       <p>아이디 : {{profileUser.id}}</p>
@@ -23,7 +23,7 @@
         <div @click="showFollowerList">팔로워 : {{ profileUser.follower }}</div>
         <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
       </div>
-      <div>
+       <div v-if="profileUser.id == userId">
         <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
         </my-recipe-item>
       </div>
@@ -66,13 +66,12 @@ export default {
     let data = {
       id: this.profileId
     }
-    const config =  this.$store.state.token;
- 
+    
+     const config =  this.$store.state.token;
+    
     UserApi.getUser(config,
       data,
       res => {
-        console.log(res)
-        
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following

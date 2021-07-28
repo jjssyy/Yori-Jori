@@ -63,7 +63,7 @@
     </label>
 
     <span @click="termPopup=true">약관보기</span>
-
+    <kakaoregister></kakaoregister>
     <button class="btn-bottom"
     @click="onJoin"
     :disabled="!isSubmit"
@@ -76,7 +76,12 @@
 import UserApi from '../../api/UserApi';
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
+import Kakaoregister from "../../components/user/snsLogin/KakaoRegister.vue";
+
 export default {
+   components: {
+    Kakaoregister, 
+  },
   created(){
     this.passwordSchema
       .is()

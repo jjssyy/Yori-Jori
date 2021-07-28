@@ -148,7 +148,61 @@
      ).catch(
          err=>errorCallback(err)
      )
+ }
+ 
+ 
+ 
+ const deleteFollowing= (data, callback, errorCallback)=>{
+     http.delete('/user/profile/followinglist', {
+         params:{
+             loginid : data.loginId,
+             followingid: data.followingId,
+         }
+     }).then(
+         res=>callback(res)
+     ).catch(
+         err=>errorCallback(err)
+     )
+ }
+ 
+ 
+ const getUser = (config,data, callback, errorCallback) => {
+    
+    http.get('/user/profile', {
+        
+        headers: {
+            'access-token':config
+        },
+        params:{
+            id : data.id
+        }} 
+       
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
 }
+ const requestUser = (config, callback, errorCallback)=>{
+     http.get("/user/updateuser", config).then(
+         res=>callback(res)
+     ).catch(
+         err=>errorCallback(err)
+     );
+ }
+ 
+ const Follow = (data, callback, errorCallback) =>{
+     http.post('/user/profile',{
+         params:{
+             loginId: data.loginId,
+             profileId: data.profileId,
+         }
+     }).then(
+         res=>callback(res)
+     ).catch(
+         err=>errorCallback(err)
+     )
+ }
  
 const fileupload = (data, callback, errorCallback) =>{
      http.post('/user/fileupload', data, {
@@ -302,6 +356,32 @@ const searchByNickname = (data, callback, errorCallback) =>{
     )
 }
 
+const snsLogin = (data, callback, errorCallback) =>{
+    http.get('/user/snslogin',{
+        params:{
+            nickname: data.nickname,
+            email: data.email
+        }
+    } 
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const snsregister = (data, callback, errorCallback) => {
+    console.log(data.sns);
+    console.log(data.email);
+    console.log(data.nickname);
+    
+    http.post('/user/snsregister',data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -328,5 +408,8 @@ const UserApi = {
     follow_already: (data, callback, errorCallback) => follow_already(data, callback, errorCallback),
     myAllRecipes: (data, callback, errorCallback) => myAllRecipes(data, callback, errorCallback),
     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
+    snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
+    snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
+    
 }
 export default UserApi

@@ -1,9 +1,8 @@
 <template>
 <div class="navigation">
   <div class="logo">
-    <router-link class="no-underline" :to="{name:'FeedMain'}">
-      logo here
-    </router-link>
+  
+    <router-link class="no-underline" :to="{name:'FeedMain'}">logo here</router-link>
   </div>
   <SearchBox/>
   <Notification/>
@@ -16,6 +15,7 @@
 <script>
 import SearchBox from './Search.vue'
 import Notification from './Notice.vue'
+import { mapState } from 'vuex'
 
 export default {
   components:{
@@ -39,6 +39,11 @@ export default {
       history.back();
     }
   },
+     computed: {
+    ...mapState([
+      'userId',
+    ]),
+  }
 }
 </script>
 

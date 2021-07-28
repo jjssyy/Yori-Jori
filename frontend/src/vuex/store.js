@@ -10,7 +10,9 @@ Vue.use(Vuex)
 const state = {
     isUser: false,
     token:'',
-    userId:'',
+    userId: '',
+    sns: '',
+    email:'',
     recipeItems: [],
     img: [],
     thumbnailNumber: 0,

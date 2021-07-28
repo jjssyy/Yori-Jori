@@ -4,7 +4,7 @@
     <Sidebar v-if="userId"/>
     <div class="main">
       <router-view></router-view>
-    </div>
+  </div>
   </div>
 </template>
 

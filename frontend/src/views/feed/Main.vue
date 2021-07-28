@@ -2,8 +2,8 @@
   <div class="feed newsfeed">
     <div class="wrapB">
       <h1>뉴스피드</h1>
-      <router-link :to="{name:'Allmember', params: {user_id: userId}}">전체 유저 목록</router-link>
-      <div v-for="(latestFeed, idx) in latestFeeds" :key="idx">
+        <router-link :to="{name:'Allmember', params: {user_id: userId}}">전체 유저 목록</router-link>
+        <div v-for="(latestFeed, idx) in latestFeeds" :key="idx">
         <LatestFeed
           :latestFeed="latestFeed" 
           :idx="idx" 
