@@ -17,6 +17,7 @@ import com.google.common.net.HttpHeaders;
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.Requestfollow;
+import com.web.curation.model.Snsreg;
 import com.web.curation.model.UserInfo;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.Waiting;
@@ -295,7 +296,6 @@ public class UserController {
 			
 			Integer follower = userservice.countfollower(id);
 			Integer following = userservice.countfollowing(id);
-			Integer waiting = userservice.countwaiting(id);
 			
 			result.setId(user.getId());
 			result.setNickname(user.getNickname());
@@ -304,18 +304,13 @@ public class UserController {
 			result.setRole(user.getRole());
 			result.setFollower(follower);
 			result.setFollowing(following);
-			result.setWaiting(waiting);
+			
 			return new ResponseEntity<UserInfo>(result,HttpStatus.OK);
 	   } else {
 		   return new ResponseEntity<UserInfo>(HttpStatus.BAD_REQUEST);
 	   }
-	   
-	  
-	   
 
-		
-
-	}
+   }
    
    @PostMapping("/fileupload")
    public ResponseEntity<String> fileupload(@RequestParam("file") MultipartFile[] multipartFiles){
@@ -555,6 +550,62 @@ public class UserController {
 			
 			
 			return new ResponseEntity<String>(result,HttpStatus.OK);
+		}
+	 	
+		  @PostMapping("/snsregister")
+	 	   public ResponseEntity<String> snsregister(@RequestBody Snsreg sns){
+	 		   
+	 		   String result = "";
+	 		   
+	 			  try {
+	 					if(userservice.kakaoreg(sns) == true) {
+	 						result = "success";
+	 					}else {
+	 						result = "fail";
+	 					}
+	 						
+	 					
+	 				} catch (Exception e) {
+	 					e.printStackTrace();
+	 					result = "error";
+	 				}
+	 				
+	 		    
+	 		  
+	 		   return new ResponseEntity<String>(result,HttpStatus.OK);
+	 	   }
+	 	
+	 	@GetMapping("/snslogin")
+		public ResponseEntity<?> snslogin(@RequestParam Map map){
+			
+			String result = "";
+
+			Map resultmap = new HashMap<>();
+			try { 
+				map.put("id", map.get("email"));
+				UserVO user = userservice.login(map);
+				System.out.println(map.get("id"));
+				if(user.getSns().equals("kakao")) {
+					String email = (String) map.get("email");
+					
+					String token = jwtservice.create("user_email", email, "access-token");
+					resultmap.put("access-token", token);
+					
+					result = "success";
+					resultmap.put("result", result);
+				}else {
+					result = "fail";
+					resultmap.put("result", result);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+				resultmap.put("result", result);
+			}
+			
+			
+			return new ResponseEntity<Map>(resultmap,HttpStatus.OK);
 		}
 
 

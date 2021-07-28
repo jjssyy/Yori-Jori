@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.web.curation.model.Changepw;
 import com.web.curation.model.FollowInfo;
 import com.web.curation.model.Requestfollow;
+import com.web.curation.model.Snsreg;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.Waiting;
 import com.web.curation.model.dao.UserDao;
@@ -196,6 +197,13 @@ public class UserServiceImpl implements UserService{
 		
 		return sqlsession.getMapper(UserDao.class).deletefollowing(rf);
 	}
+	
+	@Override
+	public boolean kakaoreg(Snsreg sns) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).kakaoreg(sns);
+	}
+
 
 	
 }
