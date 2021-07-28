@@ -24,7 +24,7 @@
         <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
       </div>
       
-      <div>
+      <div v-if="profileUser.id == userId">
 
         <div class="wrap">
           <p>비밀번호를 변경하시겠습니까</p>
@@ -62,15 +62,14 @@ export default {
     }
     
      const config =  this.$store.state.token;
-     console.log(config);
+     
     UserApi.getUser(config,
       data,
       res => {
-        console.log(res)
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following
-        this.waiting = res.data.waiting
+        
       },
       error=>{
         console.log(error)

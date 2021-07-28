@@ -16,7 +16,7 @@
 <script>
 import SearchBox from './Search.vue'
 import Notification from './Notice.vue'
-
+import { mapState } from 'vuex'
 export default {
   components:{
     SearchBox,
@@ -39,6 +39,11 @@ export default {
       history.back();
     }
   },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
+  }
 }
 </script>
 
