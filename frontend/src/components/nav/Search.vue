@@ -25,7 +25,7 @@
 <script>
 import UserApi from '../../api/UserApi';
 import defaultProfile from "../../assets/images/profile_default.png";
-
+import { mapState } from 'vuex'
 export default {
   data:()=>{
     return {
@@ -68,7 +68,12 @@ export default {
         this.UserList = []
       }
     }
-  }
+  },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
+  },
 }
 </script>
 

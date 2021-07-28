@@ -323,6 +323,32 @@ const searchByNickname = (data, callback, errorCallback) =>{
     )
 }
 
+const snsLogin = (data, callback, errorCallback) =>{
+    http.get('/user/snslogin',{
+        params:{
+            nickname: data.nickname,
+            email: data.email
+        }
+    } 
+    ).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const snsregister = (data, callback, errorCallback) => {
+    console.log(data.sns);
+    console.log(data.email);
+    console.log(data.nickname);
+    
+    http.post('/user/snsregister',data).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -352,6 +378,8 @@ const UserApi = {
     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
     latestFeed: (data, callback, errorCallback) => latestFeed(data, callback, errorCallback),
     myAllRecipes: (data, callback, errorCallback) => myAllRecipes(data, callback, errorCallback),
+    snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
+    snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
 }
 
 export default UserApi

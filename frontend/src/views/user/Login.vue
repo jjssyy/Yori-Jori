@@ -161,6 +161,11 @@ export default {
       }
     }
   },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
+  },
   data: () => {
     return {
       id: "",
