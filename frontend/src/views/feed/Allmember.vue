@@ -147,7 +147,6 @@ export default {
     
 
         follow_alreadylist = res.data;
-        console.log(this.follow_already);
             
      
       },

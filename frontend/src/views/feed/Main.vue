@@ -2,6 +2,8 @@
   <div class="feed newsfeed">
     <div class="wrapB">
       <h1>뉴스피드</h1>
+        <router-link :to="{name:'Profile', params: {user_id: userId}}">My Page</router-link>
+        <router-link :to="{name:'Recipewrite', params: {user_id: userId}}">글쓰기</router-link>
         <router-link :to="{name:'Allmember', params: {user_id: userId}}">전체 유저 목록</router-link>
         <div v-for="(latestFeed, idx) in latestFeeds" :key="idx">
         <LatestFeed
@@ -36,6 +38,7 @@ export default {
     let data = {
       id: this.userId
     }
+    console.log(this.userId);
     UserApi.latestFeed(
       data,
       res => {

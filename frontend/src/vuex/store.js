@@ -20,7 +20,7 @@ const state = {
 
 export default new Vuex.Store({
     plugins:[
-        createPersistedState
+        createPersistedState()
     ],
     state,
     mutations,
