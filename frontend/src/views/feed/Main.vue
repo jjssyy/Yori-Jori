@@ -39,6 +39,7 @@ export default {
     UserApi.latestFeed(
       data,
       res => {
+        console.log(res.data)
         this.latestFeeds = res.data.latestFeed
       },
       error => {

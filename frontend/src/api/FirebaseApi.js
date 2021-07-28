@@ -12,7 +12,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
-
+const storage = firebase.storage()
 
 const noticeAdd = (data) => {
   const now = Date.now()
@@ -39,9 +39,29 @@ const requestAdd = (data) =>{
   })
 }
 
+const upLoad = (file,callback) => {
+  var storageRef = storage.ref()
+  var path = storageRef.child('image/'+file.name)
+  var upload = path.put(file)
+
+  upload.on('state_changed',
+  null,
+  (e)=>{
+    console.log(e)
+  },
+  ()=>{
+    upload.snapshot.ref.getDownloadURL().then((url)=>{
+      console.log(`업로드된 경로: ${url}`)
+      callback(url)
+    })
+  })
+  
+}
+
 const FirebaseApi = {
   noticeAdd:(data)=>noticeAdd(data),
   requestAdd:(data)=>requestAdd(data),
+  upLoad:(file,callback)=>upLoad(file,callback),
 
 }
 export default FirebaseApi

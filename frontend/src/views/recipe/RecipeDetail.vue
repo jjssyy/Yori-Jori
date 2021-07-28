@@ -14,7 +14,7 @@ export default {
       recipe: null,
     }
   },
-  created: function() {
+  mounted: function() {
     let data= {
       recipeIdx: this.$route.params.recipe_idx
     }

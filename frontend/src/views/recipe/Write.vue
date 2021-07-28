@@ -74,6 +74,7 @@ export default {
       console.log(this.ThumbNailList)
       frm.append("title", this.title)
       frm.append("id", this.userId)
+      frm.append('nickname',this.userNickname)
       for (let i=0; i< this.recipeItems.length; i++){
         frm.append("des["+i+"]",this.recipeItems[i])
         frm.append("img["+i+"]",this.img[i])
@@ -108,6 +109,7 @@ export default {
       'recipeItems',
       'img',
       'thumbnailNumber',
+      'userNickname'
     ]),
   }
 }

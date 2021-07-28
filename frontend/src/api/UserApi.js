@@ -266,32 +266,6 @@ const myAllRecipes = (data, callback, errorCallback) => {
     );
 }
 
-const getUser = (config,data, callback, errorCallback) => {
-    
-    http.get('/user/profile', {
-        
-        headers: {
-            'access-token':config
-        },
-        params:{
-            id : data.id
-        }} 
-       
-    ).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
-const requestUser = (config, callback, errorCallback)=>{
-    http.get("/user/updateuser", config).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    );
-}
-
 const getAllmember = (data, callback, errorCallback) =>{
     http.get('/user/getallmember', {
         params:{

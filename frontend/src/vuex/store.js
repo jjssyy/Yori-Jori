@@ -11,6 +11,7 @@ const state = {
     isUser: false,
     token:'',
     userId: '',
+    userNickname: '',
     sns: '',
     email:'',
     recipeItems: [],

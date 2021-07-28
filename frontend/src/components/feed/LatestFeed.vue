@@ -1,12 +1,11 @@
 <template>
   <div class="feed-item">
-     {{latestFeed}}
     <div class="top">
       <div class="user-info">
         <div class="user-img">
           <img :src="defaultProfile" height="30px" alt="" @click="goUserProfile">
         </div>
-        <div class="user-name" @click="goUserProfile">{{ latestFeed.id }}</div>
+        <div class="user-name" @click="goUserProfile">{{ latestFeed.nickname }}</div>
       </div>
       <div class="title">
         <h1 @click="goRecipeDetail">{{ latestFeed.title }}</h1>
@@ -26,7 +25,7 @@
       </div>
     </div>
     <div class="feed-img">
-      <img :src="defaultImage" alt="기본 이미지">
+      <img :src="latestFeed.img" alt="기본 이미지">
     </div>
   </div>
 </template>
