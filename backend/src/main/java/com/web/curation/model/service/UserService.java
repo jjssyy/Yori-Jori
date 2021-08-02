@@ -18,6 +18,8 @@ public interface UserService {
 	
 	public String checkid(Map map) throws Exception;
 	
+	public boolean kakaoreg(Snsreg sns) throws Exception;
+	
 	public String checknickname(Map map) throws Exception;
 	
 	public boolean updateuser(UserVO user) throws Exception;

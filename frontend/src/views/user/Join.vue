@@ -79,7 +79,7 @@ import * as EmailValidator from "email-validator";
 import Kakaoregister from "../../components/user/snsLogin/KakaoRegister.vue";
 
 export default {
-  components: {
+   components: {
     Kakaoregister, 
   },
   created(){

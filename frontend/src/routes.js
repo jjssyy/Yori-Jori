@@ -15,10 +15,11 @@ import Recipewrite from './views/recipe/Write.vue'
 import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
+import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
 
 export default [
-
+    
 
     {
         path : '/',
@@ -66,17 +67,17 @@ export default [
         component: Recipewrite
     },
     {
-        path: '/user/followerlist',
+        path: '/user/followerlist/:user_id',
         name: 'FollowerList',
         component: FollowerList
     },
     {
-        path: '/user/followinglist',
+        path: '/user/followinglist/:user_id',
         name: 'FollowingList',
         component: FollowingList
     },
     {
-        path: '/user/profile',
+        path: '/user/profile/:user_id',
         name: 'Profile',
         component: Profile
     },
@@ -84,6 +85,11 @@ export default [
         path: '/recipe/fileupload/:user_id',
         name: 'Fileupload',
         component: Fileupload
+    },
+    {
+        path: '/recipe/:recipe_idx',
+        name: 'RecipeDetail',
+        component: RecipeDetail
     },
     {
         path: '/feed/allmember',

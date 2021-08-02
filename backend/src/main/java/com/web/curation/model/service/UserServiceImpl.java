@@ -197,6 +197,13 @@ public class UserServiceImpl implements UserService{
 		
 		return sqlsession.getMapper(UserDao.class).deletefollowing(rf);
 	}
+	
+	@Override
+	public boolean kakaoreg(Snsreg sns) throws Exception {
+		
+		return sqlsession.getMapper(UserDao.class).kakaoreg(sns);
+	}
+
 
 	@Override
 	public boolean kakaoreg(Snsreg sns) throws Exception {

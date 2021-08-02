@@ -11,13 +11,17 @@ const state = {
     isUser: false,
     token:'',
     userId: '',
+    userNickname: '',
     sns: '',
     email:'',
+    recipeItems: [],
+    img: [],
+    thumbnailNumber: 0,
 }
 
 export default new Vuex.Store({
     plugins:[
-        createPersistedState
+        createPersistedState()
     ],
     state,
     mutations,

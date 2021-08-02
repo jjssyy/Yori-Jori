@@ -2,47 +2,56 @@
 
 <template>
   <div>
+    <button @click="isThumbnail">썸네일</button>
     <div>
-        <img v-bind:src="newImgSrc">
-        <input type="file" id="file" class="inputfile" v-on:change="upload">
+      <img v-bind:src="newImgSrc">
+      <input type="file" accept="image/*" id="file" class="inputfile" v-on:change="uploadImg">
     </div>
     <div>
-        <textarea  cols="30" rows="5"></textarea>
+      <textarea style="border: solid;" cols="30" rows="5" v-model.trim="recipeItemDes" @change="uploadDes"></textarea>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import UserApi from '../../api/UserApi';
+import FirebaseApi from '../../api/FirebaseApi';
 var frm = new FormData();
 
 export default {
   data: () => {
     return {
+        img: null,
         newImgSrc:'',
+        recipeItemDes: [],
+        recipeItem: [],
     }
   },
+  props: {
+    idx: Number,
+  },
   methods: {
-    upload(e){
-      let file = e.target.files;
-      let reader = new FileReader();
-      
-      reader.readAsDataURL(file[0]);
-      reader.onload = e => {
-        this.newImgSrc = e.target.result;
+    uploadImg(e){
+      let file = e.target.files[0];
+      FirebaseApi.upLoad(
+        file,
+        res=>{
+          this.newImgSrc = res
+          frm.append("file",res);
+          this.$store.dispatch('uploadImg', {file: res, idx: this.idx});
+        })
 
-      };
-      frm.append("file",file[0]);
-    
-      
     },
 
-     
- 
+    uploadDes: function() {
+      this.$store.dispatch('writeRecipeItem', {des: this.recipeItemDes, idx: this.idx});
+    },
 
+    isThumbnail() {
+      this.$store.dispatch('choiceThumbnail', this.idx);
+    },
+    
   },
-  
-  
 }
 </script>
