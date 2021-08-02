@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,9 +44,6 @@ public class FeedController {
 
 	@Autowired
 	FeedService feedService;
-
-	@Autowired
-	ResourceLoader rsLoader;
 
 	// 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
 	// 임시 - 제목, 아이디, 설명
@@ -87,6 +85,7 @@ public class FeedController {
 			content.setDes(desList.get(i));
 			content.setThumbnail(thumbnailList.get(i));
 			content.setRecipe_idx(recipe_idx);
+			content.setContent_order(i);
 
 			feedService.writeRecipeContent(content);
 		}
@@ -192,6 +191,14 @@ public class FeedController {
 			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	//댓글 수정
+//	@PutMapping("/comment/update")
+//	public ResponseEntity<T>
+	
+	//댓글 삭제
+	
+	//댓글 좋아요 postmapping(/comment/like)
 	
 	//댓글 조회
 }

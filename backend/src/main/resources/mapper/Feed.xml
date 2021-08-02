@@ -30,9 +30,9 @@
    </select>
    
    <!-- img, des, thumbnail, recipe_idx -->
-   <insert id="writeRecipeContent" parameterType="RecipeContent">
-      insert into recipe_content(img, des, thumbnail, recipe_idx)
-      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx})
+   <insert id="writeRecipeContent" parameterType="SaveRecipeContent">
+      insert into recipe_content(img, des, thumbnail, recipe_idx, content_order)
+      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx}, #{content_order})
    </insert>
    
    <select id="getThumbnail" parameterType="integer" resultType="String">

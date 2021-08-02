@@ -30,12 +30,16 @@
    </select>
    
    <!-- img, des, thumbnail, recipe_idx -->
-   <insert id="writeRecipeContent" parameterType="RecipeContent">
-      insert into recipe_content(img, des, thumbnail, recipe_idx)
-      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx})
+   <insert id="writeRecipeContent" parameterType="SaveRecipeContent">
+      insert into recipe_content(img, des, thumbnail, recipe_idx, content_order)
+      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx}, #{content_order})
    </insert>
    
    <select id="getThumbnail" parameterType="integer" resultType="String">
       select img from recipe_content where thumbnail="true" and recipe_idx=#{reicpe_idx}
    </select>
+   
+   <insert id="writeComment" parameterType="SaveComment">
+   		insert into recipe_comment(comment, content_idx, id) values(#{comment}, #{content_idx}, #{id})
+   </insert>
 </mapper>
