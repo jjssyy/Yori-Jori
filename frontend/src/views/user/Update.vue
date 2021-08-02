@@ -157,7 +157,7 @@ export default {
           this.cellphone = res.data.userInfo.cellphone
           this.birthday = res.data.userInfo.birthday
           this.email = res.data.userInfo.email
-          
+          this.userImg = res.data.userInfo.img
         },
         error=>{
           alert('회원정보 요청에 실패하였습니다.')
