@@ -193,8 +193,19 @@ public class FeedController {
 	}
 	
 	//댓글 수정
-//	@PutMapping("/comment/update")
-//	public ResponseEntity<T>
+	@PutMapping("/comment/update")
+	public ResponseEntity<String> updateComment(@RequestBody SaveComment comment){
+		try {
+			if(feedService.updateComment(comment)==1) {
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	//댓글 삭제
 	

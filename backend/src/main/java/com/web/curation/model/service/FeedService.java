@@ -17,4 +17,5 @@ public interface FeedService {
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeComment(SaveComment comment) throws Exception;
+	public int updateComment(SaveComment comment) throws Exception;
 }

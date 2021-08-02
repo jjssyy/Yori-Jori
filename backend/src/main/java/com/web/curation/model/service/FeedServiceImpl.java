@@ -55,4 +55,9 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).writeComment(comment);
 	}
 
+	@Override
+	public int updateComment(SaveComment comment) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateComment(comment);
+	}
+
 }

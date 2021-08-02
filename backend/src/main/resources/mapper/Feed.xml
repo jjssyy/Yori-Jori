@@ -43,4 +43,9 @@
    		insert into recipe_comment(comment, content_idx, id, nickname) 
    		values(#{comment}, #{content_idx}, #{id}, #{nickname})
    </insert>
+   
+   <update id="updateComment" parameterType="SaveComment">
+   		update recipe_comment set comment=#{comment}, regdate=now()
+   </update>
+   
 </mapper>
