@@ -170,7 +170,28 @@ public class UserController {
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
+	@GetMapping("/updateuser")
+	public ResponseEntity<Map<String, Object>> updateinfo(HttpServletRequest request) {
 
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		if (jwtservice.isUsable(request.getHeader("access-token"))) {
+			try {
+				UserVO user = userservice.userInfo(request.getHeader("id"));
+				resultMap.put("userInfo", user);
+				resultMap.put("message", "SUCCESS");
+				status = HttpStatus.ACCEPTED;
+			} catch (Exception e) {
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			resultMap.put("message", "FAIL");
+			status = HttpStatus.ACCEPTED;
+		}
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
 	@PutMapping("/updateuser")
 	public ResponseEntity<String> updatename(@RequestBody UserVO user) {
 
