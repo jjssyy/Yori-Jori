@@ -18,6 +18,8 @@ public class UserVO {
 	private String role;
 	private Date regdate;
 	private String token;
+	private String img;
+
 	public String getToken() {
 		return token;
 	}
@@ -102,6 +104,11 @@ public class UserVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 }
