@@ -5,10 +5,11 @@
      <div class="wrapC" v-if="profileUser">
       <h1>프로필</h1>
       <div>
-      <p>아이디 : {{profileUser.id}}</p>
-      <p>닉네임 : {{ profileUser.nickname }}</p>
-      <p>한줄 소개 : {{ profileUser.des }}</p>
-      <p>등급 : {{ profileUser.role }}</p>
+        <img class="userImg" :src="profileUser.img || defaultProfile" :alt="profileUser.nickname">
+        <p>아이디 : {{profileUser.id}}</p>
+        <p>닉네임 : {{ profileUser.nickname }}</p>
+        <p>한줄 소개 : {{ profileUser.des }}</p>
+        <p>등급 : {{ profileUser.role }}</p>
       </div>
       <p>회원가입일 : {{ profileUser.regdate }}</p>
       <div v-if="profileUser.id != userId">
@@ -38,6 +39,7 @@
         </div>
       </div>
     </div>
+      <button @click="Logout">로그아웃</button>
   </div>
 </template>
 
@@ -45,9 +47,12 @@
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
+import defaultProfile from "@/assets/images/profile_default.png";
 
 export default {
-  components: { MyRecipeItem },
+  components: { 
+    MyRecipeItem,
+  },
   data: () => {
     return {
       profileUser: null,
@@ -58,16 +63,17 @@ export default {
       waiting: null,
       follow_wait:[],
       follow_already:[],
+      defaultProfile
     }
   },
   mounted: function() {
     this.profileId = this.$route.params.user_id
-    console.log(this.profileId)
+
     let data = {
       id: this.profileId
     }
     
-     const config =  this.$store.state.token;
+    const config =  this.$store.state.token;
     
     UserApi.getUser(config,
       data,
@@ -84,7 +90,6 @@ export default {
     UserApi.myAllRecipes(
       data,
       res => {
-        console.log(res.data.latestFeed)
         this.myRecipes = res.data.latestFeed
       },
       error=>{
@@ -95,30 +100,22 @@ export default {
       id: this.userId
     }
 
-    
-
-     UserApi.follow_already(
-      
+    UserApi.follow_already(
       data,
       res => {
         this.follow_already = res.data;
-        console.log(res.data);
-     
       },
       error=>{
         console.log(error)
       }
     )
-
   },
   methods: {
     sendrequest(member){
-
       let data = {
         loginid : this.userId,
         memberid : member.id,
         token : this.$store.state.token,
-        
       }
       UserApi.sendfollowrequest(
       data,
@@ -139,13 +136,11 @@ export default {
     },
 
 
-     senddeletefollow(member){
-
+    senddeletefollow(member){
       let data = {
         loginid : this.userId,
         memberid : member.id,
         token : this.$store.state.token,
-        
       }
       UserApi.sendfollowdelete(
       data,
@@ -164,12 +159,19 @@ export default {
     )
      
     },
-
     showFollowerList: function() {
       this.$router.push({ name: 'FollowerList' , params: {profileId: this.profileId}})
     },
     showFollowingList: function() {
       this.$router.push({ name: 'FollowingList' , params: {profileId: this.profileId}})
+    },
+    Logout: function() {
+      console.log('logout 됨')
+      // 로그아웃 처리
+      this.$store.state.token = ''
+      this.$store.state.userId = ''
+      this.$router.push({ name: 'Login' })
+      this.user = ''
     },
   },
   computed: {
@@ -179,3 +181,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.userImg{
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+</style>

@@ -23,8 +23,8 @@
 	
 	<update id="updateuser" parameterType="UserVO">
 
-		update user set nickname = #{nickname}, des = #{des}, cellphone = #{cellphone},
-		address1 = #{address1}, address2 = #{address2}, address3 = #{address3} where id = #{id}
+		update user set nickname = #{nickname}, des = #{des}, cellphone = #{cellphone}, birthday = #{birthday},
+		address1 = #{address1}, address2 = #{address2}, address3 = #{address3}, img = #{img} where id = #{id}
 		
 	</update>
 
