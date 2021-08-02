@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
+import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
 import com.web.curation.model.dao.FeedDao;
 
@@ -47,6 +48,11 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<RecipeContent> getAllRecipes(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getAllRecipes(id);
+	}
+
+	@Override
+	public int writeComment(SaveComment comment) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).writeComment(comment);
 	}
 
 }

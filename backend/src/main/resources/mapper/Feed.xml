@@ -38,4 +38,8 @@
    <select id="getThumbnail" parameterType="integer" resultType="String">
       select img from recipe_content where thumbnail="true" and recipe_idx=#{reicpe_idx}
    </select>
+   
+   <insert id="writeComment" parameterType="SaveComment">
+   		insert into recipe_comment(comment, content_idx, id) values(#{comment}, #{content_idx}, #{id})
+   </insert>
 </mapper>
