@@ -94,7 +94,7 @@
 	
 	<select id="follow_wait" parameterType="Map" resultType="String">
 		select follow_recipient from follow_wait where follow_waiter = #{id}
-	</select>
+	</select> 
 	
 	<select id="follow_already" parameterType="Map" resultType="String">
 		select following from follow where follower = #{id}

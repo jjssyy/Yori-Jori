@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div class="wrapC">
+     <div class="wrapC" v-if="profileUser">
       <h1>프로필</h1>
       <div>
       <p>아이디 : {{profileUser.id}}</p>
@@ -23,9 +23,11 @@
         <div @click="showFollowerList">팔로워 : {{ profileUser.follower }}</div>
         <div @click="showFollowingList">팔로잉 : {{ profileUser.following }}</div>
       </div>
-      
-      <div v-if="profileUser.id == userId">
-
+       <div v-if="profileUser.id == userId">
+        <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
+        </my-recipe-item>
+      </div>
+      <div>
         <div class="wrap">
           <p>비밀번호를 변경하시겠습니까</p>
           <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
@@ -42,34 +44,48 @@
 <script>
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
+import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
 
 export default {
+  components: { MyRecipeItem },
   data: () => {
     return {
       profileUser: null,
       profileId: null,
       follower: null,
       following: null,
+      myRecipes: null,
       waiting: null,
       follow_wait:[],
       follow_already:[],
     }
   },
-  created: function() {
+  mounted: function() {
     this.profileId = this.$route.params.user_id
+    console.log(this.profileId)
     let data = {
       id: this.profileId
     }
     
      const config =  this.$store.state.token;
-     
+    
     UserApi.getUser(config,
       data,
       res => {
         this.profileUser = res.data
         this.follower = res.data.follower
         this.following = res.data.following
-        
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+
+    UserApi.myAllRecipes(
+      data,
+      res => {
+        console.log(res.data.latestFeed)
+        this.myRecipes = res.data.latestFeed
       },
       error=>{
         console.log(error)
@@ -154,9 +170,6 @@ export default {
     },
     showFollowingList: function() {
       this.$router.push({ name: 'FollowingList' , params: {profileId: this.profileId}})
-    },
-    showWaitList: function() {
-      this.$router.push({ name: 'WaitList' , params: {profileId: this.profileId}})
     },
   },
   computed: {

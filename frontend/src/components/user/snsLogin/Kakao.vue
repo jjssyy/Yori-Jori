@@ -1,6 +1,7 @@
 <template>
     <div id="kakao-login">
 
+      
         <button @click="kakaologin">
             <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55">
                 <g id="그룹_247" data-name="그룹 247" transform="translate(-237 -406)">
@@ -18,13 +19,15 @@
                     </g>
                 </g>
             </svg>
-
         </button>
+     
     </div>
 </template>
 
 <script>
+   
 import UserApi from "../../../api/UserApi";
+import { mapState } from 'vuex'
     export default {
        
         methods: {
@@ -42,15 +45,10 @@ import UserApi from "../../../api/UserApi";
                     url:'/v2/user/me',
                     success: res=> {
                         const kakao_account = res.kakao_account;
-                        console.log(kakao_account.profile.nickname);
-                        console.log(kakao_account.email);
-                        console.log(kakao_account.birthday);
-
                         let data = {
                             email : kakao_account.email,
                             nickname : kakao_account.profile.nickname
                             };
-
                         UserApi.snsLogin(
                             data,
                             res => {
@@ -58,8 +56,8 @@ import UserApi from "../../../api/UserApi";
                                 if(res.data.result == "success"){
                                 alert("로그인 되었습니다.");
                                 this.$store.dispatch("login",res);
-                                console.log(this.$store.state.token);
-                                //this.$store.state.email = data.email
+                                this.$store.state.userId = res.data.id
+                                console.log(res.data.id );
                                 this.$router.push({name:'FeedMain'});
                                 }else if(res.data.result == "fail"){
                                 alert("로그인 실패.");
@@ -86,6 +84,12 @@ import UserApi from "../../../api/UserApi";
                 });
 
             },
+        },
+
+          computed: {
+            ...mapState([
+            'userId',
+            ]),
         },
 
     }

@@ -5,14 +5,12 @@
      
       <h1>유저 목록</h1>
       <div v-for="(member, idx) in members" :key="idx">
-        <div v-if="member.nickname.includes(searchnickname)">
-            <span><router-link :to="{name:'Profile', params: {user_id: member.id}}">닉네임 : {{member.nickname}}</router-link></span>&nbsp;
-            <span><button class="btn btn-danger" v-if="follow_already.includes(member.id) " @click="senddeletefollow(member)">이미 등록됨</button></span>
-            <span><button class="btn btn-primary" v-if="!follow_already.includes(member.id) " @click="sendrequest(member)">신청</button></span>
-           </div>
-     </div>
-
-      
+        <div v-if="member && member.nickname.includes(searchnickname)">
+          <span><router-link :to="{name:'Profile', params: {user_id: member.id}}">닉네임 : {{member.nickname}}</router-link></span>&nbsp;
+          <span><button class="btn btn-danger" v-if="follow_already.includes(member.id) " @click="senddeletefollow(member)">이미 등록됨</button></span>
+          <span><button class="btn btn-primary" v-if="!follow_already.includes(member.id) " @click="sendrequest(member)">신청</button></span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,12 +21,10 @@ import UserApi from '../../api/UserApi';
 import "../../components/css/feed/feed-item.scss";
 import "../../components/css/feed/newsfeed.scss";
 
-
 export default {
   props: ["keyword"],
 
   data: ()=>{
-
     return{
       profileId: null,
       members: {
@@ -38,7 +34,7 @@ export default {
      member: {
       
     },
-   
+    
     searchnickname:'',
     follow_wait:[],
     follow_already:[],
@@ -52,10 +48,7 @@ export default {
       'userId',
     ]),
   },
-
   methods: {
-
-    
     sendrequest(member){
     
       let data = {
@@ -126,30 +119,20 @@ export default {
       
       data,
       res => {
-        
         this.members = res.data
-        
         for(let i = 0; i < res.data.length; i++){
           memberlist.push(res.data[i].id);
-          
         }
-        
       },
       error=>{
         console.log(error)
       }
     )
-    
-
-     UserApi.follow_already(
-      
+    UserApi.follow_already(
       data,
       res => {
-        this.follow_already = res.data;
-    
-
+        this.follow_already = res.kdata;
         follow_alreadylist = res.data;
-        console.log(this.follow_already);
             
      
       },
@@ -157,8 +140,6 @@ export default {
         console.log(error)
       }
     )
-    
-    
   },
 };
 </script>

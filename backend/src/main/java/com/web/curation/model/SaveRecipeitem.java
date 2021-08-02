@@ -2,12 +2,11 @@ package com.web.curation.model;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-public class Recipeitem {
+public class SaveRecipeitem {
 	private String title;
 	private String id;
-	private List<MultipartFile> img;
+	private String nickname;
+	private List<String> img;
 	private List<String> des;
 	private List<String> thumbnail;
 
@@ -26,12 +25,19 @@ public class Recipeitem {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getNickname() {
+		return nickname;
+	}
 
-	public List<MultipartFile> getImg() {
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public List<String> getImg() {
 		return img;
 	}
 
-	public void setImg(List<MultipartFile> img) {
+	public void setImg(List<String> img) {
 		this.img = img;
 	}
 

@@ -42,7 +42,7 @@ export default {
       notice:0,
       unreadnotice:[],
       defaultProfile,
-      show: true
+      show: false
     }
   },
   mounted(){
@@ -85,7 +85,6 @@ export default {
 
             }
           })
-          console.log(this.unreadnotice)
           this.notice = this.unreadnotice.length
       });
     },

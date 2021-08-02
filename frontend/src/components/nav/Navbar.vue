@@ -1,9 +1,8 @@
 <template>
 <div class="navigation">
   <div class="logo">
-    <a class="no-underline" href="#">
-      logo here
-    </a>
+  
+    <router-link class="no-underline" :to="{name:'FeedMain'}">logo here</router-link>
   </div>
   <SearchBox/>
   <Notification/>
@@ -39,7 +38,7 @@ export default {
       history.back();
     }
   },
-   computed: {
+     computed: {
     ...mapState([
       'userId',
     ]),
