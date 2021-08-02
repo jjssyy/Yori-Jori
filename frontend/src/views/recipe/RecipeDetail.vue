@@ -1,14 +1,18 @@
 <template lang="">
   <div>
-    {{ recipe }}
-    <img :src='recipe.recipeContent[0].img'/>
+    <!-- {{ recipe }} -->
+    <RecipeDetailList :recipe="recipe"/>
   </div>
 </template>
 
 <script>
+import RecipeDetailList from "../../components/recipe/RecipeDetailList.vue";
 import UserApi from '../../api/UserApi';
 
 export default {
+  components:{
+    RecipeDetailList,
+  },
   data: () => {
     return {
       recipe: null,
@@ -22,7 +26,7 @@ export default {
       data,
       res => {
         console.log(res)
-        this.recipe = res.data
+        this.recipe = res.data["recipeContent"]
         console.log('레시피')
       },
       error => {
