@@ -4,7 +4,14 @@ public class SaveComment {
 	private String comment;
 	private int content_idx;
 	private String id;
+	private String nickname;
 	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public String getComment() {
 		return comment;
 	}

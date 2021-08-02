@@ -40,6 +40,7 @@
    </select>
    
    <insert id="writeComment" parameterType="SaveComment">
-   		insert into recipe_comment(comment, content_idx, id) values(#{comment}, #{content_idx}, #{id})
+   		insert into recipe_comment(comment, content_idx, id, nickname) 
+   		values(#{comment}, #{content_idx}, #{id}, #{nickname})
    </insert>
 </mapper>
