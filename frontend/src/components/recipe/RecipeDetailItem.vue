@@ -3,6 +3,7 @@
     <!-- {{ recipeItem }} -->
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
+    <p>{{ recipeItem.des }}</p>
     <RecipeCommentList :recipeItem="recipeItem" />
   </div>
 </template>

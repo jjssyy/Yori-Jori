@@ -1,6 +1,7 @@
 <template lang="">
   <div>
     <div class="commentForm">
+      <RecipeCommentItem v-for="(commentItem, idx) in comments" :key="idx" :idx="idx"/>
       <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment">
       <button @click="createComment">작성</button>
     </div>
@@ -9,7 +10,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import UserApi from '../../api/UserApi';
+import RecipeApi from '../../api/UserApi';
 
 export default {
   props: {
@@ -27,26 +28,31 @@ export default {
   },
   methods: {
     createComment() {
+      console.log(this.comment.content)
+      const newComments = this.comments
       let data = {
         content_idx: this.recipeItem.idx,
         comment: this.comment.content,
         id: this.userId,
+        nickname: this.userNickname,
       }
-      UserApi.writeComment(
+      RecipeApi.writeComment(
         data,
         res => {
           console.log("댓글 쓰기 성공")
-          // newComments.push(comment.content)
+          newComments.push(this.comment.content)
         },
         error=> {
           console.log(error)
         }
       )
+      this.comments = newComments
     }
   },
   computed: {
     ...mapState([
       'userId',
+      'userNickname',
     ])
   }
 }

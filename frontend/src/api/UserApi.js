@@ -353,14 +353,6 @@ const snsregister = (data, callback, errorCallback) => {
     )
 }
 
-const writeComment = (data, callback, errorCallback) => {
-    http.post('/comment/write',data).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
-
 
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
@@ -389,6 +381,5 @@ const UserApi = {
     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
     snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
     snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
-    writeComment: (data, callback, errorCallback) => writeComment(data, callback, errorCallback),
 }
 export default UserApi
