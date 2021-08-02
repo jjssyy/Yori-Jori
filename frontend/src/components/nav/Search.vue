@@ -54,6 +54,11 @@ export default {
       }
     });
   },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
+  },
   methods:{
     searchInput(){
       let data = {
