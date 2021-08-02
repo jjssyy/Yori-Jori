@@ -3,7 +3,10 @@
   <div class="user wrapC">
     <h1>회원 수정</h1>
     <div class="form-wrap">
-
+      <div>
+        <img :src="userImg">
+        <input type="file" accept="image/*" id="file" class="inputfile" @change="uploadImg">
+      </div>
       <div class="input-with-label">
         <input v-model="nickName"
         id="nickName" 
@@ -38,16 +41,10 @@
       </div>
       
       <div id="daumaddress">
-        <!-- <input v-model="address.address1"
-        id="address.address1" 
-        placeholder="주소를 입력하세요." 
-        type="text" 
-        /> -->
         <div>
           <label>주소</label>
           <button v-show="addresscheck" @click="saveaddressopen">저장</button>
           <button v-show="!addresscheck" @click="saveaddressopen">열기</button>
-          
         </div>
         <div>
           <DaumPostcode v-show="addresscheck"
@@ -62,21 +59,6 @@
         />
         <label for="address2">상세주소</label>
       </div>
-      <div class="input-with-label">
-        <input v-model="email" 
-        id="email" 
-        type="text" 
-        />
-        <label for="email">이메일</label>
-      </div>
-      <div class="input-with-label">
-        <input v-model="userId" 
-        id="userId" 
-        type="text" 
-        />
-        <label for="userId">아이디</label>
-      </div>
-
     </div>
 
     <button class="btn-bottom"
@@ -88,25 +70,22 @@
 <script>
 import UserApi from '../../api/UserApi';
 import DaumPostcode from 'vuejs-daum-postcode'
-
-
-
+import FirebaseApi from '../../api/FirebaseApi';
 
 export default {
   data: () => {
     return {
       addresscheck: true,
+      userImg:"",
       email: "",
       nickName: "",
       userId:"",
       des:"",
       birthday:"",
       cellphone:"",
-      
-        address1:"",
-        address2:"",
-        address3:"",
-      
+      address1:"",
+      address2:"",
+      address3:"",
       isLoading: false,
       error: {
         email: false,
@@ -117,7 +96,6 @@ export default {
   },
   components: {
     DaumPostcode,
-    
   },
   created() {
     if (this.$store.state.token === ''){
@@ -128,20 +106,15 @@ export default {
   watch:{
   },
   methods:{
-
-      saveaddressopen(){
-       
-        this.addresscheck = !this.addresscheck;
-        console.log(this.addresscheck);
-      },
-
-      saveaddressclose(){
-        
-        this.addresscheck = !this.addresscheck;
-        console.log(this.addresscheck);
-      },
-
-     handleAddress(data) {
+    saveaddressopen(){  
+      this.addresscheck = !this.addresscheck;
+      console.log(this.addresscheck);
+    },
+    saveaddressclose(){
+      this.addresscheck = !this.addresscheck;
+      console.log(this.addresscheck);
+    },
+    handleAddress(data) {
       let fullAddress = data.address
       let extraAddress = ''
       if (data.addressType === 'R') {
@@ -156,15 +129,24 @@ export default {
       this.address1 = fullAddress
       console.log(this.address1) // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     },
+    uploadImg(e){
+      let file = {
+        img:e.target.files[0],
+        userId:this.$store.state.userId
+      };
+      FirebaseApi.upLoadProfile(
+        file,
+        res=>{
+          this.userImg = res
+        })
+    },
     getUser(){
-      console.log(this.$store.state.token)
       const config = {
         headers:{
           'access-token': this.$store.state.token,
           'id':this.$store.state.userId
         }
       }
-
       UserApi.requestUser(
         config,
         res=>{
@@ -184,9 +166,10 @@ export default {
     },
     update(){
       let data = {
+        img:this.userImg,
         email:this.email,
         nickname:this.nickName,
-        id:this.userId,
+        id:this.$store.state.userId,
         des:this.des,
         birthday:this.birthday,
         cellphone:this.cellphone,
@@ -198,10 +181,8 @@ export default {
       UserApi.requestUpdate(
         data,
         res=>{
-          console.log(res);
           alert('회원수정이 완료 되었습니다.')
-          this.$router.push(`/user/profile/`);
-          
+          this.$router.push(`/user/profile/${this.userId}`);
           
         },
         error=>{
@@ -209,10 +190,7 @@ export default {
           this.$router.push("/error");
         }
       );
-      
-     
     }
-
   }
 };
 </script>
