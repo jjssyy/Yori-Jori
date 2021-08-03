@@ -44,12 +44,8 @@ const recipeItemComments = (data,callback, errorCallback) => {
 }
 
 const commentLike = (data,callback, errorCallback) => {
-    http.post('/feed/comment/like',{
-        params: {
-            comment_idx: data.comment_idx,
-            id: data.id,
-        }
-    }).then(
+    http.post('/feed/comment/like',data
+    ).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -62,12 +58,14 @@ const commentUnlike = (data,callback, errorCallback) => {
             comment_idx: data.comment_idx,
             id: data.id,
         }
-    }).then(
+    }
+    ).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
     )
 }
+
 
 const RecipeApi = {
     writeComment: (data, callback, errorCallback) => writeComment(data, callback, errorCallback),

@@ -1,7 +1,8 @@
 <template lang="">
   <div>
     <div class="commentForm">
-      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx"/>
+      <!-- {{ comments }} -->
+      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem"/>
       <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment">
       <button @click="createComment">작성</button>
     </div>
@@ -11,8 +12,12 @@
 <script>
 import { mapState } from 'vuex'
 import RecipeApi from '../../api/RecipeApi';
+import RecipeCommentItem from "../../components/recipe/RecipeCommentItem.vue";
 
 export default {
+  components:{
+    RecipeCommentItem,
+  },
   props: {
     recipeItem: {
       type: [Array, Object]
@@ -27,21 +32,7 @@ export default {
     }
   },
   mounted: function() {
-    let data = {
-      content_idx: this.recipeItem.idx,
-      id: this.recipeItem.id,
-    }
-    RecipeApi.recipeItemComments(
-      data,
-      res => {
-        console.log('조회 성공')
-        console.log(res)
-        this.comments = res.data
-      },
-      err => {
-        console.log(err)
-      }
-    )
+    this.getComment()
   },
   methods: {
     createComment() {
@@ -57,13 +48,31 @@ export default {
         data,
         res => {
           console.log("댓글 쓰기 성공")
-          newComments.push(this.comment.content)
+          this.getComment()
+          this.comment.content = ''
         },
         error=> {
           console.log(error)
         }
       )
       this.comments = newComments
+    },
+    getComment() {
+      let data = {
+      content_idx: this.recipeItem.idx,
+      id: this.recipeItem.id,
+    }
+    RecipeApi.recipeItemComments(
+      data,
+      res => {
+        console.log('조회 성공')
+        console.log(res.data.commentList)
+        this.comments = res.data.commentList
+      },
+      err => {
+        console.log(err)
+      }
+    )
     }
   },
   computed: {

@@ -1,15 +1,18 @@
 <template lang="">
   <div>
     <div v-if="update == false">
-      <p>{{ commentItem.nickname }}</p>
-      <p>{{ commentItem.comment }}</p>
-      <p>{{ commentItem.like }}</p>
-      <span v-if="heart || (commentItem.likecheck == false)">
+      <!-- {{ commentItem }} -->
+      <div>
+      <p>닉네임 : {{ commentItem.nickname }} 
+         코멘트 : {{ commentItem.comment }}</p>
+      <p>좋아요 갯수 : {{ commentItem.like }}</p>
+      </div>
+      <span v-if="heart">
           <button class="submit btn btn-secondary" @click="like">
              좋아요
           </button>
       </span>
-      <span v-else>
+      <span v-if="heart==false">
           <button class="submit btn btn-secondary" @click="unlike">
             좋아요 취소
           </button>   
@@ -73,7 +76,8 @@ export default {
         comment_idx: this.commentItem.idx,
         id: this.userId
       }
-      RecipeApi.commentLike(
+      console.log(data)
+      RecipeApi.commentUnlike(
         data,
         res => {
           console.log("좋아요 취소 성공")
