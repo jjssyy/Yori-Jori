@@ -1,6 +1,5 @@
 <template lang="">
   <div>
-    <!-- {{ recipe }} -->
     <RecipeDetailList :recipe="recipe"/>
   </div>
 </template>
