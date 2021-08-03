@@ -2,6 +2,7 @@ package com.web.curation.controller.newsfeed;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.curation.model.CommentFromDB;
+import com.web.curation.model.CommentToClient;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
@@ -182,6 +186,7 @@ public class FeedController {
 	public ResponseEntity<String> writeComment(@RequestBody SaveComment comment) {
 		try {
 			if (feedService.writeComment(comment) == 1) {
+				System.out.println("댓글 작성 성공");
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -197,6 +202,7 @@ public class FeedController {
 	public ResponseEntity<String> updateComment(@RequestBody SaveComment comment){
 		try {
 			if(feedService.updateComment(comment)==1) {
+				System.out.println("댓글 수정 성공");
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			}else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -208,8 +214,110 @@ public class FeedController {
 	}
 	
 	//댓글 삭제
+	@DeleteMapping("/comment/delete")
+	public ResponseEntity<String> deleteComment(@RequestParam int idx){
+		try {
+			if(feedService.deleteComment(idx)==1) {
+				System.out.println("댓글 삭제 성공");
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
-	//댓글 좋아요 postmapping(/comment/like)
+	
+	//댓글 좋아요
+	@PostMapping("/comment/like")
+	public ResponseEntity<String> LikeComment(@RequestParam int comment_idx, String id){
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("comment_idx", comment_idx);
+		
+		try {
+			if(feedService.checkLike(map)>0) {
+				System.out.println("이미 좋아요 누른 댓글");
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+			if(feedService.likeComment(map)==1) {
+				System.out.println("댓글 좋아요 성공");
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//댓글 좋아요 취소
+	@DeleteMapping("/comment/like")
+	public ResponseEntity<String> CancelLikeComment(@RequestParam int comment_idx, String id){
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("comment_idx", comment_idx);
+		
+		try {
+			if(feedService.cancelLikeComment(map)==1) {
+				System.out.println("댓글 좋아요 취소 성공");
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	//댓글 조회
+	@GetMapping("/comment")
+	public ResponseEntity<Map<String, Object>> CommentList(@RequestParam int content_idx, String id){
+		Map<String, Object> resultMap = new HashMap<>();
+		List<CommentToClient> commentToClient = new ArrayList<>();
+		try {
+			List<CommentFromDB> commentListFromDB = feedService.getCommentList(content_idx);
+			if(commentListFromDB.size()==0) {
+				resultMap.put("message", "no comment");
+				return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.NO_CONTENT);
+			}
+			for(int i=0; i<commentListFromDB.size(); i++) {
+				CommentToClient c = new CommentToClient();
+				c.setIdx(commentListFromDB.get(i).getIdx());
+				c.setComment(commentListFromDB.get(i).getComment());
+				c.setRegdate(commentListFromDB.get(i).getRegdate());
+				c.setId(commentListFromDB.get(i).getId());
+				c.setNickname(commentListFromDB.get(i).getNickname());
+				commentToClient.add(c);
+			}
+			HashMap<Object, Object> map = new HashMap<>();
+			map.put("id", id);
+
+			for(int i=0; i<commentListFromDB.size(); i++) {
+				int comment_idx = commentListFromDB.get(i).getIdx();
+				commentToClient.get(i).setLike(feedService.getLikeCount(comment_idx));
+				map.put("comment_idx", comment_idx);
+				if(feedService.checkLike(map)==1) {
+					commentToClient.get(i).setLikecheck(true);
+				}else {
+					commentToClient.get(i).setLikecheck(false);
+				}
+			}
+			resultMap.put("commentList", commentToClient);
+			resultMap.put("message", "Success");
+			System.out.println("댓글 조회 성공");
+			
+			return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", "Fail");
+			return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
 }

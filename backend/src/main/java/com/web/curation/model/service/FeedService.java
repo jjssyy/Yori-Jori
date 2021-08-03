@@ -3,6 +3,7 @@ package com.web.curation.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
@@ -18,4 +19,12 @@ public interface FeedService {
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeComment(SaveComment comment) throws Exception;
 	public int updateComment(SaveComment comment) throws Exception;
+	public int deleteComment(int idx) throws Exception;
+	
+	public List<CommentFromDB> getCommentList(int content_idx) throws Exception;
+	public int getLikeCount(int comment_idx) throws Exception;
+	public int checkLike(Map map) throws Exception;
+	
+	public int likeComment(Map map) throws Exception;
+	public int cancelLikeComment(Map map) throws Exception;
 }
