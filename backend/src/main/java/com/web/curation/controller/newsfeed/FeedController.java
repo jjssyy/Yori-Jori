@@ -56,6 +56,7 @@ public class FeedController {
       List<String> imgList = data.getImg();
       List<String> desList = data.getDes();
       List<String> thumbnailList = data.getThumbnail();
+      List<String> hashtagList = data.getHashtags();
       
       if(id==null) {
          return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -88,6 +89,16 @@ public class FeedController {
          content.setRecipe_idx(recipe_idx);
 
          feedService.writeRecipeContent(content);
+      }
+      
+      int size = hashtagList.size();
+      HashMap<String, Object> hash = new HashMap<String, Object>();
+      for(int i = 0; i < size; i++) {
+          hash.put("recipe_idx", recipe_idx);
+          hash.put("hashtag", hashtagList.get(i));
+    	  feedService.writeHashtags(hash);
+
+          hash.clear();
       }
 
       return new ResponseEntity<String>("Success", HttpStatus.OK);

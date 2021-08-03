@@ -1,5 +1,6 @@
 package com.web.curation.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,4 +22,6 @@ public interface FeedDao {
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	
 	public List<RecipeContent> getAllRecipes(String id) throws Exception;
+
+	public int writeHashtag(HashMap<String, Object> hash);
 }

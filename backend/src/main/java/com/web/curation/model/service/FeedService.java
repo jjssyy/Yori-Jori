@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,4 +16,5 @@ public interface FeedService {
 	public List<RecipeSingleContent> getRecipeContents(String recipe_idx) throws Exception;
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
+	public int writeHashtags(HashMap<String, Object> hash);
 }
