@@ -24,6 +24,7 @@ import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.SaveComment;
+import com.web.curation.model.SaveLike;
 import com.web.curation.model.service.FeedService;
 
 import org.slf4j.Logger;
@@ -232,10 +233,10 @@ public class FeedController {
 	
 	//댓글 좋아요
 	@PostMapping("/comment/like")
-	public ResponseEntity<String> LikeComment(@RequestParam int comment_idx, String id){
+	public ResponseEntity<String> LikeComment(@RequestBody SaveLike saveLike){
 		HashMap<Object, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("comment_idx", comment_idx);
+		map.put("id", saveLike.getId());
+		map.put("comment_idx", saveLike.getComment_idx());
 		
 		try {
 			if(feedService.checkLike(map)>0) {
@@ -256,10 +257,10 @@ public class FeedController {
 	
 	//댓글 좋아요 취소
 	@DeleteMapping("/comment/like")
-	public ResponseEntity<String> CancelLikeComment(@RequestParam int comment_idx, String id){
+	public ResponseEntity<String> CancelLikeComment(@RequestBody SaveLike saveLike){
 		HashMap<Object, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("comment_idx", comment_idx);
+		map.put("id", saveLike.getId());
+		map.put("comment_idx", saveLike.getComment_idx());
 		
 		try {
 			if(feedService.cancelLikeComment(map)==1) {
