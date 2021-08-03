@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <div v-if="update == false">
-      <!-- {{ commentItem }} -->
+      {{ commentItem }}
       <div>
       <p>닉네임 : {{ commentItem.nickname }} 
          코멘트 : {{ commentItem.comment }}</p>
@@ -18,7 +18,7 @@
           </button>   
       </span>
     </div>
-    <div v-if="update == false">
+    <div v-if="update == false && commentItem.likecheck == false">
       <div v-if="commentItem.id == userId">
         <button @click="update = true">Update</button>
         <button @click="deleteComment(idx)">Delete</button>
