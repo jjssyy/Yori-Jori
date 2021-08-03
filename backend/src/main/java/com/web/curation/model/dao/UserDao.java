@@ -16,7 +16,7 @@ public interface UserDao {
 	public boolean join(Map map) throws Exception;
 	
 	public UserVO login(Map map) throws Exception;
-
+	
 	public boolean join(UserVO user) throws Exception;
 	
 	public boolean kakaoreg(Snsreg sns) throws Exception;

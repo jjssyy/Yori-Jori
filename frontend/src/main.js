@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import firebase from 'firebase';
 
+
 Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
@@ -40,3 +41,4 @@ new Vue({
 }).$mount('#app');
 window.Kakao.init("cd0727684037fa18dbfb547d7ad9eb2c");
 
+window.Kakao.init("cd0727684037fa18dbfb547d7ad9eb2c");

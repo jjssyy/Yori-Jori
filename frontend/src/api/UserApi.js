@@ -353,7 +353,6 @@ const snsregister = (data, callback, errorCallback) => {
     )
 }
 
-
 const UserApi = {
     requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback),
     requestJoin:(data,callback,errorCallback)=>requestJoin(data,callback,errorCallback),
