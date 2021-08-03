@@ -24,7 +24,7 @@ public interface UserService {
 	
 	public boolean updateuser(UserVO user) throws Exception;
 	
-	public boolean kakaoreg(Snsreg sns) throws Exception;
+//	public boolean kakaoreg(Snsreg sns) throws Exception;
 
 	public boolean updatepw(Changepw changepw) throws Exception;
 	
