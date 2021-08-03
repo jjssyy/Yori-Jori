@@ -6,7 +6,7 @@
 <mapper namespace="com.web.curation.model.dao.FeedDao">
 
    <select id="getRecipeContents" parameterType="String" resultType="RecipeSingleContent">
-      select * from recipe_content where recipe_idx = #{recipe_idx}
+      select * from recipe_content where recipe_idx = #{recipe_idx} order by content_order
    </select>
    
    <select id="getLatestFeed" parameterType="String" resultType="RecipeContent">
@@ -30,12 +30,45 @@
    </select>
    
    <!-- img, des, thumbnail, recipe_idx -->
-   <insert id="writeRecipeContent" parameterType="RecipeContent">
-      insert into recipe_content(img, des, thumbnail, recipe_idx)
-      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx})
+   <insert id="writeRecipeContent" parameterType="SaveRecipeContent">
+      insert into recipe_content(img, des, thumbnail, recipe_idx, content_order)
+      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx}, #{content_order})
    </insert>
    
    <select id="getThumbnail" parameterType="integer" resultType="String">
       select img from recipe_content where thumbnail="true" and recipe_idx=#{reicpe_idx}
    </select>
+   
+   <insert id="writeComment" parameterType="SaveComment">
+   		insert into recipe_comment(comment, content_idx, id, nickname) 
+   		values(#{comment}, #{content_idx}, #{id}, #{nickname})
+   </insert>
+   
+   <update id="updateComment" parameterType="SaveComment">
+   		update recipe_comment set comment=#{comment}, regdate=now()
+   </update>
+   
+   <delete id="deleteComment" parameterType="integer">
+   		delete from recipe_comment where idx = #{idx};
+   </delete>
+   
+   <select id="getCommentList" parameterType="integer" resultType="CommentFromDB">
+   		select * from recipe_comment where content_idx=#{content_idx}
+   </select>
+   
+   <select id="getLikeCount" parameterType="integer" resultType="integer">
+   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
+   </select>
+   
+   <select id="checkLike" parameterType="Map" resultType="integer">
+   		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
+   </select>
+   
+   <insert id="likeComment" parameterType="Map">
+   		insert into recipe_comment_like(id, comment_idx) values(#{id}, #{comment_idx})
+   </insert>
+   
+   <delete id="cancelLikeComment" parameterType="Map">
+   		delete from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
+   </delete>
 </mapper>

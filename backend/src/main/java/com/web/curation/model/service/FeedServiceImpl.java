@@ -7,9 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
+import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
 import com.web.curation.model.dao.FeedDao;
 
@@ -47,6 +49,46 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<RecipeContent> getAllRecipes(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getAllRecipes(id);
+	}
+
+	@Override
+	public int writeComment(SaveComment comment) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).writeComment(comment);
+	}
+
+	@Override
+	public int updateComment(SaveComment comment) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateComment(comment);
+	}
+
+	@Override
+	public int deleteComment(int idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).deleteComment(idx);
+	}
+
+	@Override
+	public List<CommentFromDB> getCommentList(int content_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getCommentList(content_idx);
+	}
+
+	@Override
+	public int getLikeCount(int comment_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikeCount(comment_idx);
+	}
+
+	@Override
+	public int checkLike(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).checkLike(map);
+	}
+
+	@Override
+	public int likeComment(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).likeComment(map);
+	}
+
+	@Override
+	public int cancelLikeComment(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).cancelLikeComment(map);
 	}
 
 }
