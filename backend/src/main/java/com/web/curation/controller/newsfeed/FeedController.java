@@ -319,6 +319,5 @@ public class FeedController {
 			resultMap.put("message", "Fail");
 			return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 	}
 }
