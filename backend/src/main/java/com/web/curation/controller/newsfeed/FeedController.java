@@ -257,10 +257,10 @@ public class FeedController {
 	
 	//댓글 좋아요 취소
 	@DeleteMapping("/comment/like")
-	public ResponseEntity<String> CancelLikeComment(@RequestBody SaveLike saveLike){
+	public ResponseEntity<String> CancelLikeComment(@RequestParam int comment_idx, String id){
 		HashMap<Object, Object> map = new HashMap<>();
-		map.put("id", saveLike.getId());
-		map.put("comment_idx", saveLike.getComment_idx());
+		map.put("id", id);
+		map.put("comment_idx", comment_idx);
 		
 		try {
 			if(feedService.cancelLikeComment(map)==1) {
