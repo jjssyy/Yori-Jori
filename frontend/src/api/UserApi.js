@@ -380,6 +380,5 @@ const UserApi = {
     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
     snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
     snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
-    
 }
 export default UserApi
