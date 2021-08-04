@@ -46,6 +46,7 @@ export default {
   methods: {
     goRecipeDetail() {
       this.$router.push({name:'RecipeDetail', params: {recipe_idx:this.latestFeed.idx}})
+      this.$store.dispatch('selectRecipe',this.latestFeed.id )
     },
     goUserProfile() {
       this.$router.push({name:'Profile', params: {user_id: this.latestFeed.id}})

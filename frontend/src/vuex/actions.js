@@ -16,5 +16,8 @@ export default {
   },
   clearFormdata({commit}){
     commit('CLEARFORMDATA')
+  },
+  selectRecipe({commit}, res){
+    commit('SELECTRECIPE',res)
   }
 }

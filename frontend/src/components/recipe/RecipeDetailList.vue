@@ -1,6 +1,6 @@
 <template lang="">
   <div> 
-    <RecipeDetailItem v-for="(recipeItem, idx) in recipe" :key="idx" :recipeItem="recipeItem" :idx="idx"/>
+    <RecipeDetailItem v-for="(recipeItem, idx) in recipe" :recipeId="recipe.id" :key="idx" :recipeItem="recipeItem" :idx="idx"/>
   </div>
 </template>
 

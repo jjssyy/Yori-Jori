@@ -36,5 +36,8 @@ export default {
     state.img = []
     state.recipeItems = []
     state.thumnailNumbers = 0
+  },
+  SELECTRECIPE(state,res){
+    state.selectRecipeId = res
   }
 }
