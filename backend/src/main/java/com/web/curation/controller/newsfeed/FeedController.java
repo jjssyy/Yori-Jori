@@ -3,6 +3,7 @@ package com.web.curation.controller.newsfeed;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -186,5 +187,28 @@ public class FeedController {
          status = HttpStatus.INTERNAL_SERVER_ERROR;
       }
       return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
+   
+   //liked posts
+   @GetMapping("/likedposts")
+   public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam String user_id) {
+	   Map<String, Object> resultMap = new HashMap<String, Object>();
+	   HttpStatus status = HttpStatus.ACCEPTED;
+	   String result = "SUCCESS";
+	   try {
+		   List<String> likedPostsIdx = feedService.getLikedPosts(user_id);
+		   int length = likedPostsIdx.size();
+		   List<SaveRecipeitem> list = new ArrayList<SaveRecipeitem>();
+		   for(int i = 0; i < length; i++) {
+			   list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
+		   }
+		   resultMap.put("message", result);
+		   status = HttpStatus.ACCEPTED;
+	   } catch(Exception e) {
+		   e.printStackTrace();
+		   resultMap.put("message", e.getMessage());
+		   status = HttpStatus.INTERNAL_SERVER_ERROR;
+	   }
+	   return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
    }
 }

@@ -8,6 +8,7 @@ import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 
 public interface FeedDao {
 	
@@ -24,4 +25,8 @@ public interface FeedDao {
 	public List<RecipeContent> getAllRecipes(String id) throws Exception;
 
 	public int writeHashtag(HashMap<String, Object> hash);
+	
+	public List<String> getLikedPosts(String user_id) throws Exception;
+	
+	public SaveRecipeitem getSingleRecipe(String recipe_idx) throws Exception;
 }

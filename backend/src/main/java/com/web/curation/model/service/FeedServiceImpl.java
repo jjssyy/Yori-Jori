@@ -12,6 +12,7 @@ import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 import com.web.curation.model.dao.FeedDao;
 
 @Service
@@ -53,6 +54,16 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public int writeHashtags(HashMap<String, Object> hash) {
 		return sqlSession.getMapper(FeedDao.class).writeHashtag(hash);
+	}
+
+	@Override
+	public List<String> getLikedPosts(String user_id) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikedPosts(user_id);
+	}
+
+	@Override
+	public SaveRecipeitem getSingleRecipe(String recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
 	}
 
 

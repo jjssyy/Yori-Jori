@@ -9,6 +9,7 @@ public class RecipeContent {
 	private String nickname;
 	private String id;
 	private String img;
+	
 	public int getIdx() {
 		return idx;
 	}

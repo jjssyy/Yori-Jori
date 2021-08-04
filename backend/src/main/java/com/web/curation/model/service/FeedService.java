@@ -8,6 +8,7 @@ import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 
 public interface FeedService {
 	public int writeRecipeInfo(RecipeInfo recipeInfo) throws Exception;
@@ -17,4 +18,6 @@ public interface FeedService {
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeHashtags(HashMap<String, Object> hash);
+	public List<String> getLikedPosts(String user_id) throws Exception;
+	public SaveRecipeitem getSingleRecipe(String recipe_idx) throws Exception;
 }

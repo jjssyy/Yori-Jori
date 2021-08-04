@@ -36,7 +36,7 @@
    </insert>
    
    <select id="getThumbnail" parameterType="integer" resultType="String">
-      select img from recipe_content where thumbnail="true" and recipe_idx=#{reicpe_idx}
+      select img from recipe_content where thumbnail="true" and recipe_idx=#{recipe_idx}
    </select>
    
    <!-- hashtag -->
@@ -44,4 +44,14 @@
       insert into hashtag(recipe_idx, tag)
       values(#{recipe_idx}, #{hashtag})
    </insert>
+   
+   <!-- liked posts -->
+   <select id="likedPosts" parameterType="String" resultType="String">
+   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+   </select>
+   
+   <!-- get one recipe -->
+   <select id="getSingleRecipe" parameterType="String" resultType="saveRecipeitem">
+   		select * from recipe where idx=#{recipe_idx}
+   </select>
 </mapper>
