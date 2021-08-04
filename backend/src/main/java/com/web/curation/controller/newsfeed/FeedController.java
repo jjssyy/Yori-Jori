@@ -1,9 +1,6 @@
 package com.web.curation.controller.newsfeed;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,20 +24,12 @@ import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveLike;
 import com.web.curation.model.service.FeedService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.SaveRecipeContent;
 import com.web.curation.model.SaveRecipeitem;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @CrossOrigin("*")
 @RequestMapping("/feed")
@@ -100,7 +89,7 @@ public class FeedController {
 
 	// 레시피 하나의 내용 보여주기
 	@GetMapping("/content")
-	public ResponseEntity<Map<String, Object>> feedList(@RequestParam String recipe_idx) {
+	public ResponseEntity<Map<String, Object>> recipeDetail(@RequestParam String recipe_idx) {
 		String result = "SUCCESS";
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
