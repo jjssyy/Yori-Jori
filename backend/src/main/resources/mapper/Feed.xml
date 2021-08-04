@@ -5,7 +5,7 @@
    
 <mapper namespace="com.web.curation.model.dao.FeedDao">
 
-   <select id="getRecipeContents" parameterType="String" resultType="RecipeSingleContent">
+   <select id="getRecipeContents" parameterType="int" resultType="RecipeDetailFromDB">
       select * from recipe_content where recipe_idx = #{recipe_idx} order by content_order
    </select>
    
@@ -56,11 +56,11 @@
    		select * from recipe_comment where content_idx=#{content_idx}
    </select>
    
-   <select id="getLikeCount" parameterType="integer" resultType="integer">
+   <select id="getLikeCountComment" parameterType="integer" resultType="integer">
    		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
    </select>
    
-   <select id="checkLike" parameterType="Map" resultType="integer">
+   <select id="checkLikeComment" parameterType="Map" resultType="integer">
    		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
    </select>
    
@@ -75,4 +75,16 @@
    <delete id = "deleteRecipe" parameterType="integer">
    		delete from recipe where idx =#{idx}
    </delete>
+   
+   <select id="getLikeCountRecipe" parameterType="integer" resultType="integer">
+   		select count(*) from recipe_like where recipe_idx=#{recipe_idx}
+   </select>
+   
+   <select id="checkLikeRecipe" parameterType="Map" resultType="integer">
+   		select count(*) from recipe_like where recipe_user_id=#{id} and recipe_idx=#{recipe_idx}
+   </select>
+   
+   <select id="getRecipeInfo" parameterType="integer" resultType="RecipeInfoFromDB">
+   		select * from recipe where idx=#{recipe_idx}
+   </select>
 </mapper>

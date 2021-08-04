@@ -6,7 +6,8 @@ import java.util.Map;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
-import com.web.curation.model.RecipeSingleContent;
+import com.web.curation.model.RecipeInfoFromDB;
+import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
 
@@ -18,7 +19,7 @@ public interface FeedDao {
 	
 	public int writeRecipeContent(SaveRecipeContent recipeContent) throws Exception;
 	
-	public List<RecipeSingleContent> getRecipeContents(String recipe_idx) throws Exception;
+	public List<RecipeDetailFromDB> getRecipeContents(int recipe_idx) throws Exception;
 
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	
@@ -32,13 +33,20 @@ public interface FeedDao {
 	
 	public List<CommentFromDB> getCommentList(int content_idx) throws Exception;
 	
-	public int getLikeCount(int comment_idx) throws Exception;
+	public int getLikeCountComment(int comment_idx) throws Exception;
 	
-	public int checkLike(Map map) throws Exception;
+	public int checkLikeComment(Map map) throws Exception;
 	
 	public int likeComment(Map map) throws Exception;
 	
 	public int cancelLikeComment(Map map) throws Exception;
 	
 	public int deleteRecipe(int idx) throws Exception;
+	
+	public int getLikeCountRecipe(int recipe_idx) throws Exception;
+
+	public int checkLikeRecipe(Map map) throws Exception;
+	
+	public RecipeInfoFromDB getRecipeInfo(int recipe_idx) throws Exception;
+	
 }

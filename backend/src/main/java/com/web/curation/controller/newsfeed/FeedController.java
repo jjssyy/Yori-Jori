@@ -19,7 +19,9 @@ import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
-import com.web.curation.model.RecipeSingleContent;
+import com.web.curation.model.RecipeInfoFromDB;
+import com.web.curation.model.RecipeDetailFromDB;
+import com.web.curation.model.RecipeDetailToClient;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveLike;
 import com.web.curation.model.service.FeedService;
@@ -89,31 +91,57 @@ public class FeedController {
 
 	// 레시피 하나의 내용 보여주기
 	@GetMapping("/content")
-	public ResponseEntity<Map<String, Object>> recipeDetail(@RequestParam String recipe_idx) {
+	public ResponseEntity<Map<String, Object>> recipeDetail(@RequestParam int recipe_idx, String id) {
 		String result = "SUCCESS";
 		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
+		HttpStatus status = HttpStatus.OK;
 
 		try {
-			List<RecipeSingleContent> recipeContents = feedService.getRecipeContents(recipe_idx);
+			List<RecipeDetailFromDB> recipeDetailFromDB = feedService.getRecipeContents(recipe_idx);
 
-			resultMap.put("recipeContent", recipeContents);
-
-			if (recipeContents == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
+			if(recipeDetailFromDB == null) {
+				resultMap.put("message", "FAIL");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NO_CONTENT);
 			}
-
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
-
+			
+			RecipeDetailToClient recipeDetailToClient = new RecipeDetailToClient();
+			recipeDetailToClient.setRecipe_contents(recipeDetailFromDB);
+			
+			//recipe 정보 : title, id, regdate, nickname
+			RecipeInfoFromDB recipeInfoFromDB = feedService.getRecipeInfo(recipe_idx);
+			
+			if(recipeInfoFromDB == null) {
+				resultMap.put("message", "FAIL");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+			}
+			
+			//레시피 기본 정보
+			recipeDetailToClient.setTitle(recipeInfoFromDB.getTitle());
+			recipeDetailToClient.setRegdate(recipeInfoFromDB.getRegdate());
+			recipeDetailToClient.setId(recipeInfoFromDB.getId());
+			recipeDetailToClient.setNickname(recipeInfoFromDB.getNickname());
+			
+			//좋아요 수
+			recipeDetailToClient.setLike(feedService.getLikeCountRecipe(recipe_idx));
+			
+			//사용자가 해당 레시피에 좋아요 눌렀는지 체크
+			HashMap<Object, Object> map = new HashMap<>();
+			map.put("id", id);
+			map.put("recipe_idx", recipe_idx);
+			if(feedService.checkLikeRecipe(map)==1) {
+				recipeDetailToClient.setLikecheck(true);
+			}else {
+				recipeDetailToClient.setLikecheck(false);
+			}
+			
+			resultMap.put("recipeContent", recipeDetailToClient);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	// 최신피드 (메인)
@@ -228,7 +256,7 @@ public class FeedController {
 		map.put("comment_idx", saveLike.getComment_idx());
 		
 		try {
-			if(feedService.checkLike(map)>0) {
+			if(feedService.checkLikeComment(map)>0) {
 				System.out.println("이미 좋아요 누른 댓글");
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 			}
@@ -289,9 +317,9 @@ public class FeedController {
 
 			for(int i=0; i<commentListFromDB.size(); i++) {
 				int comment_idx = commentListFromDB.get(i).getIdx();
-				commentToClient.get(i).setLike(feedService.getLikeCount(comment_idx));
+				commentToClient.get(i).setLike(feedService.getLikeCountComment(comment_idx));
 				map.put("comment_idx", comment_idx);
-				if(feedService.checkLike(map)==1) {
+				if(feedService.checkLikeComment(map)==1) {
 					commentToClient.get(i).setLikecheck(true);
 				}else {
 					commentToClient.get(i).setLikecheck(false);
@@ -326,5 +354,8 @@ public class FeedController {
 			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	//레시피 좋아요
+	//레시피 좋아요 취소
 	
 }
