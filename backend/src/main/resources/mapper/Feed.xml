@@ -71,4 +71,8 @@
    <delete id="cancelLikeComment" parameterType="Map">
    		delete from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
    </delete>
+   
+   <delete id = "deleteRecipe" parameterType="integer">
+   		delete from recipe where idx =#{idx}
+   </delete>
 </mapper>

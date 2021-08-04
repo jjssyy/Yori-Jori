@@ -320,4 +320,22 @@ public class FeedController {
 			return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	//레시피 삭제
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> deleteRecipe(@RequestParam int idx){
+		
+		try {
+			if(feedService.deleteRecipe(idx)==1) {
+				System.out.println("레시피 삭제 성공");
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

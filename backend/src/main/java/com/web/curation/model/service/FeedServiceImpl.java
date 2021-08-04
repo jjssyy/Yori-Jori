@@ -91,4 +91,9 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).cancelLikeComment(map);
 	}
 
+	@Override
+	public int deleteRecipe(int idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).deleteRecipe(idx);
+	}
+
 }
