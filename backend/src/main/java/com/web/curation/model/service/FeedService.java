@@ -27,4 +27,6 @@ public interface FeedService {
 	
 	public int likeComment(Map map) throws Exception;
 	public int cancelLikeComment(Map map) throws Exception;
+	
+	public int deleteRecipe(int idx) throws Exception;
 }
