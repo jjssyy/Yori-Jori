@@ -10,6 +10,7 @@ public class RecipeContent {
 	private String id;
 	private String img;
 	private int likes;
+	private boolean isLiked;
 	
 	public int getIdx() {
 		return idx;
@@ -52,6 +53,12 @@ public class RecipeContent {
 	}
 	public void setLikes(int likes) {
 		this.likes = likes;
+	}
+	public boolean isLiked() {
+		return isLiked;
+	}
+	public void setLiked(boolean isLiked) {
+		this.isLiked = isLiked;
 	}
 	
 }
