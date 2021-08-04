@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
+import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
@@ -37,7 +38,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 	
 	@Override
-	public List<RecipeDetailFromDB> getRecipeContents(String recipe_idx) throws Exception {
+	public List<RecipeDetailFromDB> getRecipeContents(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getRecipeContents(recipe_idx);
 	}
 
@@ -72,13 +73,13 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public int getLikeCount(int comment_idx) throws Exception {
-		return sqlSession.getMapper(FeedDao.class).getLikeCount(comment_idx);
+	public int getLikeCountComment(int comment_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikeCountComment(comment_idx);
 	}
 
 	@Override
-	public int checkLike(Map map) throws Exception {
-		return sqlSession.getMapper(FeedDao.class).checkLike(map);
+	public int checkLikeComment(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).checkLikeComment(map);
 	}
 
 	@Override
@@ -94,6 +95,21 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public int deleteRecipe(int idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).deleteRecipe(idx);
+	}
+
+	@Override
+	public int getLikeCountRecipe(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikeCountRecipe(recipe_idx);
+	}
+
+	@Override
+	public int checkLikeRecipe(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).checkLikeRecipe(map);
+	}
+
+	@Override
+	public RecipeInfoFromDB getRecipeInfo(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getRecipeInfo(recipe_idx);
 	}
 
 }
