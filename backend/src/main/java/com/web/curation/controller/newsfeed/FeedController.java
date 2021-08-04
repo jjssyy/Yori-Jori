@@ -19,7 +19,7 @@ import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
-import com.web.curation.model.RecipeSingleContent;
+import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveLike;
 import com.web.curation.model.service.FeedService;
@@ -95,7 +95,7 @@ public class FeedController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 
 		try {
-			List<RecipeSingleContent> recipeContents = feedService.getRecipeContents(recipe_idx);
+			List<RecipeDetailFromDB> recipeContents = feedService.getRecipeContents(recipe_idx);
 
 			resultMap.put("recipeContent", recipeContents);
 
