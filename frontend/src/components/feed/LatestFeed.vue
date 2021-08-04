@@ -22,16 +22,23 @@
         <div class="share">
           <i class="fas fa-share"></i>
         </div>
+        <div v-if="latestFeed.id == userId">
+        <p @click="deleteRecipe">삭제</p>
+        <p>수정</p>
+        </div>
       </div>
     </div>
     <div class="feed-img">
       <img :src="latestFeed.img" alt="기본 이미지">
     </div>
+    <!-- {{ latestFeed }} -->
   </div>
 </template>
 <script>
 import defaultImage from "../../assets/images/img-placeholder.png";
 import defaultProfile from "../../assets/images/profile_default.png";
+import RecipeApi from '../../api/RecipeApi';
+import { mapState } from "vuex";
 
 export default {  
   data: () => {
@@ -39,6 +46,9 @@ export default {
   },
   props: {
     latestFeed: {
+      type: [Array, Object],
+    },
+    latestFeeds: {
       type: [Array, Object],
     },
     idx: Number,
@@ -50,7 +60,31 @@ export default {
     },
     goUserProfile() {
       this.$router.push({name:'Profile', params: {user_id: this.latestFeed.id}})
-    }
+    },
+    deleteRecipe() {
+      const newFeed = this.latestFeeds
+      console.log(newFeed)
+      let data = {
+        recipe_idx: this.latestFeed.idx
+      }
+      RecipeApi.deleteRecipe(
+        data,
+        res => {
+          console.log(res)
+          console.log("글 삭제 성공")
+          newFeed.splice(this.idx,1)
+        },
+        err => {
+          console.log(err)
+        }
+      )
+      this.lastetFeeds = newFeed
+    },
+  },
+  computed: {
+    ...mapState([
+      'userId',
+    ]),
   }
 }
 </script>

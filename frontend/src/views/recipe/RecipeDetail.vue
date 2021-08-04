@@ -1,5 +1,6 @@
 <template lang="">
   <div>
+    {{ recipe }}
     <RecipeDetailList :recipe="recipe"/>
   </div>
 </template>
@@ -19,7 +20,8 @@ export default {
   },
   mounted: function() {
     let data= {
-      recipeIdx: this.$route.params.recipe_idx
+      recipeIdx: this.$route.params.recipe_idx,
+      id: this
     }
     UserApi.singleRecipe(
       data,

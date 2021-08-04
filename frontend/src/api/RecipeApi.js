@@ -1,5 +1,17 @@
 import http from "@/util/http-common";
 
+const deleteRecipe = (data, callback, errorCallback) => {
+    http.delete('/feed/delete',{
+        params: {
+            idx: data.recipe_idx
+        }
+    }).then(
+        res => callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 // Comment CRUD + 좋아요
 
 const writeComment = (data, callback, errorCallback) => {
@@ -68,6 +80,7 @@ const commentUnlike = (data,callback, errorCallback) => {
 
 
 const RecipeApi = {
+    deleteRecipe: (data, callback, errorCallback) => deleteRecipe(data, callback, errorCallback),
     writeComment: (data, callback, errorCallback) => writeComment(data, callback, errorCallback),
     updateComment: (data, callback, errorCallback) => updateComment(data, callback, errorCallback),
     deleteComment: (data, callback, errorCallback) => deleteComment(data, callback, errorCallback),

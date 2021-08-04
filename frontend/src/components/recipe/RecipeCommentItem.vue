@@ -1,7 +1,6 @@
 <template lang="">
   <div>
     <div v-if="update == false">
-      {{ commentItem }}
       <div>
       <p>닉네임 : {{ commentItem.nickname }} 
          코멘트 : {{ commentItem.comment }}</p>
