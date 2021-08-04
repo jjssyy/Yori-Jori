@@ -57,13 +57,18 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<String> getLikedPosts(String user_id) throws Exception {
+	public List<Integer> getLikedPosts(String user_id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getLikedPosts(user_id);
 	}
 
 	@Override
-	public SaveRecipeitem getSingleRecipe(String recipe_idx) throws Exception {
+	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
+	}
+
+	@Override
+	public int getLikeNum(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikeNum(recipe_idx);
 	}
 
 

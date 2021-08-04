@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.web.curation.model.SaveRecipeContent;
@@ -135,6 +136,7 @@ public class FeedController {
    }
 
    //최신피드 (메인)
+   //총 좋아요 수, 내가 누른 적 있는지 체크
    @GetMapping("/latestfeed")
    public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
       Map<String, Object> resultMap = new HashMap<>();
@@ -191,12 +193,12 @@ public class FeedController {
    
    //liked posts
    @GetMapping("/likedposts")
-   public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam String user_id) {
+   public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestBody String user_id) {
 	   Map<String, Object> resultMap = new HashMap<String, Object>();
 	   HttpStatus status = HttpStatus.ACCEPTED;
 	   String result = "SUCCESS";
 	   try {
-		   List<String> likedPostsIdx = feedService.getLikedPosts(user_id);
+		   List<Integer> likedPostsIdx = feedService.getLikedPosts(user_id);
 		   int length = likedPostsIdx.size();
 		   List<SaveRecipeitem> list = new ArrayList<SaveRecipeitem>();
 		   for(int i = 0; i < length; i++) {

@@ -18,6 +18,7 @@ public interface FeedService {
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeHashtags(HashMap<String, Object> hash);
-	public List<String> getLikedPosts(String user_id) throws Exception;
-	public SaveRecipeitem getSingleRecipe(String recipe_idx) throws Exception;
+	public List<Integer> getLikedPosts(String user_id) throws Exception;
+	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
+	public int getLikeNum(int recipe_idx) throws Exception;
 }

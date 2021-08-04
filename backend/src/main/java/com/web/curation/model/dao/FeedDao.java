@@ -26,7 +26,9 @@ public interface FeedDao {
 
 	public int writeHashtag(HashMap<String, Object> hash);
 	
-	public List<String> getLikedPosts(String user_id) throws Exception;
+	public List<Integer> getLikedPosts(String user_id) throws Exception;
 	
-	public SaveRecipeitem getSingleRecipe(String recipe_idx) throws Exception;
+	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
+	
+	public int getLikeNum(int recipe_idx) throws Exception;
 }

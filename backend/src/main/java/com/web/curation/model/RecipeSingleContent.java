@@ -6,6 +6,7 @@ public class RecipeSingleContent {
 	private String des;
 	private String thumbnail;
 	private int recipe_idx;
+	private int likes;
 	
 	public int getIdx() {
 		return idx;
@@ -36,6 +37,12 @@ public class RecipeSingleContent {
 	}
 	public void setRecipe_idx(int recipe_idx) {
 		this.recipe_idx = recipe_idx;
+	}
+	public int getLikes() {
+		return likes;
+	}
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 	
 	

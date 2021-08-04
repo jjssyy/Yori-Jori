@@ -46,12 +46,17 @@
    </insert>
    
    <!-- liked posts -->
-   <select id="likedPosts" parameterType="String" resultType="String">
+   <select id="likedPosts" parameterType="String" resultType="int">
    		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
    </select>
    
    <!-- get one recipe -->
-   <select id="getSingleRecipe" parameterType="String" resultType="saveRecipeitem">
+   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
    		select * from recipe where idx=#{recipe_idx}
+   </select>
+   
+   <!-- get the number of likes -->
+   <select id="getLikeNum" parameterType="int" resultType="int">
+   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
    </select>
 </mapper>
