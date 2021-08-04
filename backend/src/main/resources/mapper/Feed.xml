@@ -10,10 +10,17 @@
    </select>
    
    <select id="getLatestFeed" parameterType="String" resultType="RecipeContent">
-      select r.idx, r.title, r.regdate, r.id, c.img , r.nickname
+      select r.idx, r.title, r.regdate, r.id, c.img , r.nickname, count(l.recipe_idx) as likes,
+      CASE 
+      	WHEN l2.recipe_user_id IS NULL THEN false
+      	ELSE true
+      END AS isLiked
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
+      left join recipe_like l on r.idx = l.recipe_idx
+      left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id},
       where c.thumbnail="true" and (r.id in (select following from follow where follower=#{id})or id=#{id})
+      group by l.recipe_idx
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
