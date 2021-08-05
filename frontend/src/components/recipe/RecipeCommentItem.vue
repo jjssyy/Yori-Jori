@@ -1,24 +1,23 @@
 <template lang="">
   <div>
     <div v-if="update == false">
-      {{ commentItem }}
       <div>
       <p>닉네임 : {{ commentItem.nickname }} 
          코멘트 : {{ commentItem.comment }}</p>
       <p>좋아요 갯수 : {{ commentItem.like }}</p>
       </div>
-      <span v-if="heart">
+      <span v-if="commentItem.likecheck == false">
           <button class="submit btn btn-secondary" @click="like">
              좋아요
           </button>
       </span>
-      <span v-if="heart==false">
+      <span v-else>
           <button class="submit btn btn-secondary" @click="unlike">
             좋아요 취소
           </button>   
       </span>
     </div>
-    <div v-if="update == false && commentItem.likecheck == false">
+    <div v-if="update == false">
       <div v-if="commentItem.id == userId">
         <button @click="update = true">Update</button>
         <button @click="deleteComment(idx)">Delete</button>
@@ -41,7 +40,6 @@ export default {
   data: () => {
     return {
       update: false,
-      heart: true,
     }
   },
   props: {
@@ -63,7 +61,7 @@ export default {
         data,
         res => {
           console.log("좋아요 성공")
-          this.heart = false
+          this.commentItem.likecheck = true
           this.commentItem.like += 1
         },
         err => {
@@ -81,7 +79,7 @@ export default {
         data,
         res => {
           console.log("좋아요 취소 성공")
-          this.heart = true
+          this.commentItem.likecheck = false
           this.commentItem.like -= 1
         },
         err => {

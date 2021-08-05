@@ -8,7 +8,8 @@
         <div v-for="(latestFeed, idx) in latestFeeds" :key="idx">
         <LatestFeed
           :latestFeed="latestFeed" 
-          :idx="idx" 
+          :idx="idx"
+          :latestFeeds="latestFeeds"
           />
       </div>
     </div>

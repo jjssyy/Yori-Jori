@@ -1,5 +1,6 @@
 <template lang="">
   <div>
+    {{ recipe }}
     <RecipeDetailList :recipe="recipe"/>
   </div>
 </template>
@@ -7,6 +8,8 @@
 <script>
 import RecipeDetailList from "../../components/recipe/RecipeDetailList.vue";
 import UserApi from '../../api/UserApi';
+import { mapState } from "vuex";
+
 
 export default {
   components:{
@@ -19,8 +22,10 @@ export default {
   },
   mounted: function() {
     let data= {
-      recipeIdx: this.$route.params.recipe_idx
+      recipeIdx: this.$route.params.recipe_idx,
+      id: this.selectRecipeId
     }
+    console.log(data.id)
     UserApi.singleRecipe(
       data,
       res => {
@@ -32,6 +37,11 @@ export default {
         console.log(error)
       }
     )
+  },
+  computed: {
+    ...mapState([
+      'selectRecipeId',
+    ]),
   }
 }
 </script>
