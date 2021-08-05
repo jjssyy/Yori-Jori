@@ -73,4 +73,9 @@
    <select id="getLikeNum" parameterType="int" resultType="int">
    		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
    </select>
+   
+   <!-- get posts in range of popularity -->
+   <select id="popularPosts">
+   		select * from recipe
+   </select>
 </mapper>
