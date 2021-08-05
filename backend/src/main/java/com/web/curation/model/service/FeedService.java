@@ -35,4 +35,7 @@ public interface FeedService {
 	public int checkLikeRecipe(Map map) throws Exception;
 	
 	public RecipeInfoFromDB getRecipeInfo(int recipe_idx) throws Exception;
+	
+	public int likeRecipe(Map map) throws Exception;
+	public int cancelLikeRecipe(Map map) throws Exception;
 }

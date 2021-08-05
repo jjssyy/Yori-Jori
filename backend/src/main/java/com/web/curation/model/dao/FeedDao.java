@@ -49,4 +49,7 @@ public interface FeedDao {
 	
 	public RecipeInfoFromDB getRecipeInfo(int recipe_idx) throws Exception;
 	
+	public int likeRecipe(Map map) throws Exception;
+	
+	public int cancelLikeRecipe(Map map) throws Exception;
 }

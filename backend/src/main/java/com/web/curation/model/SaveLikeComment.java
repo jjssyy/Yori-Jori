@@ -1,6 +1,6 @@
 package com.web.curation.model;
 
-public class SaveLike {
+public class SaveLikeComment {
 	private int comment_idx;
 	private String id;
 	

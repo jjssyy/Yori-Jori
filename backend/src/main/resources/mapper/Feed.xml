@@ -81,10 +81,18 @@
    </select>
    
    <select id="checkLikeRecipe" parameterType="Map" resultType="integer">
-   		select count(*) from recipe_like where recipe_user_id=#{id} and recipe_idx=#{recipe_idx}
+   		select count(*) from recipe_like where recipe_user_id=#{recipe_user_id} and recipe_idx=#{recipe_idx}
    </select>
    
    <select id="getRecipeInfo" parameterType="integer" resultType="RecipeInfoFromDB">
    		select * from recipe where idx=#{recipe_idx}
    </select>
+   
+   <insert id="likeRecipe" parameterType="Map">
+   		insert into recipe_like(recipe_user_id, recipe_idx) values(#{recipe_user_id}, #{recipe_idx})
+   </insert>
+   
+   <delete id="cancelLikeRecipe" parameterType="Map">
+   		delete from recipe_like where recipe_user_id=#{recipe_user_id} and recipe_idx=#{recipe_idx}
+   </delete>
 </mapper>
