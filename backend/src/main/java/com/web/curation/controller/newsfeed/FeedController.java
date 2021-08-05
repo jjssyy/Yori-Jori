@@ -23,7 +23,8 @@ import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.RecipeDetailToClient;
 import com.web.curation.model.SaveComment;
-import com.web.curation.model.SaveLike;
+import com.web.curation.model.SaveLikeComment;
+import com.web.curation.model.SaveLikeRecipe;
 import com.web.curation.model.service.FeedService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,7 +92,7 @@ public class FeedController {
 
 	// 레시피 하나의 내용 보여주기
 	@GetMapping("/content")
-	public ResponseEntity<Map<String, Object>> recipeDetail(@RequestParam int recipe_idx, String id) {
+	public ResponseEntity<Map<String, Object>> recipeDetail(@RequestParam int recipe_idx, String recipe_user_id) {
 		String result = "SUCCESS";
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.OK;
@@ -126,7 +127,7 @@ public class FeedController {
 			
 			//사용자가 해당 레시피에 좋아요 눌렀는지 체크
 			HashMap<Object, Object> map = new HashMap<>();
-			map.put("id", id);
+			map.put("recipe_user_id", recipe_user_id);
 			map.put("recipe_idx", recipe_idx);
 			if(feedService.checkLikeRecipe(map)==1) {
 				recipeDetailToClient.setLikecheck(true);
@@ -250,7 +251,7 @@ public class FeedController {
 	
 	//댓글 좋아요
 	@PostMapping("/comment/like")
-	public ResponseEntity<String> LikeComment(@RequestBody SaveLike saveLike){
+	public ResponseEntity<String> LikeComment(@RequestBody SaveLikeComment saveLike){
 		HashMap<Object, Object> map = new HashMap<>();
 		map.put("id", saveLike.getId());
 		map.put("comment_idx", saveLike.getComment_idx());
@@ -356,6 +357,46 @@ public class FeedController {
 	}
 	
 	//레시피 좋아요
-	//레시피 좋아요 취소
+	@PostMapping("/like")
+	public ResponseEntity<String> LikeRecipe(@RequestBody SaveLikeRecipe saveLike){
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("recipe_user_id", saveLike.getRecipe_user_id());
+		map.put("recipe_idx", saveLike.getRecipe_idx());
+		
+		try {
+			if(feedService.checkLikeRecipe(map)>0) {
+				System.out.println("이미 좋아요 누른 레시피");
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+			if(feedService.likeRecipe(map)==1) {
+				System.out.println("레시피 좋아요 성공");
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
+	//레시피 좋아요 취소
+	@DeleteMapping("/like")
+	public ResponseEntity<String> CancelLikeRecipe(@RequestParam int recipe_idx, String recipe_user_id){
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("recipe_user_id", recipe_user_id);
+		map.put("recipe_idx", recipe_idx);
+		
+		try {
+			if(feedService.cancelLikeRecipe(map)==1) {
+				System.out.println("레시피 좋아요 취소 성공");
+				return new ResponseEntity<String>("Success", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

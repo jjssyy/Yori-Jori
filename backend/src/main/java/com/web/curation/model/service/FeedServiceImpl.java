@@ -112,4 +112,14 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getRecipeInfo(recipe_idx);
 	}
 
+	@Override
+	public int likeRecipe(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).likeRecipe(map);
+	}
+
+	@Override
+	public int cancelLikeRecipe(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).cancelLikeRecipe(map);
+	}
+
 }
