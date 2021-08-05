@@ -75,7 +75,8 @@
    </select>
    
    <!-- get posts in range of popularity -->
-   <select id="popularPosts">
-   		select * from recipe
+   <select id="popularPosts" resultType="RecipeContent">
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes, 
+   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc; 
    </select>
 </mapper>
