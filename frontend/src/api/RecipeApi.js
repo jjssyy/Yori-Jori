@@ -21,7 +21,7 @@ const likeRecipe = (data, callback, errorCallback) => {
 }
 
 const unlikeRecipe = (data, callback, errorCallback) => {
-    http.post('/feed/unlike',{
+    http.delete('/feed/like',{
         params: {
             recipe_idx: data.recipe_idx,
             recipe_user_id: data.recipe_user_id

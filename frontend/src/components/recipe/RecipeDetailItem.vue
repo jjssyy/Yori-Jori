@@ -1,24 +1,25 @@
 <template lang="">
   <div class="wrapC">
     <!-- {{ recipeItem }} -->
+    <!-- {{ recipeContent}} -->
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
     <p>{{ recipeItem.des }}</p>
     <div>
-      <span v-if="recipeContent.likecheck == false">
-        <button class="submit btn btn-secondary" @click="like">
-          <i id="heart" class="fas fa-heart"></i>
+      <span v-show="recipeContent.likecheck == false">
+        <button class="submit" @click="like">
+          <i class="far fa-heart"></i>
         </button>
       </span>
-      <span v-else>
-        <button class="submit btn btn-secondary" @click="Unlike">
+      <span v-show="recipeContent.likecheck == true">
+        <button class="submit" @click="Unlike">
           <i class="fas fa-heart"></i>
         </button>   
       </span>
-        <p class="mb-0" style="font-size:12px;">
-          {{ recipeContent.like }}
-        </p>
-      </div>
+      <p class="mb-0" style="font-size:12px;">
+        {{ recipeContent.like }}
+      </p>
+    </div>
     <RecipeCommentList :recipeItem="recipeItem" />
   </div>
 </template>
