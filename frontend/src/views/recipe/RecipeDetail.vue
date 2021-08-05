@@ -1,7 +1,7 @@
 <template lang="">
-  <div>
-    {{ recipe }}
-    <RecipeDetailList :recipe="recipe"/>
+  <div class="wrapC">
+    레시피 제목 : {{ recipeTitle }}
+    <RecipeDetailList :recipe="recipe" :recipeContent="recipeContent"/>
   </div>
 </template>
 
@@ -18,6 +18,8 @@ export default {
   data: () => {
     return {
       recipe: null,
+      recipeTitle: '',
+      recipeContent: null,
     }
   },
   mounted: function() {
@@ -30,7 +32,9 @@ export default {
       data,
       res => {
         console.log(res)
-        this.recipe = res.data["recipeContent"]
+        this.recipe = res.data.recipeContent.recipe_contents
+        this.recipeContent =  res.data.recipeContent
+        this.recipeTitle = res.data.recipeContent.title
         console.log('레시피')
       },
       error => {

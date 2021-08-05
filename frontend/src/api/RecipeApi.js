@@ -12,6 +12,28 @@ const deleteRecipe = (data, callback, errorCallback) => {
     )
 }
 
+const likeRecipe = (data, callback, errorCallback) => {
+    http.post('/feed/like',data).then(
+        res => callback(res)
+    ).catch(
+        err => errorCallback(err)
+    )
+}
+
+const unlikeRecipe = (data, callback, errorCallback) => {
+    http.post('/feed/unlike',{
+        params: {
+            recipe_idx: data.recipe_idx,
+            recipe_user_id: data.recipe_user_id
+        }
+    }).then(
+        res => callback(res)
+    ).catch(
+        err => errorCallback(err)
+    )
+}
+
+
 // Comment CRUD + 좋아요
 
 const writeComment = (data, callback, errorCallback) => {
@@ -81,6 +103,8 @@ const commentUnlike = (data,callback, errorCallback) => {
 
 const RecipeApi = {
     deleteRecipe: (data, callback, errorCallback) => deleteRecipe(data, callback, errorCallback),
+    likeRecipe: (data, callback, errorCallback) => likeRecipe(data, callback, errorCallback),
+    unlikeRecipe: (data, callback, errorCallback) => unlikeRecipe(data, callback, errorCallback),
     writeComment: (data, callback, errorCallback) => writeComment(data, callback, errorCallback),
     updateComment: (data, callback, errorCallback) => updateComment(data, callback, errorCallback),
     deleteComment: (data, callback, errorCallback) => deleteComment(data, callback, errorCallback),
