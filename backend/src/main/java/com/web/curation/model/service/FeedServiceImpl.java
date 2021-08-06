@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 import com.web.curation.model.dao.FeedDao;
 
 @Service
@@ -52,6 +54,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int writeComment(SaveComment comment) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).writeComment(comment);
 	}
@@ -90,5 +93,26 @@ public class FeedServiceImpl implements FeedService {
 	public int cancelLikeComment(Map map) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).cancelLikeComment(map);
 	}
+=======
+	public int writeHashtags(HashMap<String, Object> hash) {
+		return sqlSession.getMapper(FeedDao.class).writeHashtag(hash);
+	}
+
+	@Override
+	public List<Integer> getLikedPosts(String user_id) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikedPosts(user_id);
+	}
+
+	@Override
+	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
+	}
+
+	@Override
+	public int getLikeNum(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikeNum(recipe_idx);
+	}
+
+>>>>>>> e35cf708d148e4e75fbff0ca3392f6563869eff8
 
 }

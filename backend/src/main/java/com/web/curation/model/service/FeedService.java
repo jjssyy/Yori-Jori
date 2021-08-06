@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeSingleContent;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
 
 public interface FeedService {
 	public int writeRecipeInfo(RecipeInfo recipeInfo) throws Exception;
@@ -17,6 +19,7 @@ public interface FeedService {
 	public List<RecipeSingleContent> getRecipeContents(String recipe_idx) throws Exception;
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
+<<<<<<< HEAD
 	public int writeComment(SaveComment comment) throws Exception;
 	public int updateComment(SaveComment comment) throws Exception;
 	public int deleteComment(int idx) throws Exception;
@@ -27,4 +30,10 @@ public interface FeedService {
 	
 	public int likeComment(Map map) throws Exception;
 	public int cancelLikeComment(Map map) throws Exception;
+=======
+	public int writeHashtags(HashMap<String, Object> hash);
+	public List<Integer> getLikedPosts(String user_id) throws Exception;
+	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
+	public int getLikeNum(int recipe_idx) throws Exception;
+>>>>>>> e35cf708d148e4e75fbff0ca3392f6563869eff8
 }

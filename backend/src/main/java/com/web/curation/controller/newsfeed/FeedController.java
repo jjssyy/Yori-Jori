@@ -47,277 +47,175 @@ import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 @RestController
 public class FeedController {
 
-	@Autowired
-	FeedService feedService;
+   @Autowired
+   FeedService feedService;
 
-	// 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
-	// 임시 - 제목, 아이디, 설명
-	@PostMapping("/write")
-	public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
-		String id = data.getId();
-		String title = data.getTitle();
-		String nickname = data.getNickname();
-		List<String> imgList = data.getImg();
-		List<String> desList = data.getDes();
-		List<String> thumbnailList = data.getThumbnail();
+   @Autowired
+   ResourceLoader rsLoader;
 
-		if (id == null) {
-			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-		}
-		if (title == null || imgList.isEmpty() || desList.isEmpty()) {
-			return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
-		}
+   // 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
+   // 임시 - 제목, 아이디, 설명
+   @PostMapping("/write")
+   public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
+      String id = data.getId();
+      String title = data.getTitle();
+      String nickname = data.getNickname();
+      List<String> imgList = data.getImg();
+      List<String> desList = data.getDes();
+      List<String> thumbnailList = data.getThumbnail();
+      List<String> hashtagList = data.getHashtags();
+      
+      if(id==null) {
+         return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+      }
+      if(title==null || imgList.isEmpty() || desList.isEmpty()) {
+         return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+      }
+      
+      RecipeInfo recipeInfo = new RecipeInfo();
+      recipeInfo.setId(id);
+      recipeInfo.setNickname(nickname);
+      recipeInfo.setTitle(title);
+      
+      Map<String, String> map = new HashMap<>();
+      map.put("title", title);
+      map.put("id", id);
 
-		RecipeInfo recipeInfo = new RecipeInfo();
-		recipeInfo.setId(id);
-		recipeInfo.setNickname(nickname);
-		recipeInfo.setTitle(title);
+      // recipe_info 저장 (title, id, regdate)
+      feedService.writeRecipeInfo(recipeInfo);
 
-		Map<String, String> map = new HashMap<>();
-		map.put("title", title);
-		map.put("id", id);
+      // recipe_idx 가져오기
+      int recipe_idx = feedService.getRecipe_idx(map);
 
-		// recipe_info 저장 (title, id, regdate)
-		feedService.writeRecipeInfo(recipeInfo);
+      //recipe_content 저장
+      for (int i = 0; i < imgList.size(); i++) {
+         SaveRecipeContent content = new SaveRecipeContent();
+         content.setImg(imgList.get(i));
+         content.setDes(desList.get(i));
+         content.setThumbnail(thumbnailList.get(i));
+         content.setRecipe_idx(recipe_idx);
 
-		// recipe_idx 가져오기
-		int recipe_idx = feedService.getRecipe_idx(map);
+         feedService.writeRecipeContent(content);
+      }
+      
+      int size = hashtagList.size();
+      HashMap<String, Object> hash = new HashMap<String, Object>();
+      for(int i = 0; i < size; i++) {
+          hash.put("recipe_idx", recipe_idx);
+          hash.put("hashtag", hashtagList.get(i));
+    	  feedService.writeHashtags(hash);
 
-		// recipe_content 저장
-		for (int i = 0; i < imgList.size(); i++) {
-			SaveRecipeContent content = new SaveRecipeContent();
-			content.setImg(imgList.get(i));
-			content.setDes(desList.get(i));
-			content.setThumbnail(thumbnailList.get(i));
-			content.setRecipe_idx(recipe_idx);
-			content.setContent_order(i);
+          hash.clear();
+      }
 
-			feedService.writeRecipeContent(content);
-		}
+      return new ResponseEntity<String>("Success", HttpStatus.OK);
+   }
+   
+   //레시피 하나의 내용 보여주기
+   @GetMapping("/content")
+   public ResponseEntity<Map<String, Object>> feedList(@RequestParam String recipe_idx) {
+      String result = "SUCCESS";
+      Map<String, Object> resultMap = new HashMap<>();
+      HttpStatus status = HttpStatus.ACCEPTED;
 
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
-	}
+      try {
+         List<RecipeSingleContent> recipeContents = feedService.getRecipeContents(recipe_idx);
 
-	// 레시피 하나의 내용 보여주기
-	@GetMapping("/content")
-	public ResponseEntity<Map<String, Object>> feedList(@RequestParam String recipe_idx) {
-		String result = "SUCCESS";
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
+         resultMap.put("recipeContent", recipeContents);
 
-		try {
-			List<RecipeSingleContent> recipeContents = feedService.getRecipeContents(recipe_idx);
+         if (recipeContents == null) {
+            result = "FAIL";
+         } else {
+            result = "SUCCESS";
+         }
 
-			resultMap.put("recipeContent", recipeContents);
+         resultMap.put("message", result);
+         status = HttpStatus.ACCEPTED;
 
-			if (recipeContents == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
-			}
+      } catch (Exception e) {
+         e.printStackTrace();
+         resultMap.put("message", e.getMessage());
+         status = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
 
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
+   //최신피드 (메인)
+   //총 좋아요 수, 내가 누른 적 있는지 체크
+   @GetMapping("/latestfeed")
+   public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
+      Map<String, Object> resultMap = new HashMap<>();
+      HttpStatus status = HttpStatus.ACCEPTED;
+      String result = "SUCCESS";
+      try {
+         List<RecipeContent> recipe = feedService.getLatestFeed(id);
+         resultMap.put("latestFeed", recipe);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
+         if (recipe == null) {
+            result = "FAIL";
+         } else {
+            result = "SUCCESS";
+         }
 
-	// 최신피드 (메인)
-	@GetMapping("/latestfeed")
-	public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		String result = "SUCCESS";
-		try {
-			List<RecipeContent> recipe = feedService.getLatestFeed(id);
-			resultMap.put("latestFeed", recipe);
+         resultMap.put("message", result);
+         status = HttpStatus.ACCEPTED;
 
-			if (recipe == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
-			}
+      } catch (Exception e) {
+         e.printStackTrace();
+         resultMap.put("message", e.getMessage());
+         status = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
 
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
+   //프로필 - 자기 레시피
+   @GetMapping("/allrecipes")
+   public ResponseEntity<Map<String, Object>> getAllRecipes(@RequestParam String id) {
+      Map<String, Object> resultMap = new HashMap<>();
+      HttpStatus status = HttpStatus.ACCEPTED;
+      String result = "SUCCESS";
+      try {
+         List<RecipeContent> recipe = feedService.getAllRecipes(id);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
+         resultMap.put("latestFeed", recipe);
 
-	// 프로필 - 자기 레시피
-	@GetMapping("/allrecipes")
-	public ResponseEntity<Map<String, Object>> getAllRecipes(@RequestParam String id) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		String result = "SUCCESS";
-		try {
-			List<RecipeContent> recipe = feedService.getAllRecipes(id);
+         if (recipe == null) {
+            result = "FAIL";
+         } else {
+            result = "SUCCESS";
+         }
 
-			resultMap.put("latestFeed", recipe);
+         resultMap.put("message", result);
+         status = HttpStatus.ACCEPTED;
 
-			if (recipe == null) {
-				result = "FAIL";
-			} else {
-				result = "SUCCESS";
-			}
-
-			resultMap.put("message", result);
-			status = HttpStatus.ACCEPTED;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
-
-	// 댓글 작성
-	@PostMapping("/comment/write")
-	public ResponseEntity<String> writeComment(@RequestBody SaveComment comment) {
-		try {
-			if (feedService.writeComment(comment) == 1) {
-				System.out.println("댓글 작성 성공");
-				return new ResponseEntity<String>("Success", HttpStatus.OK);
-			} else {
-				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	//댓글 수정
-	@PutMapping("/comment/update")
-	public ResponseEntity<String> updateComment(@RequestBody SaveComment comment){
-		try {
-			if(feedService.updateComment(comment)==1) {
-				System.out.println("댓글 수정 성공");
-				return new ResponseEntity<String>("Success", HttpStatus.OK);
-			}else {
-				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	//댓글 삭제
-	@DeleteMapping("/comment/delete")
-	public ResponseEntity<String> deleteComment(@RequestParam int idx){
-		try {
-			if(feedService.deleteComment(idx)==1) {
-				System.out.println("댓글 삭제 성공");
-				return new ResponseEntity<String>("Success", HttpStatus.OK);
-			}else {
-				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	
-	//댓글 좋아요
-	@PostMapping("/comment/like")
-	public ResponseEntity<String> LikeComment(@RequestBody SaveLike saveLike){
-		HashMap<Object, Object> map = new HashMap<>();
-		map.put("id", saveLike.getId());
-		map.put("comment_idx", saveLike.getComment_idx());
-		
-		try {
-			if(feedService.checkLike(map)>0) {
-				System.out.println("이미 좋아요 누른 댓글");
-				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-			}
-			if(feedService.likeComment(map)==1) {
-				System.out.println("댓글 좋아요 성공");
-				return new ResponseEntity<String>("Success", HttpStatus.OK);
-			}else {
-				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	//댓글 좋아요 취소
-	@DeleteMapping("/comment/like")
-	public ResponseEntity<String> CancelLikeComment(@RequestParam int comment_idx, String id){
-		HashMap<Object, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("comment_idx", comment_idx);
-		
-		try {
-			if(feedService.cancelLikeComment(map)==1) {
-				System.out.println("댓글 좋아요 취소 성공");
-				return new ResponseEntity<String>("Success", HttpStatus.OK);
-			}else {
-				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	//댓글 조회
-	@GetMapping("/comment")
-	public ResponseEntity<Map<String, Object>> CommentList(@RequestParam int content_idx, String id){
-		Map<String, Object> resultMap = new HashMap<>();
-		List<CommentToClient> commentToClient = new ArrayList<>();
-		try {
-			List<CommentFromDB> commentListFromDB = feedService.getCommentList(content_idx);
-			if(commentListFromDB.size()==0) {
-				resultMap.put("message", "no comment");
-				return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.NO_CONTENT);
-			}
-			for(int i=0; i<commentListFromDB.size(); i++) {
-				CommentToClient c = new CommentToClient();
-				c.setIdx(commentListFromDB.get(i).getIdx());
-				c.setComment(commentListFromDB.get(i).getComment());
-				c.setRegdate(commentListFromDB.get(i).getRegdate());
-				c.setId(commentListFromDB.get(i).getId());
-				c.setNickname(commentListFromDB.get(i).getNickname());
-				commentToClient.add(c);
-			}
-			HashMap<Object, Object> map = new HashMap<>();
-			map.put("id", id);
-
-			for(int i=0; i<commentListFromDB.size(); i++) {
-				int comment_idx = commentListFromDB.get(i).getIdx();
-				commentToClient.get(i).setLike(feedService.getLikeCount(comment_idx));
-				map.put("comment_idx", comment_idx);
-				if(feedService.checkLike(map)==1) {
-					commentToClient.get(i).setLikecheck(true);
-				}else {
-					commentToClient.get(i).setLikecheck(false);
-				}
-			}
-			resultMap.put("commentList", commentToClient);
-			resultMap.put("message", "Success");
-			System.out.println("댓글 조회 성공");
-			
-			return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.OK);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			resultMap.put("message", "Fail");
-			return new ResponseEntity<Map<String,Object>>(resultMap,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+      } catch (Exception e) {
+         e.printStackTrace();
+         resultMap.put("message", e.getMessage());
+         status = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
+   
+   //liked posts
+   @GetMapping("/likedposts")
+   public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestBody String user_id) {
+	   Map<String, Object> resultMap = new HashMap<String, Object>();
+	   HttpStatus status = HttpStatus.ACCEPTED;
+	   String result = "SUCCESS";
+	   try {
+		   List<Integer> likedPostsIdx = feedService.getLikedPosts(user_id);
+		   int length = likedPostsIdx.size();
+		   List<SaveRecipeitem> list = new ArrayList<SaveRecipeitem>();
+		   for(int i = 0; i < length; i++) {
+			   list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
+		   }
+		   resultMap.put("message", result);
+		   status = HttpStatus.ACCEPTED;
+	   } catch(Exception e) {
+		   e.printStackTrace();
+		   resultMap.put("message", e.getMessage());
+		   status = HttpStatus.INTERNAL_SERVER_ERROR;
+	   }
+	   return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+   }
 }
