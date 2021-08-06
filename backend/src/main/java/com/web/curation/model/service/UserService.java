@@ -23,11 +23,7 @@ public interface UserService {
 	public String checknickname(Map map) throws Exception;
 	
 	public boolean updateuser(UserVO user) throws Exception;
-<<<<<<< HEAD
-=======
-	
-//	public boolean kakaoreg(Snsreg sns) throws Exception;
->>>>>>> e35cf708d148e4e75fbff0ca3392f6563869eff8
+
 
 	public boolean updatepw(Changepw changepw) throws Exception;
 	
