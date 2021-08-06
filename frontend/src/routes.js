@@ -17,6 +17,7 @@ import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
+import Likeposts from './views/feed/Likeposts.vue'
 
 export default [
     
@@ -95,6 +96,11 @@ export default [
         path: '/feed/allmember',
         name: 'Allmember',
         component: Allmember
+    },
+    {
+        path: '/feed/likes',
+        name: 'Likeposts',
+        component: Likeposts
     },
     {
         path: '*',
