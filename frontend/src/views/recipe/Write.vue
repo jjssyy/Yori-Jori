@@ -92,7 +92,7 @@ export default {
         res => {
           console.log('성공')
           this.$router.push({ name: 'FeedMain'})
-          // this.$store.dispatch('clearFormdata')
+          this.$store.dispatch('clearFormdata')
         },
         error=> {
           console.log(error)

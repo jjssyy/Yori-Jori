@@ -17,6 +17,7 @@ import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
+import UpdateRecipe from './views/recipe/UpdateRecipe.vue'
 
 export default [
     
@@ -95,6 +96,11 @@ export default [
         path: '/feed/allmember',
         name: 'Allmember',
         component: Allmember
+    },
+    {
+        path: '/recipe/update/:recipe_idx',
+        name: 'UpdateRecipe',
+        component: UpdateRecipe
     },
     {
         path: '*',

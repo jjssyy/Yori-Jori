@@ -2,6 +2,7 @@
   <div>
     <div v-if="update == false">
       <div>
+        <!-- {{ commentItem }} -->
       <p>닉네임 : {{ commentItem.nickname }} 
          코멘트 : {{ commentItem.comment }}</p>
       <p>좋아요 갯수 : {{ commentItem.like }}</p>
@@ -89,10 +90,8 @@ export default {
     },
     updateComment() {
       let data = {
-        content_idx: this.commmentItem.idx,
+        idx: this.commmentItem.idx,
         comment: this.commentItem.comment,
-        id: this.userId,
-        nickname: this.userNickname,
       }
       RecipeApi.updateComment(
         data,

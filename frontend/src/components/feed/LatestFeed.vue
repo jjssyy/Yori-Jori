@@ -24,7 +24,7 @@
         </div>
         <div v-if="latestFeed.id == userId">
         <p @click="deleteRecipe">삭제</p>
-        <p>수정</p>
+        <p @click="updateRecipe">수정</p>
         </div>
       </div>
     </div>
@@ -60,6 +60,9 @@ export default {
     },
     goUserProfile() {
       this.$router.push({name:'Profile', params: {user_id: this.latestFeed.id}})
+    },
+    updateRecipe() {
+      this.$router.push({name:'UpdateRecipe', params: {recipe_idx:this.latestFeed.idx}})
     },
     deleteRecipe() {
       const newFeed = this.latestFeeds
