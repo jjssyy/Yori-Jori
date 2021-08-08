@@ -44,8 +44,8 @@
    		values(#{comment}, #{content_idx}, #{id}, #{nickname})
    </insert>
    
-   <update id="updateComment" parameterType="SaveComment">
-   		update recipe_comment set comment=#{comment}, regdate=now()
+   <update id="updateComment" parameterType="UpdateComment">
+   		update recipe_comment set comment=#{comment}, regdate=now() where idx=#{idx}
    </update>
    
    <delete id="deleteComment" parameterType="integer">
@@ -95,4 +95,19 @@
    <delete id="cancelLikeRecipe" parameterType="Map">
    		delete from recipe_like where recipe_user_id=#{recipe_user_id} and recipe_idx=#{recipe_idx}
    </delete>
+   
+   <delete id="deleteRecipeContent" parameterType="integer">
+   		delete from recipe_content where idx=#{content_idx}
+   </delete>
+   
+   <update id="updateRecipeInfo" parameterType="Map">
+   		update recipe set title=#{title} where idx=#{recipe_idx}
+   </update>
+   
+   <update id="updateRecipeContent" parameterType="UpdateRecipeContentToDB">
+   		update recipe_content 
+   		set img=#{img}, des=#{des}, thumbnail=#{thumbnail}, content_order=#{content_order}
+   		where idx=#{content_idx}
+   </update>
+   
 </mapper>

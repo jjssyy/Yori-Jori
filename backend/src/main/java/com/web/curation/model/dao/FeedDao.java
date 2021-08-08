@@ -10,6 +10,8 @@ import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.UpdateComment;
+import com.web.curation.model.UpdateRecipeContentToDB;
 
 public interface FeedDao {
 	
@@ -27,7 +29,7 @@ public interface FeedDao {
 	
 	public int writeComment(SaveComment comment) throws Exception;
 	
-	public int updateComment(SaveComment comment) throws Exception;
+	public int updateComment(UpdateComment comment) throws Exception;
 	
 	public int deleteComment(int idx) throws Exception;
 	
@@ -52,4 +54,10 @@ public interface FeedDao {
 	public int likeRecipe(Map map) throws Exception;
 	
 	public int cancelLikeRecipe(Map map) throws Exception;
+	
+	
+	public int updateRecipeInfo(Map map) throws Exception;
+	public int deleteRecipeContent(int content_idx) throws Exception;
+	
+	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
 }
