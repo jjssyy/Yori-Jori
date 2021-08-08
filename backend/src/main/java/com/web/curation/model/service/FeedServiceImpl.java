@@ -138,5 +138,11 @@ public class FeedServiceImpl implements FeedService {
 	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).updateRecipeContent(recipeContent);
 	}
+	
+
+	@Override
+	public List<Integer> getMasterCount(String id) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getMasterCount(id);
+	}
 
 }

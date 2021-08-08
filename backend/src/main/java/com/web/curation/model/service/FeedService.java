@@ -41,7 +41,7 @@ public interface FeedService {
 	public int likeRecipe(Map map) throws Exception;
 	public int cancelLikeRecipe(Map map) throws Exception;
 	
-
+	public List<Integer> getMasterCount(String id) throws Exception;
 	
 	public int updateRecipeInfo(Map map) throws Exception;
 	public int deleteRecipeContent(int content_idx) throws Exception;

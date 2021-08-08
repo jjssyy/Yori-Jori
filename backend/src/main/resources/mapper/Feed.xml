@@ -110,4 +110,10 @@
    		where idx=#{content_idx}
    </update>
    
+   
+	<select id="getMasterCount" parameterType="String" resultType="integer">
+		select COUNT(achieve_master) AS cnt from recipe  where id= #{id} group by achieve_master;
+	</select>
+	
+   
 </mapper>

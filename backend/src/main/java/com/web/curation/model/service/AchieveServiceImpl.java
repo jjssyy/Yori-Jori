@@ -29,4 +29,9 @@ public class AchieveServiceImpl implements AchieveService {
 		return sqlsession.getMapper(AchieveDao.class).getachieveslavelist();
 	}
 
+	@Override
+	public List<Integer> getMasterCount() throws Exception {
+		return sqlsession.getMapper(AchieveDao.class).getMasterCount();
+	}
+
 }

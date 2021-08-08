@@ -15,5 +15,7 @@ public interface AchieveService {
 	
 	List<Achieve> getachieveslavelist() throws Exception;
 	
+	List<Integer> getMasterCount() throws Exception;
+	
 
 }

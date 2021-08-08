@@ -11,9 +11,11 @@ import com.web.curation.model.SaveRecipeContent;
 
 public interface AchieveDao {
 	
-	List<Achieve> getachievemasterlist() throws Exception;
+List<Achieve> getachievemasterlist() throws Exception;
 	
 	List<Achieve> getachieveslavelist() throws Exception;
+	
+	List<Integer> getMasterCount() throws Exception;
 	
 	
 }

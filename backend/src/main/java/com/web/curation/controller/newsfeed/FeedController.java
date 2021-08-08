@@ -174,6 +174,34 @@ public class FeedController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+	
+	//프로필 - 자기 레시피
+	   @GetMapping("/mastercount")
+	   public ResponseEntity<Map<String, Object>> getUserMasterCount(@RequestParam String id) {
+	      Map<String, Object> resultMap = new HashMap<>();
+	      HttpStatus status = HttpStatus.ACCEPTED;
+	      String result = "SUCCESS";
+	      try {
+	         List<Integer> recipe = feedService.getMasterCount(id);
+
+	         resultMap.put("latestFeed", recipe);
+
+	         if (recipe == null) {
+	            result = "FAIL";
+	         } else {
+	            result = "SUCCESS";
+	         }
+
+	         resultMap.put("message", result);
+	         status = HttpStatus.ACCEPTED;
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         resultMap.put("message", e.getMessage());
+	         status = HttpStatus.INTERNAL_SERVER_ERROR;
+	      }
+	      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	   }
 
 	// 프로필 - 자기 레시피
 	@GetMapping("/allrecipes")
