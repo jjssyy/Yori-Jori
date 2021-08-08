@@ -232,7 +232,7 @@ const fileupload = (data, callback, errorCallback) =>{
      http.get('/feed/content', {
          params: {
              recipe_idx : data.recipeIdx,
-             id: data.id
+             recipe_user_id: data.id
          }
      }).then(
         res=>callback(res)
