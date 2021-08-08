@@ -148,10 +148,8 @@ export default {
         token:this.$store.state.token,
       };
       this.isSubmit=false;
-
-      const config =  this.$store.state.token;
      
-      UserApi.changepw(config,
+      UserApi.changepw(
         data,
         res=>{
           
