@@ -119,7 +119,7 @@ export default [
         component:AchieveList
     },
     {
-        path:'/ranking/rnakinglist',
+        path:'/ranking/rankinglist',
         name:'Rankinglist',
         component:Rankinglist
     },
