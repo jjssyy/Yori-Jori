@@ -1,21 +1,20 @@
 
 
 <template>
-  <div>
-    <button @click="isThumbnail">썸네일</button>
-    <div>
-      <img v-bind:src="newImgSrc">
-      <input type="file" accept="image/*" id="file" class="inputfile" v-on:change="uploadImg">
+  <div class="write-card">
+    <div class="thumbnail" @click="isThumbnail">썸네일</div>
+    <div class="image-box">
+      <img class="image" :src="newImgSrc">
+      <input type="file" accept="image/*" id="file" @change="uploadImg">
     </div>
-    <div>
-      <textarea style="border: solid;" cols="30" rows="5" v-model.trim="recipeItemDes" @change="uploadDes"></textarea>
+    <div class="content-box">
+      <textarea class="content" v-model.trim="recipeItemDes" @change="uploadDes"></textarea>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import UserApi from '../../api/UserApi';
+import { mapState } from 'vuex'
 import FirebaseApi from '../../api/FirebaseApi';
 var frm = new FormData();
 
@@ -38,12 +37,11 @@ export default {
         file,
         res=>{
           this.newImgSrc = res
+          console.log(res)
           frm.append("file",res);
           this.$store.dispatch('uploadImg', {file: res, idx: this.idx});
         })
-
     },
-
     uploadDes: function() {
       this.$store.dispatch('writeRecipeItem', {des: this.recipeItemDes, idx: this.idx});
     },
@@ -55,3 +53,33 @@ export default {
   },
 }
 </script>
+<style scoped>
+.write-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  margin: 1%;
+  border: 1px solid #ffbe76;
+  border-radius: 25px;
+
+}
+.thumbnail{
+  width: 100%;
+}
+.image-box{
+  width: 100%;
+}
+.image{
+  width: 100%;
+}
+#file{
+  width: 100%;
+}
+.content-box{
+  width: 100%;
+}
+.content{
+  width: 100%;
+}
+</style>

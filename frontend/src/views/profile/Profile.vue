@@ -168,10 +168,8 @@ export default {
     Logout: function() {
       console.log('logout 됨')
       // 로그아웃 처리
-      this.$store.state.token = ''
-      this.$store.state.userId = ''
+      this.$store.dispatch('logout')
       this.$router.push({ name: 'Login' })
-      this.user = ''
     },
   },
   computed: {

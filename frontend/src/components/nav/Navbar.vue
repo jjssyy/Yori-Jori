@@ -5,7 +5,7 @@
         <a href="#" class="menu-bars" id="show-menu" @click="sideShow">
           <i class="fas fa-bars"></i>
         </a>
-        <router-link class="no-underline" :to="{name:'FeedMain'}">logo here</router-link>
+        <router-link class="no-underline" :to="{name:'FeedMain'}">요리조리</router-link>
       </div>
       <div></div>
       <SearchBox/>
@@ -13,11 +13,11 @@
     </div>
     <nav id="nav-menu">
       <ul class="nav-menu-items">
-        <div id="nav-toggle" @click="sideShow">
+        <div class="nav-toggle" @click="sideShow">
           <a href="#" class="menu-bars" id="hide-menu">
             <i class="fas fa-bars nav-icon"></i>
           </a>
-          <router-link class="no-underline" :to="{name:'FeedMain'}">logo here</router-link>
+          <router-link class="no-underline" :to="{name:'FeedMain'}">요리조리</router-link>
         </div>
         <div class="nav-section">
           <li class="nav-text"><span href="#"><i class="fas fa-fire nav-icon"></i>Trending</span></li>
@@ -33,7 +33,7 @@
           <router-link :to="{name:'Recipewrite'}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-pen nav-icon"></i>Write</span></li>
           </router-link>
-          <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
+          <router-link :to="{name:'Likeposts'}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-heart nav-icon"></i>Likes</span></li>
           </router-link>
           <router-link :to="{name:'Profile',params: {user_id: userId}}" active-class="active" tag="button">
@@ -41,35 +41,6 @@
           </router-link>
         </div>
       </ul>
-    </nav>
-    <nav id="sidebar">
-      <div class="menu-items">
-        <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
-          <div class="link-container">
-            Home
-          </div>
-        </router-link>
-        <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
-          <div class="link-container">
-            Star
-          </div>
-        </router-link>
-        <router-link :to="{name:'Recipewrite'}" active-class="active" tag="button">
-          <div class="link-container">
-            Write
-          </div>
-        </router-link>
-        <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
-          <div class="link-container">
-            Likes
-          </div>
-        </router-link>
-        <router-link :to="{name:'Profile',params: {user_id: userId}}" active-class="active" tag="button">
-          <div class="link-container">
-            Profile
-          </div>
-        </router-link>
-      </div>
     </nav>
   </div>
 </template>
@@ -98,9 +69,11 @@ export default {
     $(document).on("scroll", function () {
       if ($(document).scrollTop() > 50) {
         $(".navigation").addClass("shrink");
+        $(".logo").addClass("shrink");
         $(".nav-toggle").addClass("shrink");
       } else {
         $(".navigation").removeClass("shrink");
+        $(".logo").removeClass("shrink");
         $(".nav-toggle").removeClass("shrink");
       }
     });
@@ -133,9 +106,12 @@ export default {
 <style>
 
 hr{
-  background-color: #464646;
+  background-color: #ffbe76;
   height: 1px;
   border: none;
+}
+svg{
+  color:#ffbe76
 }
 
 .navigation {
@@ -145,7 +121,7 @@ hr{
   width: 100%;
   top: 0;
   left: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
+  border-bottom: 1px solid #ffbe76;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -158,9 +134,7 @@ hr{
   -moz-transition: all 0.4s ease-in-out;
 }
 
-.shrink {
-  height: 50px;
-}
+
 .logo{
   width: 230px;
   height: 80px;
@@ -202,7 +176,7 @@ hr{
   top: 10px;
   left: 10px;
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.5);
+  color: #ffbe76;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 650px) {
@@ -233,6 +207,7 @@ hr{
   font-size: 2rem;
   color: #464646;
 }
+
 #nav-menu{
   color: #464646;
   background-color: #fff;
@@ -246,10 +221,12 @@ hr{
   transition: 850ms;
   z-index: 10000;
 }
+
 #nav-menu.active{
   left: 0;
   transition: 350ms;
 }
+
 .nav-text{
   display: flex;
   justify-content: flex-start;
@@ -257,36 +234,45 @@ hr{
   height: 50px;
   padding: 1rem;
 }
+
 .nav-text span{
   text-decoration: none;
   color: #464646;
   font-size: 1.2rem;
   margin-left: 1rem;
 }
+
 .nav-text:hover {
   background-color: rgba(144, 144, 144, 0.219);
   cursor: pointer;
 }
+
 .nav-menu-items{
   padding: 0%;
   margin: 0%;
   width: 100%;
   background-color: #fff;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);;
 }
+
 .nav-icon{
   margin-right: 1rem;
-  color: #909090;
+  color: #ffbe76;
 }
-#nav-toggle{
+
+.nav-toggle{
   width: 100%;
   height: 80px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
+  border-bottom: 1px solid #ffbe76;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
 }
-#nav-toggle a {
+.nav-toggle a {
   position: relative;
   color: #000000;
   font-size: 30px;
@@ -294,7 +280,7 @@ hr{
   text-decoration: none;
 }
 .fa-bars{
-  color: #464646;
+  color: #ffbe76;
 }
 .nav-section{
   background-color: #fff;
@@ -304,14 +290,6 @@ hr{
   justify-content: center;
 }
 
-#sidebar{
-  transform: translate(-50%,-50%);
-  position: fixed;
-  top: 100%;
-  left: 50%;
-  width: 100%;
-  z-index: 10000;
-}
 .menu-items{
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -320,17 +298,9 @@ hr{
   justify-content: space-around;
   width: 100%;
 }
-.link-container{
-  background-color: rgb(255, 255, 255);
-  line-height: 50px;
-  height: 50px;
-  width: 50px;
-}
 
-@media only screen and (min-width: 800px){
-  #sidebar{
-    display: none;
-  }
+.shrink {
+  height: 50px;
 }
 
 </style>

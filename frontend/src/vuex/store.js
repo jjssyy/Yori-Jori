@@ -7,7 +7,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-const state = {
+let state = {
     isUser: false,
     token:'',
     userId: '',

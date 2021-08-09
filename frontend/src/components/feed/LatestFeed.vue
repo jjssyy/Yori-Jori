@@ -89,6 +89,10 @@ export default {
 }
 </script>
 <style scoped>
+*{
+  color: #464646;
+}
+
 .feed-item{
   width: 100%;
   padding-top: 10px;
@@ -97,7 +101,7 @@ export default {
   align-items: center;
 }
 .top{
-  background-color: beige;
+  background-color: #ffbe76;
   width: 90%;
   height: 80px;
   display: flex;

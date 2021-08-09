@@ -1,10 +1,13 @@
 <template>
   <div class="notification">
+    <a href="#" id="search-show" @click="searchShow">
+      <i class="fa fa-2x fa-search"></i>
+    </a>
     <a v-on:click="show = !show" class="tooltip-bell">
       <i class="far fa-2x fa-bell"></i>
       <span id="circle" v-if="notice > 0 && !show"></span>
     </a>
-    <button @click="noticeAdd">추가</button>
+    <!-- <button @click="noticeAdd">추가</button> -->
     <div v-if="show" class="Tooltip">
       <div id="heading">
         <div class="heading-left">
@@ -26,6 +29,15 @@
         </li>
       </ul>
     </div>
+    <div id="search">
+      <div class="search-top">
+        <a href="#" id="search-show" @click="searchShow">
+          <i class="fa fa-2x fa-search"></i>
+        </a>
+        <input type="text">
+      </div>
+      <div class="search-bottom"></div>
+    </div>
   </div>
 </template>
 
@@ -42,7 +54,8 @@ export default {
       notice:0,
       unreadnotice:[],
       defaultProfile,
-      show: false
+      show: false,
+      isShow:false
     }
   },
   mounted(){
@@ -110,6 +123,18 @@ export default {
           element.ref.delete();
         });
       });
+    },
+    searchShow(event){
+      event.preventDefault()
+      console.log('ee')
+      const Search = document.querySelector('#search')
+      if (this.isShow==false){
+        Search.classList.add('active')
+        this.isShow = true
+      } else {
+        Search.classList.remove('active')
+        this.isShow = false
+      }
     }
   },
   filters : {
@@ -178,7 +203,6 @@ a {
 
 .tooltip-bell {
   display: block;
-  color: #a5a6a8;
   z-index: 200;
 }
 
@@ -301,83 +325,34 @@ p .time {
   color: #9da4ae;
 }
 
-
 span.name {
   font-weight: 500;
 }
-
-.fadeStart-enter-active {
-  -webkit-animation: fadeStart .2s both ease-in-out;
-  animation: fadeStart .2s both ease-in-out;
-}
-
-.fadeStart-leave-active {
-  -webkit-animation: fadeEnd .2s both ease-in-out;
-  animation: fadeEnd .2s both ease-in-out;
-}
-
-[v-cloak] > * {
+.search-show{
   display: none;
 }
 
-@-webkit-keyframes fadeStart {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    display: block;
-  }
+#search{
+  color: #464646;
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  top: 0%;
+  right: -100%;
+  transition: 500ms;
+  z-index: 10000;
+}
+#search.active{
+  right: 0%;
+  transition: 500ms;
 }
 
+@media only screen and (min-width: 320px) and (max-width: 650px) {
 
-@keyframes fadeStart {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    display: block;
-  }
-}
-
-
-@-webkit-keyframes fadeEnd {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-}
-
-
-@keyframes fadeEnd {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
+  .search-show {
+    display: static;
   }
 }
 
