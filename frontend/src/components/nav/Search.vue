@@ -1,8 +1,8 @@
 <template>
   <div class="navigation-search-container">
     <i class="fa fa-search"></i>
-    <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput">
-      <router-link :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}">검색</router-link>
+    <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput">
+    <router-link :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}">검색</router-link>
     <div class="search-container">
       <div class="search-container-box">
         <div class="search-results">
@@ -54,11 +54,6 @@ export default {
       }
     });
   },
-   computed: {
-    ...mapState([
-      'userId',
-    ]),
-  },
   methods:{
     searchInput(){
       let data = {
@@ -72,13 +67,12 @@ export default {
           },
           error=>{
             console.log(error)
-            
           }
         )
       } else {
         this.UserList = []
       }
-       },
+    },
 
     searchmember(id){
       this.$router.push({ name: 'Profile' , params: {user_id: id}})
@@ -133,7 +127,7 @@ export default {
   -moz-transition: all 0.4s ease-in-out;
 }
 .user-list:hover {
-  background-color: aqua;
+  background-color: #ffbe76;
   border-radius: 5px;
 }
 

@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Navbar v-if="userId"/>
-    <!-- <Sidebar v-if="userId"/> -->
     <div class="main">
       <router-view :key="$route.fullPath"></router-view>
   </div>
@@ -11,6 +10,7 @@
 
 <script>
 import "./components/css/style.scss";
+import { mapState } from 'vuex'
 import Navbar from '@/components/nav/Navbar.vue'
 // import Sidebar from '@/components/sidebar/Sidebar.vue'
 
@@ -19,10 +19,10 @@ export default {
     Navbar,
     // Sidebar
   },
-  computed:{
-    userId(){
-      return this.$store.state.userId
-    }
+  computed: {
+    ...mapState([
+      'userId',
+    ]),
   },
   name: "app"
 };

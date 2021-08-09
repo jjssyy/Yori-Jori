@@ -166,4 +166,10 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getMasterCount(id);
 	}
 
+	@Override
+	public int writeHashtags(HashMap<String, Object> hash) {
+		
+		return sqlSession.getMapper(FeedDao.class).writeHashtags(hash);
+	}
+
 }

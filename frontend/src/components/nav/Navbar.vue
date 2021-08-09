@@ -290,14 +290,6 @@ svg{
   justify-content: center;
 }
 
-#sidebar{
-  transform: translate(-50%,-50%);
-  position: fixed;
-  top: 100%;
-  left: 50%;
-  width: 100%;
-  z-index: 10000;
-}
 .menu-items{
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -306,21 +298,9 @@ svg{
   justify-content: space-around;
   width: 100%;
 }
-.link-container{
-  background-color: rgb(255, 255, 255);
-  line-height: 50px;
-  height: 50px;
-  width: 50px;
-}
 
 .shrink {
   height: 50px;
-}
-
-@media only screen and (min-width: 800px){
-  #sidebar{
-    display: none;
-  }
 }
 
 </style>

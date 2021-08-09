@@ -18,9 +18,7 @@ const AchievemasterCount = (data, callback, errorCallback) => {
 };
 
 const AchieveApi = {
-  AchievemasterList: (data, callback, errorCallback) =>
-    AchievemasterList(data, callback, errorCallback),
-  AchievemasterCount: (data, callback, errorCallback) =>
-    AchievemasterCount(data, callback, errorCallback),
+  AchievemasterList: (data, callback, errorCallback) => AchievemasterList(data, callback, errorCallback),
+  AchievemasterCount: (data, callback, errorCallback) => AchievemasterCount(data, callback, errorCallback),
 };
 export default AchieveApi;
