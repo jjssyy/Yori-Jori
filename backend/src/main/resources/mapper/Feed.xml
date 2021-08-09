@@ -152,7 +152,9 @@
    		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
    </select>
     
-
+	<select id="getMasterCount" resultType="Integer">
+		SELECT count(achieve_master_name) from achieve group by achieve_master_name;
+	</select>
    
 
    
