@@ -3,6 +3,7 @@
     <div class="wrapC">
       
       <h1>유저 목록</h1>
+
       <table class="table" id="searchmember_table">
         <thead>
           <tr>
@@ -73,6 +74,7 @@ export default {
       res => {
         if(res.data == "success"){
           alert("팔로우 신청을 보냈습니다.")
+            this.$router.go();
         }else if(res.data == "fail"){
           alert("팔로우 신청이 보내지지 않았습니다.")
         }else{
@@ -100,7 +102,7 @@ export default {
       res => {
         if(res.data == "success"){
           alert("팔로우를 취소했습니다..")
-           this.$router.go();
+            this.$router.go();
         }else if(res.data == "fail"){
           alert("팔로우 취소신청이 보내지지 않았습니다.")
         }else{
@@ -108,10 +110,9 @@ export default {
         }
       },
       error=>{
-         alert("에러발생");
+        alert("에러발생");
       }
     )
-     
     },
   },
 
@@ -123,12 +124,14 @@ export default {
       id: this.profileId
     }
 
+
+
     UserApi.getAllmember(
       
       data,
       res => {
         this.members = res.data
-  
+        
       },
       error=>{
         console.log(error)
@@ -137,8 +140,7 @@ export default {
     UserApi.follow_already(
       data,
       res => {
-        this.follow_already = res.kdata;
- 
+        this.follow_already = res.data;
             
      
       },

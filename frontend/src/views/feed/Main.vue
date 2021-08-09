@@ -62,7 +62,13 @@ export default {
   components: { 
     // FeedItem,
     LatestFeed,
-   },
+   }, 
+   methods: {
+      logout(){
+      alert('로그아웃 되었습니다.');
+      this.$store.dispatch('logout');
+      this.$router.push({name:'Login'});
+    },},
   created: function() {
     let data = {
       id: this.userId

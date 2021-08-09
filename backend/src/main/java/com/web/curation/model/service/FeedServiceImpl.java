@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -143,6 +144,12 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<Integer> getMasterCount(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getMasterCount(id);
+	}
+
+	@Override
+	public int writeHashtags(HashMap<String, Object> hash) {
+		
+		return sqlSession.getMapper(FeedDao.class).writeHashtags(hash);
 	}
 
 }

@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Navbar v-if="userId"/>
-    <!-- <Sidebar v-if="userId"/> -->
     <div class="main">
       <router-view :key="$route.fullPath"></router-view>
   </div>
