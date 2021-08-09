@@ -1,50 +1,47 @@
 
 <template>
-  <div class="user wrapC">
-    <h1>회원 수정</h1>
-    <div class="form-wrap">
-      <div>
+  <div class=" wrapC">
+    
+    <div class="row" id="userupdate">
+      <div class="row" id='userupdatebox1'>
+        <h1>회원 수정</h1>
+      </div>
+
+      <div class="row" id='userupdatebox2'>
+        <label>프로필 이미지</label><br>
         <img :src="userImg">
         <input type="file" accept="image/*" id="file" class="inputfile" @change="uploadImg">
       </div>
-      <div class="input-with-label">
-        <input v-model="nickName"
-        id="nickName" 
-        placeholder="닉네임을 입력하세요." 
-        type="text" 
-        />
+        
+      
+      <div class="row" id='userupdatebox3'>
         <label for="nickName">닉네임</label>
+        <input v-model="nickName" id="nickName" placeholder="닉네임을 입력하세요." type="text"/>
       </div>
-      <div class="input-with-label">
-        <input v-model="des"
-        id="des" 
-        placeholder="한줄소개를 입력하세요." 
-        type="text" 
-        />
+      <div class="row" id="userupdatebox9">
         <label for="des">한줄소개</label>
+        <input v-model="des" id="des" placeholder="한줄소개를 입력하세요." type="text"/>
+        
       </div>
-      <div class="input-with-label">
-        <input v-model="cellphone"
-        id="cellphone" 
-        placeholder="전화번호를 입력하세요." 
+      <div class="row" id='userupdatebox4'>
+        <label for="cellphone">전화번호</label>
+        <input v-model="cellphone" id="cellphone" placeholder="전화번호를 입력하세요." 
         type="text"
         />
-        <label for="cellphone">전화번호</label>
       </div>
-      <div class="input-with-label">
-        <input v-model="birthday"
-        id="birthday" 
-        placeholder="생일을 입력하세요." 
+      <div class="row" id='userupdatebox5'>
+        <label for="birthday">생일</label>
+        <input v-model="birthday" id="birthday" placeholder="생일을 입력하세요." 
         type="text" 
         />
-        <label for="birthday">생일</label>
+        
       </div>
       
-      <div id="daumaddress">
+      <div class="row" id='userupdatebox6'>
         <div>
           <label>주소</label>
-          <button v-show="addresscheck" @click="saveaddressopen">저장</button>
-          <button v-show="!addresscheck" @click="saveaddressopen">열기</button>
+          <button class="btn btn-primary" v-show="addresscheck" @click="saveaddressopen">저장</button>
+          <button class="btn btn-secondary" v-show="!addresscheck" @click="saveaddressopen">열기</button>
         </div>
         <div>
           <DaumPostcode v-show="addresscheck"
@@ -52,18 +49,16 @@
           />
         </div>
       </div>
-      <div class="input-with-label">
-      <input v-model="address2" 
-        id="address2" 
-        type="text" 
-        />
+      <div class="row" id='userupdatebox7'>
         <label for="address2">상세주소</label>
+        <input v-model="address2" id="address2" type="text" placeholder="상세주소를 입력하세요." />
       </div>
+    
+    <div class="row" id='userupdatebox8'>
+      <button class="button" @click="update">변경하기</button>
     </div>
+  </div>
 
-    <button class="btn-bottom"
-    @click="update"
-    >변경하기</button>
   </div>
 </template>
 
@@ -75,7 +70,7 @@ import FirebaseApi from '../../api/FirebaseApi';
 export default {
   data: () => {
     return {
-      addresscheck: true,
+      addresscheck: false,
       userImg:"",
       email: "",
       nickName: "",
@@ -108,11 +103,9 @@ export default {
   methods:{
     saveaddressopen(){  
       this.addresscheck = !this.addresscheck;
-      console.log(this.addresscheck);
     },
     saveaddressclose(){
       this.addresscheck = !this.addresscheck;
-      console.log(this.addresscheck);
     },
     handleAddress(data) {
       let fullAddress = data.address
@@ -194,3 +187,55 @@ export default {
   }
 };
 </script>
+<style>
+#userupdate{
+  margin-top: 100px;
+  border: 1px solid darkgray;
+  padding:50px;
+}
+
+input {
+  border : 1px solid darkgray;
+}
+
+label{
+  font-size: 20px;
+  margin-left: -10px;
+  margin-bottom: 5px;
+}
+
+#userupdatebox1, #userupdatebox9, #userupdatebox2, #userupdatebox3, #userupdatebox4, #userupdatebox5, #userupdatebox6, #userupdatebox7{
+  margin-top: 20px;
+  margin-left: 3px;
+ 
+}
+
+#userupdatebox8{
+  margin-top: 50px;
+  margin-left: 3px;
+  
+}
+
+#userupdatebox2 input{
+  margin-top: 30px;
+  border:none;
+}
+
+#userupdatebox8 button{
+  background-color: #ffbe76;
+  color: white;
+  height: 50px;
+  
+}
+
+#userupdatebox6 button{
+  height: 30px;
+  line-height: 18px;
+  margin-left: 25px;
+}
+
+#userupdatebox6{
+  margin-bottom: 30px;
+}
+
+</style>

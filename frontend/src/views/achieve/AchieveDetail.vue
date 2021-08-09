@@ -75,8 +75,8 @@ export default {
     let data = {
       id: this.userId,
     };
-    this.master_name = this.$route.params.master_name;
-    this.idx = this.$route.params.idx;
+    this.master_name = this.$route.query.master_name;
+    this.idx = this.$route.query.idx;
     AchieveApi.AchievemasterList(
       data,
       (res) => {
