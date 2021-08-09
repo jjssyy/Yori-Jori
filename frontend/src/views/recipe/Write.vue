@@ -70,7 +70,7 @@ export default {
       title: "",
       fields: [],
       count: 0,
-      thumbnailNumber:null,
+      thumbnailNumber:0,
       ThumbNailList: [],
       HashList:[],
       temphash:'',
