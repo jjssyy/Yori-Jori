@@ -10,6 +10,8 @@ import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.UpdateComment;
+import com.web.curation.model.UpdateRecipeContentToDB;
 
 public interface FeedService {
 	public int writeRecipeInfo(RecipeInfo recipeInfo) throws Exception;
@@ -19,7 +21,7 @@ public interface FeedService {
 	public List<RecipeContent> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeComment(SaveComment comment) throws Exception;
-	public int updateComment(SaveComment comment) throws Exception;
+	public int updateComment(UpdateComment comment) throws Exception;
 	public int deleteComment(int idx) throws Exception;
 	
 	public List<CommentFromDB> getCommentList(int content_idx) throws Exception;
@@ -38,4 +40,10 @@ public interface FeedService {
 	
 	public int likeRecipe(Map map) throws Exception;
 	public int cancelLikeRecipe(Map map) throws Exception;
+	
+	public List<Integer> getMasterCount(String id) throws Exception;
+	
+	public int updateRecipeInfo(Map map) throws Exception;
+	public int deleteRecipeContent(int content_idx) throws Exception;
+	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
 }

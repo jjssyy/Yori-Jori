@@ -33,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.web.curation.model.SaveRecipeContent;
 import com.web.curation.model.SaveRecipeitem;
+import com.web.curation.model.UpdateComment;
+import com.web.curation.model.UpdateRecipeContentToDB;
+import com.web.curation.model.UpdateRecipeFromClient;
 
 @CrossOrigin("*")
 @RequestMapping("/feed")
@@ -171,6 +174,34 @@ public class FeedController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+	
+	//프로필 - 자기 레시피
+	   @GetMapping("/mastercount")
+	   public ResponseEntity<Map<String, Object>> getUserMasterCount(@RequestParam String id) {
+	      Map<String, Object> resultMap = new HashMap<>();
+	      HttpStatus status = HttpStatus.ACCEPTED;
+	      String result = "SUCCESS";
+	      try {
+	         List<Integer> recipe = feedService.getMasterCount(id);
+
+	         resultMap.put("latestFeed", recipe);
+
+	         if (recipe == null) {
+	            result = "FAIL";
+	         } else {
+	            result = "SUCCESS";
+	         }
+
+	         resultMap.put("message", result);
+	         status = HttpStatus.ACCEPTED;
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         resultMap.put("message", e.getMessage());
+	         status = HttpStatus.INTERNAL_SERVER_ERROR;
+	      }
+	      return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	   }
 
 	// 프로필 - 자기 레시피
 	@GetMapping("/allrecipes")
@@ -218,7 +249,7 @@ public class FeedController {
 	
 	//댓글 수정
 	@PutMapping("/comment/update")
-	public ResponseEntity<String> updateComment(@RequestBody SaveComment comment){
+	public ResponseEntity<String> updateComment(@RequestBody UpdateComment comment){
 		try {
 			if(feedService.updateComment(comment)==1) {
 				System.out.println("댓글 수정 성공");
@@ -398,5 +429,97 @@ public class FeedController {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	//레시피 수정
+	@PutMapping("/update")
+	public ResponseEntity<String> updateRecipe(UpdateRecipeFromClient recipe){
+		//0.레시피 제목 수정	
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("recipe_idx", recipe.getRecipe_idx());
+		map.put("title", recipe.getTitle());
+		
+		try {
+			if(feedService.updateRecipeInfo(map)==1) {
+				System.out.println("제목 변경 성공");
+			}else {
+				System.out.println("제목 변경 실패");
+				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		//1.recipe_content 삭제
+		List<Integer> deleteContents = recipe.getDeleteContents();
+		if(deleteContents.get(0)!=-1) {
+			for(int i=0; i<deleteContents.size(); i++) {
+				try {
+					if(feedService.deleteRecipeContent(deleteContents.get(i))==1) {
+						System.out.println("content 삭제 성공");
+					}else {
+						System.out.println("content 삭제 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		//2.recipe_content 수정, 댓글:content_idx로 연결되어있어서 알아서 반영됨
+		// recipe_content 삽입
+
+		List<Integer> content_idxList = recipe.getContent_idx();
+		List<String> imgList = recipe.getImg();
+		List<String> desList = recipe.getDes();
+		List<String> thumbnailList = recipe.getThumbnail();
+		List<Integer> content_orderList = recipe.getContent_order();
+		
+		for(int i=0; i<content_idxList.size(); i++) {
+			int content_idx = content_idxList.get(i);
+			if(content_idx == -1) {
+				//삽입
+				SaveRecipeContent content = new SaveRecipeContent();
+				content.setImg(imgList.get(i));
+				content.setDes(desList.get(i));
+				content.setThumbnail(thumbnailList.get(i));
+				content.setContent_order(content_orderList.get(i));
+				
+				try {
+					if(feedService.writeRecipeContent(content)==1) {
+						System.out.println("content 삽입 성공");
+					}else {
+						System.out.println("content 삽입 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				
+			}else {
+				//수정
+				UpdateRecipeContentToDB recipeContent = new UpdateRecipeContentToDB();
+				recipeContent.setIdx(content_idx);
+				recipeContent.setImg(imgList.get(i));
+				recipeContent.setDes(desList.get(i));
+				recipeContent.setThumbnail(thumbnailList.get(i));
+				recipeContent.setContent_order(content_orderList.get(i));
+				
+				try {
+					if(feedService.updateRecipeContent(recipeContent)==1) {
+						System.out.println("content 수정 성공");
+					}else {
+						System.out.println("content 수정 실패");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
 }

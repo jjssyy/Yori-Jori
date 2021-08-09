@@ -14,6 +14,8 @@ import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.UpdateComment;
+import com.web.curation.model.UpdateRecipeContentToDB;
 import com.web.curation.model.dao.FeedDao;
 
 @Service
@@ -58,7 +60,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public int updateComment(SaveComment comment) throws Exception {
+	public int updateComment(UpdateComment comment) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).updateComment(comment);
 	}
 
@@ -120,6 +122,27 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public int cancelLikeRecipe(Map map) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).cancelLikeRecipe(map);
+	}
+
+	@Override
+	public int updateRecipeInfo(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateRecipeInfo(map);
+	}
+
+	@Override
+	public int deleteRecipeContent(int content_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).deleteRecipeContent(content_idx);
+	}
+
+	@Override
+	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateRecipeContent(recipeContent);
+	}
+	
+
+	@Override
+	public List<Integer> getMasterCount(String id) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getMasterCount(id);
 	}
 
 }

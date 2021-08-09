@@ -1,8 +1,8 @@
 <template lang="">
-  <div>
-    <p>{{ follower.nickname }}</p>
-    <button class="delete" @click="deleteFollower(follower, idx)"> remove </button>
-  </div>
+  <tr>
+    <td>{{ follower.nickname }}</td>
+    <td><button class="btn btn-secondary" @click="deleteFollower(follower, idx)"> remove </button></td>
+  </tr>
 </template>
 
 <script>
