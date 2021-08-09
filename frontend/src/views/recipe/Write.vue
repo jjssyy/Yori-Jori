@@ -97,8 +97,8 @@ export default {
       frm.append("id", this.userId)
       frm.append('nickname',this.userNickname)
       for (let i=0; i< this.recipeItems.length; i++){
-        frm.append("des["+i+"]",this.recipeItems[i])
-        frm.append("img["+i+"]",this.img[i])
+        frm.append("des["+i+"]",this.recipeItems[i].des)
+        frm.append("img["+i+"]",this.recipeItems[i].img)
         frm.append("thumbnail["+i+"]",this.ThumbNailList[i])
       }
 
@@ -139,12 +139,9 @@ export default {
       this.HashList.push({
         content : this.temphash
       })
-      console.log(this.HashList)
       this.temphash = ''
     },
     updateCard(idx){
-      console.log(idx)
-      console.log(this.fields[idx].img)
       this.fields[idx].des = ''
     },
     isThumbnail(idx){
@@ -207,18 +204,22 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  border:1px solid #FF9636;
+  border-radius: 3px;
 }
 .hash-input input{
   height: 70%;
-  border:1px solid #ffbe76;
-  border-right: none;
-  border-radius: 3px;
   background-color: #fafafa;
+  border: none;
   margin-right: 2px;
 }
 .hash-input button{
   height: 70%;
   border-radius: 3px;
+  align-items: center;
+}
+.hash-input svg{
+  margin-right: 2px;
 }
 .write-card{
   display: flex;
@@ -228,7 +229,7 @@ export default {
   height: 40vw;
   max-height: 250px;
   margin: 1%;
-  border: 1px solid #ffbe76;
+  border: 1px solid #FF9636;
   border-radius: 5px;
 
 }
@@ -287,33 +288,37 @@ export default {
   transform: translate(-50%,-50%);
   display: flex;
   padding: 10px 0px;
-  background-color: #ffbe76;
+  background-color: #fff;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   z-index: 3;
 }
 .inbox label{
-  width: 95%;
+  max-width: 95%;
+  max-height: 50vh;
   display: flex;
+  width: 500px;
+  height: 500px;
   justify-content: center;
 }
 .inbox img{
   background-color: #191919;
-  width: 100%;
-  max-width: 500px;
-  max-height: 500px;
+  min-width: 100%;
+  min-height: 100%;
   margin-bottom: 20px;
-  border: 2px solid #432384;
+  object-fit: contain;
 }
 .inbox input{
   display: none;
 }
 .inbox textarea{
   width: 95%;
-  margin-bottom: 20px;
+  margin: 20px 0px;
+  background-color: rgba(165, 175, 182, 0.5);
 }
 .hash{
-  background-color: #ffbe76;
+  background-color: #FF9636;
   padding: 0px 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -330,8 +335,7 @@ export default {
 .submit{
   width: 95%;
   display: inline;
-  background-color: #fafafa;
-  border: 1px solid #ffbe76;
+  background-color: #DAD870;
   border-radius: 3px;
   margin-bottom: 5%;
 }

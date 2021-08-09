@@ -227,7 +227,7 @@ a {
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 100%;
-  background: #f07379;
+  background: #FF9636;
 }
 
 .notification-list{
@@ -328,9 +328,6 @@ p .time {
 span.name {
   font-weight: 500;
 }
-.search-show{
-  display: none;
-}
 
 #search{
   color: #464646;
@@ -349,10 +346,10 @@ span.name {
   transition: 500ms;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 650px) {
+@media only screen and (min-width: 650px){
 
-  .search-show {
-    display: static;
+  #search-show {
+    display: none;
   }
 }
 
