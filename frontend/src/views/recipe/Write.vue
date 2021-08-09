@@ -46,8 +46,11 @@
           </div>
         </div>
         <div v-for="(h, idx) in HashList" :key="idx">
-          <span class="hash">#{{h.content}}</span>
+          <span class="hash"># {{h.content}}</span>
         </div>
+      </div>
+      <div id="image-des">
+        <h2>Challenges</h2>
       </div>
       <button class="submit" @click="check"><h1><i class="fas fa-pen nav-icon"></i></h1></button>
     </div>
@@ -83,7 +86,8 @@ export default {
     },
     check(){
       var frm = new FormData();
-      for (let i=0;i<this.recipeItems.length; i++){
+      let l = this.fields.length
+      for (let i=0;i<this.fields.length; i++){
         if( this.thumbnailNumber == i){
           this.ThumbNailList.push('true')
         }
@@ -95,11 +99,15 @@ export default {
       frm.append("title", this.title)
       frm.append("id", this.userId)
       frm.append('nickname',this.userNickname)
-      for (let i=0; i< this.recipeItems.length; i++){
-        frm.append("des["+i+"]",this.recipeItems[i].des)
-        frm.append("img["+i+"]",this.recipeItems[i].img)
+      for (let i=0; i< l; i++){
+        frm.append("des["+i+"]",this.fields[i].des)
+        frm.append("img["+i+"]",this.fields[i].img)
         frm.append("thumbnail["+i+"]",this.ThumbNailList[i])
       }
+      for (let i=0; i<this.HashList.length; i++){
+        frm.append("hashtags["+i+"]",this.HashList[i].content)
+      }
+      console.log(frm)
 
       UserApi.createRecipe(
         frm,
@@ -141,7 +149,7 @@ export default {
       this.temphash = ''
     },
     updateCard(idx){
-      this.fields[idx].des = ''
+      // this.fields[idx].des = ''
     },
     isThumbnail(idx){
       this.thumbnailNumber = idx
@@ -150,7 +158,6 @@ export default {
   computed: {
     ...mapState([
       'userId',
-      'recipeItems',
       'img',
       'userNickname'
     ]),
