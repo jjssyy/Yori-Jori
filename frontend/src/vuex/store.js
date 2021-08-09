@@ -17,6 +17,7 @@ const state = {
     recipeItems: [],
     img: [],
     thumbnailNumber: 0,
+    selectRecipeId: '',
 }
 
 export default new Vuex.Store({

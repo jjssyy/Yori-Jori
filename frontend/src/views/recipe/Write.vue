@@ -1,5 +1,4 @@
 
-
 <template>
   <div>
     <div class="wrapC">
@@ -24,9 +23,8 @@
       <div class="" id="image-des"  >
         <write-form @childs-event="imgsrc" v-for="(data, idx) in fields" :key="idx" :idx="idx"></write-form>
       </div>
-          
+        <button @click="check">등록</button>
       </div>
-      <button @click="check">등록</button>
     </div>
  
 </template>
@@ -35,7 +33,6 @@
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import WriteForm from "../../components/recipe/WriteForm.vue";
-var frm = new FormData();
 
 export default {
   data: () => {
@@ -71,7 +68,6 @@ export default {
         }
       }
 
-      console.log(this.ThumbNailList)
       frm.append("title", this.title)
       frm.append("id", this.userId)
       frm.append('nickname',this.userNickname)
@@ -95,6 +91,7 @@ export default {
         res => {
           console.log('성공')
           this.$router.push({ name: 'FeedMain'})
+          // this.$store.dispatch('clearFormdata')
         },
         error=> {
           console.log(error)

@@ -6,7 +6,14 @@ public class SaveRecipeContent {
 	private String des;
 	private String thumbnail;
 	private int recipe_idx;
+	private int content_order;
 	
+	public int getContent_order() {
+		return content_order;
+	}
+	public void setContent_order(int content_order) {
+		this.content_order = content_order;
+	}
 	public String getImg() {
 		return img;
 	}

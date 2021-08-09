@@ -17,6 +17,10 @@ import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
+import AchieveList from './views/achieve/AchieveList.vue'
+import Rankinglist from './views/ranking/ranking.vue'
+import Likeposts from './views/feed/Likeposts.vue'
+import AchieveDetail from './views/achieve/AchieveDetail.vue';
 
 export default [
     
@@ -109,5 +113,29 @@ export default [
         name:'ErrorPage',
         component:ErrorPage
     },
+    {
+        path:'/achievelist',
+        name:'Achievelist',
+        component:AchieveList
+    },
+    {
+        path:'/ranking/rnakinglist',
+        name:'Rankinglist',
+        component:Rankinglist
+    },
+
+    {
+        path: '/achievelist/:idx',
+        name: 'AchieveDetail',
+        component: AchieveDetail,
+    },
+    {
+        path: '/feed/likes',
+        name: 'Likeposts',
+        component: Likeposts
+    },
+
+
+    
 
 ]

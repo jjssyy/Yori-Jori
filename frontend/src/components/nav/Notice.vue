@@ -4,7 +4,7 @@
       <i class="far fa-2x fa-bell"></i>
       <span id="circle" v-if="notice > 0 && !show"></span>
     </a>
-    <button @click="noticeAdd">추가</button>
+    <!-- <button @click="noticeAdd">추가</button> -->
     <div v-if="show" class="Tooltip">
       <div id="heading">
         <div class="heading-left">

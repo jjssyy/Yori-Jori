@@ -13,5 +13,11 @@ export default {
   },
   choiceThumbnail({commit}, res){
     commit('CHOICETHUMBNAIL',res)
+  },
+  clearFormdata({commit}){
+    commit('CLEARFORMDATA')
+  },
+  selectRecipe({commit}, res){
+    commit('SELECTRECIPE',res)
   }
 }

@@ -19,7 +19,13 @@ public class UserVO {
 	private Date regdate;
 	private String token;
 	private String img;
-
+	private int rankpoint;
+	public int getRankpoint() {
+		return rankpoint;
+	}
+	public void setRankpoint(int rankpoint) {
+		this.rankpoint = rankpoint;
+	}
 	public String getToken() {
 		return token;
 	}
