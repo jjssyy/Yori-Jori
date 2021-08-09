@@ -205,7 +205,7 @@ label{
 }
 
 #userupdatebox1, #userupdatebox9, #userupdatebox2, #userupdatebox3, #userupdatebox4, #userupdatebox5, #userupdatebox6, #userupdatebox7{
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: 3px;
  
 }
@@ -213,6 +213,7 @@ label{
 #userupdatebox8{
   margin-top: 50px;
   margin-left: 3px;
+  margin-bottom: 50px;
   
 }
 

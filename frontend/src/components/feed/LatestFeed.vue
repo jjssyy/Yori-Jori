@@ -26,6 +26,7 @@
         <p @click="deleteRecipe">삭제</p>
         <p @click="updateRecipe">수정</p>
         </div>
+
       </div>
     </div>
     <div class="feed-img">
@@ -48,9 +49,7 @@ export default {
     latestFeed: {
       type: [Array, Object],
     },
-    latestFeeds: {
-      type: [Array, Object],
-    },
+  
     idx: Number,
   },
   methods: {
