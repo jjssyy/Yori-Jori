@@ -2,7 +2,7 @@
   <div>
     <div class="commentForm">
       <!-- {{ comments }} -->
-      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem" :recipeItemIdx="recipeItem.idx"/>
+      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem"/>
       <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment">
       <button @click="createComment">작성</button>
     </div>
@@ -36,6 +36,8 @@ export default {
   },
   methods: {
     createComment() {
+      console.log(this.comment.content)
+      const newComments = this.comments
       let data = {
         content_idx: this.recipeItem.idx,
         comment: this.comment.content,
@@ -53,16 +55,18 @@ export default {
           console.log(error)
         }
       )
+      this.comments = newComments
     },
     getComment() {
       let data = {
       content_idx: this.recipeItem.idx,
-      id: this.selectRecipeId,
+      id: this.recipeItem.id,
     }
     RecipeApi.recipeItemComments(
       data,
       res => {
         console.log('조회 성공')
+        console.log(res.data.commentList)
         this.comments = res.data.commentList
       },
       err => {
@@ -75,7 +79,6 @@ export default {
     ...mapState([
       'userId',
       'userNickname',
-      'selectRecipeId',
     ])
   }
 }

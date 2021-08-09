@@ -1,7 +1,7 @@
 <template>
   <div class="navigation-search-container">
     <i class="fa fa-search"></i>
-    <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput">
+    <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput">
       <router-link :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}">검색</router-link>
     <div class="search-container">
       <div class="search-container-box">
