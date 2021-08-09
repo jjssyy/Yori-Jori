@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,54 +45,69 @@ public class FeedController {
 
 	@Autowired
 	FeedService feedService;
+	
+	 @Autowired
+	 ResourceLoader rsLoader;
+
 
 	// 글쓰기 기능 (제목, 아이디, 사진, 설명, 썸네일여부) - post
 	// 임시 - 제목, 아이디, 설명
-	@PostMapping("/write")
-	public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
-		String id = data.getId();
-		String title = data.getTitle();
-		String nickname = data.getNickname();
-		List<String> imgList = data.getImg();
-		List<String> desList = data.getDes();
-		List<String> thumbnailList = data.getThumbnail();
+	 @PostMapping("/write")
+	   public ResponseEntity<String> writeRecipe(SaveRecipeitem data) throws Exception {
+	      String id = data.getId();
+	      String title = data.getTitle();
+	      String nickname = data.getNickname();
+	      List<String> imgList = data.getImg();
+	      List<String> desList = data.getDes();
+	      List<String> thumbnailList = data.getThumbnail();
+	      List<String> hashtagList = data.getHashtags();
+	      
+	      if(id==null) {
+	         return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+	      }
+	      if(title==null || imgList.isEmpty() || desList.isEmpty()) {
+	         return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
+	      }
+	      
+	      RecipeInfo recipeInfo = new RecipeInfo();
+	      recipeInfo.setId(id);
+	      recipeInfo.setNickname(nickname);
+	      recipeInfo.setTitle(title);
+	      
+	      Map<String, String> map = new HashMap<>();
+	      map.put("title", title);
+	      map.put("id", id);
 
-		if (id == null) {
-			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
-		}
-		if (title == null || imgList.isEmpty() || desList.isEmpty()) {
-			return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
-		}
+	      // recipe_info 저장 (title, id, regdate)
+	      feedService.writeRecipeInfo(recipeInfo);
 
-		RecipeInfo recipeInfo = new RecipeInfo();
-		recipeInfo.setId(id);
-		recipeInfo.setNickname(nickname);
-		recipeInfo.setTitle(title);
+	      // recipe_idx 가져오기
+	      int recipe_idx = feedService.getRecipe_idx(map);
 
-		Map<String, String> map = new HashMap<>();
-		map.put("title", title);
-		map.put("id", id);
+	      //recipe_content 저장
+	      for (int i = 0; i < imgList.size(); i++) {
+	         SaveRecipeContent content = new SaveRecipeContent();
+	         content.setImg(imgList.get(i));
+	         content.setDes(desList.get(i));
+	         content.setThumbnail(thumbnailList.get(i));
+	         content.setRecipe_idx(recipe_idx);
 
-		// recipe_info 저장 (title, id, regdate)
-		feedService.writeRecipeInfo(recipeInfo);
+	         feedService.writeRecipeContent(content);
+	      }
+	      
+	      int size = hashtagList.size();
+	      HashMap<String, Object> hash = new HashMap<String, Object>();
+	      for(int i = 0; i < size; i++) {
+	          hash.put("recipe_idx", recipe_idx);
+	          hash.put("hashtag", hashtagList.get(i));
+	    	  feedService.writeHashtags(hash);
 
-		// recipe_idx 가져오기
-		int recipe_idx = feedService.getRecipe_idx(map);
+	          hash.clear();
+	      }
 
-		// recipe_content 저장
-		for (int i = 0; i < imgList.size(); i++) {
-			SaveRecipeContent content = new SaveRecipeContent();
-			content.setImg(imgList.get(i));
-			content.setDes(desList.get(i));
-			content.setThumbnail(thumbnailList.get(i));
-			content.setRecipe_idx(recipe_idx);
-			content.setContent_order(i);
+	      return new ResponseEntity<String>("Success", HttpStatus.OK);
+	   }
 
-			feedService.writeRecipeContent(content);
-		}
-
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
-	}
 
 	// 레시피 하나의 내용 보여주기
 	@GetMapping("/content")

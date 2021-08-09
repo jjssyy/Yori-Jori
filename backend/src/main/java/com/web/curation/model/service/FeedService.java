@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public interface FeedService {
 	public int writeComment(SaveComment comment) throws Exception;
 	public int updateComment(UpdateComment comment) throws Exception;
 	public int deleteComment(int idx) throws Exception;
-	
+	public int writeHashtags(HashMap<String, Object> hash);
 	public List<CommentFromDB> getCommentList(int content_idx) throws Exception;
 	public int getLikeCountComment(int comment_idx) throws Exception;
 	public int checkLikeComment(Map map) throws Exception;

@@ -124,16 +124,6 @@
    		where idx=#{content_idx}
    </update>
    
-   
-	<select id="getMasterCount" parameterType="String" resultType="integer">
-		select COUNT(achieve_master) AS cnt from recipe  where id= #{id} group by achieve_master;
-	</select>
-	
-	 <insert id="writeHashtag" parameterType="Map">
-      insert into hashtag(recipe_idx, tag)
-      values(#{recipe_idx}, #{hashtag})
-   </insert>
-   
       <select id="likedPosts" parameterType="String" resultType="int">
    		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
    </select>
@@ -148,42 +138,11 @@
    </select>
    
    <!-- hashtag -->
-   <insert id="writeHashtag" parameterType="Map">
+   <insert id="writeHashtags" parameterType="Map">
       insert into hashtag(recipe_idx, tag)
       values(#{recipe_idx}, #{hashtag})
    </insert>
    
-   <!-- liked posts -->
-   <select id="likedPosts" parameterType="String" resultType="int">
-   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
-   </select>
-   
-   <!-- get one recipe -->
-   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-   		select * from recipe where idx=#{recipe_idx}
-   </select>
-   
-   <!-- get the number of likes -->
-   <select id="getLikeNum" parameterType="int" resultType="int">
-   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
-   </select>
-   
-   <insert id="writeComment" parameterType="SaveComment">
-   		insert into recipe_comment(comment, content_idx, id, nickname) 
-   		values(#{comment}, #{content_idx}, #{id}, #{nickname})
-   </insert>
-   
-   <update id="updateComment" parameterType="SaveComment">
-   		update recipe_comment set comment=#{comment}, regdate=now()
-   </update>
-   
-   <delete id="deleteComment" parameterType="integer">
-   		delete from recipe_comment where idx = #{idx};
-   </delete>
-   
-   <select id="getCommentList" parameterType="integer" resultType="CommentFromDB">
-   		select * from recipe_comment where content_idx=#{content_idx}
-   </select>
    
    <select id="getLikeCount" parameterType="integer" resultType="integer">
    		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};

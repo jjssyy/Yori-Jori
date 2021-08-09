@@ -1,5 +1,6 @@
 package com.web.curation.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +56,12 @@ public interface FeedDao {
 	
 	public int cancelLikeRecipe(Map map) throws Exception;
 	
+	public int writeHashtags(HashMap<String, Object> hash);
 
 	public List<Integer> getMasterCount(String id) throws Exception;
+	
 	public int updateRecipeInfo(Map map) throws Exception;
+	
 	public int deleteRecipeContent(int content_idx) throws Exception;
 	
 	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
