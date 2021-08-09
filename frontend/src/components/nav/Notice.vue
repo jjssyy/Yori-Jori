@@ -34,7 +34,23 @@
         <a href="#" id="search-show" @click="searchShow">
           <i class="fa fa-2x fa-search"></i>
         </a>
-        <input type="text">
+        <div>
+          <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput">
+            <router-link :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}">검색</router-link>
+            <div class="search-container">
+              <div class="search-container-box">
+                <div class="search-results">
+                  <ul v-for="(user,idx) in UserList" :key="idx">
+                    <li class="user-list" v-if="user.id != userId" @click="searchmember(user.id)">
+                      <img :src=defaultProfile alt="최고">
+                      <span class="to-profile">{{user.nickname}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+        </div>
+        
       </div>
       <div class="search-bottom"></div>
     </div>
@@ -42,12 +58,14 @@
 </template>
 
 
-
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 import firebase from 'firebase';
 import FirebaseApi from '../../api/FirebaseApi';
 import defaultProfile from "../../assets/images/profile_default.png";
-
+import UserApi from '../../api/UserApi';
+import { mapState } from 'vuex'
 export default {
   data:()=>{
     return {
@@ -55,13 +73,30 @@ export default {
       unreadnotice:[],
       defaultProfile,
       show: false,
-      isShow:false
+      isShow:false,
+      defaultProfile,
+      InputText:'',
+      msg:'',
+      UserList:[]
     }
   },
   mounted(){
     this.onNotice(),
-    this.onRequest()
+    this.onRequest(),
+    $(document).on("scroll", function () {
+      if ($(document).scrollTop() > 50) {
+        $(".search-container").addClass("shrink");
+        $(".user-list").addClass("ul-scroll");
+        $(".to-profile").addClass("scb-scroll");
+
+      } else {
+        $(".search-container").removeClass("shrink");
+        $(".user-list").removeClass("ul-scroll");
+        $(".to-profile").removeClass("scb-scroll");
+      }
+    });
   },
+  
   watch :{
     getUserId(){
       this.onNotice(),
@@ -74,6 +109,28 @@ export default {
     }
   },
   methods:{
+    searchInput(){
+      let data = {
+        nickname : this.InputText,
+      };
+      if (this.InputText.length != 0) {
+        UserApi.searchByNickname(
+          data, 
+          res=>{
+            this.UserList = res.data.nicknameList
+          },
+          error=>{
+            console.log(error)
+          }
+        )
+      } else {
+        this.UserList = []
+      }
+    },
+
+    searchmember(id){
+      this.$router.push({ name: 'Profile' , params: {user_id: id}})
+    },
     noticeAdd(){
       let data = {
         user:this.$store.state.userId,
@@ -160,7 +217,12 @@ export default {
 
 			return `${Math.floor(betweenTimeDay / 365)}년전`;
 		}
-  }
+  },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
+  },
 }
 </script>
 
