@@ -67,16 +67,15 @@ export default {
         frm.append("thumbnail["+i+"]",this.recipe[i].thumbnail)
         frm.append("content_order["+i+"]",i)
       }
-      if(this.deleteContents){
-        for(let i=0;i<this.deleteContents.length; i++){
-          frm.append("deleteContents["+i+"]",this.deleteContents[i])
-        } 
+      if(this.deleteContents.length == 0){
+        const deleteContent = [-1]
+        frm.append("deleteContents[0]",deleteContent[0])
       }
       else {
-        frm.append("deletecontents[0]",-1)
+        for(let i=0;i<this.deleteContents.length; i++){
+        frm.append("deleteContents["+i+"]",this.deleteContents[i])
+        } 
       }
-      console.log(this.deleteContents)
-
       // FormData의 key 확인
       for (let key of frm.keys()) {
         console.log(key);
