@@ -160,11 +160,7 @@ export default {
       id: this.profileId
     }
     
-<<<<<<< HEAD
-     const config =  this.$store.state.token;
-=======
     const config =  this.$store.state.token;
->>>>>>> feature/S05P13C205-51
     
     UserApi.getUser(config,
       data,
