@@ -486,7 +486,7 @@ public class FeedController {
 		}
 		//2.recipe_content 수정, 댓글:content_idx로 연결되어있어서 알아서 반영됨
 		// recipe_content 삽입
-
+		int recipe_idx = recipe.getRecipe_idx();
 		List<Integer> content_idxList = recipe.getContent_idx();
 		List<String> imgList = recipe.getImg();
 		List<String> desList = recipe.getDes();
@@ -498,6 +498,7 @@ public class FeedController {
 			if(content_idx == -1) {
 				//삽입
 				SaveRecipeContent content = new SaveRecipeContent();
+				content.setRecipe_idx(recipe_idx);
 				content.setImg(imgList.get(i));
 				content.setDes(desList.get(i));
 				content.setThumbnail(thumbnailList.get(i));
