@@ -18,7 +18,7 @@
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
-      select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes 
+      select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes, 
       CASE 
          WHEN l2.recipe_user_id IS NULL THEN false
          ELSE true

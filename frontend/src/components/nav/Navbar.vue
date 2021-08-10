@@ -5,7 +5,7 @@
         <a href="#" class="menu-bars" id="show-menu" @click="sideShow">
           <i class="fas fa-bars"></i>
         </a>
-        <router-link class="no-underline" :to="{name:'FeedMain'}">요리조리</router-link>
+        <router-link class="no-underline" :to="{name:'FeedMain'}"><img class="logo-img" :src="logo" alt=""></router-link>
       </div>
       <div></div>
       <SearchBox/>
@@ -17,7 +17,7 @@
           <a href="#" class="menu-bars" id="hide-menu">
             <i class="fas fa-bars nav-icon"></i>
           </a>
-          <router-link class="no-underline" :to="{name:'FeedMain'}">요리조리</router-link>
+          <router-link class="no-underline" :to="{name:'FeedMain'}"><img class="logo-img" :src="logo" alt=""></router-link>
         </div>
         <div class="nav-section">
           <li class="nav-text"><span href="#"><i class="fas fa-fire nav-icon"></i>Trending</span></li>
@@ -52,6 +52,8 @@
 import SearchBox from './Search.vue'
 import Notification from './Notice.vue'
 import { mapState } from 'vuex'
+import logo from '@/assets/logo.png'
+
 export default {
   components:{
     SearchBox,
@@ -60,6 +62,7 @@ export default {
   data: ()=>{
     return{
       isShow: false,
+      logo
     }
   },
   mounted(){
@@ -109,9 +112,6 @@ hr{
   background-color: #ffbe76;
   height: 1px;
   border: none;
-}
-svg{
-  color:#ffbe76
 }
 
 .navigation {
@@ -303,4 +303,11 @@ svg{
   height: 50px;
 }
 
+.logo-img{
+  margin: 0%;
+  padding: 0%;
+}
+#hide-menu svg{
+  color: #ffbe76;
+}
 </style>
