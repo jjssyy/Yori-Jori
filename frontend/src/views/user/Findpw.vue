@@ -1,6 +1,9 @@
 
 <template>
     <div class="wrapC" id="findpw">
+      <div class="row" id="findpw_box0">
+       <img :src="require(`@/assets/images/roundlogo.png`)" />
+    </div>
       <div class="row" id="findpw_box1">
         <h1>비밀번호 찾기</h1>
       </div>
@@ -110,6 +113,7 @@ input {
 #findpw_box4{
   margin-top: 50px;
   margin-left: 5px;
+  margin-bottom: 50px;
 }
 
 #findpw_box4 button{
@@ -117,6 +121,18 @@ input {
   color: white;
   height: 50px;
 }
+
+#findpw_box1{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#findpw_box0 img{
+  width:200px;
+  margin-left: 150px;
+}
+
 
 </style>
 

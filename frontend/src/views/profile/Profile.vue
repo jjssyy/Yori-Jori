@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="wrapC" v-if="profileUser">
-      
       <div class="row" id="profile_wrap">
         <div class="row" id="profile_main">
           <div class="col-sm-3" id="profile_left_box" >
@@ -85,7 +84,7 @@
               </div>
             
               <div class="col-md-2" id="profile_rankpoint_refresh">
-                <button v-if="profileUser.rankpoint != rankpoint" class="btn btn-primary" @click="updaterank">갱신</button>
+                <button v-if="profileUser.rankpoint != rankpoint" class="btn btn-danger" @click="updaterank">갱신</button>
               </div>
             </div>
               <div class="row" id="profile_update_box">
@@ -112,16 +111,7 @@
         <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
         </my-recipe-item>
       </div>
-      <div>
-        <div class="wrap">
-          <p>비밀번호를 변경하시겠습니까</p>
-          <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
-        </div>
-        <div class="wrap">
-          <p>회원정보 변경</p>
-          <router-link to="/user/update" class="btn--text">변경하기</router-link>
-        </div>
-      </div>
+  
     </div>
   </div>
 </template>
@@ -364,7 +354,7 @@ export default {
 }
 #profile_rankpoint_refresh button{
   height: 30px;
-  line-height: 20px;
+  line-height: 17px;
   
 }
 

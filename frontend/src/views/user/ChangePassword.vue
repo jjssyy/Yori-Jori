@@ -7,9 +7,13 @@
 <template>
   <div class="wrapC">
     <div class="row" id="pwupdate">
+      <div class="row" id="updatepw_box0">
+       <img :src="require(`@/assets/images/roundlogo.png`)" />
+    </div>
       <div class="row" id="updatepw">
          <h1>비밀번호 변경</h1>
    
+      </div>
       <div class="row" id="updatepw_box1">
         <input v-model="oldpw" 
         v-bind:class="{error : error.oldpw, complete:!error.oldpw&&oldpw.length!==0}"
@@ -54,7 +58,6 @@
 
   
 
-      </div>
 
     </div>
    
@@ -218,12 +221,24 @@ input {
 #updatepw_box4{
   margin-top: 50px;
   margin-left: 5px;
+  margin-bottom: 50px;
 }
 
 #updatepw_box4 button{
   background-color: #ffbe76;
   color: white;
   height: 50px;
+}
+
+#updatepw{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#updatepw_box0 img{
+  width:200px;
+  margin-left: 120px;
 }
 
 </style>
