@@ -51,7 +51,7 @@ export default {
     like() {
       let data = {
         recipe_idx: this.recipeItem.recipe_idx,
-        recipe_user_id: this.selectRecipeId
+        recipe_user_id: this.userId
       }
       RecipeApi.likeRecipe(
         data,
@@ -75,7 +75,7 @@ export default {
     Unlike() {
       let data = {
         recipe_idx: this.recipeItem.recipe_idx,
-        recipe_user_id: this.selectRecipeId
+        recipe_user_id: this.userId
       }
       RecipeApi.unlikeRecipe(
         data,
