@@ -6,6 +6,9 @@
         <div class="row">
            <label>일반 가입</label>
         </div>
+        <div class="row" style="margin-top:30px;">
+          <p>아이디, 비밀번호 등을 활용한 회원가입</p>
+        </div>
        <div class="row">
         <router-link to="/user/join" class="btn--text">
           <img :src="require(`@/assets/images/user.png`)" />
@@ -17,6 +20,9 @@
         <div class="col-md-4" id="kakao">
           <div class="row">
             <label>카카오가입</label>
+          </div>
+          <div class="row" style="margin-top:30px;">
+            <p>카카오 API를 이용한 회원가입</p>
           </div>
           <div class="row">
             <kakaoregister></kakaoregister>
@@ -231,18 +237,22 @@ export default {
 }
 
 #normal label, #kakao label{
-font-size: 25px;
+  font-size: 40px;
 }
 
 #normal img{
   width:350px;
   height:250px;
-  margin: 50px 0px 50px -100px;
+  margin: 80px 0px 50px -100px;
 }
 
 #kakao img{
   width:200px;
-  margin: 90px 0px 50px -20px;
+  margin: 120px 0px 50px -20px;
+}
+
+p{
+  color: #ffbe76;
 }
 
 </style>
