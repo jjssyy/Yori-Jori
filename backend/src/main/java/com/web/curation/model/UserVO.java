@@ -18,6 +18,14 @@ public class UserVO {
 	private String role;
 	private Date regdate;
 	private String token;
+	private String img;
+	private int rankpoint;
+	public int getRankpoint() {
+		return rankpoint;
+	}
+	public void setRankpoint(int rankpoint) {
+		this.rankpoint = rankpoint;
+	}
 	public String getToken() {
 		return token;
 	}
@@ -102,6 +110,11 @@ public class UserVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 }

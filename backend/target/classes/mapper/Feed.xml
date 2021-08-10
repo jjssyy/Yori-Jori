@@ -5,19 +5,33 @@
    
 <mapper namespace="com.web.curation.model.dao.FeedDao">
 
-   <select id="getRecipeContents" parameterType="String" resultType="RecipeSingleContent">
-      select * from recipe_content where recipe_idx = #{recipe_idx}
+   <select id="getRecipeContents" parameterType="int" resultType="RecipeDetailFromDB">
+      select * from recipe_content where recipe_idx = #{recipe_idx} order by content_order
    </select>
    
    <select id="getLatestFeed" parameterType="String" resultType="RecipeContent">
-      select r.idx, r.title, r.regdate, r.id, c.img , r.nickname
+       select r.idx, r.title, r.regdate, r.id, c.img , r.nickname, count(l.recipe_idx) as likes,
+      CASE 
+      	WHEN l2.recipe_user_id IS NULL THEN false
+      	ELSE true
+      END AS isLiked
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
+      left join recipe_like l on r.idx = l.recipe_idx
+      left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id}
       where c.thumbnail="true" and (r.id in (select following from follow where follower=#{id})or id=#{id})
+      group by l.recipe_idx
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
-      select * from recipe where id = #{id}
+      select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes, 
+      CASE 
+      	WHEN l2.recipe_user_id IS NULL THEN false
+      	ELSE true
+      END AS isLiked
+      from recipe r left join recipe_like l on r.idx = l.recipe_idx 
+      left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id} 
+      where r.id = #{id} group by l.recipe_idx
    </select>
 
    <!-- title, id -->
@@ -30,12 +44,187 @@
    </select>
    
    <!-- img, des, thumbnail, recipe_idx -->
-   <insert id="writeRecipeContent" parameterType="RecipeContent">
-      insert into recipe_content(img, des, thumbnail, recipe_idx)
-      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx})
+   <insert id="writeRecipeContent" parameterType="SaveRecipeContent">
+       insert into recipe_content(img, des, thumbnail, recipe_idx, content_order)
+      values(#{img}, #{des}, #{thumbnail}, #{recipe_idx}, #{content_order})
    </insert>
    
    <select id="getThumbnail" parameterType="integer" resultType="String">
-      select img from recipe_content where thumbnail="true" and recipe_idx=#{reicpe_idx}
+      select img from recipe_content where thumbnail="true" and recipe_idx=#{recipe_idx}
+<<<<<<< HEAD
    </select>
+   
+   <!-- hashtag -->
+   <insert id="writeHashtag" parameterType="Map">
+      insert into hashtag(recipe_idx, tag)
+      values(#{recipe_idx}, #{hashtag})
+   </insert>
+   
+   <!-- liked posts -->
+   <select id="likedPosts" parameterType="String" resultType="int">
+   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+   </select>
+   
+   <!-- get one recipe -->
+   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
+   		select * from recipe where idx=#{recipe_idx}
+   </select>
+   
+   <!-- get the number of likes -->
+   <select id="getLikeNum" parameterType="int" resultType="int">
+   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
+   </select>
+   
+   <!-- get posts in range of popularity -->
+   <select id="popularPosts" resultType="RecipeContent">
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes, 
+   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc; 
+=======
+>>>>>>> 0d59a87ee292b7baaf775c9f88e9a1f9f9ebd286
+   </select>
+   
+   <insert id="writeComment" parameterType="SaveComment">
+   		insert into recipe_comment(comment, content_idx, id, nickname) 
+   		values(#{comment}, #{content_idx}, #{id}, #{nickname})
+   </insert>
+   
+   <update id="updateComment" parameterType="UpdateComment">
+   		update recipe_comment set comment=#{comment}, regdate=now() where idx=#{idx}
+   </update>
+   
+   <delete id="deleteComment" parameterType="integer">
+   		delete from recipe_comment where idx = #{idx};
+   </delete>
+   
+   <select id="getCommentList" parameterType="integer" resultType="CommentFromDB">
+   		select * from recipe_comment where content_idx=#{content_idx}
+   </select>
+   
+   <select id="getLikeCountComment" parameterType="integer" resultType="integer">
+   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
+   </select>
+   
+   <select id="checkLikeComment" parameterType="Map" resultType="integer">
+   		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
+   </select>
+   
+   <insert id="likeComment" parameterType="Map">
+   		insert into recipe_comment_like(id, comment_idx) values(#{id}, #{comment_idx})
+   </insert>
+   
+   <delete id="cancelLikeComment" parameterType="Map">
+   		delete from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
+   </delete>
+   
+   <delete id = "deleteRecipe" parameterType="integer">
+   		delete from recipe where idx =#{idx}
+   </delete>
+   
+   <select id="getLikeCountRecipe" parameterType="integer" resultType="integer">
+   		select count(*) from recipe_like where recipe_idx=#{recipe_idx}
+   </select>
+   
+   <select id="checkLikeRecipe" parameterType="Map" resultType="integer">
+   		select count(*) from recipe_like where recipe_user_id=#{recipe_user_id} and recipe_idx=#{recipe_idx}
+   </select>
+   
+   <select id="getRecipeInfo" parameterType="integer" resultType="RecipeInfoFromDB">
+   		select * from recipe where idx=#{recipe_idx}
+   </select>
+   
+   <insert id="likeRecipe" parameterType="Map">
+   		insert into recipe_like(recipe_user_id, recipe_idx) values(#{recipe_user_id}, #{recipe_idx})
+   </insert>
+   
+   <delete id="cancelLikeRecipe" parameterType="Map">
+   		delete from recipe_like where recipe_user_id=#{recipe_user_id} and recipe_idx=#{recipe_idx}
+   </delete>
+   
+   <delete id="deleteRecipeContent" parameterType="integer">
+   		delete from recipe_content where idx=#{content_idx}
+   </delete>
+   
+   <update id="updateRecipeInfo" parameterType="Map">
+   		update recipe set title=#{title} where idx=#{recipe_idx}
+   </update>
+   
+   <update id="updateRecipeContent" parameterType="UpdateRecipeContentToDB">
+   		update recipe_content 
+   		set img=#{img}, des=#{des}, thumbnail=#{thumbnail}, content_order=#{content_order}
+   		where idx=#{content_idx}
+   </update>
+   
+   
+	<select id="getMasterCount" parameterType="String" resultType="integer">
+		select COUNT(achieve_master) AS cnt from recipe  where id= #{id} group by achieve_master;
+	</select>
+	
+	 <insert id="writeHashtag" parameterType="Map">
+      insert into hashtag(recipe_idx, tag)
+      values(#{recipe_idx}, #{hashtag})
+   </insert>
+   
+      <select id="likedPosts" parameterType="String" resultType="int">
+   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+   </select>
+     <!-- get one recipe -->
+   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
+   		select * from recipe where idx=#{recipe_idx}
+   </select>
+   
+   <!-- get the number of likes -->
+   <select id="getLikeNum" parameterType="int" resultType="int">
+   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
+   </select>
+   
+   <!-- hashtag -->
+   <insert id="writeHashtag" parameterType="Map">
+      insert into hashtag(recipe_idx, tag)
+      values(#{recipe_idx}, #{hashtag})
+   </insert>
+   
+   <!-- liked posts -->
+   <select id="likedPosts" parameterType="String" resultType="int">
+   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+   </select>
+   
+   <!-- get one recipe -->
+   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
+   		select * from recipe where idx=#{recipe_idx}
+   </select>
+   
+   <!-- get the number of likes -->
+   <select id="getLikeNum" parameterType="int" resultType="int">
+   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
+   </select>
+   
+   <insert id="writeComment" parameterType="SaveComment">
+   		insert into recipe_comment(comment, content_idx, id, nickname) 
+   		values(#{comment}, #{content_idx}, #{id}, #{nickname})
+   </insert>
+   
+   <update id="updateComment" parameterType="SaveComment">
+   		update recipe_comment set comment=#{comment}, regdate=now()
+   </update>
+   
+   <delete id="deleteComment" parameterType="integer">
+   		delete from recipe_comment where idx = #{idx};
+   </delete>
+   
+   <select id="getCommentList" parameterType="integer" resultType="CommentFromDB">
+   		select * from recipe_comment where content_idx=#{content_idx}
+   </select>
+   
+   <select id="getLikeCount" parameterType="integer" resultType="integer">
+   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
+   </select>
+   
+   <select id="checkLike" parameterType="Map" resultType="integer">
+   		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
+   </select>
+    
+
+   
+
+   
 </mapper>

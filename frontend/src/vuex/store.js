@@ -7,7 +7,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-const state = {
+let state = {
     isUser: false,
     token:'',
     userId: '',
@@ -17,6 +17,7 @@ const state = {
     recipeItems: [],
     img: [],
     thumbnailNumber: 0,
+    selectRecipeId: '',
 }
 
 export default new Vuex.Store({

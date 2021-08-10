@@ -183,41 +183,41 @@
         err=>errorCallback(err)
     )
 }
- const requestUser = (config, callback, errorCallback)=>{
-     http.get("/user/updateuser", config).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const Follow = (data, callback, errorCallback) =>{
-     http.post('/user/profile',{
-         params:{
-             loginId: data.loginId,
-             profileId: data.profileId,
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
+
+const requestUser = (config, callback, errorCallback)=>{
+    http.get("/user/updateuser", config).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    );
+}
+
+const Follow = (data, callback, errorCallback) =>{
+    http.post('/user/profile',{
+        params:{
+            loginId: data.loginId,
+            profileId: data.profileId,
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
 const fileupload = (data, callback, errorCallback) =>{
-     http.post('/user/fileupload', data, {
-         headers: {
-             'Content-Type': 'multipart/form-data'
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const createRecipe = (data, callback, errorCallback) =>{
-     http.post('/feed/write', data, {
+    http.post('/user/fileupload', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const createRecipe = (data, callback, errorCallback) =>{
+    http.post('/feed/write', data, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -231,7 +231,8 @@ const fileupload = (data, callback, errorCallback) =>{
  const singleRecipe = (data, callback, errorCallback) => {
      http.get('/feed/content', {
          params: {
-             recipe_idx : data.recipeIdx
+             recipe_idx : data.recipeIdx,
+             recipe_user_id: data.id
          }
      }).then(
         res=>callback(res)

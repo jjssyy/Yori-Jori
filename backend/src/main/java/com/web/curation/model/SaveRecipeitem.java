@@ -9,6 +9,8 @@ public class SaveRecipeitem {
 	private List<String> img;
 	private List<String> des;
 	private List<String> thumbnail;
+	private List<String> hashtags;
+	private int likes;
 
 	public String getTitle() {
 		return title;
@@ -56,5 +58,22 @@ public class SaveRecipeitem {
 	public void setThumbnail(List<String> thumbnail) {
 		this.thumbnail = thumbnail;
 	}
+
+	public List<String> getHashtags() {
+		return hashtags;
+	}
+
+	public void setHashtags(List<String> hashtags) {
+		this.hashtags = hashtags;
+	}
+	
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
 
 }

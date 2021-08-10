@@ -5,12 +5,6 @@ import java.sql.Date;
 public class UserInfo {
 	
 	private String id;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	private String nickname;
 	private String des;
 	private String role;
@@ -19,7 +13,21 @@ public class UserInfo {
 	private Integer follower;
 	private Integer following;
 	private Integer waiting;
-	
+	private String img;
+	private int rankpoint;
+	public int getRankpoint() {
+		return rankpoint;
+	}
+	public void setRankpoint(int rankpoint) {
+		this.rankpoint = rankpoint;
+	}
+
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public Integer getWaiting() {
 		return waiting;
 	}
@@ -62,5 +70,10 @@ public class UserInfo {
 	public void setFollowing(Integer following) {
 		this.following = following;
 	}
-
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 }

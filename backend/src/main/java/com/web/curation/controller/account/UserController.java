@@ -106,7 +106,7 @@ public class UserController {
 				
 				String token = jwtservice.create("user_email", email, "access-token");
 				resultmap.put("access-token", token);
-				
+				resultmap.put("id", user.getId());
 				result = "success";
 				resultmap.put("result", result);
 			}else {
@@ -132,8 +132,8 @@ public class UserController {
 
 		try {
 
-			String encodepassworrd = passwordencoder.encode(user.getPw());
-			user.setPw(encodepassworrd);
+			String encodepassword = passwordencoder.encode(user.getPw());
+			user.setPw(encodepassword);
 
 			boolean join = userservice.join(user);
 			if (join == true) {
@@ -326,7 +326,7 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public ResponseEntity<UserInfo> profile(@RequestParam String id, HttpServletRequest request) throws Exception {
-		System.out.println(id);
+		
 		if (jwtservice.isUsable(request.getHeader("access-token"))) {
 			UserInfo result = new UserInfo();
 
@@ -341,6 +341,11 @@ public class UserController {
 			result.setRole(user.getRole());
 			result.setFollower(follower);
 			result.setFollowing(following);
+<<<<<<< HEAD
+=======
+			result.setImg(user.getImg());
+			result.setRankpoint(user.getRankpoint());
+>>>>>>> feature/S05P13C205-51
 
 			return new ResponseEntity<UserInfo>(result, HttpStatus.OK);
 		} else {
@@ -553,59 +558,59 @@ public class UserController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@GetMapping("/snslogin")
-	public ResponseEntity<?> snslogin(@RequestParam Map map) {
-
-		String result = "";
-
-		Map resultmap = new HashMap<>();
-		try {
-			map.put("id", map.get("email"));
-			UserVO user = userservice.login(map);
-			System.out.println(map.get("id"));
-			if (user.getSns().equals("kakao")) {
-				String email = (String) map.get("email");
-
-				String token = jwtservice.create("user_email", email, "access-token");
-				resultmap.put("access-token", token);
-
-				result = "success";
-				resultmap.put("result", result);
-			} else {
-				result = "fail";
-				resultmap.put("result", result);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = "error";
-			resultmap.put("result", result);
-		}
-	 	
-	 	  @PostMapping("/snsregister")
-	 	   public ResponseEntity<String> snsregister(@RequestBody Snsreg sns){
-	 		   
-	 		   String result = "";
-	 		   
-	 			  try {
-	 					if(userservice.kakaoreg(sns) == true) {
-	 						result = "success";
-	 					}else {
-	 						result = "fail";
-	 					}
-	 						
-	 					
-	 				} catch (Exception e) {
-	 					e.printStackTrace();
-	 					result = "error";
-	 				}
-	 				
-	 		    
-	 		  
-	 		   return new ResponseEntity<String>(result,HttpStatus.OK);
-	 	   }
-
-		return new ResponseEntity<Map>(resultmap, HttpStatus.OK);
-	}
+//	@GetMapping("/snslogin")
+//	public ResponseEntity<?> snslogin(@RequestParam Map map) {
+//
+//		String result = "";
+//
+//		Map resultmap = new HashMap<>();
+//		try {
+//			map.put("id", map.get("email"));
+//			UserVO user = userservice.login(map);
+//			System.out.println(map.get("id"));
+//			if (user.getSns().equals("kakao")) {
+//				String email = (String) map.get("email");
+//
+//				String token = jwtservice.create("user_email", email, "access-token");
+//				resultmap.put("access-token", token);
+//
+//				result = "success";
+//				resultmap.put("result", result);
+//			} else {
+//				result = "fail";
+//				resultmap.put("result", result);
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			result = "error";
+//			resultmap.put("result", result);
+//		}
+//	 	
+//	 	  @PostMapping("/snsregister")
+//	 	   public ResponseEntity<String> snsregister(@RequestBody Snsreg sns){
+//	 		   
+//	 		   String result = "";
+//	 		   
+//	 			  try {
+//	 					if(userservice.kakaoreg(sns) == true) {
+//	 						result = "success";
+//	 					}else {
+//	 						result = "fail";
+//	 					}
+//	 						
+//	 					
+//	 				} catch (Exception e) {
+//	 					e.printStackTrace();
+//	 					result = "error";
+//	 				}
+//	 				
+//	 		    
+//	 		  
+//	 		   return new ResponseEntity<String>(result,HttpStatus.OK);
+//	 	   }
+//
+//		return new ResponseEntity<Map>(resultmap, HttpStatus.OK);
+//	}
 
 }
