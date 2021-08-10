@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
+import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -171,7 +172,21 @@ public class FeedController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
 		try {
-			List<RecipeContent> recipe = feedService.getLatestFeed(id);
+			List<FeedRecipe> recipe = feedService.getLatestFeed(id);
+			
+			HashMap<Object, Object> map = new HashMap<>();
+			map.put("recipe_user_id", id);
+			for(int i=0; i<recipe.size(); i++) {
+				int recipe_idx = recipe.get(i).getIdx();
+				map.put("recipe_idx", recipe_idx);
+				if(feedService.checkLikeRecipe(map)==1) {
+					recipe.get(i).setLikecheck(true);
+				}else {
+					recipe.get(i).setLikecheck(false);
+				}
+				recipe.get(i).setLike(feedService.getLikeCountRecipe(recipe_idx));
+			}
+			
 			resultMap.put("latestFeed", recipe);
 
 			if (recipe == null) {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.CommentFromDB;
+import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -46,7 +47,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<RecipeContent> getLatestFeed(String id) throws Exception {
+	public List<FeedRecipe> getLatestFeed(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getLatestFeed(id);
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.web.curation.model.CommentFromDB;
+import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -19,7 +20,7 @@ public interface FeedService {
 	public Integer getRecipe_idx(Map map) throws Exception;
 	public int writeRecipeContent(SaveRecipeContent recipeContent) throws Exception;
 	public List<RecipeDetailFromDB> getRecipeContents(int recipe_idx) throws Exception;
-	public List<RecipeContent> getLatestFeed(String id) throws Exception;
+	public List<FeedRecipe> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeComment(SaveComment comment) throws Exception;
 	public int updateComment(UpdateComment comment) throws Exception;
