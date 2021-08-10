@@ -41,7 +41,7 @@
      );
  }
  
- const checknickname = (data, callback, errorCallback)=>{
+const checknickname = (data, callback, errorCallback)=>{
      http.get("/user/checknickname", {
          params: {
              nickname: data.nickname
@@ -345,6 +345,17 @@ const snsLogin = (data, callback, errorCallback) =>{
     )
 }
 
+const myMasterCount = (data, callback, errorCallback) => {
+    http
+      .get('/feed/mastercount', {
+        params: {
+          id: data.id,
+        },
+      })
+      .then((res) => callback(res))
+      .catch((err) => errorCallback(err));
+  }
+
 const snsregister = (data, callback, errorCallback) => {
     
     http.post('/user/snsregister',data).then(
@@ -381,6 +392,6 @@ const UserApi = {
     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
     snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
     snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
-    
+    myMasterCount: (data, callback, errorCallback) => myMasterCount(data, callback, errorCallback),
 }
 export default UserApi

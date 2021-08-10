@@ -60,7 +60,7 @@ export default {
   components: {},
   methods: {
     showDetail(master, idx) {
-      this.$router.push({ name: 'AchieveDetail', params: { master_name: master, idx: idx } });
+      this.$router.push({ name: 'AchieveDetail', query: { master_name: master, idx: idx } });
     },
   },
   created: function() {

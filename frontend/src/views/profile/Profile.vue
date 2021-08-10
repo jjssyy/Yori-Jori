@@ -19,7 +19,7 @@
                   <b>레시피</b>
                 </div>
                 <div class="row">
-                    <p>1</p>
+                    <p>{{profileUser.recipecnt}}</p>
                 </div>
               </div>
               <div class="col-md-4" id="profile_follower_box">
@@ -60,7 +60,7 @@
                   <b>레시피</b>
                 </div>
                 <div class="row">
-                  <p>1</p>
+                  <p>{{profileUser.recipecnt}}</p>
                 </div>
               </div>
               <div class="col-md-4" id="profile_follower_box">
@@ -80,12 +80,12 @@
                 <div class="col-md-4" id="profile_rankpoint_rank">
                 <b>순위 :</b> <span>{{profileUser.rankpoint}}</span> 
               </div>
-              <div class="col-md-5" id="profile_rankpoint_point">
+              <div class="col-md-4" id="profile_rankpoint_point">
                 <b>RP :</b> <span>{{profileUser.rankpoint}}</span> 
               </div>
             
-              <div class="col-md-3" id="profile_rankpoint_refresh">
-                <button v-if="profileUser.rankpoint != rankpoint" @click="updaterank">갱신</button>
+              <div class="col-md-2" id="profile_rankpoint_refresh">
+                <button v-if="profileUser.rankpoint != rankpoint" class="btn btn-primary" @click="updaterank">갱신</button>
               </div>
             </div>
               <div class="row" id="profile_update_box">
@@ -155,6 +155,7 @@ export default {
   },
   created() {
     this.profileId = this.$route.params.user_id
+    
     let data = {
       id: this.profileId
     }
@@ -169,6 +170,7 @@ export default {
       data,
       res => {
         this.profileUser = res.data
+         console.log(this.profileUser.recipecnt);
         this.follower = res.data.follower
         this.following = res.data.following
       },
@@ -293,6 +295,7 @@ export default {
         res => {
           if(res.data == "success"){
             alert("갱신되었습니다.")
+            this.$router.go();
           }else if(res.data == "fail"){
             alert("갱신에 실패하였습니다.")
           }else{
@@ -361,6 +364,11 @@ export default {
 #profile_rankpoint_point span, #profile_rankpoint_rank span{
   color: #ffbe76;
   margin-left: 10px;
+  
+}
+#profile_rankpoint_refresh button{
+  height: 30px;
+  line-height: 20px;
   
 }
 

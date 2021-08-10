@@ -5,50 +5,59 @@
     Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
  -->
 <template>
-  <div class="user join wrapC">
-    <h1>비밀번호 변경</h1>
+  <div class="wrapC">
+    <div class="row" id="pwupdate">
+      <div class="row" id="updatepw">
+         <h1>비밀번호 변경</h1>
    
-      <div class="input-with-label">
+      <div class="row" id="updatepw_box1">
         <input v-model="oldpw" 
         v-bind:class="{error : error.oldpw, complete:!error.oldpw&&oldpw.length!==0}"
         id="oldpw" 
         placeholder="현재 비밀번호를 입력하세요." 
         :type="passwordType"  
         />
-        <label for="oldpw">현재 비밀번호</label>
+       
         <div class="error-text" v-if="error.oldpw">{{error.oldpw}}</div>
       </div>
 
-      <div class="input-with-label">
+      <div class="row" id="updatepw_box2">
         <input 
         v-model="newpw" 
         id="newpw" 
         :type="passwordType" 
         v-bind:class="{error : error.newpw, complete:!error.newpw&&newpw.length!==0}"
-        placeholder="비밀번호를 입력하세요." />
-        <label for="newpw">비밀번호</label>
+        placeholder="새 비밀번호를 입력하세요." />
+        
         <div class="error-text" v-if="error.newpw">{{error.newpw}}</div>
       </div>
 
-      <div class="input-with-label">
+      <div class="row" id="updatepw_box3">
         <input
           v-model="passwordConfirm"
           :type="passwordConfirmType"
           v-bind:class="{error : error.passwordConfirm, complete:!error.passwordConfirm&&passwordConfirm.length!==0}"
           id="password-confirm"
-          placeholder="비밀번호를 다시한번 입력하세요."
+          placeholder="새 비밀번호를 다시한번 입력하세요."
         />
-        <label for="password-confirm">비밀번호 확인</label>
+       
         <div class="error-text" v-if="error.passwordConfirm">{{error.passwordConfirm}}</div>
       </div>
-    
+    <div class="row" id="updatepw_box4">
+        <button class="button"
+        @click="changepw"
+        :disabled="!isSubmit"
+        :class="{disabled : !isSubmit}"
+        >변경하기</button>
+    </div>
 
 
-    <button class="btn-bottom"
-    @click="changepw"
-    :disabled="!isSubmit"
-    :class="{disabled : !isSubmit}"
-    >변경하기</button>
+  
+
+      </div>
+
+    </div>
+   
   </div>
  
 </template>
@@ -189,3 +198,33 @@ export default {
   }
 };
 </script>
+
+<style>
+#pwupdate{
+  margin-top: 250px;
+  border: 1px solid darkgray;
+  padding:50px;
+}
+
+input {
+  border : 1px solid darkgray;
+}
+
+#updatepw_box1, #updatepw_box2, #updatepw_box3{
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+#updatepw_box4{
+  margin-top: 50px;
+  margin-left: 5px;
+}
+
+#updatepw_box4 button{
+  background-color: #ffbe76;
+  color: white;
+  height: 50px;
+}
+
+</style>
+
