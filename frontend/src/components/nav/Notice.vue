@@ -1,8 +1,8 @@
 <template>
   <div class="notification">
-    <a href="#" id="search-show" @click="searchShow">
+    <span href="#" id="search-show" @click="searchShow">
       <i class="fa fa-2x fa-search"></i>
-    </a>
+    </span>
     <a v-on:click="show = !show" class="tooltip-bell">
       <i class="far fa-2x fa-bell"></i>
       <span id="circle" v-if="notice > 0 && !show"></span>
@@ -39,28 +39,31 @@
     </div>
     <div id="search">
       <div class="search-top">
-        <a href="#" id="search-show" @click="searchShow">
-          <i class="fa fa-2x fa-search"></i>
-        </a>
-        <div>
-          <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput">
-            <router-link :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}">검색</router-link>
-            <div class="search-container">
-              <div class="search-container-box">
-                <div class="search-results">
-                  <ul v-for="(user,idx) in UserList" :key="idx">
-                    <li class="user-list" v-if="user.id != userId" @click="searchmember(user.id)">
-                      <img :src=defaultProfile alt="최고">
-                      <span class="to-profile">{{user.nickname}}</span>
-                    </li>
-                  </ul>
-                </div>
+        <span href="#" id="back" @click="searchShow">
+          <i class="fas fa-2x fa-arrow-left"></i>
+        </span>
+        <div class="input-box">
+          <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput" >
+          <router-link @click.native="searchShow()" :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}" >검색</router-link>
+        </div>
+      </div>
+        <div class="search-mid">
+          <div class="search-container">
+            <div class="search-container-box">
+              <div class="search-results">
+                <ul v-for="(user,idx) in UserList" :key="idx">
+                  <li class="user-list" v-if="user.id != userId" @click="[searchShow(),searchmember(user.id)]">
+                    <img :src="user.img||defaultProfile">
+                    <span class="to-profile">{{user.nickname}}</span>
+                  </li>
+                </ul>
               </div>
             </div>
+          </div>
         </div>
-        
+      <div class="search-bottom">
+        <button class="cancle" @click="searchShow">검색창 닫기</button>
       </div>
-      <div class="search-bottom"></div>
     </div>
   </div>
 </template>
@@ -89,21 +92,8 @@ export default {
     }
   },
   mounted(){
-    this.onNotice(),
-    $(document).on("scroll", function () {
-      if ($(document).scrollTop() > 50) {
-        $(".search-container").addClass("shrink");
-        $(".user-list").addClass("ul-scroll");
-        $(".to-profile").addClass("scb-scroll");
-
-      } else {
-        $(".search-container").removeClass("shrink");
-        $(".user-list").removeClass("ul-scroll");
-        $(".to-profile").removeClass("scb-scroll");
-      }
-    });
+    this.onNotice()
   },
-  
   watch :{
     getUserId(){
       this.onNotice()
@@ -130,23 +120,8 @@ export default {
     },
 
     searchmember(id){
+      this.searchShow
       this.$router.push({ name: 'Profile' , params: {user_id: id}})
-    },
-    noticeAdd(){
-      let data = {
-        user:this.$store.state.userId,
-        img:this.$store.state.userId,
-        ReqUser:this.$store.state.userId,
-        type:'comment'
-      }
-      FirebaseApi.noticeAdd(data)
-    },
-    requestAdd(){
-      let data = {
-        user:this.$store.state.userId,
-        permitUser:'unKnown'
-      }
-      FirebaseApi.requestAdd(data)
     },
     onNotice(){
       const db = firebase.firestore();
@@ -169,9 +144,7 @@ export default {
         });
       });
     },
-    searchShow(event){
-      event.preventDefault()
-      console.log('ee')
+    searchShow(){
       const Search = document.querySelector('#search')
       if (this.isShow==false){
         Search.classList.add('active')
@@ -180,6 +153,8 @@ export default {
         Search.classList.remove('active')
         this.isShow = false
       }
+      this.InputText = ''
+      this.UserList = []
     }
   },
   filters : {
@@ -250,6 +225,9 @@ a {
   cursor: pointer;
 }
 
+svg{
+  color: rgba(144, 144, 144, 0.3);
+}
 
 .tooltip-bell {
   display: block;
@@ -386,13 +364,16 @@ span.name {
   height: 100vh;
   position: fixed;
   display: flex;
-  top: 0%;
-  right: -100%;
-  transition: 500ms;
+  flex-direction: column;
+  align-items: center;
+  top: -100%;
+  left: 0%;
+  transition: 350ms;
   z-index: 10000;
+  border-bottom: 1px solid #FF9636;
 }
 #search.active{
-  right: 0%;
+  top: 0%;
   transition: 500ms;
 }
 
@@ -401,6 +382,44 @@ span.name {
   #search-show {
     display: none;
   }
+}
+.search-top{
+  width: 100%;
+}
+#back svg{
+  margin: 5px 10px;
+}
+.input-box{
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.input-box input{
+  width: 90%;
+  border-radius: 3px;
+}
+.input-box a{
+  margin-left: 1%;
+  width: 9%;
+}
+.search-mid{
+  width: 100%;
+}
+.user-list{
+  width: 100%;
+}
+.search-bottom{
+  width: 100%;
+}
+.cancle{
+  position: absolute;
+  bottom: 0%;
+  cursor: pointer;
+  display: inline;
+  background-color: #FF5C4D;
+  width: 100%;
+  height: 5vh;
+  color: #464646;
 }
 
 </style>
