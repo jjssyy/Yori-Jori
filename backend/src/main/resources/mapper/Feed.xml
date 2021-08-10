@@ -18,7 +18,7 @@
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
-      select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes, 
+      select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes 
       CASE 
       	WHEN l2.recipe_user_id IS NULL THEN false
       	ELSE true
@@ -70,8 +70,8 @@
    
    <!-- get posts in range of popularity -->
    <select id="popularPosts" resultType="RecipeContent">
-   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes, 
-   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc; 
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes
+   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc
    </select>
    
    <insert id="writeComment" parameterType="SaveComment">
@@ -144,16 +144,6 @@
    		set img=#{img}, des=#{des}, thumbnail=#{thumbnail}, content_order=#{content_order}
    		where idx=#{content_idx}
    </update>
-
-     <!-- get one recipe -->
-   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-   		select * from recipe where idx=#{recipe_idx}
-   </select>
-   
-   <!-- get the number of likes -->
-   <select id="getLikeNum" parameterType="int" resultType="int">
-   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
-   </select>
    
    <!-- hashtag -->
    <insert id="writeHashtags" parameterType="Map">
