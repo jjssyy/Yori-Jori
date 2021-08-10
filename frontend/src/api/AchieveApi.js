@@ -17,8 +17,20 @@ const AchievemasterCount = (data, callback, errorCallback) => {
     .catch((err) => errorCallback(err));
 };
 
+const getAchievecurrent = (data, callback, errorCallback) => {
+  http
+    .get('/achieve/getAchievecurrent',{
+      params:{
+          id:data.id,
+      }
+  })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
 const AchieveApi = {
   AchievemasterList: (data, callback, errorCallback) => AchievemasterList(data, callback, errorCallback),
   AchievemasterCount: (data, callback, errorCallback) => AchievemasterCount(data, callback, errorCallback),
+  getAchievecurrent: (data, callback, errorCallback) => getAchievecurrent(data, callback, errorCallback),
 };
 export default AchieveApi;

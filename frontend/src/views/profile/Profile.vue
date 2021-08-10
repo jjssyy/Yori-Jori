@@ -105,12 +105,22 @@
           <p>{{ profileUser.des }}</p>
         </div>
       </div>
-      
+      <div class="row">
+          <div class="row">
+            <label>칭호</label>
+          </div>
+          <div class="row">
+            <span v-for="(clear, idx) in achieve" :key="idx">
+              <p v-if="clear.percent == 100">{{clear.title}} </p>
+            </span>
+          </div>
       </div>
-       <div v-if="profileUser.id == userId">
+       <div class="row" v-if="profileUser.id == userId">
         <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
         </my-recipe-item>
       </div>
+      </div>
+      
   
     </div>
   </div>
@@ -120,6 +130,7 @@
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import RankApi from '../../api/RankApi';
+import AchieveApi from '../../api/AchieveApi';
 import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
 
 export default {
@@ -140,7 +151,8 @@ export default {
       recipe_cnt:null,
       recipe_comment_cnt:null,
       recipe_comment_like_cnt:null,
-      recipe_like_cnt:null
+      recipe_like_cnt:null,
+      achieve:[]
     }
   },
   created() {
@@ -209,6 +221,26 @@ export default {
         },
       error=>{
         console.log(error)
+      }
+    )
+
+    data = {
+      id: this.profileId
+    },
+
+      AchieveApi.getAchievecurrent(
+      data,
+      res => {
+        console.log(res);
+        if(res.data.message == "SUCCESS"){
+          this.achieve = res.data.achieve;
+        }else if(res.data.message == "error"){
+          alert("에러발생");
+        }
+      },
+      error=>{
+        alert("에러발생");
+        console.log(error);
       }
     )
     // if(this.rankpoint != this.profileUser["rankpoint"]){
