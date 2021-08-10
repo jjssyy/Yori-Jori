@@ -1,17 +1,17 @@
 <template lang="">
   <div class="wrapC">
-    <!-- {{ recipeItem }} -->
-    {{ recipeContent}}
+    {{ recipeItem }}
+    {{ recipeContent }}
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
     <p>{{ recipeItem.des }}</p>
     <div>
-      <span v-show="recipeContent.likecheck == false">
+      <span v-show="recipeContent.likecheck == false" v-if="recipeContent.likecheck == false">
         <button class="submit" @click="like">
           <i class="far fa-heart"></i>
         </button>
       </span>
-      <span v-show="recipeContent.likecheck == true">
+      <span v-show="recipeContent.likecheck == true" v-if="recipeContent.likecheck == true">
         <button class="submit" @click="Unlike">
           <i class="fas fa-heart"></i>
         </button>   
@@ -53,6 +53,7 @@ export default {
         recipe_idx: this.recipeItem.recipe_idx,
         recipe_user_id: this.userId
       }
+
       RecipeApi.likeRecipe(
         data,
         res => {
