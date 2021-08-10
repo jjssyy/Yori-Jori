@@ -22,7 +22,7 @@
       </div>
 
       <div v-for="(recipe_file, idx) in recipe" :key="idx" class="" id="image-des" >
-        <update-form :recipe_file="recipe_file" :recipe="recipe" :idx="idx"></update-form>
+        <update-form :recipe_file="recipe_file" :recipe="recipe" :idx="recipe_file.content_order"></update-form>
       </div>
         <button @click="check">등록</button>
       </div>

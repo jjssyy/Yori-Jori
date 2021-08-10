@@ -14,6 +14,8 @@
     <div>
       <textarea style="border: solid;" cols="30" rows="5" v-model.trim="recipe_file.des"></textarea>
     </div>
+    <button @click="leftContent">위로  |</button>
+    <button @click="rightContent">|  아래로</button>
   </div>
 </template>
 
@@ -41,6 +43,28 @@ export default {
   mounted: function(){
   },
   methods: {
+    leftContent() {
+      if (this.idx >= 1) {
+        const content = this.recipe[this.idx - 1]
+        this.idx -= 1
+        this.recipe_file.content_order -= 1
+        const idx = this.idx + 1
+        this.recipe[this.idx] = this.recipe[this.idx + 1]
+        this.recipe[this.idx + 1] = content
+        this.recipe[this.idx + 1].content_order += 1
+      }
+    },
+    rightContent() {
+      if (this.idx < this.recipe.length) {
+        const content = this.recipe[this.idx + 1]
+        this.idx += 1
+        this.recipe_file.content_order += 1
+
+        this.recipe[this.idx] = this.recipe[this.idx - 1]
+        this.recipe[this.idx - 1] = content
+        this.recipe[this.idx - 1].content_order -= 1
+      }
+    },
     uploadImg(e){
       let file = e.target.files[0];
       FirebaseApi.upLoad(
