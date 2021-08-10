@@ -7,7 +7,7 @@
       <div class="row">
         <input class="col-md-9" v-model="id" id="id" placeholder="아이디를 입력하세요." type="text"/>
         <div class="col-md-3">
-          <button class="btn btn-primary" @click="checkid">중복체크</button>
+          <button class="btn" @click="checkid">중복체크</button>
         </div>
         
       </div>
@@ -19,7 +19,7 @@
       <div class="row">
         <input class="col-md-9" v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />  
         <div class="col-md-3">
-        <button class="btn btn-primary" @click="checknickname">중복체크</button>
+        <button class="btn" @click="checknickname">중복체크</button>
         </div>
       
       </div>
@@ -301,5 +301,10 @@ input {
   margin-left: 20px;
 }
 
+#join button{
+  background-color: #ffbe76;
+  box-shadow: none;
+  color: white;
+}
 
 </style>
