@@ -20,6 +20,14 @@ public class UserVO {
 	private String token;
 	private String img;
 	private int rankpoint;
+	
+	private int recipecnt;
+	public int getRecipecnt() {
+		return recipecnt;
+	}
+	public void setRecipecnt(int recipecnt) {
+		this.recipecnt = recipecnt;
+	}
 	public int getRankpoint() {
 		return rankpoint;
 	}
