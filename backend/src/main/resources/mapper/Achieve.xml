@@ -16,5 +16,7 @@
 	<select id="getMasterCount" resultType="Integer">
 		SELECT count(achieve_master_name) from achieve group by achieve_master_name
 	</select>
-	
+	<select id="getAchievecurrent" parameterType="String" resultType="Achievecurrent">
+		select id, t.title as title, t.cnt as clear_cnt, e.cnt as achieve_cnt, round((t.cnt / e.cnt * 100)) as percent from (select id, title, count(*) as cnt from recipe  where id = #{id} group by title) t inner join (select achieve_title_name as title, count(*) as cnt from achieve group by achieve_title_name) e on t.title = e.title;
+	</select>
 </mapper>

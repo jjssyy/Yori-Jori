@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.curation.model.Achieve;
+import com.web.curation.model.Achievecurrent;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.service.AchieveService;
 import com.web.curation.model.service.JwtService;
@@ -82,5 +83,32 @@ public class AchieveController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+	
+	@GetMapping("/getAchievecurrent")
+	public ResponseEntity<Map<String, Object>> getachievecurrent(@RequestParam Map map) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String result = "SUCCESS";
+		try {
+			String id = (String) map.get("id");
+			List<Achievecurrent> achieve = achieveservice.getAchievecurrent(id);
+			if(achieve == null) {
+				result = "fail";
+			}else {
+				resultMap.put("achieve", achieve);
+			}
+			
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", "error");
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+
 
 }

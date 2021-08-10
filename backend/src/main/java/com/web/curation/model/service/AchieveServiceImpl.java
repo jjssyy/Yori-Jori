@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.Achieve;
+import com.web.curation.model.Achievecurrent;
 import com.web.curation.model.UserVO;
 import com.web.curation.model.dao.AchieveDao;
 import com.web.curation.model.dao.SearchDao;
@@ -33,5 +34,11 @@ public class AchieveServiceImpl implements AchieveService {
 	public List<Integer> getMasterCount() throws Exception {
 		return sqlsession.getMapper(AchieveDao.class).getMasterCount();
 	}
+	@Override
+	public List<Achievecurrent> getAchievecurrent(String id) throws Exception {
+		
+		return sqlsession.getMapper(AchieveDao.class).getAchievecurrent(id);
+	}
+
 
 }

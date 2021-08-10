@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.web.curation.model.Achieve;
+import com.web.curation.model.Achievecurrent;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 
@@ -16,6 +17,8 @@ public interface AchieveService {
 	List<Achieve> getachieveslavelist() throws Exception;
 	
 	List<Integer> getMasterCount() throws Exception;
+	
+	List<Achievecurrent> getAchievecurrent(String id) throws Exception;
 	
 
 }
