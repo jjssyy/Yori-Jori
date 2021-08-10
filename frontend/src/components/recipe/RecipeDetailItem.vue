@@ -1,7 +1,7 @@
 <template lang="">
   <div class="wrapC">
     <!-- {{ recipeItem }} -->
-    <!-- {{ recipeContent}} -->
+    {{ recipeContent}}
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
     <p>{{ recipeItem.des }}</p>
@@ -20,12 +20,13 @@
         {{ recipeContent.like }}
       </p>
     </div>
-    <RecipeCommentList :recipeItem="recipeItem" />
+    <RecipeCommentList :recipeItem="recipeItem" :recipeContent="recipeContent"/>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 import RecipeApi from '../../api/RecipeApi';
+import FirebaseApi from '../../api/FirebaseApi';
 import RecipeCommentList from "../../components/recipe/RecipeCommentList.vue";
 
 export default {
@@ -50,7 +51,7 @@ export default {
     like() {
       let data = {
         recipe_idx: this.recipeItem.recipe_idx,
-        recipe_user_id: this.selectRecipeId
+        recipe_user_id: this.userId
       }
       RecipeApi.likeRecipe(
         data,
@@ -63,11 +64,18 @@ export default {
           console.log(err)
         }
       )
+      let notice = {
+        user:this.recipeContent.id,
+        img:this.$store.state.userId,
+        ReqUser:this.$store.state.userId,
+        type:'like'
+      }
+      FirebaseApi.noticeAdd(notice)
     },
     Unlike() {
       let data = {
         recipe_idx: this.recipeItem.recipe_idx,
-        recipe_user_id: this.selectRecipeId
+        recipe_user_id: this.userId
       }
       RecipeApi.unlikeRecipe(
         data,

@@ -9,12 +9,8 @@
       select * from recipe_content where recipe_idx = #{recipe_idx} order by content_order
    </select>
    
-   <select id="getLatestFeed" parameterType="String" resultType="RecipeContent">
-       select r.idx, r.title, r.regdate, r.id, c.img , r.nickname, count(l.recipe_idx) as likes,
-      CASE 
-      	WHEN l2.recipe_user_id IS NULL THEN false
-      	ELSE true
-      END AS isLiked
+   <select id="getLatestFeed" parameterType="String" resultType="FeedRecipe">
+        select *
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
       left join recipe_like l on r.idx = l.recipe_idx
@@ -179,7 +175,9 @@
    		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
    </select>
     
-
+	<select id="getMasterCount" resultType="Integer">
+		SELECT count(achieve_master_name) from achieve group by achieve_master_name;
+	</select>
    
 
    

@@ -21,6 +21,7 @@ import Likeposts from './views/feed/Likeposts.vue'
 import AchieveList from './views/achieve/AchieveList.vue'
 import Rankinglist from './views/ranking/ranking.vue'
 import AchieveDetail from './views/achieve/AchieveDetail.vue';
+import Joinselect from './views/user/Joinselect.vue';
 
 export default [
     
@@ -134,6 +135,13 @@ export default [
         name: 'AchieveDetail',
         component: AchieveDetail,
     },
+    {
+        path: '/user/joinselect',
+        name: 'Joinselect',
+        component: Joinselect,
+    },
+
+    
 
 
     

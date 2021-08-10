@@ -22,8 +22,16 @@
           <div class="img-left">
             <img class="user-photo" alt="User Photo" v-bind:src="defaultProfile" />
           </div>
-          <div class="user-content">
+          <div class="user-content" v-if="user.type === 'comment'">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 댓글을 달았습니다.</p>
+            <p class="time">{{user.date | timeFor}}</p>
+          </div>
+          <div class="user-content" v-if="user.type === 'like'">
+            <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 게시글을 좋아합니다.</p>
+            <p class="time">{{user.date | timeFor}}</p>
+          </div>
+          <div class="user-content" v-if="user.type === 'follow'">
+            <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 팔로우합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
         </li>
@@ -82,7 +90,6 @@ export default {
   },
   mounted(){
     this.onNotice(),
-    this.onRequest(),
     $(document).on("scroll", function () {
       if ($(document).scrollTop() > 50) {
         $(".search-container").addClass("shrink");
@@ -99,13 +106,7 @@ export default {
   
   watch :{
     getUserId(){
-      this.onNotice(),
-      this.onRequest()
-    }
-  },
-  computed:{
-    getUserId(){
-      return this.$store.state.userId
+      this.onNotice()
     }
   },
   methods:{
@@ -134,7 +135,9 @@ export default {
     noticeAdd(){
       let data = {
         user:this.$store.state.userId,
-        ReqUser:'cha'
+        img:this.$store.state.userId,
+        ReqUser:this.$store.state.userId,
+        type:'comment'
       }
       FirebaseApi.noticeAdd(data)
     },
@@ -150,24 +153,9 @@ export default {
       db.collection("notice"+this.$store.state.userId)
         .onSnapshot((doc) => {
           this.unreadnotice = doc.docs.map(v=>{
-            if (v.data().isRead == 0){
-              return v.data()
-
-            }
+            return v.data()
           })
           this.notice = this.unreadnotice.length
-      });
-    },
-    onRequest(){
-      const db = firebase.firestore();
-      db.collection("request"+this.$store.state.userId)
-        .onSnapshot((doc) => {
-          this.unreadrequest = doc.docs.map(v=>{
-            return {
-              requser:v.data().ReqUser
-            }
-          })
-          this.request = this.unreadrequest.length
       });
     },
     deleteAll(event){
