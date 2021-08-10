@@ -3,6 +3,9 @@
   <div class=" wrapC">
     
     <div class="row" id="userupdate">
+      <div class="row" id="userupdatebox0">
+       <img :src="require(`@/assets/images/roundlogo.png`)" />
+    </div>
       <div class="row" id='userupdatebox1'>
         <h1>회원 수정</h1>
       </div>
@@ -237,6 +240,18 @@ label{
 
 #userupdatebox6{
   margin-bottom: 30px;
+  margin-bottom: 50px;
+}
+
+#userupdatebox1{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#userupdatebox0 img{
+  width:200px;
+  margin-left: 130px;
 }
 
 </style>

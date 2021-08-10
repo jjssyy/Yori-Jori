@@ -1,5 +1,8 @@
 <template>
   <div class="wrapC" id="join">
+    <div class="row" id="join_box0">
+       <img :src="require(`@/assets/images/roundlogo.png`)" />
+    </div>
     <div class="row" id="join_box1">
       <h1>가입하기</h1>
     </div>
@@ -286,6 +289,7 @@ input {
 
 #join_box6{
   margin-top: 50px;
+  margin-bottom: 50px;
   
 }
 
@@ -305,6 +309,17 @@ input {
   background-color: #ffbe76;
   box-shadow: none;
   color: white;
+}
+
+#join_box1{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#join_box0 img{
+  width:200px;
+  margin-left: 150px;
 }
 
 </style>
