@@ -56,12 +56,6 @@ public class FeedServiceImpl implements FeedService {
 	public List<RecipeContent> getAllRecipes(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getAllRecipes(id);
 	}
-
-	@Override
-	public int writeHashtags(HashMap<String, Object> hash) {
-		return sqlSession.getMapper(FeedDao.class).writeHashtag(hash);
-	}
-
 	@Override
 	public List<Integer> getLikedPosts(String user_id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getLikedPosts(user_id);

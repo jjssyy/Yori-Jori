@@ -341,11 +341,8 @@ public class UserController {
 			result.setRole(user.getRole());
 			result.setFollower(follower);
 			result.setFollowing(following);
-<<<<<<< HEAD
-=======
 			result.setImg(user.getImg());
 			result.setRankpoint(user.getRankpoint());
->>>>>>> feature/S05P13C205-51
 
 			return new ResponseEntity<UserInfo>(result, HttpStatus.OK);
 		} else {

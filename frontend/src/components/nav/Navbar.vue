@@ -252,7 +252,7 @@ svg{
   margin: 0%;
   width: 100%;
   background-color: #fff;
-  border-right: 1px solid rgba(0, 0, 0, 0.05);;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .nav-icon{
