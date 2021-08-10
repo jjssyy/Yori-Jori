@@ -13,10 +13,8 @@
         select *
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
-      left join recipe_like l on r.idx = l.recipe_idx
-      left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id}
-      where c.thumbnail="true" and (r.id in (select following from follow where follower=#{id})or id=#{id})
-      group by l.recipe_idx
+      where c.thumbnail="true" and (r.id in (
+									select following from follow where follower=#{id}) or id=#{id} );
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">

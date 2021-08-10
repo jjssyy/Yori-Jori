@@ -71,7 +71,7 @@ export default {
     getComment() {
       let data = {
       content_idx: this.recipeItem.idx,
-      id: this.recipeItem.id,
+      id: this.selectRecipeId,
     }
     RecipeApi.recipeItemComments(
       data,
@@ -90,6 +90,7 @@ export default {
     ...mapState([
       'userId',
       'userNickname',
+      'selectRecipeId',
     ])
   }
 }

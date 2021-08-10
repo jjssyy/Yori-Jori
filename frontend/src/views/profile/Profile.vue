@@ -108,13 +108,20 @@
       </div>
       
       </div>
-      
-      
-      <div v-if="profileUser.id == userId">
+       <div v-if="profileUser.id == userId">
         <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
         </my-recipe-item>
       </div>
-
+      <div>
+        <div class="wrap">
+          <p>비밀번호를 변경하시겠습니까</p>
+          <router-link to="/user/changepassword" class="btn--text">비밀번호 변경</router-link>
+        </div>
+        <div class="wrap">
+          <p>회원정보 변경</p>
+          <router-link to="/user/update" class="btn--text">변경하기</router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
