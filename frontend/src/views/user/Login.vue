@@ -52,15 +52,11 @@
         </div>
         <div class="wrap">
           <p>아직 회원이 아니신가요?</p>
-          <router-link to="/user/join" class="btn--text">가입하기</router-link>
+          <router-link to="/user/joinselect" class="btn--text">가입하기</router-link>
         </div>
         <div class="wrap">
           <p>비밀번호 찾기</p>
           <router-link to="/user/findpw" class="btn--text">찾아보기</router-link>
-        </div>
-        <div class="wrap">
-          <p>글쓰기</p>
-          <router-link to="/recipe/write" class="btn--text">쓰기</router-link>
         </div>
       </div>
     </div>

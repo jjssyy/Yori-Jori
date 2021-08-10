@@ -1,93 +1,44 @@
 <template>
-  <div class="wrapC" id="join">
-    <div class="row" id="join_box1">
-      <h1>가입하기</h1>
-    </div>
-    <div class="row" id="join_box2">
-      <div class="row">
-        <input class="col-md-9" v-model="id" id="id" placeholder="아이디를 입력하세요." type="text"/>
-        <div class="col-md-3">
-          <button class="btn btn-primary" @click="checkid">중복체크</button>
+  <div class="wrapC">
+    <div class="row" id="register">
+
+      <div class="col-md-4" id="normal">
+        <div class="row">
+           <label>일반 가입</label>
         </div>
-        
+       <div class="row">
+        <router-link to="/user/join" class="btn--text">
+          <img :src="require(`@/assets/images/user.png`)" />
+        </router-link>
+       </div>
+    
       </div>
-      <div class="row">
-        <div class="error-text" v-if="error.id"></div>
+      <div class="col-md-4"></div>
+        <div class="col-md-4" id="kakao">
+          <div class="row">
+            <label>카카오가입</label>
+          </div>
+          <div class="row">
+            <kakaoregister></kakaoregister>
+          </div>
       </div>
-    </div>
-      <div class="row" id="join_box3">
-      <div class="row">
-        <input class="col-md-9" v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />  
-        <div class="col-md-3">
-        <button class="btn btn-primary" @click="checknickname">중복체크</button>
-        </div>
-      
       </div>
-      <div class="row">
-        <div class="error-text" v-if="error.nickname"></div>
-      </div>
-    </div>
-    <div class="row" id="join_box4">
-      <div class="row">
-        <input v-model="email" 
-        v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
-        id="email" 
-        placeholder="이메일을 입력하세요." 
-        type="text" 
-        />
-      </div>
-      <div class="row">
-        <div class="error-text" v-if="error.email">{{error.email}}</div>
-      </div>
+    
     </div>
 
-    <div class="row" id="join_box4">
-      <div class="row">
-        <input 
-        v-model="password" 
-        id="password" 
-        :type="passwordType" 
-        v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
-        placeholder="비밀번호를 입력하세요." />
-      </div>
-      <div class="row">
-        <div class="error-text" v-if="error.password">{{error.password}}</div>
-      </div>
-    </div>
 
-    <div class="row" id="join_box5">
-      <div class="row">
-        <input
-          v-model="passwordConfirm"
-          :type="passwordConfirmType"
-          v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
-          id="password-confirm"
-          placeholder="비밀번호를 다시한번 입력하세요."
-        />
-      </div>
-      <div class="row">
-        <div class="error-text" v-if="error.passwordConfirm">{{error.passwordConfirm}}</div>
-      </div>
-        <div class="row" id="join_box6">
-        <button class="button"
-          @click="onJoin"
-          :disabled="!isSubmit"
-          :class="{disabled : !isSubmit}"
-          >가입하기</button>
-    </div>
-    </div>
-  
-  </div>
 </template>
 
 <script>
 import UserApi from '../../api/UserApi';
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
-
+import Kakaoregister from "../../components/user/snsLogin/KakaoRegister.vue";
 
 export default {
- 
+   components: {
+    Kakaoregister, 
+  },
   created(){
     this.passwordSchema
       .is()
@@ -269,37 +220,29 @@ export default {
 </script>
 
 <style>
-#join{
-  margin-top: 100px;
-  border: 1px solid darkgray;
-  padding:50px;
+
+#register{
+  margin-top: 200px;
 }
 
-input {
-  border : 1px solid darkgray;
-}
-
-#join_box1,#join_box2,#join_box3,#join_box4,#join_box5{
-  margin-top: 20px;
-  margin-left: 5px;
-}
-
-#join_box6{
-  margin-top: 50px;
+#normal, #kakao{
+  text-align: center;
   
 }
 
-#join_box6 button{
-  background-color: #ffbe76;
-  color: white;
-  height: 50px;
+#normal label, #kakao label{
+font-size: 25px;
 }
 
-#join_box2 button, #join_box3 button{
-  margin-top: 5px;
-  height: 40px;
-  margin-left: 20px;
+#normal img{
+  width:350px;
+  height:250px;
+  margin: 50px 0px 50px -100px;
 }
 
+#kakao img{
+  width:200px;
+  margin: 90px 0px 50px -20px;
+}
 
 </style>
