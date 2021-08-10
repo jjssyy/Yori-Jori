@@ -58,6 +58,7 @@ export default {
         comment_idx: this.commentItem.idx,
         id: this.userId
       }
+      console.log(data.id)
       RecipeApi.commentLike(
         data,
         res => {

@@ -1,7 +1,7 @@
 <template lang="">
   <div class="wrapC">
-    <!-- {{ recipeItem }} -->
-    {{ recipeContent}}
+    {{ recipeItem }}
+    <!-- {{ recipeContent }} -->
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
     <p>{{ recipeItem.des }}</p>
@@ -53,6 +53,7 @@ export default {
         recipe_idx: this.recipeItem.recipe_idx,
         recipe_user_id: this.userId
       }
+
       RecipeApi.likeRecipe(
         data,
         res => {
