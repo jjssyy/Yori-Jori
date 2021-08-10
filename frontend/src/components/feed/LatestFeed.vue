@@ -3,6 +3,7 @@
     <div class="top">
       <div class="user-info">
         <div class="user-img">
+          <!-- {{ latestFeed }} -->
           <img :src="defaultProfile" height="30px" alt="" @click="goUserProfile">
         </div>
         <div class="user-name" @click="goUserProfile">{{ latestFeed.nickname }}</div>
@@ -13,7 +14,7 @@
       <div class="btn-group">
         <div class="like">
           <i class="fas fa-heart icon full"></i>
-          0
+          {{ latestFeed.like }}
         </div>
         <div class="comment">
           <i class="far fa-comment-alt icon"></i>
