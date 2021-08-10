@@ -251,7 +251,7 @@ export default {
   margin: 120px 0px 50px -20px;
 }
 
-p{
+#register p{
   color: #ffbe76;
 }
 
