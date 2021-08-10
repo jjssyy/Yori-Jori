@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="getMasterCount" resultType="Integer">
-		SELECT count(achieve_master_name) from achieve group by achieve_master_name;
+		SELECT count(achieve_master_name) from achieve group by achieve_master_name
 	</select>
 	
 </mapper>
