@@ -1,6 +1,6 @@
 <template lang="">
   <div class="wrapC">
-    {{ recipeItem }}
+    <!-- {{ recipeItem }} -->
     {{ recipeContent}}
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
