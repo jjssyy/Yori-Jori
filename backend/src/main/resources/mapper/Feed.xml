@@ -14,7 +14,7 @@
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
       where c.thumbnail="true" and (r.id in (
-									select following from follow where follower=#{id}) or id=#{id} );
+									select following from follow where follower=#{id}) or id=#{id} )
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
@@ -84,7 +84,7 @@
    </update>
    
    <delete id="deleteComment" parameterType="integer">
-   		delete from recipe_comment where idx = #{idx};
+   		delete from recipe_comment where idx = #{idx}
    </delete>
    
    <select id="getCommentList" parameterType="integer" resultType="CommentFromDB">
@@ -92,7 +92,7 @@
    </select>
    
    <select id="getLikeCountComment" parameterType="integer" resultType="integer">
-   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
+   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx}
    </select>
    
    <select id="checkLikeComment" parameterType="Map" resultType="integer">
@@ -166,7 +166,7 @@
    
    
    <select id="getLikeCount" parameterType="integer" resultType="integer">
-   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
+   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx}
    </select>
    
    <select id="checkLike" parameterType="Map" resultType="integer">
@@ -174,7 +174,7 @@
    </select>
     
 	<select id="getMasterCount" resultType="Integer">
-		SELECT count(achieve_master_name) from achieve group by achieve_master_name;
+		SELECT count(achieve_master_name) from achieve group by achieve_master_name
 	</select>
    
 
