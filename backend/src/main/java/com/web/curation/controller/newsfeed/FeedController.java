@@ -575,4 +575,26 @@ public class FeedController {
 		}
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
+	//writeRecipe-업적 확인 기능 추가
+	@GetMapping("/write")
+	public ResponseEntity<Map<String, Object>> RecipeAchieveList(){
+		Map<String, Object> resultMap = new HashMap<>();
+		List<AchieveListFromDB> achieveList;
+		
+		try {
+			achieveList = feedService.getAchieveListForRecipe();
+			if(achieveList == null) {
+				resultMap.put("message", "FAIL");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NO_CONTENT);
+			}
+			resultMap.put("achieveList", achieveList);
+			resultMap.put("message", "Success");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

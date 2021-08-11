@@ -164,6 +164,8 @@
       SELECT count(achieve_master_name) from achieve group by achieve_master_name
    </select>
    
-
+	<select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
+		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
+	</select>
    
 </mapper>
