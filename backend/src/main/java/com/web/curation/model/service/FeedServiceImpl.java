@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
@@ -133,8 +132,6 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getRecipeInfo(recipe_idx);
 	}
 
-<<<<<<< HEAD
-=======
 	@Override
 	public int likeRecipe(Map map) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).likeRecipe(map);
@@ -177,5 +174,4 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getAchieveListForRecipe();
 	}
 
->>>>>>> 15702f6434f6bdc63a4adb058e56d1ca4dd0d147
 }
