@@ -168,7 +168,7 @@
 		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
 	</select>
 	
-	<select id="getHashtag" parameterType="integer" resultType="HashMap">
+	<select id="getHashtag" parameterType="integer" resultType="HashtagVO">
 		select * from hashtag where recipe_idx=#{recipe_idx}
 	</select>
    

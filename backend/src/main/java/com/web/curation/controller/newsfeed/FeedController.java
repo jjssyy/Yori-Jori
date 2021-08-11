@@ -20,6 +20,7 @@ import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.FeedRecipe;
+import com.web.curation.model.HashtagVO;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -184,7 +185,24 @@ public class FeedController {
 			} else {
 				recipeDetailToClient.setLikecheck(false);
 			}
-
+			
+			//해시태그 받아오기
+			List<HashtagVO> hashtagList = feedService.getHashtag(recipe_idx);
+			
+			List<Integer> hashtag_idx = new ArrayList<>();
+			List<String> tag = new ArrayList<>();
+			
+			for(int i=0; i<hashtagList.size(); i++) {
+				int idx = hashtagList.get(i).getIdx();
+				String hashtag = hashtagList.get(i).getTag();
+				
+				hashtag_idx.add(idx);
+				tag.add(hashtag);
+				System.out.println(tag.get(i));
+			}
+			recipeDetailToClient.setHashtag_idx(hashtag_idx);
+			recipeDetailToClient.setTag(tag);
+			
 			resultMap.put("recipeContent", recipeDetailToClient);
 
 		} catch (Exception e) {

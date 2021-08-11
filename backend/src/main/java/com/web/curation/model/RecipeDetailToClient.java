@@ -19,6 +19,22 @@ public class RecipeDetailToClient {
 	private String achieve_master;
 	private String achieve_slave;
 	
+	//DB:hashtag
+	private List<Integer> hashtag_idx;
+	private List<String> tag;
+	
+	public List<Integer> getHashtag_idx() {
+		return hashtag_idx;
+	}
+	public void setHashtag_idx(List<Integer> hashtag_idx) {
+		this.hashtag_idx = hashtag_idx;
+	}
+	public List<String> getTag() {
+		return tag;
+	}
+	public void setTag(List<String> tag) {
+		this.tag = tag;
+	}
 	public String getAchieve_master() {
 		return achieve_master;
 	}
