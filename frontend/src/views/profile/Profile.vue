@@ -133,6 +133,7 @@ import UserApi from '../../api/UserApi';
 import RankApi from '../../api/RankApi';
 import AchieveApi from '../../api/AchieveApi';
 import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
+import FirebaseApi from '../../api/FirebaseApi';
 
 export default {
   components: { MyRecipeItem },
@@ -251,6 +252,14 @@ export default {
   },
   methods: {
     sendrequest(member){
+      let notice = {
+        user:this.$route.params.user_id,
+        img:this.userId,
+        ReqUser:this.$store.state.userId,
+        type:'follow',
+        articleID:0
+      }
+      FirebaseApi.noticeAdd(notice)
 
       let data = {
         loginid : this.userId,
@@ -269,11 +278,12 @@ export default {
         }else{
           alert("에러발생");
         }
-      },
-      error=>{
-        alert("에러발생");
-      }
-    )
+        },
+        error=>{
+          alert("에러발생");
+        }
+      )
+
     
     },
 

@@ -19,7 +19,7 @@ public class JwtInterceptor implements HandlerInterceptor{
 	
 	public static final Logger logger = LoggerFactory.getLogger(JwtInterceptor.class);
 	
-	private static final String HEADER_AUTH = "auth-token";
+	private static final String HEADER_AUTH = "access-token";
 
 	@Autowired
 	private JwtService jwtService;
@@ -28,14 +28,23 @@ public class JwtInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		final String token = request.getHeader(HEADER_AUTH);
-
-		if(token != null && jwtService.isUsable(token)){
-			logger.info("토큰 사용 가능 : {}", token);
+		
+		if(jwtService.isUsable(token)) {
+			System.out.println("사용가능");
 			return true;
-		}else{
-			logger.info("토큰 사용 불가능 : {}", token);
+		}else {
+			System.out.println("사용불가");
 			throw new UnauthorizedException();
 		}
-
+		
+		
+		//if(token != null && jwtService.isUsable(token)){
+		
+		//	return true;
+		//}else{
+		//	System.out.println(token);
+		//	throw new UnauthorizedException();
+		//}
+		
 	}
 }

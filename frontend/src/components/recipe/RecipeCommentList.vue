@@ -64,7 +64,8 @@ export default {
         user:this.recipeContent.id,
         img:this.$store.state.userId,
         ReqUser:this.$store.state.userId,
-        type:'comment'
+        type:'comment',
+        articleID:this.recipeContent.recipe_contents[0].recipe_idx
       }
       FirebaseApi.noticeAdd(notice)
     },
