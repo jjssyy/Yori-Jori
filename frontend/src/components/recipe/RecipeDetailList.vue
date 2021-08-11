@@ -1,6 +1,6 @@
 <template lang="">
   <div> 
-    <RecipeDetailItem v-for="(recipeItem, idx) in recipe" :key="idx" :recipeItem="recipeItem" :idx="idx"/>
+    <RecipeDetailItem v-for="(recipeItem, idx) in recipe" :key="idx" :recipeItem="recipeItem" :idx="idx" :recipeContent="recipeContent"/>
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   },
   props: {
     recipe: {
+      type: [Array, Object]
+    },
+    recipeContent: {
       type: [Array, Object]
     }
   }

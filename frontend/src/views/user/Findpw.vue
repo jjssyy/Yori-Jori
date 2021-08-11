@@ -1,43 +1,22 @@
 
 <template>
-  <div class="user" id="login">
-    <div class="wrapC">
-      <h1>
-        로그인을 하고 나면
-        <br />좋은 일만 있을 거예요.
-      </h1>
-
-      <div class="input-with-label">
-        <input
-          v-model="id"
-          @keyup.enter="findpw"
-          id="id"
-          placeholder="아이디를 입력하세요."
-          type="text"
-        />
-        <label for="id">아이디</label>
-      </div> 
-
-       <div class="input-with-label">
-        <input
-          v-model="email"
-          @keyup.enter="findpw"
-          id="email"
-          placeholder="이메일을 입력하세요."
-          type="text"
-        />
-        <label for="id">이메일</label>
-      </div> 
-
-      <button
-        class="btn btn--back btn--login"
-        @click="findpw"
-        :disabled="isSubmit"
-        :class="{disabled : !isSubmit}"
-      >비밀번호 찾기</button>
-
+    <div class="wrapC" id="findpw">
+      <div class="row" id="findpw_box0">
+       <img :src="require(`@/assets/images/roundlogo.png`)" />
     </div>
-  </div>
+      <div class="row" id="findpw_box1">
+        <h1>비밀번호 찾기</h1>
+      </div>
+      <div class="row" id="findpw_box2">
+        <input v-model="id" @keyup.enter="findpw" id="id" placeholder="아이디를 입력하세요." type="text"/>
+      </div>
+      <div class="row" id="findpw_box3">
+        <input v-model="email" @keyup.enter="findpw" id="email" placeholder="이메일을 입력하세요." type="text"/>
+      </div>
+      <div class="row" id="findpw_box4">
+          <button class="btn btn--back btn--login" @click="findpw" :disabled="isSubmit" :class="{disabled : !isSubmit}">비밀번호 찾기</button>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -112,5 +91,49 @@ export default {
   }
 };
 </script>
+
+<style>
+
+#findpw{
+  margin-top: 250px;
+  border: 1px solid darkgray;
+  padding:50px;
+
+}
+
+input {
+  border : 1px solid darkgray;
+}
+
+#findpw_box1, #findpw_box2, #findpw_box3{
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+#findpw_box4{
+  margin-top: 50px;
+  margin-left: 5px;
+  margin-bottom: 50px;
+}
+
+#findpw_box4 button{
+  background-color: #ffbe76;
+  color: white;
+  height: 50px;
+}
+
+#findpw_box1{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#findpw_box0 img{
+  width:200px;
+  margin-left: 150px;
+}
+
+
+</style>
 
 

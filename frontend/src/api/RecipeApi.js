@@ -1,5 +1,51 @@
 import http from "@/util/http-common";
 
+const deleteRecipe = (data, callback, errorCallback) => {
+    http.delete('/feed/delete',{
+        params: {
+            idx: data.recipe_idx
+        }
+    }).then(
+        res => callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const updateRecipe = (data, callback, errorCallback) => {
+    http.put('/feed/update',data,{
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(
+        res => callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const likeRecipe = (data, callback, errorCallback) => {
+    http.post('/feed/like',data).then(
+        res => callback(res)
+    ).catch(
+        err => errorCallback(err)
+    )
+}
+
+const unlikeRecipe = (data, callback, errorCallback) => {
+    http.delete('/feed/like',{
+        params: {
+            recipe_idx: data.recipe_idx,
+            recipe_user_id: data.recipe_user_id
+        }
+    }).then(
+        res => callback(res)
+    ).catch(
+        err => errorCallback(err)
+    )
+}
+
+
 // Comment CRUD + 좋아요
 
 const writeComment = (data, callback, errorCallback) => {
@@ -68,6 +114,10 @@ const commentUnlike = (data,callback, errorCallback) => {
 
 
 const RecipeApi = {
+    deleteRecipe: (data, callback, errorCallback) => deleteRecipe(data, callback, errorCallback),
+    updateRecipe: (data, callback, errorCallback) => updateRecipe(data, callback, errorCallback),
+    likeRecipe: (data, callback, errorCallback) => likeRecipe(data, callback, errorCallback),
+    unlikeRecipe: (data, callback, errorCallback) => unlikeRecipe(data, callback, errorCallback),
     writeComment: (data, callback, errorCallback) => writeComment(data, callback, errorCallback),
     updateComment: (data, callback, errorCallback) => updateComment(data, callback, errorCallback),
     deleteComment: (data, callback, errorCallback) => deleteComment(data, callback, errorCallback),

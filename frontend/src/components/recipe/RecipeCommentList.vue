@@ -12,6 +12,7 @@
 <script>
 import { mapState } from 'vuex'
 import RecipeApi from '../../api/RecipeApi';
+import FirebaseApi from '../../api/FirebaseApi';
 import RecipeCommentItem from "../../components/recipe/RecipeCommentItem.vue";
 
 export default {
@@ -20,6 +21,9 @@ export default {
   },
   props: {
     recipeItem: {
+      type: [Array, Object]
+    },
+    recipeContent: {
       type: [Array, Object]
     }
   },
@@ -56,11 +60,18 @@ export default {
         }
       )
       this.comments = newComments
+      let notice = {
+        user:this.recipeContent.id,
+        img:this.$store.state.userId,
+        ReqUser:this.$store.state.userId,
+        type:'comment'
+      }
+      FirebaseApi.noticeAdd(notice)
     },
     getComment() {
       let data = {
       content_idx: this.recipeItem.idx,
-      id: this.recipeItem.id,
+      id: this.userId,
     }
     RecipeApi.recipeItemComments(
       data,
@@ -79,6 +90,7 @@ export default {
     ...mapState([
       'userId',
       'userNickname',
+      'selectRecipeId',
     ])
   }
 }

@@ -1,19 +1,18 @@
 package com.web.curation.model;
 
-public class RecipeSingleContent {
-	private int idx;
+public class UpdateRecipeContentToDB {
+	private int content_idx;
 	private String img;
 	private String des;
 	private String thumbnail;
 	private int recipe_idx;
-	private int likes;
-	private boolean isLiked;
+	private int content_order;
 	
 	public int getIdx() {
-		return idx;
+		return content_idx;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+	public void setIdx(int content_idx) {
+		this.content_idx = content_idx;
 	}
 	public String getImg() {
 		return img;
@@ -39,18 +38,10 @@ public class RecipeSingleContent {
 	public void setRecipe_idx(int recipe_idx) {
 		this.recipe_idx = recipe_idx;
 	}
-	public int getLikes() {
-		return likes;
+	public int getContent_order() {
+		return content_order;
 	}
-	public void setLikes(int likes) {
-		this.likes = likes;
+	public void setContent_order(int content_order) {
+		this.content_order = content_order;
 	}
-	public boolean isLiked() {
-		return isLiked;
-	}
-	public void setLiked(boolean isLiked) {
-		this.isLiked = isLiked;
-	}
-	
-	
 }

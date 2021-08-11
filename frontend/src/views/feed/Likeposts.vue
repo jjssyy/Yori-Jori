@@ -29,11 +29,11 @@ export default {
     let data = {
       id: this.userId
     }
-    UserApi.latestFeed(
+    FeedApi.likeposts(
       data,
       res => {
         console.log(res.data)
-        this.latestFeeds = res.data.latestFeed
+        this.latestFeeds = res.data.latestPosts
       },
       error => {
         console.log(error)

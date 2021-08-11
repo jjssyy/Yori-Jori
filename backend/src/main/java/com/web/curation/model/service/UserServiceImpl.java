@@ -205,5 +205,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+//	@Override
+//	public boolean kakaoreg(Snsreg sns) throws Exception {
+//		
+//		return sqlsession.getMapper(UserDao.class).kakaoreg(sns);
+//	}
+
 	
 }

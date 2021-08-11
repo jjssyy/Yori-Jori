@@ -1,3 +1,4 @@
+
 import UserApi from '../api/UserApi';
 export default {
   LOGIN: function (state, res) {
@@ -36,5 +37,12 @@ export default {
     state.img = []
     state.recipeItems = []
     state.thumnailNumbers = 0
+    state.deleteContents = []  
+  },
+  SELECTRECIPE(state,res){
+    state.selectRecipeId = res
+  },
+  DELETECONTENT(state,res){
+    state.deleteContents.push(res)
   }
 }

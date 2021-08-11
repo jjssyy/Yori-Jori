@@ -19,23 +19,12 @@ const noticeAdd = (data) => {
   console.log("notice"+data.user)
   db.collection("notice"+data.user).doc(now.toString()).set({
     date:now,
+    img:data.img,
     ReqUser: data.ReqUser,
-    isRead: 0,
-    msg:'',
+    type:data.type,
   })
   .then((docRef) => {
     console.log("Document written");
-  })
-}
-
-const requestAdd = (data) =>{
-  db.collection("request"+data.user).add({
-    user: data.permitUser,
-    isRead: 0,
-    msg:''
-  })
-  .then((docRef) => {
-    console.log("Document written with ID: ", docRef.id);
   })
 }
 
@@ -76,7 +65,6 @@ const upLoadProfile = (file,callback) => {
 
 const FirebaseApi = {
   noticeAdd:(data)=>noticeAdd(data),
-  requestAdd:(data)=>requestAdd(data),
   upLoad:(file,callback)=>upLoad(file,callback),
   upLoadProfile:(file,callback)=>upLoadProfile(file,callback),
 

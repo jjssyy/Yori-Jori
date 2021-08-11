@@ -1,68 +1,49 @@
 
 <template>
-  <div class="user" id="login">
+  
     <div class="wrapC">
-      <h1>
-        로그인을 하고 나면
-        <br />좋은 일만 있을 거예요.
-      </h1>
-
-      <div class="input-with-label">
-        <input
-          v-model="id"
-          @keyup.enter="onLogin"
-          id="id"
-          placeholder="아이디를 입력하세요."
-          type="text"
-        />
-        <label for="id">아이디</label>
+      <div class="row" id="login">
+      <div class="row" id="login_box1">
+        <img style="width:150px; height:130px;" :src="require(`@/assets/images/mainlogo.png`)" />
       </div>
-      <div class="input-with-label">
-        <input
-          v-model="password"
-          type="password"
-          v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
-          id="password"
-          @keyup.enter="onLogin"
-          placeholder="비밀번호를 입력하세요."
-        />
-        <label for="password">비밀번호</label>
-        <div class="error-text" v-if="error.password">{{error.password}}</div>
+      <div class="row" id="login_box7">
+        <h1>요리조리</h1>
       </div>
-      <button
+      <div class="row" id="login_box2">
+        <input v-model="id" @keyup.enter="onLogin" id="id" placeholder="아이디를 입력하세요."  type="text"/>
+      </div>
+      <div class="row" id="login_box3">
+        <input v-model="password" type="password" v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}" id="password"  @keyup.enter="onLogin"  placeholder="비밀번호 8자리 이상 입력하세요."/>
+      </div>
+      <div class="row" id="login_box4">
+          <button
         class="btn btn--back btn--login"
         @click="onLogin"
         :disabled="!isSubmit"
         :class="{disabled : !isSubmit}"
       >로그인</button>
 
-      <div class="sns-login">
-        <div class="text">
-          <p>SNS 간편 로그인</p>
-          <div class="bar"></div>
-        </div>
-
-        <kakaoLogin :component="component" />
-        <GoogleLogin :component="component" />
       </div>
-      <div class="add-option">
-        <div class="text">
-          <p>혹시</p>
-          <div class="bar"></div>
+      <div class="row" id="login_box5">
+        <div class="row" style="border-bottom:1px solid lightgray; margin-left:0px;">
         </div>
-        <div class="wrap">
-          <p>아직 회원이 아니신가요?</p>
-          <router-link to="/user/join" class="btn--text">가입하기</router-link>
-        </div>
-        <div class="wrap">
-          <p>비밀번호 찾기</p>
-          <router-link to="/user/findpw" class="btn--text">찾아보기</router-link>
-        </div>
-        <div class="wrap">
-          <p>글쓰기</p>
-          <router-link to="/recipe/write" class="btn--text">쓰기</router-link>
+        <div class="row" style=" margin-top: 30px;">
+          <kakaoLogin :component="component" />
         </div>
       </div>
+      <div class="row" id="login_box6">
+        <div class="row">
+         
+          <router-link to="/user/joinselect" id="routerlink" style="margin-top:0px;" class="btn--text">아직 회원이 아니신가요?</router-link>
+        
+        </div>
+        <div class="row">
+         
+          <router-link to="/user/findpw"  id="routerlink" style="margin-left:10px; margin-top:12px;" class="btn--text">비밀번호를 잊어버리셨나요?</router-link>
+          
+        </div>
+      </div>
+    
     </div>
   </div>
 </template>
@@ -73,7 +54,6 @@
 import "../../components/css/user.scss";
 import PV from "password-validator";
 import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
-import GoogleLogin from "../../components/user/snsLogin/Google.vue";
 import UserApi from "../../api/UserApi";
 import { mapState } from 'vuex'
 import { mapActions } from 'vuex'
@@ -82,7 +62,6 @@ import { mapActions } from 'vuex'
 export default {
   components: {
     KakaoLogin, 
-    GoogleLogin
   },
   created() {
     this.component = this;
@@ -181,4 +160,64 @@ export default {
 };
 </script>
 
+
+
+<style>
+
+#login{
+  margin-top: 0px;
+  
+  padding:50px;
+}
+
+input {
+  border : 1px solid darkgray;
+}
+
+#login_box1,#login_box2,#login_box3,#login_box4,#login_box5,#login_box6{
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+#login_box4{
+  margin-bottom: 50px;
+  
+}
+
+#login_box4 button{
+  background-color: #ffbe76;
+  box-shadow: none;
+  color: white;
+}
+
+#login_box7{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#login_box1 img{
+  margin-left: 130px;
+}
+
+#login_box6{
+  text-align: center;
+}
+
+
+
+#login_box5 img{
+  width:30px;
+  height: 30px;
+  margin: 0px auto;
+}
+
+#routerlink {
+ text-decoration:none; 
+ color: gray;
+ font-weight: 500;
+}
+
+
+</style>
 
