@@ -62,6 +62,9 @@ public class FeedController {
 		List<String> thumbnailList = data.getThumbnail();
 		List<String> hashtagList = data.getHashtags();
 
+		String achieve_master = data.getAchieve_master();
+		String achieve_slave = data.getAchieve_slave();
+		
 		if (id == null) {
 			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 		}
@@ -73,7 +76,9 @@ public class FeedController {
 		recipeInfo.setId(id);
 		recipeInfo.setNickname(nickname);
 		recipeInfo.setTitle(title);
-
+		recipeInfo.setAchieve_master(achieve_master);
+		recipeInfo.setAchieve_slave(achieve_slave);
+		
 		Map<String, String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("id", id);
