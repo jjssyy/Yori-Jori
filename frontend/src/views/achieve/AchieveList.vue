@@ -4,35 +4,36 @@
       <div style="margin-top:50px;">
         <h1>업적</h1>
       </div>
-
-      <h3>전체 항목 달성도</h3>
-      <b-progress :max="achieveslave.length" height="4rem" style="margin:30px 10px">
-        <b-progress-bar class="bar-color" :value="userrecipe.length">
-          <span
-            >전체 달성도: <strong>{{ userrecipe.length }} / {{ achieveslave.length }}</strong></span
-          >
-        </b-progress-bar>
-      </b-progress>
-      <div style="margin-top:50px;"></div>
-      <h3>항목 달성도</h3>
-      <div class="submenu" v-for="(master, idx) in achievemaster" :key="idx">
-        <div class="line">
-          <div class="box">
-            <h4>{{ master.achieve_master_name }}</h4>
-          </div>
-          <div class="font" @click="showDetail(master.achieve_master_name, idx)">
-            <i class="fas fa-clipboard-list"></i>
-          </div>
-        </div>
-        <b-progress :max="achieveCount[idx]" height="3rem" style="margin:10px">
-          <b-progress-bar class="bar-color" :value="count[idx]">
+      <b-card title="전체 항목 달성도">
+        <b-progress :max="totalCount" height="4rem" style="margin:30px 10px">
+          <b-progress-bar class="bar-color" :value="userCount">
             <span
-              >{{ master.achieve_master_name }} 종류 달성도:
-              <strong>{{ count[idx] }} / {{ achieveCount[idx] }}</strong></span
+              >달성도:
+              <strong style="margin-left:3px;">{{ (userCount / totalCount) * 100 }}%</strong></span
             >
           </b-progress-bar>
         </b-progress>
-      </div>
+      </b-card>
+      <b-card title="항목 달성도">
+        <div class="submenu" v-for="(master, idx) in achievemaster" :key="idx">
+          <div class="line">
+            <div class="box">
+              <h4>{{ master.achieve_master_name }}</h4>
+            </div>
+            <div class="font" @click="showDetail(master.achieve_master_name, idx)">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+          </div>
+          <b-progress :max="userRecipe[idx].achieve_cnt" height="3rem" style="margin:10px">
+            <b-progress-bar class="bar-color" :value="userRecipe[idx].clear_cnt">
+              <span>
+                달성도:
+                <strong>{{ userRecipe[idx].percent }}%</strong>
+              </span>
+            </b-progress-bar>
+          </b-progress>
+        </div>
+      </b-card>
     </div>
   </div>
 </template>
@@ -51,10 +52,9 @@ export default {
   data: () => {
     return {
       achievemaster: [],
-      achieveslave: [],
-      userrecipe: [],
-      achieveCount: [],
-      count: [],
+      userRecipe: [],
+      totalCount: 0,
+      userCount: 0,
     };
   },
   components: {},
@@ -70,34 +70,21 @@ export default {
     AchieveApi.AchievemasterList(
       data,
       (res) => {
-        (this.achievemaster = res.data.masterlist), (this.achieveslave = res.data.slavelist);
+        this.achievemaster = res.data.masterlist;
       },
       (error) => {
         console.log(error);
       }
     );
-    AchieveApi.AchievemasterCount(
+
+    AchieveApi.getAchievecurrent(
       data,
       (res) => {
-        this.achieveCount = res.data.masterCount;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    UserApi.myAllRecipes(
-      data,
-      (res) => {
-        this.userrecipe = res.data.latestFeed;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    UserApi.myMasterCount(
-      data,
-      (res) => {
-        this.count = res.data.latestFeed;
+        this.userRecipe = res.data.achieve;
+        for (let i = 0; i < res.data.achieve.length; i++) {
+          this.totalCount += res.data.achieve[i].achieve_cnt;
+          this.userCount += res.data.achieve[i].clear_cnt;
+        }
       },
       (error) => {
         console.log(error);
@@ -115,6 +102,7 @@ export default {
   background-color: #ffbe76;
   color: black;
   font-size: 1.1rem;
+  min-width: 22%;
 }
 .line {
   display: flex;
@@ -125,7 +113,7 @@ export default {
   text-align: right;
 }
 .box {
-  min-width: 89%;
+  min-width: 88%;
 }
 .fa-clipboard-list {
   width: 100%;
@@ -135,5 +123,17 @@ export default {
 }
 .submenu {
   margin-top: 40px;
+}
+.card-title {
+  font-size: 28px;
+}
+.card-body {
+  padding: 30px;
+}
+.card {
+  margin: 40px 0px;
+}
+.progress-bar bar-color {
+  min-width: 80px;
 }
 </style>
