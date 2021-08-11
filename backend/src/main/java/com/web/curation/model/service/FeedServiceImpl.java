@@ -1,5 +1,6 @@
 package com.web.curation.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.CommentFromDB;
+import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
+import com.web.curation.model.SaveRecipeitem;
+import com.web.curation.model.UpdateComment;
+import com.web.curation.model.UpdateRecipeContentToDB;
 import com.web.curation.model.dao.FeedDao;
 
 @Service
@@ -43,7 +48,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<RecipeContent> getLatestFeed(String id) throws Exception {
+	public List<FeedRecipe> getLatestFeed(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getLatestFeed(id);
 	}
 	
@@ -51,14 +56,27 @@ public class FeedServiceImpl implements FeedService {
 	public List<RecipeContent> getAllRecipes(String id) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getAllRecipes(id);
 	}
+	@Override
+	public List<Integer> getLikedPosts(String user_id) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikedPosts(user_id);
+	}
 
 	@Override
+	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
+	}
+
+	@Override
+	public int getLikeNum(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getLikeNum(recipe_idx);
+	}
+
 	public int writeComment(SaveComment comment) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).writeComment(comment);
 	}
 
 	@Override
-	public int updateComment(SaveComment comment) throws Exception {
+	public int updateComment(UpdateComment comment) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).updateComment(comment);
 	}
 
@@ -110,6 +128,43 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public RecipeInfoFromDB getRecipeInfo(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getRecipeInfo(recipe_idx);
+	}
+
+	@Override
+	public int likeRecipe(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).likeRecipe(map);
+	}
+
+	@Override
+	public int cancelLikeRecipe(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).cancelLikeRecipe(map);
+	}
+
+	@Override
+	public int updateRecipeInfo(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateRecipeInfo(map);
+	}
+
+	@Override
+	public int deleteRecipeContent(int content_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).deleteRecipeContent(content_idx);
+	}
+
+	@Override
+	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateRecipeContent(recipeContent);
+	}
+	
+
+	@Override
+	public List<Integer> getMasterCount(String id) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getMasterCount(id);
+	}
+
+	@Override
+	public int writeHashtags(HashMap<String, Object> hash) {
+		
+		return sqlSession.getMapper(FeedDao.class).writeHashtags(hash);
 	}
 
 }

@@ -41,7 +41,7 @@
      );
  }
  
- const checknickname = (data, callback, errorCallback)=>{
+const checknickname = (data, callback, errorCallback)=>{
      http.get("/user/checknickname", {
          params: {
              nickname: data.nickname
@@ -183,41 +183,41 @@
         err=>errorCallback(err)
     )
 }
- const requestUser = (config, callback, errorCallback)=>{
-     http.get("/user/updateuser", config).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const Follow = (data, callback, errorCallback) =>{
-     http.post('/user/profile',{
-         params:{
-             loginId: data.loginId,
-             profileId: data.profileId,
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
+
+const requestUser = (config, callback, errorCallback)=>{
+    http.get("/user/updateuser", config).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    );
+}
+
+const Follow = (data, callback, errorCallback) =>{
+    http.post('/user/profile',{
+        params:{
+            loginId: data.loginId,
+            profileId: data.profileId,
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
 const fileupload = (data, callback, errorCallback) =>{
-     http.post('/user/fileupload', data, {
-         headers: {
-             'Content-Type': 'multipart/form-data'
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const createRecipe = (data, callback, errorCallback) =>{
-     http.post('/feed/write', data, {
+    http.post('/user/fileupload', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(
+        res=>callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
+const createRecipe = (data, callback, errorCallback) =>{
+    http.post('/feed/write', data, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -345,6 +345,17 @@ const snsLogin = (data, callback, errorCallback) =>{
     )
 }
 
+const myMasterCount = (data, callback, errorCallback) => {
+    http
+      .get('/feed/mastercount', {
+        params: {
+          id: data.id,
+        },
+      })
+      .then((res) => callback(res))
+      .catch((err) => errorCallback(err));
+  }
+
 const snsregister = (data, callback, errorCallback) => {
     
     http.post('/user/snsregister',data).then(
@@ -381,5 +392,6 @@ const UserApi = {
     singleRecipe: (data, callback, errorCallback) => singleRecipe(data, callback, errorCallback),
     snsLogin: (data, callback, errorCallback) => snsLogin(data, callback, errorCallback),
     snsregister: (data, callback, errorCallback) => snsregister(data, callback, errorCallback),
+    myMasterCount: (data, callback, errorCallback) => myMasterCount(data, callback, errorCallback),
 }
 export default UserApi

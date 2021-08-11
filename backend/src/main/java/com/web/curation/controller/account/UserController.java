@@ -106,7 +106,7 @@ public class UserController {
 				
 				String token = jwtservice.create("user_email", email, "access-token");
 				resultmap.put("access-token", token);
-				
+				resultmap.put("id", user.getId());
 				result = "success";
 				resultmap.put("result", result);
 			}else {
@@ -132,8 +132,8 @@ public class UserController {
 
 		try {
 
-			String encodepassworrd = passwordencoder.encode(user.getPw());
-			user.setPw(encodepassworrd);
+			String encodepassword = passwordencoder.encode(user.getPw());
+			user.setPw(encodepassword);
 
 			boolean join = userservice.join(user);
 			if (join == true) {
@@ -326,7 +326,7 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public ResponseEntity<UserInfo> profile(@RequestParam String id, HttpServletRequest request) throws Exception {
-		System.out.println(id);
+		
 		if (jwtservice.isUsable(request.getHeader("access-token"))) {
 			UserInfo result = new UserInfo();
 
@@ -342,6 +342,7 @@ public class UserController {
 			result.setFollower(follower);
 			result.setFollowing(following);
 			result.setImg(user.getImg());
+			result.setRankpoint(user.getRankpoint());
 
 			return new ResponseEntity<UserInfo>(result, HttpStatus.OK);
 		} else {

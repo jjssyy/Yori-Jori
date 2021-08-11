@@ -1,8 +1,17 @@
-<template lang="">
-  <div>
-    <p @click="backBack">뒤로가기</p>
-    <h1> 팔로잉 리스트 </h1>
-    <FollowingItem v-for="(following, idx) in followings" :key="idx" :following="following" :idx="idx" :followings="followings" :profileId="profileId"/>
+<template>
+  <div class="wrapC">
+    <!-- <p @click="backBack">뒤로가기</p> -->
+    <h1> 팔로잉</h1>
+    <table class="table">
+      <thead>
+        <th>닉네임</th>
+        <th>비고</th>
+      </thead>
+      <tbody>
+        <FollowingItem v-for="(following, idx) in followings" :key="idx" :following="following" :idx="idx" :followings="followings" :profileId="profileId"/>
+      </tbody>
+
+    </table>
   </div>
 </template>
 <script>
@@ -40,3 +49,30 @@ export default {
   }
 }
 </script>
+
+<style>
+
+table{
+  margin-top: 50px;
+}
+table thead{
+    
+    height: 50px;
+    color: white;
+    font-size: 22px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #ffbe76;
+
+}
+
+ td{
+    
+    height: 100px;
+    font-size: 22px;
+    line-height: 80px;
+    text-align: center;
+
+}
+
+</style>

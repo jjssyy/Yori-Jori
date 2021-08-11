@@ -14,6 +14,21 @@ public class UserInfo {
 	private Integer following;
 	private Integer waiting;
 	private String img;
+	private int rankpoint;
+	private int recipecnt;
+	
+	public int getRecipecnt() {
+		return recipecnt;
+	}
+	public void setRecipecnt(int recipecnt) {
+		this.recipecnt = recipecnt;
+	}
+	public int getRankpoint() {
+		return rankpoint;
+	}
+	public void setRankpoint(int rankpoint) {
+		this.rankpoint = rankpoint;
+	}
 
 	public String getId() {
 		return id;

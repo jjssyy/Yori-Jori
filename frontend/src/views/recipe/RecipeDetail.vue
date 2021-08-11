@@ -25,7 +25,7 @@ export default {
   mounted: function() {
     let data= {
       recipeIdx: this.$route.params.recipe_idx,
-      id: this.selectRecipeId
+      id: this.userId
     }
     console.log(data.id)
     UserApi.singleRecipe(
@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'selectRecipeId',
+      'userId',
     ]),
   }
 }

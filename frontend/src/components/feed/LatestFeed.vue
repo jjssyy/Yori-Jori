@@ -3,6 +3,7 @@
     <div class="top">
       <div class="user-info">
         <div class="user-img">
+          <!-- {{ latestFeed }} -->
           <img :src="defaultProfile" height="30px" alt="" @click="goUserProfile">
         </div>
         <div class="user-name" @click="goUserProfile">{{ latestFeed.nickname }}</div>
@@ -13,7 +14,7 @@
       <div class="btn-group">
         <div class="like">
           <i class="fas fa-heart icon full"></i>
-          0
+          {{ latestFeed.like }}
         </div>
         <div class="comment">
           <i class="far fa-comment-alt icon"></i>
@@ -26,6 +27,7 @@
         <p @click="deleteRecipe">삭제</p>
         <p @click="updateRecipe">수정</p>
         </div>
+
       </div>
     </div>
     <div class="feed-img">
@@ -48,9 +50,7 @@ export default {
     latestFeed: {
       type: [Array, Object],
     },
-    latestFeeds: {
-      type: [Array, Object],
-    },
+  
     idx: Number,
   },
   methods: {
@@ -91,7 +91,12 @@ export default {
   }
 }
 </script>
+
 <style scoped>
+*{
+  color: #464646;
+}
+
 .feed-item{
   width: 100%;
   padding-top: 10px;
@@ -100,7 +105,7 @@ export default {
   align-items: center;
 }
 .top{
-  background-color: beige;
+  background-color: #ffbe76;
   width: 90%;
   height: 80px;
   display: flex;

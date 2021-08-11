@@ -2,7 +2,7 @@
   <div>
     <div class="commentForm">
       <!-- {{ comments }} -->
-      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem" :recipeItemIdx="recipeItem.idx"/>
+      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem"/>
       <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment">
       <button @click="createComment">작성</button>
     </div>
@@ -12,6 +12,7 @@
 <script>
 import { mapState } from 'vuex'
 import RecipeApi from '../../api/RecipeApi';
+import FirebaseApi from '../../api/FirebaseApi';
 import RecipeCommentItem from "../../components/recipe/RecipeCommentItem.vue";
 
 export default {
@@ -20,6 +21,9 @@ export default {
   },
   props: {
     recipeItem: {
+      type: [Array, Object]
+    },
+    recipeContent: {
       type: [Array, Object]
     }
   },
@@ -36,6 +40,8 @@ export default {
   },
   methods: {
     createComment() {
+      console.log(this.comment.content)
+      const newComments = this.comments
       let data = {
         content_idx: this.recipeItem.idx,
         comment: this.comment.content,
@@ -53,16 +59,25 @@ export default {
           console.log(error)
         }
       )
+      this.comments = newComments
+      let notice = {
+        user:this.recipeContent.id,
+        img:this.$store.state.userId,
+        ReqUser:this.$store.state.userId,
+        type:'comment'
+      }
+      FirebaseApi.noticeAdd(notice)
     },
     getComment() {
       let data = {
       content_idx: this.recipeItem.idx,
-      id: this.selectRecipeId,
+      id: this.userId,
     }
     RecipeApi.recipeItemComments(
       data,
       res => {
         console.log('조회 성공')
+        console.log(res.data.commentList)
         this.comments = res.data.commentList
       },
       err => {

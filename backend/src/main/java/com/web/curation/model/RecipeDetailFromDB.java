@@ -6,6 +6,8 @@ public class RecipeDetailFromDB {
 	private String des;
 	private String thumbnail;
 	private int recipe_idx;
+	private int likes;
+	private boolean isLiked;
 	private int content_order;
 	
 	public int getContent_order() {
@@ -43,6 +45,18 @@ public class RecipeDetailFromDB {
 	}
 	public void setRecipe_idx(int recipe_idx) {
 		this.recipe_idx = recipe_idx;
+	}
+	public int getLikes() {
+		return likes;
+	}
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+	public boolean isLiked() {
+		return isLiked;
+	}
+	public void setLiked(boolean isLiked) {
+		this.isLiked = isLiked;
 	}
 	
 	

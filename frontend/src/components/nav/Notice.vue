@@ -1,10 +1,13 @@
 <template>
   <div class="notification">
+    <span href="#" id="search-show" @click="searchShow">
+      <i class="fa fa-2x fa-search"></i>
+    </span>
     <a v-on:click="show = !show" class="tooltip-bell">
       <i class="far fa-2x fa-bell"></i>
       <span id="circle" v-if="notice > 0 && !show"></span>
     </a>
-    <button @click="noticeAdd">추가</button>
+    <!-- <button @click="noticeAdd">추가</button> -->
     <div v-if="show" class="Tooltip">
       <div id="heading">
         <div class="heading-left">
@@ -19,85 +22,115 @@
           <div class="img-left">
             <img class="user-photo" alt="User Photo" v-bind:src="defaultProfile" />
           </div>
-          <div class="user-content">
+          <div class="user-content" v-if="user.type === 'comment'">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 댓글을 달았습니다.</p>
+            <p class="time">{{user.date | timeFor}}</p>
+          </div>
+          <div class="user-content" v-if="user.type === 'like'">
+            <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 게시글을 좋아합니다.</p>
+            <p class="time">{{user.date | timeFor}}</p>
+          </div>
+          <div class="user-content" v-if="user.type === 'follow'">
+            <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 팔로우합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
         </li>
       </ul>
     </div>
+    <div id="search">
+      <div class="search-top">
+        <span href="#" id="back" @click="searchShow">
+          <i class="fas fa-2x fa-arrow-left"></i>
+        </span>
+        <div class="input-box">
+          <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput" >
+          <router-link @click.native="searchShow()" :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}" >검색</router-link>
+        </div>
+      </div>
+        <div class="search-mid">
+          <div class="search-container">
+            <div class="search-container-box">
+              <div class="search-results">
+                <ul v-for="(user,idx) in UserList" :key="idx">
+                  <li class="user-list" v-if="user.id != userId" @click="[searchShow(),searchmember(user.id)]">
+                    <img :src="user.img||defaultProfile">
+                    <span class="to-profile">{{user.nickname}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="search-bottom">
+        <button class="cancle" @click="searchShow">검색창 닫기</button>
+      </div>
+    </div>
   </div>
 </template>
 
 
-
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 import firebase from 'firebase';
 import FirebaseApi from '../../api/FirebaseApi';
 import defaultProfile from "../../assets/images/profile_default.png";
-
+import UserApi from '../../api/UserApi';
+import { mapState } from 'vuex'
 export default {
   data:()=>{
     return {
       notice:0,
       unreadnotice:[],
       defaultProfile,
-      show: false
+      show: false,
+      isShow:false,
+      defaultProfile,
+      InputText:'',
+      msg:'',
+      UserList:[]
     }
   },
   mounted(){
-    this.onNotice(),
-    this.onRequest()
+    this.onNotice()
   },
   watch :{
     getUserId(){
-      this.onNotice(),
-      this.onRequest()
-    }
-  },
-  computed:{
-    getUserId(){
-      return this.$store.state.userId
+      this.onNotice()
     }
   },
   methods:{
-    noticeAdd(){
+    searchInput(){
       let data = {
-        user:this.$store.state.userId,
-        ReqUser:'cha'
+        nickname : this.InputText,
+      };
+      if (this.InputText.length != 0) {
+        UserApi.searchByNickname(
+          data, 
+          res=>{
+            this.UserList = res.data.nicknameList
+          },
+          error=>{
+            console.log(error)
+          }
+        )
+      } else {
+        this.UserList = []
       }
-      FirebaseApi.noticeAdd(data)
     },
-    requestAdd(){
-      let data = {
-        user:this.$store.state.userId,
-        permitUser:'unKnown'
-      }
-      FirebaseApi.requestAdd(data)
+
+    searchmember(id){
+      this.searchShow
+      this.$router.push({ name: 'Profile' , params: {user_id: id}})
     },
     onNotice(){
       const db = firebase.firestore();
       db.collection("notice"+this.$store.state.userId)
         .onSnapshot((doc) => {
           this.unreadnotice = doc.docs.map(v=>{
-            if (v.data().isRead == 0){
-              return v.data()
-
-            }
+            return v.data()
           })
           this.notice = this.unreadnotice.length
-      });
-    },
-    onRequest(){
-      const db = firebase.firestore();
-      db.collection("request"+this.$store.state.userId)
-        .onSnapshot((doc) => {
-          this.unreadrequest = doc.docs.map(v=>{
-            return {
-              requser:v.data().ReqUser
-            }
-          })
-          this.request = this.unreadrequest.length
       });
     },
     deleteAll(event){
@@ -110,6 +143,18 @@ export default {
           element.ref.delete();
         });
       });
+    },
+    searchShow(){
+      const Search = document.querySelector('#search')
+      if (this.isShow==false){
+        Search.classList.add('active')
+        this.isShow = true
+      } else {
+        Search.classList.remove('active')
+        this.isShow = false
+      }
+      this.InputText = ''
+      this.UserList = []
     }
   },
   filters : {
@@ -135,7 +180,12 @@ export default {
 
 			return `${Math.floor(betweenTimeDay / 365)}년전`;
 		}
-  }
+  },
+   computed: {
+    ...mapState([
+      'userId',
+    ]),
+  },
 }
 </script>
 
@@ -175,10 +225,12 @@ a {
   cursor: pointer;
 }
 
+svg{
+  color: rgba(144, 144, 144, 0.3);
+}
 
 .tooltip-bell {
   display: block;
-  color: #a5a6a8;
   z-index: 200;
 }
 
@@ -203,7 +255,7 @@ a {
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 100%;
-  background: #f07379;
+  background: #FF9636;
 }
 
 .notification-list{
@@ -301,84 +353,73 @@ p .time {
   color: #9da4ae;
 }
 
-
 span.name {
   font-weight: 500;
 }
 
-.fadeStart-enter-active {
-  -webkit-animation: fadeStart .2s both ease-in-out;
-  animation: fadeStart .2s both ease-in-out;
+#search{
+  color: #464646;
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: -100%;
+  left: 0%;
+  transition: 350ms;
+  z-index: 10000;
+  border-bottom: 1px solid #FF9636;
+}
+#search.active{
+  top: 0%;
+  transition: 500ms;
 }
 
-.fadeStart-leave-active {
-  -webkit-animation: fadeEnd .2s both ease-in-out;
-  animation: fadeEnd .2s both ease-in-out;
-}
+@media only screen and (min-width: 650px){
 
-[v-cloak] > * {
-  display: none;
-}
-
-@-webkit-keyframes fadeStart {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    display: block;
+  #search-show {
+    display: none;
   }
 }
-
-
-@keyframes fadeStart {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    display: block;
-  }
+.search-top{
+  width: 100%;
 }
-
-
-@-webkit-keyframes fadeEnd {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
+#back svg{
+  margin: 5px 10px;
 }
-
-
-@keyframes fadeEnd {
-  0% {
-    opacity: 1;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 5px, 0);
-    transform: translate3d(0, 5px, 0);
-  }
+.input-box{
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.input-box input{
+  width: 90%;
+  border-radius: 3px;
+}
+.input-box a{
+  margin-left: 1%;
+  width: 9%;
+}
+.search-mid{
+  width: 100%;
+}
+.user-list{
+  width: 100%;
+}
+.search-bottom{
+  width: 100%;
+}
+.cancle{
+  position: absolute;
+  bottom: 0%;
+  cursor: pointer;
+  display: inline;
+  background-color: #FF5C4D;
+  width: 100%;
+  height: 5vh;
+  color: #464646;
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template lang="">
   <div>
     <div v-if="update == false">
+      {{ commentItem }}
       <div>
         <!-- {{ commentItem }} -->
       <p>닉네임 : {{ commentItem.nickname }} 
@@ -58,6 +59,7 @@ export default {
         comment_idx: this.commentItem.idx,
         id: this.userId
       }
+      console.log(data.id)
       RecipeApi.commentLike(
         data,
         res => {

@@ -1,49 +1,65 @@
-
-<!--
-    가입하기는 기본적인 폼만 제공됩니다
-    기능명세에 따라 개발을 진행하세요.
-    Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
- -->
 <template>
-  <div class="user join wrapC">
-    <h1>가입하기</h1>
-    <div class="form-wrap">
-      <div class="input-with-label">
-        <input v-model="id" id="id" placeholder="닉네임을 입력하세요." type="text" />
-        <label for="id">아이디</label>
-        <button @click="checkid">중복체크</button>
+  <div class="wrapC" id="join">
+    <div class="row" id="join_box0">
+       <img :src="require(`@/assets/images/roundlogo.png`)" />
+    </div>
+    <div class="row" id="join_box1">
+      <h1>가입하기</h1>
+    </div>
+    <div class="row" id="join_box2">
+      <div class="row">
+        <input class="col-md-9" v-model="id" id="id" placeholder="아이디를 입력하세요." type="text"/>
+        <div class="col-md-3">
+          <button class="btn" @click="checkid">중복체크</button>
+        </div>
+        
+      </div>
+      <div class="row">
         <div class="error-text" v-if="error.id"></div>
       </div>
-      <div class="input-with-label">
-        <input v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
-        <label for="nickname">닉네임</label>
-        <button @click="checknickname">중복체크</button>
+    </div>
+      <div class="row" id="join_box3">
+      <div class="row">
+        <input class="col-md-9" v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />  
+        <div class="col-md-3">
+        <button class="btn" @click="checknickname">중복체크</button>
+        </div>
+      
+      </div>
+      <div class="row">
         <div class="error-text" v-if="error.nickname"></div>
       </div>
-
-      <div class="input-with-label">
+    </div>
+    <div class="row" id="join_box4">
+      <div class="row">
         <input v-model="email" 
         v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
         id="email" 
         placeholder="이메일을 입력하세요." 
         type="text" 
         />
-        <label for="email">이메일</label>
+      </div>
+      <div class="row">
         <div class="error-text" v-if="error.email">{{error.email}}</div>
       </div>
+    </div>
 
-      <div class="input-with-label">
+    <div class="row" id="join_box4">
+      <div class="row">
         <input 
         v-model="password" 
         id="password" 
         :type="passwordType" 
         v-bind:class="{error : error.password, complete:!error.password&&password.length!==0}"
         placeholder="비밀번호를 입력하세요." />
-        <label for="password">비밀번호</label>
+      </div>
+      <div class="row">
         <div class="error-text" v-if="error.password">{{error.password}}</div>
       </div>
+    </div>
 
-      <div class="input-with-label">
+    <div class="row" id="join_box5">
+      <div class="row">
         <input
           v-model="passwordConfirm"
           :type="passwordConfirmType"
@@ -51,24 +67,19 @@
           id="password-confirm"
           placeholder="비밀번호를 다시한번 입력하세요."
         />
-        <label for="password-confirm">비밀번호 확인</label>
+      </div>
+      <div class="row">
         <div class="error-text" v-if="error.passwordConfirm">{{error.passwordConfirm}}</div>
       </div>
+        <div class="row" id="join_box6">
+        <button class="button"
+          @click="onJoin"
+          :disabled="!isSubmit"
+          :class="{disabled : !isSubmit}"
+          >가입하기</button>
     </div>
-
-    <label>
-      <input v-model="isTerm" type="checkbox" id="term" />
-      <span>약관을 동의합니다.</span>
-      <div class="error-text" v-if="error.rule"></div>
-    </label>
-
-    <span @click="termPopup=true">약관보기</span>
-    <kakaoregister></kakaoregister>
-    <button class="btn-bottom"
-    @click="onJoin"
-    :disabled="!isSubmit"
-    :class="{disabled : !isSubmit}"
-    >가입하기</button>
+    </div>
+  
   </div>
 </template>
 
@@ -76,12 +87,10 @@
 import UserApi from '../../api/UserApi';
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
-import Kakaoregister from "../../components/user/snsLogin/KakaoRegister.vue";
+
 
 export default {
-   components: {
-    Kakaoregister, 
-  },
+ 
   created(){
     this.passwordSchema
       .is()
@@ -235,6 +244,7 @@ export default {
           console.log(res);
           if(res.data =="success"){
             alert("회원가입에 성공하였습니다!");
+            this.$router.push({name:'Login'});
             this.$router.push("/user/join/complete");
           }else if(res.data =="fail"){
             alert("회원가입에 실패하셨습니다.!");
@@ -260,3 +270,56 @@ export default {
   }
 };
 </script>
+
+<style>
+#join{
+  margin-top: 100px;
+  border: 1px solid darkgray;
+  padding:50px;
+}
+
+input {
+  border : 1px solid darkgray;
+}
+
+#join_box1,#join_box2,#join_box3,#join_box4,#join_box5{
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+#join_box6{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  
+}
+
+#join_box6 button{
+  background-color: #ffbe76;
+  color: white;
+  height: 50px;
+}
+
+#join_box2 button, #join_box3 button{
+  margin-top: 5px;
+  height: 40px;
+  margin-left: 20px;
+}
+
+#join button{
+  background-color: #ffbe76;
+  box-shadow: none;
+  color: white;
+}
+
+#join_box1{
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#join_box0 img{
+  width:200px;
+  margin-left: 150px;
+}
+
+</style>
