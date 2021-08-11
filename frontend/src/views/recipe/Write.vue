@@ -13,13 +13,26 @@
 
       <div id="image-des">
         <h2>CARDs</h2>
-        <div v-for="(data, idx) in fields" :key="idx" class="write-card" @click="updateCard(idx)">
+        <div v-for="(data, idx) in fields" :key="fields[idx].idx" class="write-card" @click="updateCard(idx)">
+          <div class="check-box">
           <div class="thumbnail" @click="isThumbnail(idx)">썸네일</div>
+          <span @click="deleteContent(idx)">
+            <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
+          </span>
+          </div>
           <div class="image-box">
             <img class="image" :src="data.img">
           </div>
           <div class="content-box">
             {{data.des}}
+          </div>
+          <div class="leftright">
+          <button @click="leftContent(idx)">
+            <i class="fas fa-angle-double-left"></i> 
+          </button>
+          <button @click="rightContent(idx)">
+            <i class="fas fa-angle-double-right"></i>
+          </button>
           </div>
         </div>
         <div class="addcard" id="add" @click="tempimage">
@@ -51,6 +64,11 @@
       </div>
       <div id="image-des">
         <h2>Challenges</h2>
+        <select name="title_name" id="title_name">
+          <option v-for="(Achieve, idx) in Achieves" :key="idx" :value="Achieve[2]">
+            {{ Achieve[2] }}
+          </option>
+        </select>
       </div>
       <button class="submit" @click="check"><h1><i class="fas fa-pen nav-icon"></i></h1></button>
     </div>
@@ -61,6 +79,7 @@
 <script>
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
+import RecipeApi from '../../api/RecipeApi';
 import FirebaseApi from '../../api/FirebaseApi';
 var frm = new FormData();
 
@@ -77,8 +96,20 @@ export default {
       showcard:false,
       tempImg:'',
       tempDes:'',
-      defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14"
+      defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14",
+      Achieves: [],
     }
+  },
+  mounted: function(){
+    RecipeApi.achieveRecipe(
+      res => {
+        console.log("칭호 가져옴")
+        this.Achieves = res.data
+      },
+      error=> {
+        console.log(error)
+      }      
+    )
   },
   methods: {
     tempimage(){
@@ -153,7 +184,17 @@ export default {
     },
     isThumbnail(idx){
       this.thumbnailNumber = idx
-    }
+    },
+    deleteContent(idx){
+      this.fields.splice(idx,1)
+      console.log(this.fields)
+    },
+    // leftContent(idx){
+    //   }
+    // },
+    // rightContent(idx){
+
+    // }
   },
   computed: {
     ...mapState([
@@ -344,5 +385,17 @@ export default {
   background-color: #DAD870;
   border-radius: 3px;
   margin-bottom: 5%;
+}
+.leftright{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+.check-box{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 2px;
+  padding-right: 4px;
 }
 </style>
