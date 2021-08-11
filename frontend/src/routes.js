@@ -93,14 +93,14 @@ export default [
         component: RecipeDetail
     },
     {
-        path: '/feed/allmember',
-        name: 'Allmember',
-        component: Allmember
-    },
-    {
         path: '/recipe/update/:recipe_idx',
         name: 'UpdateRecipe',
         component: UpdateRecipe
+    },
+    {
+        path: '/feed/allmember',
+        name: 'Allmember',
+        component: Allmember
     },
     {
         path: '*',
