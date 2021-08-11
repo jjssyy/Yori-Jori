@@ -122,7 +122,7 @@ public class FeedController {
 				list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
 			}
 			resultMap.put("message", result);
-			resultMap.add("latestPosts", list);
+			resultMap.put("latestPosts", list);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			e.printStackTrace();
