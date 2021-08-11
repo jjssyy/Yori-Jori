@@ -169,6 +169,8 @@ public class FeedController {
 			recipeDetailToClient.setRegdate(recipeInfoFromDB.getRegdate());
 			recipeDetailToClient.setId(recipeInfoFromDB.getId());
 			recipeDetailToClient.setNickname(recipeInfoFromDB.getNickname());
+			recipeDetailToClient.setAchieve_master(recipeInfoFromDB.getAchieve_master());
+			recipeDetailToClient.setAchieve_slave(recipeInfoFromDB.getAchieve_slave());
 
 			// 좋아요 수
 			recipeDetailToClient.setLike(feedService.getLikeCountRecipe(recipe_idx));
