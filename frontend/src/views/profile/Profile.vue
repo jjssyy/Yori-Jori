@@ -110,8 +110,9 @@
             <label>칭호</label>
           </div>
           <div class="row">
-            <span v-for="(clear, idx) in achieve" :key="idx">
-              <p v-if="clear.percent == 100">{{clear.title}} </p>
+            <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
+                <img id="achieve_img" v-if="clear.percent == 100" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
+                <img id="achieve_img" v-else :src="require(`@/assets/images/${clear.fail_img}.png`)" />
             </span>
           </div>
       </div>
@@ -181,7 +182,7 @@ export default {
     UserApi.myAllRecipes(
       data,
       res => {
-        this.myRecipes = res.data.latestFeed
+        this.myRecipes = res.data.latestFeed 
       },
       error=>{
         console.log(error)
@@ -426,7 +427,9 @@ export default {
   margin-top: 10px;
 }
 
-
-
+#achieve_img{
+  width:100px;
+  height: 100px;
+}
 
 </style>

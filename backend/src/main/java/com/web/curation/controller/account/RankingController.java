@@ -30,9 +30,6 @@ public class RankingController {
 	@Autowired
 	RankingService rankingservice;
 	
-	@Autowired
-	JwtService jwtservice;
-	
 	@GetMapping("/myrank")
 	public ResponseEntity<?> myranking(@RequestParam Map map) throws Exception{
 		
