@@ -1,12 +1,7 @@
 <template lang="">
   <div class="wrapC">
-<<<<<<< HEAD
     <!-- {{ recipeItem }} -->
     <!-- {{ recipeContent}} -->
-=======
-    {{ recipeItem }}
-    <!-- {{ recipeContent }} -->
->>>>>>> dev
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
     <p>{{ recipeItem.des }}</p>
@@ -25,11 +20,7 @@
         {{ recipeContent.like }}
       </p>
     </div>
-<<<<<<< HEAD
-    <RecipeCommentList :recipeItem="recipeItem" />
-=======
     <RecipeCommentList :recipeItem="recipeItem" :recipeContent="recipeContent"/>
->>>>>>> dev
   </div>
 </template>
 <script>
