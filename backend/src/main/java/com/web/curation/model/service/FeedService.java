@@ -59,4 +59,6 @@ public interface FeedService {
 	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
+	
+	public List<RecipeContent> getPopularPosts() throws Exception;
 }

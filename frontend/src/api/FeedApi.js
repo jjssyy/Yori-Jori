@@ -25,11 +25,7 @@ const likeposts = (data, callback, errorCallback) => {
 }
 
 const FeedApi = {
-<<<<<<< HEAD
-  likeposts: (config,data, callback, errorCallback) => likeposts(config,data, callback, errorCallback),
-=======
   likeposts: (data, callback, errorCallback) => likeposts(data, callback, errorCallback),
->>>>>>> 15702f6434f6bdc63a4adb058e56d1ca4dd0d147
 }
 
 export default FeedApi

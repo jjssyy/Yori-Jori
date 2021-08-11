@@ -67,9 +67,9 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
 	}
 
-	@Override
-	public int writeHashtags(HashMap<String, Object> hash) {
-		return sqlSession.getMapper(FeedDao.class).writeHashtag(hash);
+//	@Override
+//	public int writeHashtags(HashMap<String, Object> hash) {
+//		return sqlSession.getMapper(FeedDao.class).writeHashtag(hash);
 	public int getLikeNum(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getLikeNum(recipe_idx);
 	}
@@ -173,6 +173,11 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getAchieveListForRecipe();
+	}
+
+	@Override
+	public List<RecipeContent> getPopularPosts() throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getPopularPosts();
 	}
 
 }

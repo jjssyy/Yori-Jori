@@ -37,8 +37,6 @@ public interface FeedDao {
 	
 	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
 	
-	public int getLikeNum(int recipe_idx) throws Exception;
-	
 	public int writeComment(SaveComment comment) throws Exception;
 	
 	public int updateComment(UpdateComment comment) throws Exception;
@@ -79,4 +77,6 @@ public interface FeedDao {
 	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
+	
+	public List<RecipeContent> popularPosts() throws Exception;
 }
