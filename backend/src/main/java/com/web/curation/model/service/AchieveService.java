@@ -19,6 +19,9 @@ public interface AchieveService {
 	List<Integer> getMasterCount() throws Exception;
 	
 	List<Achievecurrent> getAchievecurrent(String id) throws Exception;
-	
+
+	List<Achieve> getMasterCategoryCount(String master) throws Exception;
+
+	List<RecipeContent> getCategoryRecipe(Map<String, String> map);
 
 }

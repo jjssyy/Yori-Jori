@@ -19,4 +19,12 @@
 	<select id="getAchievecurrent" parameterType="String" resultType="Achievecurrent">
 		select id, t.title as title, t.cnt as clear_cnt, e.cnt as achieve_cnt, round((t.cnt / e.cnt * 100)) as percent, title.clear_img as clear_img, title.fail_img as fail_img from (select id, title, count(*) as cnt from recipe where id = #{id} group by title) t inner join (select achieve_title_name as title, count(*) as cnt from achieve group by achieve_title_name) e on t.title = e.title inner join title on e.title = title.title_name;
 	</select>
+	<select id="getMasterCategoryCount" parameterType="String" resultType="Achieve">
+		select * from achieve where achieve_master_name = #{master}
+	</select>
+	<select id="getCategoryRecipe" parameterType="map" resultType="RecipeContent">
+   		select * from recipe where id = #{id} and achieve_master = #{master}
+    </select>
+	
+	
 </mapper>
