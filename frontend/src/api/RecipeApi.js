@@ -1,6 +1,6 @@
 import http from "@/util/http-common";
 
-const achieveRecipe = (data, callback, errorCallback) =>{
+const achieveRecipe = (callback, errorCallback) =>{
     http.get('/feed/write')
     .then(
          res=>callback(res)
@@ -123,7 +123,7 @@ const commentUnlike = (data,callback, errorCallback) => {
 
 
 const RecipeApi = {
-    achieveRecipe: (data, callback, errorCallback) => achieveRecipe(data, callback, errorCallback),
+    achieveRecipe: (callback, errorCallback) => achieveRecipe(callback, errorCallback),
     deleteRecipe: (data, callback, errorCallback) => deleteRecipe(data, callback, errorCallback),
     updateRecipe: (data, callback, errorCallback) => updateRecipe(data, callback, errorCallback),
     likeRecipe: (data, callback, errorCallback) => likeRecipe(data, callback, errorCallback),
