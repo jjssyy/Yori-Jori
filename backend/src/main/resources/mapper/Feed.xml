@@ -165,7 +165,7 @@
    </select>
    
 	<select id="getAchieveForRecipe" resultType="AchieveListFromDB">
-		select * from achieve;
+		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve;
 	</select>
    
 </mapper>
