@@ -1,183 +1,156 @@
- import http from "@/util/http-common";
- import { mapState } from 'vuex'
- import { mapActions } from 'vuex'
- 
- 
- const requestLogin = (data,callback,errorCallback) => {
-     //백앤드와 로그인 통신하는 부
-     http.get("/user/login",{
-         params:{
-             id:data.id,
-             pw:data.pw
-         }
-     })
-     .then(res=>callback(res)) 
-     .catch(err=>errorCallback(err));
- }
- 
- const requestJoin = (data, callback, errorCallback) => {
- 
-     http.post("/user/join",data).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const checkid = (data, callback, errorCallback)=>{
-     http.get("/user/checkid", {
-         params: {
-             id: data.id
-         }
-     }).then(
-         res => callback(res),
-         
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
-const checknickname = (data, callback, errorCallback)=>{
-     http.get("/user/checknickname", {
-         params: {
-             nickname: data.nickname
-         }
-     }).then(
-         res => callback(res),
-         
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const requestChangePassword = (data, callback, errorCallback)=>{
-     http.post("/account/changepassword", data).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const changepw = (data, callback, errorCallback) => {
-     
-     http.post("/user/updatepw",data).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const requestUpdate = (data, callback, errorCallback)=>{
-     http.put("/user/updateuser", data).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const getFollow = (data, callback, errorCallback)=>{
-     http.get('/follow', data).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const emailfindpw = (data, callback, errorCallback)=>{
-     http.get("/user/findpw", {
-         params: {
-             id: data.id,
-             email: data.email
-         }
-     }).then(
-         res => callback(res),
-         
-     ).catch(
-         err=>errorCallback(err)
-     );
- }
- 
- const getFollower= (data, callback, errorCallback)=>{
-     http.get('/user/profile/followerlist', {
-         params:{
-             id : data.id
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const getWaiter = (data, callback, errorCallback)=>{
-     http.get('/user/profile/waitlist', {
-         params:{
-             id : data.id
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const getFollowing = (data, callback, errorCallback)=>{
-     http.get('/user/profile/followinglist', {
-         params:{
-             id : data.id
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- const deleteFollower= (data, callback, errorCallback)=>{
-     http.delete('/user/profile/followerlist', {
-         params:{
-             loginid : data.loginId,
-             followerid: data.followerId
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- 
- 
- const deleteFollowing= (data, callback, errorCallback)=>{
-     http.delete('/user/profile/followinglist', {
-         params:{
-             loginid : data.loginId,
-             followingid: data.followingId,
-         }
-     }).then(
-         res=>callback(res)
-     ).catch(
-         err=>errorCallback(err)
-     )
- }
- 
- 
- const getUser = (data, callback, errorCallback) => {
-    
-    http.get('/user/profile', {
-        
-       
-        params:{
-            id : data.id
-        }} 
-       
-    ).then(
-        res=>callback(res)
-    ).catch(
-        err=>errorCallback(err)
-    )
-}
->>>>>>> frontend/src/api/UserApi.js
+import http from '@/util/http-common';
+import { mapState } from 'vuex';
+import { mapActions } from 'vuex';
+
+const requestLogin = (data, callback, errorCallback) => {
+  //백앤드와 로그인 통신하는 부
+  http
+    .get('/user/login', {
+      params: {
+        id: data.id,
+        pw: data.pw,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const requestJoin = (data, callback, errorCallback) => {
+  http
+    .post('/user/join', data)
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const checkid = (data, callback, errorCallback) => {
+  http
+    .get('/user/checkid', {
+      params: {
+        id: data.id,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const checknickname = (data, callback, errorCallback) => {
+  http
+    .get('/user/checknickname', {
+      params: {
+        nickname: data.nickname,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const requestChangePassword = (data, callback, errorCallback) => {
+  http
+    .post('/account/changepassword', data)
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const changepw = (data, callback, errorCallback) => {
+  http
+    .post('/user/updatepw', data)
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const requestUpdate = (data, callback, errorCallback) => {
+  http
+    .put('/user/updateuser', data)
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const getFollow = (data, callback, errorCallback) => {
+  http
+    .get('/follow', data)
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const emailfindpw = (data, callback, errorCallback) => {
+  http
+    .get('/user/findpw', {
+      params: {
+        id: data.id,
+        email: data.email,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const getFollower = (data, callback, errorCallback) => {
+  http
+    .get('/user/profile/followerlist', {
+      params: {
+        id: data.id,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const getWaiter = (data, callback, errorCallback) => {
+  http
+    .get('/user/profile/waitlist', {
+      params: {
+        id: data.id,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const getFollowing = (data, callback, errorCallback) => {
+  http
+    .get('/user/profile/followinglist', {
+      params: {
+        id: data.id,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const deleteFollower = (data, callback, errorCallback) => {
+  http
+    .delete('/user/profile/followerlist', {
+      params: {
+        loginid: data.loginId,
+        followerid: data.followerId,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const deleteFollowing = (data, callback, errorCallback) => {
+  http
+    .delete('/user/profile/followinglist', {
+      params: {
+        loginid: data.loginId,
+        followingid: data.followingId,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
+const getUser = (data, callback, errorCallback) => {
+  http
+    .get('/user/profile', {
+      params: {
+        id: data.id,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
 
 const requestLogin = (data, callback, errorCallback) => {
   //백앤드와 로그인 통신하는 부
