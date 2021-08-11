@@ -575,4 +575,11 @@ public class FeedController {
 		}
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
+	
+	//writeRecipe-업적 확인 기능 추가
+	@GetMapping("/write")
+	public ResponseEntity<Map<Object, String>> RecipeAchieveList(){
+		return null;
+		
+	}
 }
