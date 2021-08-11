@@ -36,13 +36,8 @@
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
       select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes, 
       CASE 
-<<<<<<< HEAD
-      	WHEN l2.recipe_user_id IS NULL THEN false
-      	ELSE true
-=======
          WHEN l2.recipe_user_id IS NULL THEN false
          ELSE true
->>>>>>> 7a9600ea58ed1e562bc4639cdbc7eabc57a70667
       END AS isLiked
       from recipe r left join recipe_like l on r.idx = l.recipe_idx 
       left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id} 
@@ -261,7 +256,9 @@
       SELECT count(achieve_master_name) from achieve group by achieve_master_name
    </select>
    
-
+	<select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
+		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
+	</select>
    
 >>>>>>> 7a9600ea58ed1e562bc4639cdbc7eabc57a70667
 </mapper>
