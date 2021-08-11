@@ -19,5 +19,8 @@ export default {
   },
   selectRecipe({commit}, res){
     commit('SELECTRECIPE',res)
+  },
+  deleteContent({commit},res){
+    commit('DELETECONTENT',res)
   }
 }
