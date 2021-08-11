@@ -12,6 +12,18 @@ const deleteRecipe = (data, callback, errorCallback) => {
     )
 }
 
+const updateRecipe = (data, callback, errorCallback) => {
+    http.put('/feed/update',data,{
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(
+        res => callback(res)
+    ).catch(
+        err=>errorCallback(err)
+    )
+}
+
 const likeRecipe = (data, callback, errorCallback) => {
     http.post('/feed/like',data).then(
         res => callback(res)
@@ -103,6 +115,7 @@ const commentUnlike = (data,callback, errorCallback) => {
 
 const RecipeApi = {
     deleteRecipe: (data, callback, errorCallback) => deleteRecipe(data, callback, errorCallback),
+    updateRecipe: (data, callback, errorCallback) => updateRecipe(data, callback, errorCallback),
     likeRecipe: (data, callback, errorCallback) => likeRecipe(data, callback, errorCallback),
     unlikeRecipe: (data, callback, errorCallback) => unlikeRecipe(data, callback, errorCallback),
     writeComment: (data, callback, errorCallback) => writeComment(data, callback, errorCallback),

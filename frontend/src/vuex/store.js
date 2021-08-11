@@ -17,6 +17,7 @@ let state = {
     recipeItems: [],
     img: [],
     thumbnailNumber: 0,
+    deleteContents: [],
     selectRecipeId: '',
 }
 
