@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
@@ -76,6 +75,4 @@ public interface FeedDao {
 	public int deleteRecipeContent(int content_idx) throws Exception;
 	
 	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
-
-	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
 }
