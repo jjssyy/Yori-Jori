@@ -110,7 +110,7 @@ public class FeedController {
 
 	// liked posts
 	@GetMapping("/likedposts")
-	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestBody String user_id) {
+	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam String user_id) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
@@ -122,6 +122,7 @@ public class FeedController {
 				list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
 			}
 			resultMap.put("message", result);
+			resultMap.add("latestPosts", list);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			e.printStackTrace();

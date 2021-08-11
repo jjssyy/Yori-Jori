@@ -3,15 +3,10 @@ import { mapState } from 'vuex'
 
 
 
-const likeposts = (config,data, callback, errorCallback) => {
-  console.log(this.$store.state)
-  console.log(config)
+const likeposts = (data, callback, errorCallback) => {
   http.get('/feed/likedposts', {
-      headers: {
-          'access-token':config
-      },
       params:{
-          id : data.id
+          user_id : data.id
       }}
   ).then(
       res=>callback(res)
@@ -21,7 +16,7 @@ const likeposts = (config,data, callback, errorCallback) => {
 }
 
 const FeedApi = {
-  likeposts: (config,data, callback, errorCallback) => likeposts(config,data, callback, errorCallback),
+  likeposts: (data, callback, errorCallback) => likeposts(data, callback, errorCallback),
 }
 
 export default FeedApi
