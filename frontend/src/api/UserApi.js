@@ -166,13 +166,11 @@ const checknickname = (data, callback, errorCallback)=>{
  }
  
  
- const getUser = (config,data, callback, errorCallback) => {
+ const getUser = (data, callback, errorCallback) => {
     
     http.get('/user/profile', {
         
-        headers: {
-            'access-token':config
-        },
+       
         params:{
             id : data.id
         }} 
