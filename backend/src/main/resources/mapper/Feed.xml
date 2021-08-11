@@ -127,4 +127,9 @@
    <delete id="cancelLikeComment" parameterType="Map">
    		delete from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
    </delete>
+   
+   <select id="popularPosts" resultType="RecipeContent">
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes, 
+   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc; 
+   </select>
 </mapper>
