@@ -209,7 +209,7 @@ public class UserController {
 
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		if (jwtservice.isUsable(request.getHeader("access-token"))) {
+	
 			try {
 				UserVO user = userservice.userInfo(request.getHeader("id"));
 				resultMap.put("userInfo", user);
@@ -219,11 +219,7 @@ public class UserController {
 				resultMap.put("message", e.getMessage());
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
-		} else {
-			resultMap.put("message", "FAIL");
-			status = HttpStatus.ACCEPTED;
-		}
-
+	
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	@PutMapping("/updateuser")
@@ -231,7 +227,7 @@ public class UserController {
 
 		String result = "";
 
-		if (jwtservice.isUsable(user.getToken())) {
+		
 			try {
 
 				if (userservice.updateuser(user) == true) {
@@ -244,9 +240,7 @@ public class UserController {
 				e.printStackTrace();
 				result = "error";
 			}
-		} else {
-			result = "error";
-		}
+		
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
@@ -256,7 +250,7 @@ public class UserController {
 
 		String result = "error";
 
-		if (jwtservice.isUsable(changepw.getToken())) {
+		
 			try {
 				String old = userservice.oldpw(changepw);
 
@@ -285,9 +279,7 @@ public class UserController {
 				result = "error";
 			}
 
-		} else {
-			result = "error";
-		}
+		
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
@@ -327,7 +319,7 @@ public class UserController {
 	@GetMapping("/profile")
 	public ResponseEntity<UserInfo> profile(@RequestParam String id, HttpServletRequest request) throws Exception {
 		
-		if (jwtservice.isUsable(request.getHeader("access-token"))) {
+		
 			UserInfo result = new UserInfo();
 
 			UserVO user = userservice.userInfo(id);
@@ -343,11 +335,10 @@ public class UserController {
 			result.setFollowing(following);
 			result.setImg(user.getImg());
 			result.setRankpoint(user.getRankpoint());
+			result.setRecipecnt(user.getRecipecnt());
 
 			return new ResponseEntity<UserInfo>(result, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<UserInfo>(HttpStatus.BAD_REQUEST);
-		}
+		
 
 	}
 
@@ -490,7 +481,7 @@ public class UserController {
 
 		String result = "";
 
-		if (jwtservice.isUsable(rf.getToken())) {
+		
 			try {
 
 				if (userservice.requestfollow(rf) == true) {
@@ -503,9 +494,7 @@ public class UserController {
 				e.printStackTrace();
 				result = "error";
 			}
-		} else {
-			result = "error";
-		}
+	
 
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
@@ -515,7 +504,7 @@ public class UserController {
 
 		String result = "";
 
-		if (jwtservice.isUsable(rf.getToken())) {
+		
 			try {
 
 				if (userservice.deletefollowing(rf) == true) {
@@ -528,9 +517,7 @@ public class UserController {
 				e.printStackTrace();
 				result = "error";
 			}
-		} else {
-			result = "error";
-		}
+		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}

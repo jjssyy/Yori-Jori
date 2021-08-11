@@ -1,7 +1,7 @@
 <template lang="">
   <div class="wrapC">
     <!-- {{ recipeItem }} -->
-    <!-- {{ recipeContent}} -->
+    {{ recipeContent}}
     {{ idx+1 }}
     <img :src='recipeItem.img' width="400"/>
     <p>{{ recipeItem.des }}</p>
@@ -69,7 +69,8 @@ export default {
         user:this.recipeContent.id,
         img:this.$store.state.userId,
         ReqUser:this.$store.state.userId,
-        type:'like'
+        type:'like',
+        articleID:this.recipeContent.recipe_contents[0].recipe_idx
       }
       FirebaseApi.noticeAdd(notice)
     },

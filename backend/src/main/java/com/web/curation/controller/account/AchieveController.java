@@ -29,9 +29,6 @@ public class AchieveController {
 	AchieveService achieveservice;
 	
 
-	@Autowired
-	JwtService jwtservice;
-
 	@GetMapping("list")
 	public ResponseEntity<?> getachievelist() {
 

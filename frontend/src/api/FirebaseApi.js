@@ -22,6 +22,7 @@ const noticeAdd = (data) => {
     img:data.img,
     ReqUser: data.ReqUser,
     type:data.type,
+    articleID:data.articleID
   })
   .then((docRef) => {
     console.log("Document written");
