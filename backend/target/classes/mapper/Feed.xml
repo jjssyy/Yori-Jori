@@ -13,7 +13,7 @@
       select r.idx, r.title, r.regdate, r.id, c.img , r.nickname, count(l.recipe_idx) as likes,
       CASE 
       	WHEN l2.recipe_user_id IS NULL THEN false
-      	ELSE true
+      	ELSE trues
       END AS isLiked
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
@@ -55,11 +55,7 @@
    
    <!-- img, des, thumbnail, recipe_idx -->
    <insert id="writeRecipeContent" parameterType="SaveRecipeContent">
-<<<<<<< HEAD
       insert into recipe_content(img, des, thumbnail, recipe_idx, content_order)
-=======
-       insert into recipe_content(img, des, thumbnail, recipe_idx, content_order)
->>>>>>> 7a9600ea58ed1e562bc4639cdbc7eabc57a70667
       values(#{img}, #{des}, #{thumbnail}, #{recipe_idx}, #{content_order})
    </insert>
    
@@ -74,89 +70,17 @@
    </insert>
    
    <!-- liked posts -->
-<<<<<<< HEAD
-   <select id="likedPosts" parameterType="String" resultType="int">
-   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
-=======
    <select id="getLikedPosts" parameterType="String" resultType="int">
          select recipe_idx from recipe_like where recipe_user_id = #{user_id}
->>>>>>> 7a9600ea58ed1e562bc4639cdbc7eabc57a70667
    </select>
    
    <!-- get one recipe -->
    <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-<<<<<<< HEAD
-   		select * from recipe where idx=#{recipe_idx}
-=======
          select * from recipe where idx=#{recipe_idx}
->>>>>>> 7a9600ea58ed1e562bc4639cdbc7eabc57a70667
    </select>
    
    <!-- get the number of likes -->
    <select id="getLikeNum" parameterType="int" resultType="int">
-<<<<<<< HEAD
-   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
-   </select>
-   
-   <!-- hashtag -->
-   <insert id="writeHashtag" parameterType="Map">
-      insert into hashtag(recipe_idx, tag)
-      values(#{recipe_idx}, #{hashtag})
-   </insert>
-   
-   <!-- liked posts -->
-   <select id="likedPosts" parameterType="String" resultType="int">
-   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
-   </select>
-   
-   <!-- get one recipe -->
-   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-   		select * from recipe where idx=#{recipe_idx}
-   </select>
-   
-   <!-- get the number of likes -->
-   <select id="getLikeNum" parameterType="int" resultType="int">
-   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
-   </select>
-   
-   <insert id="writeComment" parameterType="SaveComment">
-   		insert into recipe_comment(comment, content_idx, id, nickname) 
-   		values(#{comment}, #{content_idx}, #{id}, #{nickname})
-   </insert>
-   
-   <update id="updateComment" parameterType="SaveComment">
-   		update recipe_comment set comment=#{comment}, regdate=now()
-   </update>
-   
-   <delete id="deleteComment" parameterType="integer">
-   		delete from recipe_comment where idx = #{idx};
-   </delete>
-   
-   <select id="getCommentList" parameterType="integer" resultType="CommentFromDB">
-   		select * from recipe_comment where content_idx=#{content_idx}
-   </select>
-   
-   <select id="getLikeCount" parameterType="integer" resultType="integer">
-   		 select count(*) from recipe_comment_like where comment_idx= #{comment_idx};
-   </select>
-   
-   <select id="checkLike" parameterType="Map" resultType="integer">
-   		select count(*) from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
-   </select>
-   
-   <insert id="likeComment" parameterType="Map">
-   		insert into recipe_comment_like(id, comment_idx) values(#{id}, #{comment_idx})
-   </insert>
-   
-   <delete id="cancelLikeComment" parameterType="Map">
-   		delete from recipe_comment_like where id=#{id} and comment_idx=#{comment_idx}
-   </delete>
-   
-   <select id="popularPosts" resultType="RecipeContent">
-   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes, 
-   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc; 
-   </select>
-=======
          select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
    </select>
    
@@ -260,5 +184,4 @@
 		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
 	</select>
    
->>>>>>> 7a9600ea58ed1e562bc4639cdbc7eabc57a70667
 </mapper>
