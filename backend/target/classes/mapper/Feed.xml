@@ -54,7 +54,7 @@
    </insert>
    
    <!-- liked posts -->
-   <select id="getlikedPosts" parameterType="String" resultType="int">
+   <select id="getLikedPosts" parameterType="String" resultType="int">
          select recipe_idx from recipe_like where recipe_user_id = #{user_id}
    </select>
    
