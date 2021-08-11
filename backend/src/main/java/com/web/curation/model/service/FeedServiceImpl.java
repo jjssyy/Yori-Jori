@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.RecipeContent;
@@ -166,11 +165,6 @@ public class FeedServiceImpl implements FeedService {
 	public int writeHashtags(HashMap<String, Object> hash) {
 		
 		return sqlSession.getMapper(FeedDao.class).writeHashtags(hash);
-	}
-
-	@Override
-	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception {
-		return sqlSession.getMapper(FeedDao.class).getAchieveListForRecipe();
 	}
 
 }
