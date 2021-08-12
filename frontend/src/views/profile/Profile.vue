@@ -111,8 +111,8 @@
           </div>
           <div class="row">
             <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
-                <img id="achieve_img" v-if="clear.percent == 100" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
-                <img id="achieve_img" v-else :src="require(`@/assets/images/${clear.fail_img}.png`)" />
+                <img id="achieve_img" v-if="clear.percent == 100" :title="`${clear.title}%`" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
+                <img id="achieve_img" v-else :title="`${clear.title} ${clear.percent}%`" :src="require(`@/assets/images/${clear.fail_img}.png`)" />
             </span>
           </div>
       </div>
@@ -335,10 +335,10 @@ export default {
     },
 
     showFollowerList: function() {
-      this.$router.push({ name: 'FollowerList' , params: {profileId: this.profileId}})
+      this.$router.push({ name: 'FollowerList' , query: {profileId: this.profileId}})
     },
     showFollowingList: function() {
-      this.$router.push({ name: 'FollowingList' , params: {profileId: this.profileId}})
+      this.$router.push({ name: 'FollowingList' , query: {profileId: this.profileId}})
     },
   },
   computed: {

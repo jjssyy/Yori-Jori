@@ -4,21 +4,10 @@ export default {
   LOGIN: function (state, res) {
     const userId = res.data['id']
     const token = res.data['access-token']
+    const nickname = res.data['nickname']
     state.token = token
     state.userId = userId
-    let data = {
-      id: userId,
-    }
-    UserApi.getUser(token,
-      data,
-      userRes => {
-        console.log(userRes)
-        state.userNickname = userRes.data.nickname
-      },
-      error=>{
-        console.log(error)
-      }
-    )
+    state.userNickname = nickname
   },
   LOGOUT: function(state){
     state.token = ''
@@ -36,7 +25,7 @@ export default {
   CLEARFORMDATA(state){
     state.img = []
     state.recipeItems = []
-    state.thumnailNumbers = 0
+    state.thumnailNumbers = 0 
     state.deleteContents = []  
   },
   SELECTRECIPE(state,res){

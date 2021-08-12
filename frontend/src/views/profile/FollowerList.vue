@@ -31,7 +31,7 @@ export default {
     }
   },
   created: function () {
-    this.profileId = this.$route.params.profileId
+    this.profileId = this.$route.query.profileId
     let data = {
       id: this.profileId
     }
