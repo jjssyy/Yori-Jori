@@ -27,6 +27,7 @@ public class AchieveController {
 
 	@Autowired
 	AchieveService achieveservice;
+	
 
 	@GetMapping("list")
 	public ResponseEntity<?> getachievelist() {
@@ -107,5 +108,64 @@ public class AchieveController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
+	@GetMapping("/categorylist")
+	public ResponseEntity<Map<String, Object>> getAchieveCategorylistMasterCount(@RequestParam String master) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String result = "SUCCESS";
+		try {
+			List<Achieve> list = achieveservice.getMasterCategoryCount(master);
+
+			resultMap.put("list", list);
+
+			if (list.isEmpty()) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+
+	@GetMapping("/myRecipe")
+	public ResponseEntity<Map<String, Object>> getCategoryRecipe(@RequestParam String id,@RequestParam String master) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String result = "SUCCESS";
+		System.out.println(id);
+		System.out.println(master);
+		Map<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("master", master);
+
+		try {
+			List<RecipeContent> recipe = achieveservice.getCategoryRecipe(map);
+			
+			resultMap.put("latestFeed", recipe);
+
+			if (recipe == null) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
 
 }

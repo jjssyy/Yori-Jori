@@ -1,8 +1,7 @@
 <template>
   <div class="navigation-search-container">
     <i class="fa fa-search"></i>
-    <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput">
-    <router-link :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}">검색</router-link>
+    <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput" @keyup.enter="search">
     <div class="search-container">
       <div class="search-container-box">
         <div class="search-results">
@@ -73,9 +72,15 @@ export default {
         this.UserList = []
       }
     },
-
+    search(){
+      this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
+      this.InputText = ''
+      this.UserList = []
+    },
     searchmember(id){
       this.$router.push({ name: 'Profile' , params: {user_id: id}})
+      this.InputText = ''
+      this.UserList = []
     }
   },
    computed: {

@@ -19,10 +19,6 @@
           </a>
           <router-link class="no-underline" :to="{name:'FeedMain'}"><img class="logo-img" :src="logo" alt=""></router-link>
         </div>
-        <div class="nav-section">
-          <li class="nav-text"><span href="#"><i class="fas fa-fire nav-icon"></i>Trending</span></li>
-        </div>
-        <hr>
         <div class="nav-section" @click="sideShow">
           <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-home nav-icon"></i>Home</span></li>
@@ -36,9 +32,20 @@
           <router-link :to="{name:'Likeposts'}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-heart nav-icon"></i>Likes</span></li>
           </router-link>
+          <router-link :to="{name:'Achievelist', params:{user_id: userId}}" active-class="active" tag="button">
+            <li class="nav-text"><span><i class="fas fa-medal nav-icon"></i>Achieve</span></li>
+          </router-link>
+          <router-link :to="{name:'Rankinglist', params:{user_id: userId}}" active-class="active" tag="button">
+            <li class="nav-text"><span><i class="fas fa-trophy nav-icon"></i>Rank</span></li>
+          </router-link>
           <router-link :to="{name:'Profile',params: {user_id: userId}}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-fire nav-icon"></i>Profile</span></li>
           </router-link>
+        </div>
+        <div class="nav-section nav-logout">
+          <button>
+            <li class="nav-text" @click="logout"><span><i class="fas fa-sign-out-alt nav-icon"></i>로그아웃</span></li>
+          </button>
         </div>
       </ul>
     </nav>
@@ -95,7 +102,13 @@ export default {
         sideMenu.classList.remove('active')
         this.isShow = false
       }
-    }
+    },
+    logout(event){
+      event.preventDefault()
+      alert('로그아웃 되었습니다.');
+      this.$store.dispatch('logout');
+      this.$router.push({name:'Login'});
+    },
   },
   computed: {
     ...mapState([
@@ -292,7 +305,9 @@ svg{
   flex-direction: column;
   justify-content: center;
 }
-
+.nav-logout{
+  height: 100%;
+}
 .menu-items{
   background-color: rgb(255, 255, 255);
   display: flex;
