@@ -605,7 +605,7 @@ public class FeedController {
 		HttpStatus status = HttpStatus.OK;
 		List<RecipeContent> list;
 		try {
-			list = feedService.getPopularPosts();
+			list = feedService.popularPosts();
 			resultMap.put("popularPosts", list);
 		} catch (Exception e) {
 			e.printStackTrace();

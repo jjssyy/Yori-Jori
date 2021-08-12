@@ -5,11 +5,7 @@
         <a href="#" class="menu-bars" id="show-menu" @click="sideShow">
           <i class="fas fa-bars"></i>
         </a>
-<<<<<<< HEAD
-        <router-link class="no-underline" :to="{name:'FeedMain'}">요리조리</router-link>
-=======
         <router-link class="no-underline" :to="{name:'FeedMain'}"><img class="logo-img" :src="logo" alt=""></router-link>
->>>>>>> 15702f6434f6bdc63a4adb058e56d1ca4dd0d147
       </div>
       <div></div>
       <SearchBox/>
@@ -21,11 +17,7 @@
           <a href="#" class="menu-bars" id="hide-menu">
             <i class="fas fa-bars nav-icon"></i>
           </a>
-<<<<<<< HEAD
-          <router-link class="no-underline" :to="{name:'FeedMain'}">요리조리</router-link>
-=======
           <router-link class="no-underline" :to="{name:'FeedMain'}"><img class="logo-img" :src="logo" alt=""></router-link>
->>>>>>> 15702f6434f6bdc63a4adb058e56d1ca4dd0d147
         </div>
         <div class="nav-section">
           <li class="nav-text"><span href="#"><i class="fas fa-fire nav-icon"></i>Trending</span></li>
@@ -322,11 +314,12 @@ svg{
   #sidebar{
     display: none;
   }
-.logo-img{
-  margin: 0%;
-  padding: 0%;
-}
-#hide-menu svg{
-  color: #ffbe76;
+  .logo-img{
+    margin: 0%;
+    padding: 0%;
+  }
+  #hide-menu svg{
+    color: #ffbe76;
+  }
 }
 </style>

@@ -335,6 +335,7 @@ public class UserController {
 			result.setFollowing(following);
 			result.setImg(user.getImg());
 			result.setRankpoint(user.getRankpoint());
+			result.setRecipecnt(user.getRecipecnt());
 
 			return new ResponseEntity<UserInfo>(result, HttpStatus.OK);
 		

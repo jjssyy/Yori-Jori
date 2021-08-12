@@ -176,7 +176,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<RecipeContent> getPopularPosts() throws Exception {
+	public List<RecipeContent> popularPosts() throws Exception {
 		return sqlSession.getMapper(FeedDao.class).popularPosts();
 	}
 
