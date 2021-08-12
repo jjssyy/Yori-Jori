@@ -176,5 +176,13 @@
    <select id="getHashtag" parameterType="integer" resultType="HashtagVO">
       select * from hashtag where recipe_idx=#{recipe_idx}
    </select>
+	
+	<delete id="deleteHashtag" parameterType="integer">
+		delete from hashtag where idx=#{hashtag_idx}
+	</delete>
+	
+	<update id="updateHashtag" parameterType="integer">
+	
+	</update>   
    
 </mapper>

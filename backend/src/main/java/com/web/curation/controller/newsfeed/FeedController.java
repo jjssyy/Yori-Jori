@@ -594,6 +594,7 @@ public class FeedController {
 						System.out.println("content 수정 성공");
 					} else {
 						System.out.println("content 수정 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -601,8 +602,29 @@ public class FeedController {
 				}
 			}
 		}
+		//3.해시태그 삭제
+		List<Integer> deletehashtag = recipe.getDeletehashtag();
+		if(deletehashtag.get(0) !=-1) {
+			for(int i=0; i<deletehashtag.size(); i++) {
+				int hashtag_idx = deletehashtag.get(i);
+				try {
+					if(feedService.deleteHashtag(hashtag_idx)==1) {
+						System.out.println("해시태그 삭제 성공");
+					}else {
+						System.out.println("해시태그 삭제 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		//4.해시태그 수정
+		
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
+	
 	//writeRecipe-업적 확인 기능 추가
 	@GetMapping("/write")
 	public ResponseEntity<Map<String, Object>> RecipeAchieveList(){

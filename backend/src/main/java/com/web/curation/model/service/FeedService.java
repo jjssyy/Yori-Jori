@@ -59,4 +59,6 @@ public interface FeedService {
 	
 	public List<RecipeContent> popularPosts() throws Exception;
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
+	
+	public int deleteHashtag(int hashtag_idx) throws Exception;
 }
