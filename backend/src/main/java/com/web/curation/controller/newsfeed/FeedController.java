@@ -124,7 +124,7 @@ public class FeedController {
 		try {
 			List<Integer> likedPostsIdx = feedService.getLikedPosts(user_id);
 			int length = likedPostsIdx.size();
-			List<SaveRecipeitem> list = new ArrayList<SaveRecipeitem>();
+			List<RecipeContent> list = new ArrayList<RecipeContent>();
 			for (int i = 0; i < length; i++) {
 				list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
 			}
