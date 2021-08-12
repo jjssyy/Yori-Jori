@@ -13,6 +13,43 @@ public class UpdateRecipeFromClient {
 	private List<Integer> content_order;
 	private List<Integer> deleteContents; //삭제한 content들의 idx들
 	
+	private String achieve_master;
+	private String achieve_slave;
+	
+	private List<Integer> hashtag_idx;
+	private List<String> tag;
+	private List<Integer> deletehashtag;
+	
+	public String getAchieve_master_name() {
+		return achieve_master;
+	}
+	public void setAchieve_master_name(String achieve_master_name) {
+		this.achieve_master = achieve_master_name;
+	}
+	public String getAchieve_slave_name() {
+		return achieve_slave;
+	}
+	public void setAchieve_slave_name(String achieve_slave_name) {
+		this.achieve_slave = achieve_slave_name;
+	}
+	public List<Integer> getHashtag_idx() {
+		return hashtag_idx;
+	}
+	public void setHashtag_idx(List<Integer> hashtag_idx) {
+		this.hashtag_idx = hashtag_idx;
+	}
+	public List<String> getTag() {
+		return tag;
+	}
+	public void setTag(List<String> tag) {
+		this.tag = tag;
+	}
+	public List<Integer> getDeletehashtag() {
+		return deletehashtag;
+	}
+	public void setDeletehashtag(List<Integer> deletehashtag) {
+		this.deletehashtag = deletehashtag;
+	}
 	public List<Integer> getDeleteContents() {
 		return deleteContents;
 	}

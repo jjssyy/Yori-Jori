@@ -516,6 +516,8 @@ public class FeedController {
 		HashMap<Object, Object> map = new HashMap<>();
 		map.put("recipe_idx", recipe.getRecipe_idx());
 		map.put("title", recipe.getTitle());
+		map.put("achieve_master", recipe.getAchieve_master_name());
+		map.put("achieve_slave", recipe.getAchieve_slave_name());
 
 		try {
 			if (feedService.updateRecipeInfo(map) == 1) {
