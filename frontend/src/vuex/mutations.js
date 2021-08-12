@@ -9,16 +9,6 @@ export default {
     let data = {
       id: userId,
     }
-    UserApi.getUser(token,
-      data,
-      userRes => {
-        console.log(userRes)
-        state.userNickname = userRes.data.nickname
-      },
-      error=>{
-        console.log(error)
-      }
-    )
   },
   LOGOUT: function(state){
     state.token = ''

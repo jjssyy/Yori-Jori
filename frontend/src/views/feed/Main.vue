@@ -2,12 +2,6 @@
   <div class="feed newsfeed">
     <div class="wrapB">
       <h1>뉴스피드</h1>
-        
-        <router-link :to="{name:'Profile', params: {user_id: userId}}">My Page</router-link>
-        <router-link :to="{name:'Recipewrite', params: {user_id: userId}}">글쓰기</router-link>
-        <router-link :to="{name:'Achievelist', params:{user_id: userId}}">업적</router-link>
-        <router-link :to="{name:'Rankinglist', params:{user_id: userId}}">랭킹</router-link>
-        <button @click="logout">로그아웃</button>
         <div v-for="(latestFeed, idx) in latestFeeds" :key="idx">
         <LatestFeed
           :latestFeed="latestFeed" 
