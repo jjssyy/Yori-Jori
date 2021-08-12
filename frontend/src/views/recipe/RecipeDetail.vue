@@ -1,7 +1,7 @@
 <template lang="">
   <div class="wrapC">
     레시피 제목 : {{ recipeTitle }}
-    <RecipeDetailList :recipe="recipe" :recipeContent="recipeContent"/>
+    <RecipeDetailList :recipe="recipe" :recipeContent="recipeContent" :thumbnailImg="thumbnailImg"/>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
       recipe: null,
       recipeTitle: '',
       recipeContent: null,
+      thumbnailImg: '',
     }
   },
   mounted: function() {
@@ -27,7 +28,6 @@ export default {
       recipeIdx: this.$route.params.recipe_idx,
       id: this.userId
     }
-    console.log(data.id)
     UserApi.singleRecipe(
       data,
       res => {
@@ -36,6 +36,11 @@ export default {
         this.recipeContent =  res.data.recipeContent
         this.recipeTitle = res.data.recipeContent.title
         console.log('레시피')
+        for (let i=0; i<this.recipe.length; i++){
+          if(this.recipe[i].thumbnail === "true"){
+            this.thumbnailImg = this.recipe[i].img
+          }
+        }
       },
       error => {
         console.log(error)
