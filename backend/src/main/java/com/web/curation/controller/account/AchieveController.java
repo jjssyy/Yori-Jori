@@ -90,6 +90,7 @@ public class AchieveController {
 		String result = "SUCCESS";
 		try {
 			String id = (String) map.get("id");
+			
 			List<Achievecurrent> achieve = achieveservice.getAchievecurrent(id);
 			if(achieve == null) {
 				result = "fail";
