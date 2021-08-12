@@ -1,6 +1,6 @@
 <template lang="">
   <tr>
-    <td>{{ follower.nickname }}</td>
+    <td><router-link :to="{name:'Profile', query: {user_id: follower.id}}" style="text-decoration:none; color:black;" >{{follower.nickname}}</router-link></td>
     <td><button class="btn btn-secondary" @click="deleteFollower(follower, idx)"> remove </button></td>
   </tr>
 </template>
@@ -33,7 +33,7 @@ export default {
       res => {
         console.log(res)
         console.log(data)
-        newFollowers.splice(idx,1)
+        this.$router.go();
         console.log('삭제성공')
       },
       error=>{

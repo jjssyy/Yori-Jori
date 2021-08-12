@@ -16,7 +16,8 @@ import { mapState } from 'vuex'
 const likeposts = (data, callback, errorCallback) => {
   http.get('/feed/likedposts', {
       params:{
-          user_id : data.id
+          user_id : data.id,
+          page: data.page
       }}, {
         headers: {
           'access-token': store.state.token
@@ -28,9 +29,22 @@ const likeposts = (data, callback, errorCallback) => {
       err=>errorCallback(err)
   )
 }
+const popularposts = (data, callback, errorCallback) => {
+  http.get('/feed/popularposts', {
+      params:{
+          user_id : data.id,
+          page: data.page
+      }}
+  ).then(
+      res=>callback(res)
+  ).catch(
+      err=>errorCallback(err)
+  )
+}
 
 const FeedApi = {
   likeposts: (data, callback, errorCallback) => likeposts(data, callback, errorCallback),
+  popularposts: (data, callback, errorCallback) => popularposts(data, callback, errorCallback),
 }
 
 export default FeedApi

@@ -2,9 +2,9 @@
   <div class="newsfeed"
   v-infinite-scroll="loadMore" 
   infinite-scroll-disabled="busy" 
-  infinite-scroll-distance="10"
+  infinite-scroll-distance="20"
   >
-    <h1>보관함</h1>
+    <h1>인기글</h1>
     <div 
     class='feed' 
     v-for="(latestFeed, idx) in latestFeeds" 
@@ -19,23 +19,26 @@
 </template>
 
 <script>
-import FeedApi from '../../api/FeedApi';
 import UserApi from '../../api/UserApi';
+import FeedApi from '../../api/FeedApi';
 import { mapState } from "vuex";
+// import "../../components/css/feed/feed-item.scss";
+// import "../../components/css/feed/newsfeed.scss";
 import FeedItem from "../../components/feed/FeedItem.vue";
+import LatestFeed from "../../components/feed/LatestFeed.vue";
 
 export default {
   props: ["keyword"],
   data:() => {
     return {
       latestFeeds: [],
-      page:1,
-      busy:false
+      page : 1,
+      busy: false
     }
   },
   components: { 
     FeedItem,
-  },
+  }, 
   methods: {
     getPost(){
       console.log(this.page)
@@ -43,10 +46,11 @@ export default {
         id: this.userId,
         page: this.page++
       }
-      FeedApi.likeposts(
+      FeedApi.popularposts(
         data,
         res => {
-          const items = res.data.latestPosts.map(item => {
+          console.log(res.data)
+          const items = res.data.popularPosts.map(item => {
             return item
           })
           this.busy = false
@@ -72,6 +76,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .newsfeed{
   display: flex;

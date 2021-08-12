@@ -5,6 +5,7 @@ import Join from './views/user/Join.vue'
 import ChangePassword from './views/user/ChangePassword.vue'
 import JoinComplete from './views/user/JoinComplete.vue'
 import FeedMain from './views/feed/Main.vue'
+import StarMain from './views/feed/Star.vue'
 import Components from './views/Components.vue'
 import Pagenotfound from './views/error/PageNotFound.vue'
 import ErrorPage from './views/error/ErrorPage.vue'
@@ -111,6 +112,11 @@ export default [
         path: '/feed/likes',
         name: 'Likeposts',
         component: Likeposts
+    },
+    {
+        path: '/feed/stars',
+        name: 'StarMain',
+        component: StarMain
     },
     {
         path: '*',
