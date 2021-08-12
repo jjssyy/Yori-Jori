@@ -6,7 +6,11 @@ import { mapActions } from 'vuex';
 //리스트에서 사용
 const AchievemasterList = (data, callback, errorCallback) => {
   http
-    .get('/achieve/list')
+    .get('/achieve/list' , {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
