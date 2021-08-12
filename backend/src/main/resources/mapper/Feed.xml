@@ -54,7 +54,7 @@
    
    <!-- get posts in range of popularity -->
    <select id="popularPosts" resultType="RecipeContent">
-         select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes
+         select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx) likes
          from recipe r left join recipe_like l on r.idx = l.recipe_idx 
          join recipe_content as c on r.idx=c.recipe_idx
          where c.thumbnail="true"
@@ -69,20 +69,20 @@
    
    <!-- liked posts -->
    <select id="likedPosts" parameterType="String" resultType="int">
-   		select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+         select recipe_idx from recipe_like where recipe_user_id = #{user_id}
    </select>
    
    <!-- get one recipe -->
-   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-   		select r.title, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
-   		from recipe r left join recipe_like l on r.idx = l.recipe_idx
-   		join recipe_content as c on r.idx = c.recipe_idx 
-   		where c.thumbnail="true" and r.idx=#{recipe_idx}
+   <select id="getSingleRecipe" parameterType="int" resultType="RecipeContent">
+         select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
+         from recipe r left join recipe_like l on r.idx = l.recipe_idx
+         join recipe_content as c on r.idx = c.recipe_idx 
+         where c.thumbnail="true" and r.idx=#{recipe_idx}
    </select>
    
    <!-- get the number of likes -->
    <select id="getLikeNum" parameterType="int" resultType="int">
-   		select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
+         select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
    </select>
    
    <insert id="writeComment" parameterType="SaveComment">
@@ -168,12 +168,12 @@
       SELECT count(achieve_master_name) from achieve group by achieve_master_name
    </select>
    
-	<select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
-		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
-	</select>
-	
-	<select id="getHashtag" parameterType="integer" resultType="HashtagVO">
-		select * from hashtag where recipe_idx=#{recipe_idx}
-	</select>
+   <select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
+      select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
+   </select>
+   
+   <select id="getHashtag" parameterType="integer" resultType="HashtagVO">
+      select * from hashtag where recipe_idx=#{recipe_idx}
+   </select>
    
 </mapper>

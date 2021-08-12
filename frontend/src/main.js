@@ -27,7 +27,8 @@ Vue.use(VueRouter)
 //   };
 //   // Initialize Firebase
 // firebase.initializeApp(firebaseConfig);
-
+import infiniteScroll from 'vue-infinite-scroll'
+Vue.use(infiniteScroll)
 
 const router = new VueRouter({
     mode: 'history',
