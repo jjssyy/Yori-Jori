@@ -7,6 +7,7 @@ import java.util.Map;
 import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.FeedRecipe;
+import com.web.curation.model.HashtagVO;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -78,4 +79,6 @@ public interface FeedDao {
 	public int updateRecipeContent(UpdateRecipeContentToDB recipeContent) throws Exception;
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
+	
+	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
 }

@@ -30,7 +30,7 @@
 
    <!-- title, id -->
    <insert id="writeRecipeInfo" parameterType="RecipeInfo">
-      insert into recipe(title,id,nickname) values(#{title},#{id},#{nickname})
+      insert into recipe(title,id,nickname,achieve_master,achieve_slave) values(#{title},#{id},#{nickname},#{achieve_master},#{achieve_slave})
    </insert>
    
    <select id="getRecipe_idx" parameterType="Map" resultType="integer">
@@ -166,6 +166,10 @@
    
 	<select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
 		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
+	</select>
+	
+	<select id="getHashtag" parameterType="integer" resultType="HashtagVO">
+		select * from hashtag where recipe_idx=#{recipe_idx}
 	</select>
    
 </mapper>
