@@ -30,7 +30,7 @@
 
    <!-- title, id -->
    <insert id="writeRecipeInfo" parameterType="RecipeInfo">
-      insert into recipe(title,id,nickname) values(#{title},#{id},#{nickname})
+      insert into recipe(title,id,nickname,achieve_master,achieve_slave) values(#{title},#{id},#{nickname},#{achieve_master},#{achieve_slave})
    </insert>
    
    <select id="getRecipe_idx" parameterType="Map" resultType="integer">
@@ -55,7 +55,10 @@
    <!-- get posts in range of popularity -->
    <select id="popularPosts" resultType="RecipeContent">
          select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes
-         from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc
+         from recipe r left join recipe_like l on r.idx = l.recipe_idx 
+         join recipe_content as c on r.idx=c.recipe_idx
+         where c.thumbnail="true"
+         group by l.recipe_idx order by likes desc
    </select>
    
    <!-- hashtag -->
@@ -164,6 +167,10 @@
    
 	<select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
 		select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
+	</select>
+	
+	<select id="getHashtag" parameterType="integer" resultType="HashtagVO">
+		select * from hashtag where recipe_idx=#{recipe_idx}
 	</select>
    
 </mapper>
