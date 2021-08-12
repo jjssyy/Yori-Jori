@@ -1,7 +1,12 @@
 import http from "@/util/http-common";
+import store from '@/vuex/store.js'
 
 const achieveRecipe = (callback, errorCallback) =>{
-    http.get('/feed/write')
+    http.get('/feed/write', {
+        headers: {
+          'access-token': store.state.token
+        }
+      })
     .then(
          res=>callback(res)
      ).catch(
@@ -14,7 +19,11 @@ const deleteRecipe = (data, callback, errorCallback) => {
         params: {
             idx: data.recipe_idx
         }
-    }).then(
+    }, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res => callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -24,7 +33,8 @@ const deleteRecipe = (data, callback, errorCallback) => {
 const updateRecipe = (data, callback, errorCallback) => {
     http.put('/feed/update',data,{
         headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            'access-token': store.state.token
         }
     }).then(
         res => callback(res)
@@ -34,7 +44,11 @@ const updateRecipe = (data, callback, errorCallback) => {
 }
 
 const likeRecipe = (data, callback, errorCallback) => {
-    http.post('/feed/like',data).then(
+    http.post('/feed/like',data, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res => callback(res)
     ).catch(
         err => errorCallback(err)
@@ -47,7 +61,11 @@ const unlikeRecipe = (data, callback, errorCallback) => {
             recipe_idx: data.recipe_idx,
             recipe_user_id: data.recipe_user_id
         }
-    }).then(
+    }, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res => callback(res)
     ).catch(
         err => errorCallback(err)
@@ -58,7 +76,11 @@ const unlikeRecipe = (data, callback, errorCallback) => {
 // Comment CRUD + 좋아요
 
 const writeComment = (data, callback, errorCallback) => {
-    http.post('/feed/comment/write',data).then(
+    http.post('/feed/comment/write',data, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -66,7 +88,11 @@ const writeComment = (data, callback, errorCallback) => {
 }
 
 const updateComment = (data,callback, errorCallback) => {
-    http.put('/feed/comment/update',data).then(
+    http.put('/feed/comment/update',data, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -78,7 +104,11 @@ const deleteComment = (data,callback, errorCallback) => {
         params: {
             idx: data.idx,
         }
-    }).then(
+    }, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -91,7 +121,11 @@ const recipeItemComments = (data,callback, errorCallback) => {
         content_idx: data.content_idx,
         id: data.id,
       }
-    }).then(
+    }, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }).then(
         res=>callback(res)
     ).catch(
         err=>errorCallback(err)
@@ -99,7 +133,11 @@ const recipeItemComments = (data,callback, errorCallback) => {
 }
 
 const commentLike = (data,callback, errorCallback) => {
-    http.post('/feed/comment/like',data
+    http.post('/feed/comment/like',data, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }
     ).then(
         res=>callback(res)
     ).catch(
@@ -113,7 +151,11 @@ const commentUnlike = (data,callback, errorCallback) => {
             comment_idx: data.comment_idx,
             id: data.id,
         }
-    }
+    }, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }
     ).then(
         res=>callback(res)
     ).catch(
