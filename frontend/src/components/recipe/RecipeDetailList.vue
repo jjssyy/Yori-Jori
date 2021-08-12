@@ -3,6 +3,8 @@
     <!-- {{ recipeContent}} -->
     <hooper :progress="true" id="hooper">
       <slide class="thumbNail" :style="{ backgroundImage: `url(${thumbnailImg})` }">
+        <div class="bg"></div>
+        <h1 style="color:white;">{{ recipeContent.title}}</h1>
       </slide>
       <slide v-for="(recipeItem, idx) in recipe" :key="idx">
         <!-- {{ recipeItem }} -->
@@ -11,6 +13,7 @@
         <img :src='recipeItem.img' width="" class="recipeImg"/>
         <p>{{ recipeItem.des }}</p>
         </div>
+        <!-- <RecipeCommentList :recipeItem="recipeItem" :recipeContent="recipeContent"/> -->
       </slide>
       <!-- <hooper-progress slot="hooper-addons"></hooper-progress> -->
       <hooper-navigation slot="hooper-addons"></hooper-navigation>
@@ -137,5 +140,17 @@ export default {
     background-position: center;
     background-repeat : no-repeat;
     background-size: cover;
+  }
+  .bg{
+    background-color:rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  h1{
+    position: relative; 
+    z-index:1000;
+    top: 400px;
+    text-align: right;
   }
 </style>

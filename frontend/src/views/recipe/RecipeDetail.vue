@@ -1,6 +1,6 @@
 <template lang="">
   <div class="wrapC">
-    레시피 제목 : {{ recipeTitle }}
+    <!-- 레시피 제목 : {{ recipeTitle }} -->
     <RecipeDetailList :recipe="recipe" :recipeContent="recipeContent" :thumbnailImg="thumbnailImg"/>
   </div>
 </template>
