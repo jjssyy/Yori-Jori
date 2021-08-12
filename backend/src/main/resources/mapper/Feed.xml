@@ -147,7 +147,8 @@
    </delete>
    
    <update id="updateRecipeInfo" parameterType="Map">
-         update recipe set title=#{title} where idx=#{recipe_idx}
+         update recipe set title=#{title}, achieve_master=#{achieve_master}, achieve_slave=#{achieve_slave}
+         where idx=#{recipe_idx}
    </update>
    
    <update id="updateRecipeContent" parameterType="UpdateRecipeContentToDB">
