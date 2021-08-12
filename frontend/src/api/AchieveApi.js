@@ -1,4 +1,5 @@
 import http from '@/util/http-common';
+import store from '@/vuex/store.js'
 import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
 
@@ -17,6 +18,10 @@ const getAchievecurrent = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -24,7 +29,11 @@ const getAchievecurrent = (data, callback, errorCallback) => {
 
 const AchievemasterCount = (data, callback, errorCallback) => {
   http
-    .get('/achieve/mastercount')
+    .get('/achieve/mastercount', {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
@@ -35,6 +44,10 @@ const myMasterCount = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -46,6 +59,10 @@ const AchievemasterCategoryList = (data, callback, errorCallback) => {
       params: {
         master: data.master,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -58,6 +75,10 @@ const myRecipe = (data, callback, errorCallback) => {
         id: data.id,
         master: data.master,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));

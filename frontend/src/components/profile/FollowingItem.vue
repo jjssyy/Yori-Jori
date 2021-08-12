@@ -31,10 +31,9 @@ export default {
       UserApi.deleteFollowing(
       data,
       res => {
-        console.log(res)
-        console.log(data)
+        
         newFollowings.splice(idx,1)
-        console.log('삭제성공')
+        
       },
       error=>{
         console.log(error)

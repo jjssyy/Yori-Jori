@@ -1,4 +1,5 @@
 import http from "@/util/http-common";
+import store from '@/vuex/store.js'
 import { mapState } from 'vuex'
 
 
@@ -16,7 +17,11 @@ const likeposts = (data, callback, errorCallback) => {
   http.get('/feed/likedposts', {
       params:{
           user_id : data.id
-      }}
+      }}, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }
   ).then(
       res=>callback(res)
   ).catch(
