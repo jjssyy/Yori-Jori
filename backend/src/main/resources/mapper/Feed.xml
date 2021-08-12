@@ -169,7 +169,7 @@
    </select>
    
    <select id="getAchieveListForRecipe" resultType="AchieveListFromDB">
-      select achieve_master_name, achieve_slave_name, achieve_title_name from achieve
+       select distinct achieve_master_name, achieve_slave_name from achieve
    </select>
    
    <select id="getHashtag" parameterType="integer" resultType="HashtagVO">
