@@ -36,7 +36,7 @@ export default {
   CLEARFORMDATA(state){
     state.img = []
     state.recipeItems = []
-    state.thumnailNumbers = 0
+    state.thumnailNumbers = 0 
     state.deleteContents = []  
   },
   SELECTRECIPE(state,res){

@@ -199,7 +199,6 @@ const deleteFollowing = (data, callback, errorCallback) => {
 };
 
 const getUser = (data, callback, errorCallback) => {
-  
   http
     .get('/user/profile', {
       params: {
@@ -217,7 +216,11 @@ const getUser = (data, callback, errorCallback) => {
 
 const requestUser = (config, callback, errorCallback) => {
   http
-    .get('/user/updateuser', config)
+    .get('/user/updateuser', config, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
@@ -355,6 +358,10 @@ const snsLogin = (data, callback, errorCallback) => {
         nickname: data.nickname,
         email: data.email,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -362,7 +369,11 @@ const snsLogin = (data, callback, errorCallback) => {
 
 const snsregister = (data, callback, errorCallback) => {
   http
-    .post('/user/snsregister', data)
+    .post('/user/snsregister', data , {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
@@ -379,8 +390,7 @@ const UserApi = {
   requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
   getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
   emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
-  getUser: (config, data, callback, errorCallback) =>
-    getUser(config, data, callback, errorCallback),
+  getUser: (config, data, callback, errorCallback) =>getUser(config, data, callback, errorCallback),
   getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
   getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
   getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
