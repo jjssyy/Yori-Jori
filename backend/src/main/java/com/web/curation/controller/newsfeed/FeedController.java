@@ -516,9 +516,9 @@ public class FeedController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("recipe_idx", recipe.getRecipe_idx());
 		map.put("title", recipe.getTitle());
-		map.put("achieve_master", recipe.getAchieve_master_name());
-		map.put("achieve_slave", recipe.getAchieve_slave_name());
-
+		map.put("achieve_master", recipe.getAchieve_master());
+		map.put("achieve_slave", recipe.getAchieve_slave());
+		System.out.println(recipe.getAchieve_master());
 		try {
 			if (feedService.updateRecipeInfo(map) == 1) {
 				System.out.println("제목 변경 성공");

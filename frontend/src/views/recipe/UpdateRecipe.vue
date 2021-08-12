@@ -94,10 +94,7 @@ export default {
     deleteHash(tagidx, idx){
       this.recipeContent.tag.splice(idx,1)
       this.recipeContent.hashtag_idx.splice(idx,1)
-      if(tagidx!=-1){
       this.deleteHashtag.push(tagidx)
-      }
-      console.log('dkdk')
     },
     updateMaster(){
       this.slave_names = []
@@ -122,8 +119,10 @@ export default {
       frm.append("recipe_idx", this.$route.params.recipe_idx)
       frm.append("title", this.title)
       console.log(this.masterSelected)
-      frm.append('achieve_master',this.masterSelected)
-      frm.append('achieve_slave',this.slaveSelected)
+      frm.append("achieve_master",this.masterSelected)
+      frm.append("achieve_slave",this.slaveSelected)
+      console.log("나옴")
+
       for (let i=0; i< this.recipe.length; i++){
         frm.append("content_idx["+i+"]", this.recipe[i].idx)
         frm.append("des["+i+"]",this.recipe[i].des)
@@ -131,9 +130,9 @@ export default {
         frm.append("thumbnail["+i+"]",this.recipe[i].thumbnail)
         frm.append("content_order["+i+"]",i)
       }
-      for (let i=0; i< this.recipeContent.tag.length; i++){
-        frm.append("hashtag_idx["+i+"]",this.recipeContent.hash_idx[i])
-        frm.append("tag["+i+"]",this.recipeConent.tag[i])
+      for (let i=0; i< this.recipeContent.hashtag_idx.length; i++){
+        frm.append("hashtag_idx["+i+"]",this.recipeContent.hashtag_idx[i])
+        frm.append("tag["+i+"]",this.recipeContent.tag[i])
       }
       if(this.deleteContents.length == 0){
         const deleteContent = [-1]
@@ -144,7 +143,7 @@ export default {
         frm.append("deleteContents["+i+"]",this.deleteContents[i])
         } 
       }
-
+  
       if(this.deleteHashtag.length == 0){
         this.deleteHashtag = [-1]
         frm.append("deletehashtag[0]",this.deleteHashtag[0])

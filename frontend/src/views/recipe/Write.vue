@@ -55,7 +55,7 @@
           <h2>TAGs</h2>
           <div class="hash-input">
             <input type="text" v-model="temphash" @keyup.enter="createHash" placeholder="태그를 입력하세요">
-            <button @click="createHash"><i class="fas fa-pen nav-icon"></i></button>
+            <button @click="createHash"><i class="fas fa-pen hash-icon"></i></button>
           </div>
         </div>
         <div v-for="(h, idx) in HashList" :key="idx">
@@ -79,7 +79,7 @@
           </select>
         </div>
       </div>
-      <button class="submit" @click="check"><h1><i class="fas fa-pen nav-icon"></i></h1></button>
+      <button class="submit" @click="check"><h1><i class="fas fa-pen pen-icon"></i></h1></button>
     </div>
   </div>
 
@@ -249,9 +249,8 @@ export default {
 </script>
 <style scoped>
 *{
-  font-family: "Roboto", sans-serif;
+  font-family: 'NanumBarunGothic', sans-serif;
 }
-
 .write{
   margin: 0%;
   padding: 0%;
@@ -293,12 +292,12 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  border:1px solid #FF9636;
+  border:1px solid #ffbe76;
   border-radius: 3px;
 }
 .hash-input input{
   height: 70%;
-  background-color: #fafafa;
+  background-color: #ffffff;
   border: none;
   margin-right: 2px;
 }
@@ -306,6 +305,7 @@ export default {
   height: 70%;
   border-radius: 3px;
   align-items: center;
+  margin-right: 6px;
 }
 .hash-input svg{
   margin-right: 2px;
@@ -318,7 +318,7 @@ export default {
   height: 40vw;
   max-height: 250px;
   margin: 1%;
-  border: 1px solid #FF9636;
+  border: 1px solid #ffbe76;
   border-radius: 5px;
 
 }
@@ -407,7 +407,7 @@ export default {
   background-color: rgba(165, 175, 182, 0.5);
 }
 .hash{
-  background-color: #FF9636;
+  background-color: #ffbe76;
   padding: 0px 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -424,7 +424,8 @@ export default {
 .submit{
   width: 95%;
   display: inline;
-  background-color: #DAD870;
+  background-color:#ffbe76;
+  color:#ffffff;
   border-radius: 3px;
   margin-bottom: 5%;
 }
@@ -440,4 +441,14 @@ export default {
   padding-left: 2px;
   padding-right: 4px;
 }
+.pen-icon{
+  margin-top: 6px;
+  padding-top: 3px;
+  color: #fff;
+}
+.hash-icon{
+  margin-top: 5px;
+  margin-right: 13px;
+}
+
 </style>
