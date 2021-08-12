@@ -72,7 +72,7 @@ export default {
   data: () => {
     return {
       recipe: null,
-      recipeContent: null,
+      recipeContent: [],
       title: '',
       master_names: [],
       slave_names: [],
@@ -118,11 +118,10 @@ export default {
       var frm = new FormData();
       frm.append("recipe_idx", this.$route.params.recipe_idx)
       frm.append("title", this.title)
-      console.log(this.masterSelected)
       frm.append("achieve_master",this.masterSelected)
       frm.append("achieve_slave",this.slaveSelected)
       console.log("나옴")
-
+      console.log(this.recipeContent.tag)
       for (let i=0; i< this.recipe.length; i++){
         frm.append("content_idx["+i+"]", this.recipe[i].idx)
         frm.append("des["+i+"]",this.recipe[i].des)
@@ -198,27 +197,32 @@ export default {
       }
     )
     this.$store.dispatch('clearFormdata')
-
+    console.log(this.masterSelected)
     RecipeApi.achieveRecipe(
       res => {
         console.log(res)
         console.log("칭호 가져옴")
         this.Achieves = res.data.achieveList
+
         for(let achieve of this.Achieves){
           this.master_names.push(achieve.achieve_master_name)
         }
         this.master_names = new Set(this.master_names)
+        console.log(this.masterSelected)
 
         for(let achieve of this.Achieves){
-          if(this.masterSelected === achieve.achieve_master_name){
+          if(this.masterSelected == achieve.achieve_master_name){
+            console.log(achieve.achieve_master_name)
             this.slave_names.push(achieve.achieve_slave_name)
           }
         }
+        console.log(this.slave_names)
       },
       err=> {
         console.log(err)
       }
     )
+    console.log(this.masterSelected)
   },
   computed: {
     ...mapState([
