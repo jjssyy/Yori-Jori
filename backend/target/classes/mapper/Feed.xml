@@ -62,7 +62,7 @@
    </select>
    
    <!-- hashtag -->
-   <insert id="writeHashtag" parameterType="Map">
+   <insert id="writeHashtags" parameterType="Map">
       insert into hashtag(recipe_idx, tag)
       values(#{recipe_idx}, #{hashtag})
    </insert>
