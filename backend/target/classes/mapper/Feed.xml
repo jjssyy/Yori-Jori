@@ -62,7 +62,7 @@
    </select>
    
    <!-- hashtag -->
-   <insert id="writeHashtag" parameterType="Map">
+   <insert id="writeHashtags" parameterType="Map">
       insert into hashtag(recipe_idx, tag)
       values(#{recipe_idx}, #{hashtag})
    </insert>
@@ -74,7 +74,10 @@
    
    <!-- get one recipe -->
    <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-   		select * from recipe where idx=#{recipe_idx}
+   		select r.title, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
+   		from recipe r left join recipe_like l on r.idx = l.recipe_idx
+   		join recipe_content as c on r.idx = c.recipe_idx 
+   		where c.thumbnail="true" and r.idx=#{recipe_idx}
    </select>
    
    <!-- get the number of likes -->
