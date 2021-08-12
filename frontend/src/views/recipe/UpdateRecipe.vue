@@ -4,7 +4,7 @@
     <div class="wrapC">
       <h1>글수정</h1>
       <!-- {{recipeContent}} -->
-      <!-- {{ recipeContent}} -->
+      {{ recipeContent}}
       <div class="input-with-label">
         <form>
           <input
@@ -24,6 +24,24 @@
       <div v-for="(recipe_file, idx) in recipe" :key="idx" class="" id="image-des" >
         <update-form :recipe_file="recipe_file" :recipe="recipe" :idx="recipe_file.content_order"></update-form>
       </div>
+
+      <div id="image-des">
+        <h2>Challenges</h2>
+        <div>
+          <select name="master_name" id="master_name" v-model="masterSelected" @change="updateMaster">
+            <option value="achieve_master" selected >{{ recipeContent.achieve_master }} </option>
+            <option v-for="(master_name, idx) in master_names" :key="idx" :value="master_name">
+              {{ master_name }}
+            </option>
+          </select>
+          <select name="slave_name" id="slave_name" v-model="slaveSelected">
+            <option value="" selected disabled hidden> 소분류 선택 </option>
+            <option v-for="(slave_name, idx) in slave_names" :key="idx" :value="slave_name">
+              {{ slave_name }}
+            </option>
+          </select>
+        </div>
+      </div>
         <button @click="check">등록</button>
       </div>
     </div>
@@ -42,12 +60,26 @@ export default {
       recipe: null,
       recipeContent: null,
       title: '',
+      master_names: [],
+      slave_names: [],
+      masterSelected: '',
+      slaveSelected: '',
     }
   },
   components:{
     UpdateForm,
   },
   methods: {
+    updateMaster(){
+      this.slave_names = []
+      if(this.masterSelected) {
+        for(let i = 0; i< this.Achieves.length; i++){
+          if(this.masterSelected === this.Achieves[i].achieve_master_name){
+            this.slave_names.push(this.Achieves[i].achieve_slave_name)
+          }
+        }
+      }
+    },
     addimagedes(){
       this.recipe.push({
         idx : -1,
@@ -119,6 +151,21 @@ export default {
       }
     )
     this.$store.dispatch('clearFormdata')
+
+    RecipeApi.achieveRecipe(
+      res => {
+        console.log(res)
+        console.log("칭호 가져옴")
+        this.Achieves = res.data.achieveList
+        for(let i = 0; i< this.Achieves.length; i++){
+          this.master_names.push(this.Achieves[i].achieve_master_name)
+        }
+        this.master_names = new Set(this.master_names)
+      },
+      err=> {
+        console.log(err)
+      }      
+    )
   },
   computed: {
     ...mapState([
