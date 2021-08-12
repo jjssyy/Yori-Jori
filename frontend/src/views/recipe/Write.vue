@@ -65,12 +65,6 @@
       <div id="image-des">
         <h2>Challenges</h2>
         <div>
-          <select name="title_name" id="title_name" v-model="titleSelected" @change="updateTitle">
-            <option value="" selected disabled hidden> 칭호 선택 </option>
-            <option v-for="(title_name, idx) in title_names" :key="idx" :value="title_name">
-              {{ title_name }}
-            </option>
-          </select>
           <select name="master_name" id="master_name" v-model="masterSelected" @change="updateMaster">
             <option value="" selected disabled hidden> 대분류 선택 </option>
             <option v-for="(master_name, idx) in master_names" :key="idx" :value="master_name">
@@ -114,10 +108,8 @@ export default {
       defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14",
       Achieves: [],
       Achieves_two: [],
-      title_names: [],
       master_names: [],
       slave_names: [],
-      titleSelected: '',
       masterSelected: '',
       slaveSelected: '',
     }
@@ -129,9 +121,9 @@ export default {
         console.log("칭호 가져옴")
         this.Achieves = res.data.achieveList
         for(let i = 0; i< this.Achieves.length; i++){
-          this.title_names.push(this.Achieves[i].achieve_title_name)
+          this.master_names.push(this.Achieves[i].achieve_master_name)
         }
-        this.title_names = new Set(this.title_names)
+        this.master_names = new Set(this.master_names)
       },
       err=> {
         console.log(err)
@@ -142,28 +134,11 @@ export default {
     updateMaster(){
       this.slave_names = []
       if(this.masterSelected) {
-        for(let i = 0; i< this.Achieves_two.length; i++){
-          if(this.masterSelected == this.Achieves_two[i].achieve_master_name){
-            this.slave_names.push(this.Achieves_two[i].achieve_slave_name)
-          }
-        }
-      }
-    },
-    updateTitle(){
-      this.Achieves_two = []
-      this.master_names = []
-      this.slave_names = []
-      if(this.titleSelected) {
         for(let i = 0; i< this.Achieves.length; i++){
-          if (this.titleSelected == this.Achieves[i].achieve_title_name){
-            this.Achieves_two.push(this.Achieves[i])
+          if(this.masterSelected == this.Achieves[i].achieve_master_name){
+            this.slave_names.push(this.Achieves[i].achieve_slave_name)
           }
         }
-        console.log(this.Achieves_two)
-        for(let i = 0; i< this.Achieves_two.length; i++){
-          this.master_names.push(this.Achieves_two[i].achieve_master_name)
-        }
-        this.master_names = new Set(this.master_names)
       }
     },
     tempimage(){
