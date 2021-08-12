@@ -28,5 +28,26 @@ from(select achieve_slave, id, title  from recipe where id = #{id} group by achi
    		select * from recipe where id = #{id} and achieve_master = #{master}
     </select>
 	
+	<select id="getTitleList" parameterType="String" resultType="AchieveTitleList">
+		select ifnull(id,#{id}) as id, title.title_name as title, count(a.achieve_slave) as clear_cnt, count(achieve.achieve_slave_name) as achieve_cnt, round((count(a.achieve_slave) / count(achieve.achieve_slave_name) * 100)) as percent, title.clear_img as clear_img, title.fail_img as fail_img
+		from(select achieve_slave, id, title  from recipe where id = #{id} group by achieve_slave) a
+		right outer join achieve 
+		on a.achieve_slave = achieve.achieve_slave_name
+		inner join title 
+		on achieve.achieve_title_name = title.title_name 
+		group by title.title_name;
+	</select>
 	
+	<select id="getTitleOne" parameterType="map" resultType="AchieveTitleList">
+		select ifnull(id,#{id}) as id, title.title_name as title, count(a.achieve_slave) as clear_cnt, count(achieve.achieve_slave_name) as achieve_cnt, round((count(a.achieve_slave) / count(achieve.achieve_slave_name) * 100)) as percent, title.clear_img as clear_img, title.fail_img as fail_img
+		from(select achieve_slave, id, title  from recipe where id = #{id} group by achieve_slave) a
+		right outer join achieve on a.achieve_slave = achieve.achieve_slave_name
+ 		inner join title on achieve.achieve_title_name = title.title_name group by title.title_name having title.title_name = #{title};
+	</select>
+	<select id="getTitleDetail" parameterType="map" resultType="AchieveTitleDetail">
+		select ifnull(id,#{id}) as id, title.title_name as title, achieve.achieve_slave_name,a.achieve_slave
+		from(select achieve_slave, id, title  from recipe where id = #{id} group by achieve_slave) a
+ 		right outer join achieve on a.achieve_slave = achieve.achieve_slave_name
+ 		inner join title on achieve.achieve_title_name = title.title_name where title.title_name = #{title};
+	</select>
 </mapper>

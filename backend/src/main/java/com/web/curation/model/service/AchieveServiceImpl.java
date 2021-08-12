@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.model.Achieve;
+import com.web.curation.model.AchieveTitleDetail;
+import com.web.curation.model.AchieveTitleList;
 import com.web.curation.model.Achievecurrent;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.UserVO;
@@ -50,6 +52,21 @@ public class AchieveServiceImpl implements AchieveService {
 	@Override
 	public List<RecipeContent> getCategoryRecipe(Map<String, String> map) {
 		return sqlsession.getMapper(AchieveDao.class).getCategoryRecipe(map);
+	}
+
+	@Override
+	public List<AchieveTitleList> getTitleList(String id) {
+		return sqlsession.getMapper(AchieveDao.class).getTitleList(id);
+	}
+
+	@Override
+	public List<AchieveTitleDetail> getTitleDetail(Map<String, String> map) {
+		return sqlsession.getMapper(AchieveDao.class).getTitleDetail(map);
+	}
+
+	@Override
+	public List<AchieveTitleList> getTitleOne(Map<String, String> map) {
+		return sqlsession.getMapper(AchieveDao.class).getTitleOne(map);
 	}
 
 
