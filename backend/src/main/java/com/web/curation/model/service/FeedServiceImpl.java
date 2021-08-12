@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.FeedRecipe;
+import com.web.curation.model.HashtagVO;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -178,6 +179,8 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<RecipeContent> popularPosts() throws Exception {
 		return sqlSession.getMapper(FeedDao.class).popularPosts();
+	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getHashtag(recipe_idx);
 	}
 
 }

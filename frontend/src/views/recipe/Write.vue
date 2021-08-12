@@ -13,13 +13,26 @@
 
       <div id="image-des">
         <h2>CARDs</h2>
-        <div v-for="(data, idx) in fields" :key="idx" class="write-card" @click="updateCard(idx)">
+        <div v-for="(data, idx) in fields" :key="fields[idx].idx" class="write-card" @click="updateCard(idx)">
+          <div class="check-box">
           <div class="thumbnail" @click="isThumbnail(idx)">썸네일</div>
+          <span @click="deleteContent(idx)">
+            <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
+          </span>
+          </div>
           <div class="image-box">
             <img class="image" :src="data.img">
           </div>
           <div class="content-box">
             {{data.des}}
+          </div>
+          <div class="leftright">
+          <button @click="leftContent(idx)">
+            <i class="fas fa-angle-double-left"></i> 
+          </button>
+          <button @click="rightContent(idx)">
+            <i class="fas fa-angle-double-right"></i>
+          </button>
           </div>
         </div>
         <div class="addcard" id="add" @click="tempimage">
@@ -51,6 +64,26 @@
       </div>
       <div id="image-des">
         <h2>Challenges</h2>
+        <div>
+          <select name="title_name" id="title_name" v-model="titleSelected" @change="updateTitle">
+            <option value="" selected disabled hidden> 칭호 선택 </option>
+            <option v-for="(title_name, idx) in title_names" :key="idx" :value="title_name">
+              {{ title_name }}
+            </option>
+          </select>
+          <select name="master_name" id="master_name" v-model="masterSelected" @change="updateMaster">
+            <option value="" selected disabled hidden> 대분류 선택 </option>
+            <option v-for="(master_name, idx) in master_names" :key="idx" :value="master_name">
+              {{ master_name }}
+            </option>
+          </select>
+          <select name="slave_name" id="slave_name" v-model="slaveSelected">
+            <option value="" selected disabled hidden> 소분류 선택 </option>
+            <option v-for="(slave_name, idx) in slave_names" :key="idx" :value="slave_name">
+              {{ slave_name }}
+            </option>
+          </select>
+        </div>
       </div>
       <button class="submit" @click="check"><h1><i class="fas fa-pen nav-icon"></i></h1></button>
     </div>
@@ -61,6 +94,7 @@
 <script>
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
+import RecipeApi from '../../api/RecipeApi';
 import FirebaseApi from '../../api/FirebaseApi';
 var frm = new FormData();
 
@@ -77,10 +111,61 @@ export default {
       showcard:false,
       tempImg:'',
       tempDes:'',
-      defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14"
+      defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14",
+      Achieves: [],
+      Achieves_two: [],
+      title_names: [],
+      master_names: [],
+      slave_names: [],
+      titleSelected: '',
+      masterSelected: '',
+      slaveSelected: '',
     }
   },
+  mounted: function(){
+    RecipeApi.achieveRecipe(
+      res => {
+        console.log(res)
+        console.log("칭호 가져옴")
+        this.Achieves = res.data.achieveList
+        for(let i = 0; i< this.Achieves.length; i++){
+          this.title_names.push(this.Achieves[i].achieve_title_name)
+        }
+        this.title_names = new Set(this.title_names)
+      },
+      err=> {
+        console.log(err)
+      }      
+    )
+  },
   methods: {
+    updateMaster(){
+      this.slave_names = []
+      if(this.masterSelected) {
+        for(let i = 0; i< this.Achieves_two.length; i++){
+          if(this.masterSelected == this.Achieves_two[i].achieve_master_name){
+            this.slave_names.push(this.Achieves_two[i].achieve_slave_name)
+          }
+        }
+      }
+    },
+    updateTitle(){
+      this.Achieves_two = []
+      this.master_names = []
+      this.slave_names = []
+      if(this.titleSelected) {
+        for(let i = 0; i< this.Achieves.length; i++){
+          if (this.titleSelected == this.Achieves[i].achieve_title_name){
+            this.Achieves_two.push(this.Achieves[i])
+          }
+        }
+        console.log(this.Achieves_two)
+        for(let i = 0; i< this.Achieves_two.length; i++){
+          this.master_names.push(this.Achieves_two[i].achieve_master_name)
+        }
+        this.master_names = new Set(this.master_names)
+      }
+    },
     tempimage(){
       this.showcard = !this.showcard
     },
@@ -95,10 +180,11 @@ export default {
           this.ThumbNailList.push('false')
         }
       }
-
       frm.append("title", this.title)
       frm.append("id", this.userId)
       frm.append('nickname',this.userNickname)
+      frm.append('achieve_master',this.masterSelected)
+      frm.append('achieve_slave',this.slaveSelected)
       for (let i=0; i< l; i++){
         frm.append("des["+i+"]",this.fields[i].des)
         frm.append("img["+i+"]",this.fields[i].img)
@@ -153,6 +239,28 @@ export default {
     },
     isThumbnail(idx){
       this.thumbnailNumber = idx
+    },
+    deleteContent(idx){
+      this.fields.splice(idx,1)
+      console.log(this.fields)
+    },
+    leftContent(idx){
+      if(idx >= 1){
+        let content = this.fields[idx]
+        this.fields[idx] = this.fields[idx-1]
+        this.fields[idx].idx += 1
+        this.fields[idx-1] = content
+        this.fields[idx-1].idx -= 1
+      }
+    },
+    rightContent(idx){
+       if(idx < this.fields.length-1){
+        let content = this.fields[idx]
+        this.fields[idx] = this.fields[idx+1]
+        this.fields[idx].idx -= 1
+        this.fields[idx+1] = content
+        this.fields[idx+1].idx += 1
+      }
     }
   },
   computed: {
@@ -344,5 +452,17 @@ export default {
   background-color: #DAD870;
   border-radius: 3px;
   margin-bottom: 5%;
+}
+.leftright{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+.check-box{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 2px;
+  padding-right: 4px;
 }
 </style>

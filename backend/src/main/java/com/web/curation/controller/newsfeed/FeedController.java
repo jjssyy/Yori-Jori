@@ -20,6 +20,7 @@ import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.FeedRecipe;
+import com.web.curation.model.HashtagVO;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -62,6 +63,9 @@ public class FeedController {
 		List<String> thumbnailList = data.getThumbnail();
 		List<String> hashtagList = data.getHashtags();
 
+		String achieve_master = data.getAchieve_master();
+		String achieve_slave = data.getAchieve_slave();
+		
 		if (id == null) {
 			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 		}
@@ -73,7 +77,9 @@ public class FeedController {
 		recipeInfo.setId(id);
 		recipeInfo.setNickname(nickname);
 		recipeInfo.setTitle(title);
-
+		recipeInfo.setAchieve_master(achieve_master);
+		recipeInfo.setAchieve_slave(achieve_slave);
+		
 		Map<String, String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("id", id);
@@ -164,6 +170,8 @@ public class FeedController {
 			recipeDetailToClient.setRegdate(recipeInfoFromDB.getRegdate());
 			recipeDetailToClient.setId(recipeInfoFromDB.getId());
 			recipeDetailToClient.setNickname(recipeInfoFromDB.getNickname());
+			recipeDetailToClient.setAchieve_master(recipeInfoFromDB.getAchieve_master());
+			recipeDetailToClient.setAchieve_slave(recipeInfoFromDB.getAchieve_slave());
 
 			// 좋아요 수
 			recipeDetailToClient.setLike(feedService.getLikeCountRecipe(recipe_idx));
@@ -177,7 +185,24 @@ public class FeedController {
 			} else {
 				recipeDetailToClient.setLikecheck(false);
 			}
-
+			
+			//해시태그 받아오기
+			List<HashtagVO> hashtagList = feedService.getHashtag(recipe_idx);
+			
+			List<Integer> hashtag_idx = new ArrayList<>();
+			List<String> tag = new ArrayList<>();
+			
+			for(int i=0; i<hashtagList.size(); i++) {
+				int idx = hashtagList.get(i).getIdx();
+				String hashtag = hashtagList.get(i).getTag();
+				
+				hashtag_idx.add(idx);
+				tag.add(hashtag);
+				System.out.println(tag.get(i));
+			}
+			recipeDetailToClient.setHashtag_idx(hashtag_idx);
+			recipeDetailToClient.setTag(tag);
+			
 			resultMap.put("recipeContent", recipeDetailToClient);
 
 		} catch (Exception e) {

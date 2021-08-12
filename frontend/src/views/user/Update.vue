@@ -69,6 +69,7 @@
 import UserApi from '../../api/UserApi';
 import DaumPostcode from 'vuejs-daum-postcode'
 import FirebaseApi from '../../api/FirebaseApi';
+import swal from 'sweetalert';
 
 export default {
   data: () => {
@@ -177,12 +178,12 @@ export default {
       UserApi.requestUpdate(
         data,
         res=>{
-          alert('회원수정이 완료 되었습니다.')
+          swal('회원수정이 완료 되었습니다.',{icon:'success'})
           this.$router.push(`/user/profile/${this.userId}`);
           
         },
         error=>{
-          alert("실패");
+          swal("실패","회원수정에실패하였습니다.","error");
           this.$router.push("/error");
         }
       );

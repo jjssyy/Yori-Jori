@@ -31,14 +31,10 @@ public class JwtInterceptor implements HandlerInterceptor{
 		
 		
 		
-		if(jwtService.isUsable(token)) {
+	
 			System.out.println(token);
 			return true;
-			
-		}else {
-			System.out.println("!!!");
-			throw new UnauthorizedException();
-		}
+		
 		
 		
 		//if(token != null && jwtService.isUsable(token)){

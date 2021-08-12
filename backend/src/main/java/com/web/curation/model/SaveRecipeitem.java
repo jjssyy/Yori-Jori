@@ -11,6 +11,25 @@ public class SaveRecipeitem {
 	private List<String> thumbnail;
 	private List<String> hashtags;
 	private int likes;
+	
+	private String achieve_master;
+	private String achieve_slave;
+
+	public String getAchieve_master() {
+		return achieve_master;
+	}
+
+	public void setAchieve_master(String achieve_master) {
+		this.achieve_master = achieve_master;
+	}
+
+	public String getAchieve_slave() {
+		return achieve_slave;
+	}
+
+	public void setAchieve_slave(String achieve_slave) {
+		this.achieve_slave = achieve_slave;
+	}
 
 	public String getTitle() {
 		return title;

@@ -57,6 +57,8 @@ import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
 import UserApi from "../../api/UserApi";
 import { mapState } from 'vuex'
 import { mapActions } from 'vuex'
+import swal from 'sweetalert';
+
 
 
 export default {
@@ -116,24 +118,23 @@ export default {
 
            
              if(res.data.result == "success"){
-            alert("로그인 되었습니다.");
+            swal({title:"로그인 되었습니다.",icon:'success'});
            this.$store.dispatch("login",res);
 
               this.$store.state.userId = data.id
               this.$router.push({name:'FeedMain'});
             }else if(res.data.result == "fail"){
-              alert("로그인 실패.");
+              swal({title:"로그인 실패.",icon:'error'});
           
             }else{
-              alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
+              swal("로그인 실패","아이디가 존재하지 않거나 비밀번호가 틀렸습니다.",'error');
               this.$router.push({name:'ErrorPage'});
 
             }
           },
           error => {
             //요청이 끝나면 버튼 활성화
-            alert("아이디가 존재하지 않거나 비밀번호가 틀렸습니다.");
-
+            swal("로그인 실패","아이디가 존재하지 않거나 비밀번호가 틀렸습니다.",'error');
             this.$router.push({name:'ErrorPage'});
           }
         );
