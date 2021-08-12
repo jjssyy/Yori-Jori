@@ -141,12 +141,9 @@ const deleteFollowing = (data, callback, errorCallback) => {
     .catch((err) => errorCallback(err));
 };
 
-const getUser = (config, data, callback, errorCallback) => {
+const getUser = (data, callback, errorCallback) => {
   http
     .get('/user/profile', {
-      headers: {
-        'access-token': config,
-      },
       params: {
         id: data.id,
       },
@@ -154,6 +151,7 @@ const getUser = (config, data, callback, errorCallback) => {
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
+
 
 const requestUser = (config, callback, errorCallback) => {
   http
