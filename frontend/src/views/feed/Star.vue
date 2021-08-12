@@ -49,6 +49,7 @@ export default {
       FeedApi.popularposts(
         data,
         res => {
+          console.log(res.data)
           const items = res.data.popularPosts.map(item => {
             return item
           })
