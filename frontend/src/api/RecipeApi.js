@@ -1,5 +1,14 @@
 import http from "@/util/http-common";
 
+const achieveRecipe = (callback, errorCallback) =>{
+    http.get('/feed/write')
+    .then(
+         res=>callback(res)
+     ).catch(
+         err=>errorCallback(err)
+     )
+ }
+
 const deleteRecipe = (data, callback, errorCallback) => {
     http.delete('/feed/delete',{
         params: {
@@ -114,6 +123,7 @@ const commentUnlike = (data,callback, errorCallback) => {
 
 
 const RecipeApi = {
+    achieveRecipe: (callback, errorCallback) => achieveRecipe(callback, errorCallback),
     deleteRecipe: (data, callback, errorCallback) => deleteRecipe(data, callback, errorCallback),
     updateRecipe: (data, callback, errorCallback) => updateRecipe(data, callback, errorCallback),
     likeRecipe: (data, callback, errorCallback) => likeRecipe(data, callback, errorCallback),
