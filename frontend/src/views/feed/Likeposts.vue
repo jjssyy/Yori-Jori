@@ -1,6 +1,15 @@
 <template>
-  <div class="newsfeed">
-    <div class='feed' v-for="(latestFeed, idx) in latestFeeds" :key="idx">
+  <div class="newsfeed"
+  v-infinite-scroll="loadMore" 
+  infinite-scroll-disabled="busy" 
+  infinite-scroll-distance="20"
+  >
+    <h1>인기글</h1>
+    <div 
+    class='feed' 
+    v-for="(latestFeed, idx) in latestFeeds" 
+    :key="idx"
+    >
       <FeedItem
         :latestFeed="latestFeed" 
         :idx="idx" 
@@ -20,27 +29,37 @@ export default {
   data:() => {
     return {
       latestFeeds: [],
-      page:1
+      page:1,
+      busy:false
     }
   },
   components: { 
     FeedItem,
-   },
+  },
   methods: {
     getPost(){
+      console.log(this.page)
       let data = {
-        id: this.userId
+        id: this.userId,
+        page: this.page++
       }
       FeedApi.likeposts(
         data,
         res => {
-          console.log(res.data)
-          this.latestFeeds = res.data.latestPosts
+          const items = res.data.latestPosts.map(item => {
+            return item
+          })
+          this.busy = false
+          this.latestFeeds = this.latestFeeds.concat(items)
         },
         error => {
           console.log(error)
         }
       )
+    },
+    loadMore(){
+      this.busy = true
+      this.getPost()
     }
   },
   created: function() {

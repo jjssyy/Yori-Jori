@@ -1,14 +1,19 @@
 <template>
-  <div class="feed newsfeed">
-    <div class="wrapB">
-      <h1>인기글</h1>
-      <div v-for="(latestFeed, idx) in latestFeeds" :key="idx">
-        <LatestFeed
-          :latestFeed="latestFeed" 
-          :idx="idx"
-          :latestFeeds="latestFeeds"
-          />
-      </div>
+  <div class="newsfeed"
+  v-infinite-scroll="loadMore" 
+  infinite-scroll-disabled="busy" 
+  infinite-scroll-distance="20"
+  >
+    <h1>인기글</h1>
+    <div 
+    class='feed' 
+    v-for="(latestFeed, idx) in latestFeeds" 
+    :key="idx"
+    >
+      <FeedItem
+        :latestFeed="latestFeed" 
+        :idx="idx" 
+        />
     </div>
   </div>
 </template>
@@ -19,7 +24,7 @@ import FeedApi from '../../api/FeedApi';
 import { mapState } from "vuex";
 // import "../../components/css/feed/feed-item.scss";
 // import "../../components/css/feed/newsfeed.scss";
-// import FeedItem from "../../components/feed/FeedItem.vue";
+import FeedItem from "../../components/feed/FeedItem.vue";
 import LatestFeed from "../../components/feed/LatestFeed.vue";
 
 export default {
@@ -27,28 +32,37 @@ export default {
   data:() => {
     return {
       latestFeeds: [],
-      page : 1
+      page : 1,
+      busy: false
     }
   },
   components: { 
-    // FeedItem,
-    LatestFeed,
+    FeedItem,
   }, 
   methods: {
     getPost(){
+      console.log(this.page)
       let data = {
         id: this.userId,
-        page: this.page
+        page: this.page++
       }
       FeedApi.popularposts(
         data,
         res => {
-          this.latestFeeds = res.data.popularPosts
+          const items = res.data.popularPosts.map(item => {
+            return item
+          })
+          this.busy = false
+          this.latestFeeds = this.latestFeeds.concat(items)
         },
         error => {
           console.log(error)
         }
       )
+    },
+    loadMore(){
+      this.busy = true
+      this.getPost()
     }
   },
   created: function() {
@@ -62,3 +76,15 @@ export default {
 }
 </script>
 
+<style scoped>
+.newsfeed{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.feed{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+</style>
