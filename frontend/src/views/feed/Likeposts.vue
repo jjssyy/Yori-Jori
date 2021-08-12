@@ -20,25 +20,31 @@ export default {
   data:() => {
     return {
       latestFeeds: [],
+      page:1
     }
   },
   components: { 
     FeedItem,
    },
-  created: function() {
-    let data = {
-      id: this.userId
-    }
-    FeedApi.likeposts(
-      data,
-      res => {
-        console.log(res.data)
-        this.latestFeeds = res.data.latestPosts
-      },
-      error => {
-        console.log(error)
+  methods: {
+    getPost(){
+      let data = {
+        id: this.userId
       }
-    )
+      FeedApi.likeposts(
+        data,
+        res => {
+          console.log(res.data)
+          this.latestFeeds = res.data.latestPosts
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+  },
+  created: function() {
+    this.getPost()
   },
   computed: {
     ...mapState([

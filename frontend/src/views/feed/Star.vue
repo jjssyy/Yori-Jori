@@ -27,31 +27,32 @@ export default {
   data:() => {
     return {
       latestFeeds: [],
+      page : 1
     }
   },
   components: { 
     // FeedItem,
     LatestFeed,
-   }, 
-   methods: {
-      logout(){
-      alert('로그아웃 되었습니다.');
-      this.$store.dispatch('logout');
-      this.$router.push({name:'Login'});
-    },},
-  created: function() {
-    let data = {
-      id: this.userId
-    }
-    FeedApi.popularposts(
-      data,
-      res => {
-        this.latestFeeds = res.data.popularPosts
-      },
-      error => {
-        console.log(error)
+  }, 
+  methods: {
+    getPost(){
+      let data = {
+        id: this.userId,
+        page: this.page
       }
-    )
+      FeedApi.popularposts(
+        data,
+        res => {
+          this.latestFeeds = res.data.popularPosts
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+  },
+  created: function() {
+    this.getPost()
   },
   computed: {
     ...mapState([
