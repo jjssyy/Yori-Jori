@@ -77,7 +77,7 @@
    		select r.title, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
    		from recipe r left join recipe_like l on r.idx = l.recipe_idx
    		join recipe_content as c on r.idx = c.recipe_idx 
-   		where c.thumbnail="true" and idx=#{recipe_idx}
+   		where c.thumbnail="true" and r.idx=#{recipe_idx}
    </select>
    
    <!-- get the number of likes -->
