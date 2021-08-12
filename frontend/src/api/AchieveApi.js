@@ -63,6 +63,39 @@ const myRecipe = (data, callback, errorCallback) => {
     .catch((err) => errorCallback(err));
 };
 
+const achieveTitle = (data, callback, errorCallback) => {
+  http
+    .get('/achieve/titleList', {
+      params: {
+        id: data.id,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+const achieveTitleOne = (data, callback, errorCallback) => {
+  http
+    .get('/achieve/titleOne', {
+      params: {
+        id: data.id,
+        title: data.title,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+const achieveTitleDetail = (data, callback, errorCallback) => {
+  http
+    .get('/achieve/titleDetail', {
+      params: {
+        id: data.id,
+        title: data.title,
+      },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
+
 const AchieveApi = {
   AchievemasterList: (data, callback, errorCallback) =>
     AchievemasterList(data, callback, errorCallback),
@@ -75,5 +108,11 @@ const AchieveApi = {
     AchievemasterCategoryList(data, callback, errorCallback),
   myRecipe: (config, data, callback, errorCallback) =>
     myRecipe(config, data, callback, errorCallback),
+  achieveTitle: (config, data, callback, errorCallback) =>
+    achieveTitle(config, data, callback, errorCallback),
+  achieveTitleOne: (config, data, callback, errorCallback) =>
+    achieveTitleOne(config, data, callback, errorCallback),
+  achieveTitleDetail: (config, data, callback, errorCallback) =>
+    achieveTitleDetail(config, data, callback, errorCallback),
 };
 export default AchieveApi;

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.curation.model.Achieve;
+import com.web.curation.model.AchieveTitleDetail;
+import com.web.curation.model.AchieveTitleList;
 import com.web.curation.model.Achievecurrent;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.service.AchieveService;
@@ -140,8 +142,6 @@ public class AchieveController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
-		System.out.println(id);
-		System.out.println(master);
 		Map<String, String> map = new HashMap<>();
 		map.put("id", id);
 		map.put("master", master);
@@ -167,5 +167,101 @@ public class AchieveController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+	
+	@GetMapping("/titleList")
+	public ResponseEntity<Map<String, Object>> getTitleList(@RequestParam String id) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String result = "SUCCESS";
 
+		try {
+			List<AchieveTitleList> TitleList = achieveservice.getTitleList(id);
+			
+			resultMap.put("list", TitleList);
+
+			if (TitleList == null) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@GetMapping("/titleOne")
+	public ResponseEntity<Map<String, Object>> getTitleOne(@RequestParam String id,@RequestParam String title) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String result = "SUCCESS";
+		Map<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("title", title);
+
+		try {
+			List<AchieveTitleList> TitleDetailOne = achieveservice.getTitleOne(map);
+			
+			resultMap.put("list", TitleDetailOne);
+
+			if (TitleDetailOne == null) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@GetMapping("/titleDetail")
+	public ResponseEntity<Map<String, Object>> getTitleDetail(@RequestParam String id,@RequestParam String title) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String result = "SUCCESS";
+		Map<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("title", title);
+
+		try {
+			List<AchieveTitleDetail> TitleDetail = achieveservice.getTitleDetail(map);
+			
+			for (int i = 0; i < TitleDetail.size(); i++) {
+				System.out.println(TitleDetail.get(i).getId());
+				System.out.println(TitleDetail.get(i).getTitle());
+				System.out.println(TitleDetail.get(i).getAchieve_slave());
+				System.out.println(TitleDetail.get(i).getAchieve_slave_name());
+			}
+			
+			resultMap.put("list", TitleDetail);
+
+			if (TitleDetail == null) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
 }
