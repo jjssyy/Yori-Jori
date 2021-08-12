@@ -110,12 +110,13 @@
             <label>칭호</label>
           </div>
           <div class="row">
-            <span v-for="(clear, idx) in achieve" :key="idx">
-              <p v-if="clear.percent == 100">{{clear.title}} </p>
+            <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
+                <img id="achieve_img" v-if="clear.percent == 100" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
+                <img id="achieve_img" v-else :src="require(`@/assets/images/${clear.fail_img}.png`)" />
             </span>
           </div>
       </div>
-       <div class="row" v-if="profileUser.id == userId">
+      <div class="row" v-if="profileUser.id == userId">
         <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
         </my-recipe-item>
       </div>
@@ -132,6 +133,7 @@ import UserApi from '../../api/UserApi';
 import RankApi from '../../api/RankApi';
 import AchieveApi from '../../api/AchieveApi';
 import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
+import FirebaseApi from '../../api/FirebaseApi';
 
 export default {
   components: { MyRecipeItem },
@@ -162,13 +164,10 @@ export default {
       id: this.profileId
     }
     
-    const config =  this.$store.state.token;
-    
-    UserApi.getUser(config,
+    UserApi.getUser(
       data,
       res => {
         this.profileUser = res.data
-         console.log(this.profileUser.recipecnt);
         this.follower = res.data.follower
         this.following = res.data.following
       },
@@ -180,7 +179,7 @@ export default {
     UserApi.myAllRecipes(
       data,
       res => {
-        this.myRecipes = res.data.latestFeed
+        this.myRecipes = res.data.latestFeed 
       },
       error=>{
         console.log(error)
@@ -250,6 +249,14 @@ export default {
   },
   methods: {
     sendrequest(member){
+      let notice = {
+        user:this.$route.params.user_id,
+        img:this.userId,
+        ReqUser:this.$store.state.userId,
+        type:'follow',
+        articleID:0
+      }
+      FirebaseApi.noticeAdd(notice)
 
       let data = {
         loginid : this.userId,
@@ -268,11 +275,12 @@ export default {
         }else{
           alert("에러발생");
         }
-      },
-      error=>{
-        alert("에러발생");
-      }
-    )
+        },
+        error=>{
+          alert("에러발생");
+        }
+      )
+
     
     },
 
@@ -416,7 +424,9 @@ export default {
   margin-top: 10px;
 }
 
-
-
+#achieve_img{
+  width:100px;
+  height: 100px;
+}
 
 </style>

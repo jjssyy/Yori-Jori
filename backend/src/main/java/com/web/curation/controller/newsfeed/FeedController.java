@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.curation.model.AchieveListFromDB;
 import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.FeedRecipe;
+import com.web.curation.model.HashtagVO;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -61,6 +63,9 @@ public class FeedController {
 		List<String> thumbnailList = data.getThumbnail();
 		List<String> hashtagList = data.getHashtags();
 
+		String achieve_master = data.getAchieve_master();
+		String achieve_slave = data.getAchieve_slave();
+		
 		if (id == null) {
 			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 		}
@@ -72,7 +77,9 @@ public class FeedController {
 		recipeInfo.setId(id);
 		recipeInfo.setNickname(nickname);
 		recipeInfo.setTitle(title);
-
+		recipeInfo.setAchieve_master(achieve_master);
+		recipeInfo.setAchieve_slave(achieve_slave);
+		
 		Map<String, String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("id", id);
@@ -110,7 +117,7 @@ public class FeedController {
 
 	// liked posts
 	@GetMapping("/likedposts")
-	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestBody String user_id) {
+	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam String user_id) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
@@ -122,6 +129,7 @@ public class FeedController {
 				list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
 			}
 			resultMap.put("message", result);
+			resultMap.put("latestPosts", list);
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,6 +170,8 @@ public class FeedController {
 			recipeDetailToClient.setRegdate(recipeInfoFromDB.getRegdate());
 			recipeDetailToClient.setId(recipeInfoFromDB.getId());
 			recipeDetailToClient.setNickname(recipeInfoFromDB.getNickname());
+			recipeDetailToClient.setAchieve_master(recipeInfoFromDB.getAchieve_master());
+			recipeDetailToClient.setAchieve_slave(recipeInfoFromDB.getAchieve_slave());
 
 			// 좋아요 수
 			recipeDetailToClient.setLike(feedService.getLikeCountRecipe(recipe_idx));
@@ -175,7 +185,24 @@ public class FeedController {
 			} else {
 				recipeDetailToClient.setLikecheck(false);
 			}
-
+			
+			//해시태그 받아오기
+			List<HashtagVO> hashtagList = feedService.getHashtag(recipe_idx);
+			
+			List<Integer> hashtag_idx = new ArrayList<>();
+			List<String> tag = new ArrayList<>();
+			
+			for(int i=0; i<hashtagList.size(); i++) {
+				int idx = hashtagList.get(i).getIdx();
+				String hashtag = hashtagList.get(i).getTag();
+				
+				hashtag_idx.add(idx);
+				tag.add(hashtag);
+				System.out.println(tag.get(i));
+			}
+			recipeDetailToClient.setHashtag_idx(hashtag_idx);
+			recipeDetailToClient.setTag(tag);
+			
 			resultMap.put("recipeContent", recipeDetailToClient);
 
 		} catch (Exception e) {
@@ -573,5 +600,27 @@ public class FeedController {
 			}
 		}
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
+	}
+	//writeRecipe-업적 확인 기능 추가
+	@GetMapping("/write")
+	public ResponseEntity<Map<String, Object>> RecipeAchieveList(){
+		Map<String, Object> resultMap = new HashMap<>();
+		List<AchieveListFromDB> achieveList;
+		
+		try {
+			achieveList = feedService.getAchieveListForRecipe();
+			if(achieveList == null) {
+				resultMap.put("message", "FAIL");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NO_CONTENT);
+			}
+			resultMap.put("achieveList", achieveList);
+			resultMap.put("message", "Success");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

@@ -22,6 +22,7 @@ const noticeAdd = (data) => {
     img:data.img,
     ReqUser: data.ReqUser,
     type:data.type,
+    articleID:data.articleID
   })
   .then((docRef) => {
     console.log("Document written");
@@ -30,7 +31,8 @@ const noticeAdd = (data) => {
 
 const upLoad = (file,callback) => {
   var storageRef = storage.ref()
-  var path = storageRef.child('image/'+file.name)
+  const now = Date.now()
+  var path = storageRef.child('image/'+`${now.toString()}/`+file.name)
   var upload = path.put(file)
 
   upload.on('state_changed',

@@ -29,9 +29,6 @@ public class SearchController {
 	@Autowired
 	SearchService searchservice;
 	
-	@Autowired
-	JwtService jwtservice;
-	
 	@GetMapping("/nickname")
 	public ResponseEntity<Map<String, Object>> searchByNickname(@RequestParam Map map) {
 		String nickname = (String)map.get("nickname");

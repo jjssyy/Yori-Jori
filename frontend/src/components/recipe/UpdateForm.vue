@@ -55,7 +55,7 @@ export default {
       }
     },
     rightContent() {
-      if (this.idx < this.recipe.length) {
+      if (this.idx < this.recipe.length-1) {
         const content = this.recipe[this.idx + 1]
         this.idx += 1
         this.recipe_file.content_order += 1

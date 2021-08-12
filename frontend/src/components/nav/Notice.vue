@@ -7,7 +7,6 @@
       <i class="far fa-2x fa-bell"></i>
       <span id="circle" v-if="notice > 0 && !show"></span>
     </a>
-    <!-- <button @click="noticeAdd">추가</button> -->
     <div v-if="show" class="Tooltip">
       <div id="heading">
         <div class="heading-left">
@@ -17,16 +16,16 @@
           <a class="notification-link" href="#" @click="deleteAll">전체 삭제</a>
         </div>
       </div>
-      <ul class="notification-list">
+      <ul class="notification-list" v-on:click="show = !show">
         <li class="notification-item" v-for="(user,idx) of unreadnotice.slice().reverse()" :key="idx">
-          <div class="img-left">
+          <div class="img-left" @click="searchmember(user.ReqUser)">
             <img class="user-photo" alt="User Photo" v-bind:src="defaultProfile" />
           </div>
-          <div class="user-content" v-if="user.type === 'comment'">
+          <div class="user-content" v-if="user.type === 'comment'" @click="[toRecipe(user.articleID),deleteDoc(user.date)]">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 댓글을 달았습니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
-          <div class="user-content" v-if="user.type === 'like'">
+          <div class="user-content" v-if="user.type === 'like'" @click="[toRecipe(user.articleID),deleteDoc(user.date)]">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 게시글을 좋아합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
@@ -144,6 +143,18 @@ export default {
         });
       });
     },
+    deleteDoc(doc){
+      const db = firebase.firestore();
+      db.collection("notice"+this.$store.state.userId)
+      .get()
+      .then(res => {
+        res.forEach(element => {
+          if (element.id === doc.toString()){
+            element.ref.delete();
+          }
+        });
+      });
+    },
     searchShow(){
       const Search = document.querySelector('#search')
       if (this.isShow==false){
@@ -155,6 +166,9 @@ export default {
       }
       this.InputText = ''
       this.UserList = []
+    },
+    toRecipe(idx){
+      this.$router.push({ name: 'RecipeDetail' , params: {recipe_idx: idx}})
     }
   },
   filters : {
@@ -273,6 +287,7 @@ svg{
   display: -ms-grid;
   display: grid;
   padding: 0.65rem 0;
+  cursor: pointer;
 }
 
 #heading {
