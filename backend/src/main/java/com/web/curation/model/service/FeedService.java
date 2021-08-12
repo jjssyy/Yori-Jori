@@ -61,4 +61,5 @@ public interface FeedService {
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
 	
 	public int deleteHashtag(int hashtag_idx) throws Exception;
+	public int updateHashtag(Map map) throws Exception;
 }

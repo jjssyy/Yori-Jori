@@ -189,4 +189,9 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).deleteHashtag(hashtag_idx);
 	}
 
+	@Override
+	public int updateHashtag(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateHashtag(map);
+	}
+
 }

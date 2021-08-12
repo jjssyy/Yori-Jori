@@ -181,8 +181,10 @@
 		delete from hashtag where idx=#{hashtag_idx}
 	</delete>
 	
-	<update id="updateHashtag" parameterType="integer">
-	
+	<update id="updateHashtag" parameterType="Map">
+		update hashtag
+		set tag = #{tag}
+		where idx=#{hashtag_idx}
 	</update>   
    
 </mapper>
