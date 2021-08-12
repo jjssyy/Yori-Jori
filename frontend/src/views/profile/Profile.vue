@@ -116,7 +116,7 @@
             </span>
           </div>
       </div>
-       <div class="row" v-if="profileUser.id == userId">
+      <div class="row" v-if="profileUser.id == userId">
         <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
         </my-recipe-item>
       </div>
@@ -164,13 +164,10 @@ export default {
       id: this.profileId
     }
     
-    const config =  this.$store.state.token;
-    
-    UserApi.getUser(config,
+    UserApi.getUser(
       data,
       res => {
         this.profileUser = res.data
-         console.log(this.profileUser.recipecnt);
         this.follower = res.data.follower
         this.following = res.data.following
       },
