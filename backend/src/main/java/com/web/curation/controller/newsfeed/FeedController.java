@@ -623,4 +623,22 @@ public class FeedController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/popularposts")
+	public ResponseEntity<Map<String, Object>> popularPosts() {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		HttpStatus status = HttpStatus.OK;
+		List<RecipeContent> list;
+		try {
+			list = feedService.popularPosts();
+			resultMap.put("popularPosts", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		resultMap.put("status", status);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
 }

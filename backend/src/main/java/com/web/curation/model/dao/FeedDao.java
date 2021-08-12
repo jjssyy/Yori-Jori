@@ -38,8 +38,6 @@ public interface FeedDao {
 	
 	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
 	
-	public int getLikeNum(int recipe_idx) throws Exception;
-	
 	public int writeComment(SaveComment comment) throws Exception;
 	
 	public int updateComment(UpdateComment comment) throws Exception;
@@ -66,6 +64,7 @@ public interface FeedDao {
 	
 	public int likeRecipe(Map map) throws Exception;
 	
+	public int getLikeNum(int recipe_idx) throws Exception;
 	public int cancelLikeRecipe(Map map) throws Exception;
 	
 	public int writeHashtags(HashMap<String, Object> hash);
@@ -80,5 +79,6 @@ public interface FeedDao {
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
 	
+	public List<RecipeContent> popularPosts() throws Exception;
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
 }

@@ -126,6 +126,9 @@ hr{
   height: 1px;
   border: none;
 }
+svg{
+  color:#ffbe76
+}
 
 .navigation {
   background-color: #ffffff;
@@ -318,11 +321,20 @@ hr{
   height: 50px;
 }
 
-.logo-img{
-  margin: 0%;
-  padding: 0%;
+.shrink {
+  height: 50px;
 }
-#hide-menu svg{
-  color: #ffbe76;
+
+@media only screen and (min-width: 800px){
+  #sidebar{
+    display: none;
+  }
+  .logo-img{
+    margin: 0%;
+    padding: 0%;
+  }
+  #hide-menu svg{
+    color: #ffbe76;
+  }
 }
 </style>
