@@ -244,12 +244,24 @@ export default {
       this.fields.splice(idx,1)
       console.log(this.fields)
     },
-    // leftContent(idx){
-    //   }
-    // },
-    // rightContent(idx){
-
-    // }
+    leftContent(idx){
+      if(idx >= 1){
+        let content = this.fields[idx]
+        this.fields[idx] = this.fields[idx-1]
+        this.fields[idx].idx += 1
+        this.fields[idx-1] = content
+        this.fields[idx-1].idx -= 1
+      }
+    },
+    rightContent(idx){
+       if(idx < this.fields.length-1){
+        let content = this.fields[idx]
+        this.fields[idx] = this.fields[idx+1]
+        this.fields[idx].idx -= 1
+        this.fields[idx+1] = content
+        this.fields[idx+1].idx += 1
+      }
+    }
   },
   computed: {
     ...mapState([
