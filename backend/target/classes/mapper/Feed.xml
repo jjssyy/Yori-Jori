@@ -47,25 +47,9 @@
       select img from recipe_content where thumbnail="true" and recipe_idx=#{recipe_idx}
    </select>
    
-   <!-- hashtag -->
-   <insert id="writeHashtag" parameterType="Map">
-      insert into hashtag(recipe_idx, tag)
-      values(#{recipe_idx}, #{hashtag})
-   </insert>
-   
    <!-- liked posts -->
    <select id="getLikedPosts" parameterType="String" resultType="int">
          select recipe_idx from recipe_like where recipe_user_id = #{user_id}
-   </select>
-   
-   <!-- get one recipe -->
-   <select id="getSingleRecipe" parameterType="int" resultType="saveRecipeitem">
-         select * from recipe where idx=#{recipe_idx}
-   </select>
-   
-   <!-- get the number of likes -->
-   <select id="getLikeNum" parameterType="int" resultType="int">
-         select count(*) from recipe_like where recipe_idx=#{recipe_idx} group by recipe_idx
    </select>
    
    <!-- get posts in range of popularity -->
@@ -156,10 +140,6 @@
          delete from recipe_content where idx=#{content_idx}
    </delete>
    
-   <select id="popularPosts" resultType="RecipeContent">
-   		select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes, 
-   		from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc; 
-   </select>
    <update id="updateRecipeInfo" parameterType="Map">
          update recipe set title=#{title} where idx=#{recipe_idx}
    </update>
@@ -169,13 +149,6 @@
          set img=#{img}, des=#{des}, thumbnail=#{thumbnail}, content_order=#{content_order}
          where idx=#{content_idx}
    </update>
-   
-   <!-- hashtag -->
-   <insert id="writeHashtags" parameterType="Map">
-      insert into hashtag(recipe_idx, tag)
-      values(#{recipe_idx}, #{hashtag})
-   </insert>
-   
    
    <select id="getLikeCount" parameterType="integer" resultType="integer">
           select count(*) from recipe_comment_like where comment_idx= #{comment_idx}
