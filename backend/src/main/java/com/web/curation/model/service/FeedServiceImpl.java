@@ -64,7 +64,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception {
+	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
 	}
 

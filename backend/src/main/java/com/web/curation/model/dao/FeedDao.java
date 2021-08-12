@@ -36,7 +36,7 @@ public interface FeedDao {
 	
 	public List<Integer> getLikedPosts(String user_id) throws Exception;
 	
-	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
+	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception;
 	
 	public int writeComment(SaveComment comment) throws Exception;
 	
