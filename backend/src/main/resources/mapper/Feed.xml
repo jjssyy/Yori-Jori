@@ -54,8 +54,11 @@
    
    <!-- get posts in range of popularity -->
    <select id="popularPosts" resultType="RecipeContent">
-         select r.idx, r.title, r.regdate, r.nickname, r.id, r.img, count(l.recipe_idx) likes
-         from recipe r left join recipe_like l on r.idx = l.recipe_idx group by l.recipe_idx order by likes desc
+         select r.idx, r.title, r.regdate, r.nickname, r.id, count(l.recipe_idx) likes
+         from recipe r left join recipe_like l on r.idx = l.recipe_idx 
+         join recipe_content as c on r.idx=c.recipe_idx
+         where c.thumbnail="true"
+         group by l.recipe_idx order by likes desc
    </select>
    
    <!-- hashtag -->
