@@ -143,4 +143,8 @@ export default {
   font-size: 28px;
   margin-left: 0.3%;
 }
+#achieve_img {
+  width: 220px;
+  height: 220px;
+}
 </style>
