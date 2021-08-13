@@ -62,4 +62,5 @@ public interface FeedService {
 	
 	public int deleteHashtag(int hashtag_idx) throws Exception;
 	public int updateHashtag(Map map) throws Exception;
+	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception;
 }

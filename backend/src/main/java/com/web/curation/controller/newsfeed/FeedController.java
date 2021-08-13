@@ -702,4 +702,33 @@ public class FeedController {
 		resultMap.put("status", status);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	
+	@GetMapping("/hashtagsearch")
+	public ResponseEntity<Map<String, Object>> hashtagsearch(@RequestParam Map map) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+
+		String result = "SUCCESS";
+		try {
+			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
+			
+			resultMap.put("hashtagfeed", recipe);
+
+			if (recipe == null) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+
 }

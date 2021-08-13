@@ -194,4 +194,10 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).updateHashtag(map);
 	}
 
+	@Override
+	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception {
+		
+		return sqlSession.getMapper(FeedDao.class).gethashtagRecipes(map);
+	}
+
 }
