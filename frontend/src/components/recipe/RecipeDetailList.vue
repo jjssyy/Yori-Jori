@@ -1,17 +1,29 @@
 <template lang="">
-  <div>
+  <div class="content_box">
     <!-- {{ recipeContent}} -->
     <hooper :progress="true" id="hooper">
       <slide class="thumbNail" :style="{ backgroundImage: `url(${thumbnailImg})` }">
-        <div class="bg"></div>
+        <div class="thumbnailContent">
+          <div class="bg"></div>
+          <div class="name_time">
+          <p class="recipe_content_nickname" style="color:white;">작성자 : {{ recipeContent.nickname}}</p>
+          <p class="time" style="color:white;">{{ date }} {{ recipeContent.regdate }}</p>
+          </div>
         <h1 style="color:white;">{{ recipeContent.title}}</h1>
+        <div class="hashlist">
+        <div v-for="(h, idx) in recipeContent.tag" :key="idx">
+          <span class="hash"># {{h}}</span>
+        </div>
+        </div>
+
+        </div>
       </slide>
       <slide v-for="(recipeItem, idx) in recipe" :key="idx">
         <!-- {{ recipeItem }} -->
         <!-- {{ idx+1 }} -->
         <div>
         <img :src='recipeItem.img' width="" class="recipeImg"/>
-        <p>{{ recipeItem.des }}</p>
+        <p class="recipe_content">{{ recipeItem.des }}</p>
         </div>
         <!-- <RecipeCommentList :recipeItem="recipeItem" :recipeContent="recipeContent"/> -->
       </slide>
@@ -63,7 +75,19 @@ export default {
   },
   data: () => {
     return {
+      date: '',
     }
+  },
+  mounted: function() {
+    var a = this.recipeContent.regdate.slice(0,4)
+    a += '.'
+    a += this.recipeContent.regdate.slice(5,7)
+    a += '.'
+    a += this.recipeContent.regdate.slice(8,10)
+    a += ' '
+    a += this.recipeContent.regdate.slice(11,16)
+    this.date = a
+    console.log(this.date)
   },
   methods: {
     change(idx){
@@ -119,17 +143,17 @@ export default {
   }
 }
 </script>
-<style scope>
+<style scoped>
   img {
     /* margin-top: 10px; */
   }
   #hooper {
-    height: 80vh;
+    height: 70vh;
   }
   .slide {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     font-size: 4rem;
-    line-height: 80vh;
+    line-height: 70vh;
   }
   .recipeImg {
     height: 60vh;
@@ -148,9 +172,50 @@ export default {
     position: absolute;
   }
   h1{
+    margin-top: 10px;
+    margin-bottom: 10px;
     position: relative; 
     z-index:1000;
-    top: 400px;
-    text-align: right;
+    top: 200px;
+    left: 20px;
+    text-align: left;
+  }
+  .recipe_content{
+    padding: 5px;
+    font-size: 10px;
+  }
+  .name_time p{
+    margin: 0px;
+    position: relative; 
+    z-index:1000;
+    top: 200px;
+    left: 20px;
+    text-align: left;
+  }
+  .time {
+    font-size: 12px;
+  }
+  .hashlist{
+    position: relative; 
+    z-index:1000;
+    top: 200px;
+    left: 15px;
+    text-align: left;
+    display: flex;
+    /* overflow: auto; */
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .hash{
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2px 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 50px;
+  border-radius: 25px;
   }
 </style>
