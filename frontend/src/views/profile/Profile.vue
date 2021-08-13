@@ -99,7 +99,7 @@
         </div>
       <div class="row" id="profile_desc_box">
         <div class="row" id="profile_desc_head">
-          <p>소개</p>
+          <label>소개</label>
         </div>
         <div class="row" id="profile_desc_body">
           <p>{{ profileUser.des }}</p>
@@ -109,20 +109,33 @@
           <div class="row">
             <label>칭호</label>
           </div>
-          <div class="row">
+          <div class="row" style="margin-bottom:100px;">
             <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
                 <img id="achieve_img" v-if="clear.percent == 100" :title="`${clear.title}%`" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
                 <img id="achieve_img" v-else :title="`${clear.title} ${clear.percent}%`" :src="require(`@/assets/images/${clear.fail_img}.png`)" />
             </span>
           </div>
       </div>
-      <div class="row" v-if="profileUser.id == userId">
-        <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx">
-        </my-recipe-item>
+      <div class="row">
+        <div class="row">
+          <label>요리책</label>
+        </div>
+        <div class="row">
+            <table class="table">
+              <thead>
+                <th>no</th>
+                <th>제목</th>
+                <th>업적</th>
+                <th>좋아요</th>
+              </thead>
+              <tbody>
+                <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx"></my-recipe-item>
+              </tbody>
+            </table>
+        </div>
+        
       </div>
       </div>
-      
-  
     </div>
   </div>
 </template>
@@ -180,6 +193,7 @@ export default {
       data,
       res => {
         this.myRecipes = res.data.latestFeed 
+        console.log(this.myRecipes);
       },
       error=>{
         console.log(error)
@@ -427,6 +441,12 @@ export default {
 #achieve_img{
   width:100px;
   height: 100px;
+}
+
+table thead{
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 </style>
