@@ -24,12 +24,12 @@ public interface AchieveService {
 
 	List<Achieve> getMasterCategoryCount(String master) throws Exception;
 
-	List<RecipeContent> getCategoryRecipe(Map<String, String> map);
+	List<RecipeContent> getCategoryRecipe(Map<String, String> map) throws Exception;
 
-	List<AchieveTitleList> getTitleList(String id);
+	List<AchieveTitleList> getTitleList(String id) throws Exception;
 
-	List<AchieveTitleList> getTitleOne(Map<String, String> map);
+	List<AchieveTitleList> getTitleOne(Map<String, String> map) throws Exception;
 	
-	List<AchieveTitleDetail> getTitleDetail(Map<String, String> map);
+	List<AchieveTitleDetail> getTitleDetail(Map<String, String> map) throws Exception;
 
 }
