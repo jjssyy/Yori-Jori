@@ -31,8 +31,6 @@ export default {
       UserApi.deleteFollower(
       data,
       res => {
-        console.log(res)
-        console.log(data)
         this.$router.go();
         console.log('삭제성공')
       },

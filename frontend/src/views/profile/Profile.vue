@@ -197,7 +197,7 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우 신청을 보냈습니다.");
+          alert("팔로우 목록에 등록했습니다.");
             this.$router.go();
         }else if(res.data == "fail"){
           alert("팔로우 신청이 보내지지 않았습니다.")
