@@ -4,11 +4,10 @@ export default {
   LOGIN: function (state, res) {
     const userId = res.data['id']
     const token = res.data['access-token']
+    const nickname = res.data['nickname']
     state.token = token
     state.userId = userId
-    let data = {
-      id: userId,
-    }
+    state.userNickname = nickname
   },
   LOGOUT: function(state){
     state.token = ''

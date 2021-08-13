@@ -290,7 +290,7 @@ public class FeedController {
 		String result = "SUCCESS";
 		try {
 			List<RecipeContent> recipe = feedService.getAllRecipes(id);
-
+			
 			resultMap.put("latestFeed", recipe);
 
 			if (recipe == null) {
@@ -513,9 +513,11 @@ public class FeedController {
 	@PutMapping("/update")
 	public ResponseEntity<String> updateRecipe(UpdateRecipeFromClient recipe) {
 		// 0.레시피 제목 수정
-		HashMap<Object, Object> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		map.put("recipe_idx", recipe.getRecipe_idx());
 		map.put("title", recipe.getTitle());
+		map.put("achieve_master", recipe.getAchieve_master_name());
+		map.put("achieve_slave", recipe.getAchieve_slave_name());
 
 		try {
 			if (feedService.updateRecipeInfo(map) == 1) {
@@ -592,6 +594,7 @@ public class FeedController {
 						System.out.println("content 수정 성공");
 					} else {
 						System.out.println("content 수정 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -599,8 +602,66 @@ public class FeedController {
 				}
 			}
 		}
+		//3.해시태그 삭제
+		List<Integer> deletehashtag = recipe.getDeletehashtag();
+		if(deletehashtag.get(0) !=-1) {
+			for(int i=0; i<deletehashtag.size(); i++) {
+				int hashtag_idx = deletehashtag.get(i);
+				try {
+					if(feedService.deleteHashtag(hashtag_idx)==1) {
+						System.out.println("해시태그 삭제 성공");
+					}else {
+						System.out.println("해시태그 삭제 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		//4.해시태그 수정, 삽입
+		map = new HashMap<>();
+		List<Integer> hashtag_idx = recipe.getHashtag_idx();
+		List<String> tag = recipe.getTag();
+		for(int i=0; i<hashtag_idx.size(); i++) {
+			int idx = hashtag_idx.get(i);
+			//해시태그 삽입
+			if(idx == -1) {
+				map.put("recipe_idx", recipe_idx);
+				map.put("hashtag", tag.get(i));
+				try {
+					if(feedService.writeHashtags(map)==1) {
+						System.out.println("해시태그 수정 성공");
+					}else {
+						System.out.println("해시태그 수정 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}else {
+				map.put("hashtag_idx", idx);
+				map.put("tag", tag.get(i));
+				
+				try {
+					if(feedService.updateHashtag(map)==1) {
+						System.out.println("해시태그 수정 성공");
+					}else {
+						System.out.println("해시태그 수정 실패");
+						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
+	
 	//writeRecipe-업적 확인 기능 추가
 	@GetMapping("/write")
 	public ResponseEntity<Map<String, Object>> RecipeAchieveList(){

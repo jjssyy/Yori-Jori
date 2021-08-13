@@ -4,36 +4,41 @@
       <div style="margin-top:50px;">
         <h1>업적</h1>
       </div>
-      <b-card title="전체 항목 달성도">
+      <b-card title="전체 칭호 달성도">
+        
         <b-progress :max="totalCount" height="4rem" style="margin:30px 10px">
           <b-progress-bar class="bar-color" :value="userCount">
             <span
               >달성도:
-              <strong style="margin-left:3px;">{{ (userCount / totalCount) * 100 }}%</strong></span
+              <strong style="margin-left:3px;"
+                >{{ Math.floor((userCount / totalCount) * 100) }}%</strong
+              ></span
             >
           </b-progress-bar>
         </b-progress>
       </b-card>
-      <b-card title="항목 달성도">
-        <div class="submenu" v-for="(master, idx) in achievemaster" :key="idx">
+      <b-card title="세부 칭호 달성도">
+        <div class="submenu" v-for="(master, idx) in achieveTitle" :key="idx">
           <div class="line">
             <div class="box">
-              <h4>{{ master.achieve_master_name }}</h4>
+              <h4>{{ master.title }}</h4>
             </div>
-            <div class="font" @click="showDetail(master.achieve_master_name, idx)">
+            <div class="font" @click="showDetail(master.title, idx)">
               <i class="fas fa-clipboard-list"></i>
             </div>
           </div>
-          <b-progress :max="userRecipe[idx].achieve_cnt" height="3rem" style="margin:10px">
-            <b-progress-bar class="bar-color" :value="userRecipe[idx].clear_cnt">
+          <b-progress :max="master.achieve_cnt" height="3rem" style="margin:10px">
+            <b-progress-bar class="bar-color" :value="master.clear_cnt">
               <span>
                 달성도:
-                <strong>{{ userRecipe[idx].percent }}%</strong>
+                <strong>{{ master.percent }}%</strong>
               </span>
             </b-progress-bar>
           </b-progress>
         </div>
       </b-card>
+      {{ totalCount }}
+      {{ achieveTitle }}
     </div>
   </div>
 </template>
@@ -51,40 +56,32 @@ export default {
   props: ['keyword'],
   data: () => {
     return {
-      achievemaster: [],
-      userRecipe: [],
+      achieveTitle: [],
       totalCount: 0,
       userCount: 0,
     };
   },
   components: {},
   methods: {
-    showDetail(master, idx) {
-      this.$router.push({ name: 'AchieveDetail', query: { master_name: master, idx: idx } });
+    showDetail(title, idx) {
+      this.$router.push({ name: 'AchieveDetail', query: { title: title, idx: idx } });
     },
   },
   created: function() {
     let data = {
       id: this.userId,
     };
-    AchieveApi.AchievemasterList(
-      data,
-      (res) => {
-        this.achievemaster = res.data.masterlist;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
-    AchieveApi.getAchievecurrent(
+    AchieveApi.achieveTitle(
       data,
       (res) => {
-        this.userRecipe = res.data.achieve;
-        for (let i = 0; i < res.data.achieve.length; i++) {
-          this.totalCount += res.data.achieve[i].achieve_cnt;
-          this.userCount += res.data.achieve[i].clear_cnt;
+        console.log(res);
+        for (let i = 0; i < res.data.list.length; i++) {
+          this.totalCount += res.data.list[i].achieve_cnt;
+          this.userCount += res.data.list[i].clear_cnt;
         }
+        this.achieveTitle = res.data.list;
+        
       },
       (error) => {
         console.log(error);
