@@ -59,7 +59,10 @@
           </div>
         </div>
         <div v-for="(h, idx) in HashList" :key="idx">
-          <span class="hash"># {{h.content}}</span>
+          <div class="hash">
+          <span># {{h.content}}</span>
+          <span @click="deleteHash(idx)"><i id="hashDelete" class="fas fa-times"></i></span>
+          </div>
         </div>
       </div>
       <div id="image-des">
@@ -131,6 +134,9 @@ export default {
     )
   },
   methods: {
+    deleteHash(idx){
+      this.HashList.splice(idx,1)
+    },
     updateMaster(){
       this.slave_names = []
       if(this.masterSelected) {
@@ -441,9 +447,14 @@ export default {
   padding-left: 2px;
   padding-right: 4px;
 }
-.pen-icon{
+#hashDelete{
   margin-top: 6px;
-  padding-top: 3px;
+  margin-left: 8px;
+  color: #fff;
+}
+.pen-icon{
+  margin-top: 7px;
+  padding-top: 4px;
   color: #fff;
 }
 .hash-icon{
