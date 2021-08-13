@@ -4,7 +4,7 @@
     <div class="wrapC">
       <div class="row" id="login">
       <div class="row" id="login_box1">
-        <img style="width:150px; height:130px;" :src="require(`@/assets/images/mainlogo.png`)" />
+        <img style="width:150px; height:130px;float: none; margin:0 auto;" :src="require(`@/assets/images/mainlogo.png`)" />
       </div>
       <div class="row" id="login_box7">
         <h1>요리조리</h1>

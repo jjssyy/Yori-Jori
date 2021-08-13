@@ -20,7 +20,7 @@ export default {
       hashtagfeed: [],
       page:1,
       busy:false,
-      hashtage:null,
+      hashtag:null,
     }
   },
   components: { 
