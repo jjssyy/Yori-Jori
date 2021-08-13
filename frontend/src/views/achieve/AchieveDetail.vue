@@ -4,11 +4,25 @@
       <h1></h1>
       <h2>{{ title }} 종류</h2>
       <b-card>
+        <label class="titlefont">칭호</label>
+        <div>
+          <img
+            id="achieve_img"
+            v-if="achieveTitleOne[0].percent == 100"
+            :title="`${achieveTitleOne[0].title}%`"
+            :src="require(`@/assets/images/${achieveTitleOne[0].clear_img}.png`)"
+          />
+          <img
+            id="achieve_img"
+            v-else
+            :title="`${achieveTitleOne[0].title} ${achieveTitleOne[0].percent}%`"
+            :src="require(`@/assets/images/${achieveTitleOne[0].fail_img}.png`)"
+          />
+        </div>
         <div style="margin-top:50px;">
           <b-progress :max="achieveTitleOne[0].achieve_cnt" height="4rem" style="margin:30px 10px">
             <b-progress-bar class="bar-color" :value="achieveTitleOne[0].clear_cnt">
               <span>
-                달성도:
                 <strong>{{ achieveTitleOne[0].percent }}%</strong>
               </span>
             </b-progress-bar>
@@ -83,7 +97,7 @@ export default {
   background-color: #ffbe76;
   color: black;
   font-size: 1.1rem;
-  min-width: 25%;
+  min-width: 9%;
 }
 .menu-1 {
   display: flex;
@@ -103,16 +117,18 @@ export default {
   padding: 10px;
   min-height: 2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 .submenu {
   margin: 10px;
   min-width: 87%;
 }
 .fa-utensils {
-  width: 100%;
-  height: 35px;
-  margin-top: 3px;
+  width: 80%;
+  height: 30px;
+  margin-top: 5px;
+  color: chocolate;
+  opacity: 0.9;
 }
 .card-title {
   font-size: 28px;
@@ -122,5 +138,9 @@ export default {
 }
 .card {
   margin: 40px 0px;
+}
+.titlefont {
+  font-size: 28px;
+  margin-left: 0.3%;
 }
 </style>

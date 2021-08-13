@@ -7,14 +7,34 @@
       <b-card title="전체 칭호 달성도">
         <b-progress :max="totalCount" height="4rem" style="margin:30px 10px">
           <b-progress-bar class="bar-color" :value="userCount">
-            <span
-              >달성도:
+            <span>
               <strong style="margin-left:3px;"
                 >{{ Math.floor((userCount / totalCount) * 100) }}%</strong
               ></span
             >
           </b-progress-bar>
         </b-progress>
+        <div class="row">
+          <div class="row">
+            <label class="titlefont">칭호</label>
+          </div>
+          <div class="row">
+            <span v-for="(clear, id) in achieveTitle" :key="id" style="width:100px; height:100px;">
+              <img
+                id="achieve_img"
+                v-if="clear.percent == 100"
+                :title="`${clear.title}%`"
+                :src="require(`@/assets/images/${clear.clear_img}.png`)"
+              />
+              <img
+                id="achieve_img"
+                v-else
+                :title="`${clear.title} ${clear.percent}%`"
+                :src="require(`@/assets/images/${clear.fail_img}.png`)"
+              />
+            </span>
+          </div>
+        </div>
       </b-card>
       <b-card title="세부 칭호 달성도">
         <div class="submenu" v-for="(master, idx) in achieveTitle" :key="idx">
@@ -29,15 +49,12 @@
           <b-progress :max="master.achieve_cnt" height="3rem" style="margin:10px">
             <b-progress-bar class="bar-color" :value="master.clear_cnt">
               <span>
-                달성도:
-                <strong>{{ master.percent }}%</strong>
+                <strong>{{ master.percent }}% </strong>
               </span>
             </b-progress-bar>
           </b-progress>
         </div>
       </b-card>
-      {{ totalCount }}
-      {{ achieveTitle }}
     </div>
   </div>
 </template>
@@ -97,7 +114,7 @@ export default {
   background-color: #ffbe76;
   color: black;
   font-size: 1.1rem;
-  min-width: 22%;
+  min-width: 9%;
 }
 .line {
   display: flex;
@@ -130,5 +147,13 @@ export default {
 }
 .progress-bar bar-color {
   min-width: 80px;
+}
+#achieve_img {
+  width: 100px;
+  height: 100px;
+}
+.titlefont {
+  font-size: 28px;
+  margin-left: 0.3%;
 }
 </style>
