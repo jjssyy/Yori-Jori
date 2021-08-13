@@ -85,15 +85,23 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
+    font-family: 'BBTreeGB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 *{
   margin: 0%;
   padding: 0%;
-  font-family: 'Pretendard-Regular';
+  color: rgba(0, 0, 0, 0.7);
+  /* font-family: 'Pretendard-Regular'; */
+}
+h2{
+  font-family: 'BBTreeGB';
+  font-weight: 500;
+}
+svg{
+  color: #ffbe76;
 }
 
 .feed-item{

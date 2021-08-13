@@ -1,141 +1,62 @@
 <template>
-  <div>
-    <div class="wrapC" v-if="profileUser">
-      <div class="row" id="profile_wrap">
-        <div class="row" id="profile_main">
-          <div class="col-sm-3" id="profile_left_box" >
-            <div class="row" id="profile_nickname_box">
-              <p>{{ profileUser.nickname }}</p>
-            </div>
-            <div class="row" id="profie_img_box">
-              <div id="profile_img">이미지</div>
-            </div>
-          </div>
-          <div class="col-sm-9" id="profile_right_box" v-if="profileUser.id != userId">
-            <div class="row" >
-              <div class="col-md-4" id="profile_recipe_box" >
-                <div class="row">
-                  <b>레시피</b>
-                </div>
-                <div class="row">
-                    <p>{{profileUser.recipecnt}}</p>
-                </div>
-              </div>
-              <div class="col-md-4" id="profile_follower_box">
-                <div class="row">
-                  <b>팔로워</b>
-                </div>
-                <div class="row">
-                  <p>{{ profileUser.follower }}</p>
-                </div>
-                
-              </div>
-              <div class="col-md-4" id="profile_following_box">
-                <div class="row">
-                  <b>팔로잉</b>
-                </div>
-                <div class="row">
-                  <p>{{ profileUser.following }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" id="profile_rankpoint_box">
-                <div class="col-md-4" id="profile_rankpoint_rank">
-                <b>순위 :</b> <span>{{profileUser.rankpoint}}</span> 
-              </div>
-              <div class="col-md-5" id="profile_rankpoint_point">
-                <b>RP :</b> <span>{{profileUser.rankpoint}}</span> 
-              </div>
-            </div>
-            <div class="row" style="margin-top:20px;" v-if="profileUser.id != userId">
-                  <button class="btn btn-secondary" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button>
-                  <button class="btn btn-primary" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">신청</button>
-              </div>
-          </div>
-          <div class="col-md-9" id="profile_right_box" v-if="profileUser.id == userId">
-            <div class="row">
-              <div class="col-md-4" id="profile_recipe_box">
-                <div class="row">
-                  <b>레시피</b>
-                </div>
-                <div class="row">
-                  <p>{{profileUser.recipecnt}}</p>
-                </div>
-              </div>
-              <div class="col-md-4" id="profile_follower_box">
-                <div class="row">
-                  <b>팔로워</b>
-                </div>
-                <div class="row" @click="showFollowerList"><p>{{ profileUser.follower }}</p></div>
-              </div>
-              <div class="col-md-4" id="profile_following_box">
-                <div class="row">
-                  <b>팔로잉</b>
-                </div>
-                <div class="row" @click="showFollowingList"> <p>{{ profileUser.following }}</p></div>
-              </div>
-            </div>
-            <div class="row" id="profile_rankpoint_box">
-                <div class="col-md-4" id="profile_rankpoint_rank">
-                <b>순위 :</b> <span>{{profileUser.rankpoint}}</span> 
-              </div>
-              <div class="col-md-4" id="profile_rankpoint_point">
-                <b>RP :</b> <span>{{profileUser.rankpoint}}</span> 
-              </div>
-            
-              <div class="col-md-2" id="profile_rankpoint_refresh">
-                <button v-if="profileUser.rankpoint != rankpoint" class="btn btn-danger" @click="updaterank">갱신</button>
-              </div>
-            </div>
-              <div class="row" id="profile_update_box">
-                <div class="col-md-6" id="profile_update_user">
-                  <router-link style="text-decoration:none; color:black;" to="/user/update" class="btn--text">회원정보</router-link>
-              </div>
-              <div class="col-md-6" id="profile_update_pw">
-                  <router-link style="text-decoration:none; color:black;" to="/user/changepassword" class="btn--text">비밀번호</router-link>
-              </div>
-              </div>
-          </div>
+  <div class="profile-page" v-if="profileUser">
+    <div class="profile" v-if="profileUser">
+      <div class="profile-image">
+        <img :src="profileUser.img" alt="">
+      </div>
+      <div class="profile-user-settings">
+        <h1 class="profile-user-name">{{ profileUser.id }}</h1>
+        <div v-if="profileUser.id == userId">
+          <router-link style="text-decoration:none; color:black;" to="/user/update" class="profile-edit-btn">회원정보</router-link>
+          <router-link style="text-decoration:none; color:black;" to="/user/changepassword" class="profile-edit-btn">비밀번호</router-link>
         </div>
-      <div class="row" id="profile_desc_box">
-        <div class="row" id="profile_desc_head">
-          <label>소개</label>
-        </div>
-        <div class="row" id="profile_desc_body">
-          <p>{{ profileUser.des }}</p>
+        <div v-else>
+          <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button>
+          <button class="profile-edit-btn request" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">신청</button>
         </div>
       </div>
-      <div class="row">
-          <div class="row">
-            <label>칭호</label>
-          </div>
-          <div class="row" style="margin-bottom:100px;">
-            <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
-                <img id="achieve_img" v-if="clear.percent == 100" :title="`${clear.title}%`" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
-                <img id="achieve_img" v-else :title="`${clear.title} ${clear.percent}%`" :src="require(`@/assets/images/${clear.fail_img}.png`)" />
-            </span>
-          </div>
+      <div class="profile-stats">
+        <ul>
+          <li><span class="profile-stat-count">{{profileUser.recipecnt}}</span> 레시피</li>
+          <li @click="showFollowerList"><span class="profile-stat-count">{{ profileUser.follower }}</span> 팔로워</li>
+          <li @click="showFollowingList"><span class="profile-stat-count">{{ profileUser.following }}</span> 팔로잉</li>
+          <li><span class="profile-stat-count">{{profileUser.rankpoint}}</span> RP</li>
+          <li><span class="profile-stat-count">{{profileUser.rankpoint}}</span> 랭킹</li>
+          <!-- <button v-if="profileUser.rankpoint != rankpoint" @click="updaterank">갱신</button> -->
+        </ul>
       </div>
-      <div class="row">
-        <div class="row">
-          <label>요리책</label>
-        </div>
-        <div class="row">
-            <table class="table">
-              <thead>
-                <th>no</th>
-                <th>제목</th>
-                <th>업적</th>
-                <th>좋아요</th>
-              </thead>
-              <tbody>
-                <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx"></my-recipe-item>
-              </tbody>
-            </table>
-        </div>
-        
+      <div class="profile-bio">
+        <p><span class="profile-real-name">{{ profileUser.nickname }}</span> {{profileUser.des}}</p>
       </div>
+    </div>
+    <div class="achieve-section">
+      <div class="achieve-title">
+        <h4><i class="fas fa-medal"></i>칭호</h4>
       </div>
+      <div class="achieve-list" style="margin-bottom:100px;">
+        <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
+          <img id="achieve_img" v-if="clear.percent == 100" :title="`${clear.title}%`" :src="require(`@/assets/images/${clear.clear_img}.png`)" />
+          <img id="achieve_img" v-else :title="`${clear.title} ${clear.percent}%`" :src="require(`@/assets/images/${clear.fail_img}.png`)" />
+        </span>
+      </div>
+    </div>
+    <div class="article-sections">
+      <div class="article-title">
+        <h4><i class="fas fa-pen"></i>요리책</h4>
+      </div>
+      <div class="article-list">
+        <table class="table">
+          <thead>
+            <th>no</th>
+            <th>제목</th>
+            <th>업적</th>
+            <th>좋아요</th>
+          </thead>
+          <tbody>
+            <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx"></my-recipe-item>
+          </tbody>
+        </table>
+      </div>  
     </div>
   </div>
 </template>
@@ -193,7 +114,6 @@ export default {
       data,
       res => {
         this.myRecipes = res.data.latestFeed 
-        console.log(this.myRecipes);
       },
       error=>{
         console.log(error)
@@ -203,10 +123,7 @@ export default {
       id: this.userId
     }
 
-    
-
     UserApi.follow_already(
-      
       data,
       res => {
         this.follow_already = res.data;
@@ -252,7 +169,6 @@ export default {
         }
       },
       error=>{
-        alert("에러발생");
         console.log(error);
       }
     )
@@ -276,7 +192,6 @@ export default {
         loginid : this.userId,
         memberid : member.id,
         token : this.$store.state.token,
-        
       }
       UserApi.sendfollowrequest(
       data,
@@ -363,84 +278,128 @@ export default {
 }
 </script>
 
-<style>
-#profile_nickname_box{
-  font-size: 25px;
-  
+<style scoped>
+svg{
+  margin: 3px;
 }
 
-#profile_img{
-  background-color: gray;
-  color: white;
-  height: 100px;
-  width: 100px;
-  margin-left: 10px;
+*{
+  font-family: "Open Sans", Arial, sans-serif;
+}
+.profile-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0%;
+  padding: 0%;
 }
 
-#profile_regdate_box p{
-  margin-top: 10px;
+.profile {
+  padding: 0;
+  width: 100%;
+  max-width: 616px;
 }
 
-#profile_recipe_box, #profile_follower_box, #profile_following_box{
-  text-align: center;
+.profile-image {
+  width: 100%;
+  height: 152px;
+  height: width;
+  display: flex;
+  justify-content: center;
+  margin-right: 3rem;
+  overflow: hidden;
+  border: none;
 }
 
-#profile_recipe_box p, #profile_follower_box p , #profile_following_box p{
-  color: #ffbe76;
+.profile-image img {
+  padding: 0%;
+  margin: 0%;
+  width: 152px;
+  height: 152px;
+  border-radius: 50%;
+  background-color: #fafafa;
+  object-fit: cover;
+  border: none;
+
 }
 
-#profile_right_box{
-  margin-top: 60px;
+.profile-user-settings {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-#profile_rankpoint_box{
-  margin-top: 10px;
+.profile-user-name {
+    display: inline-block;
+    font-weight: 300;
 }
 
-#profile_rankpoint_rank{
-  margin-left: 30px;
+.profile-edit-btn {
+    border: 0.1rem solid #dbdbdb;
+    border-radius: 3px;
+    margin-left: 5px;
+    padding: 0px 3px;
 }
 
-#profile_rankpoint_point span, #profile_rankpoint_rank span{
-  color: #ffbe76;
-  margin-left: 10px;
-  
-}
-#profile_rankpoint_refresh button{
-  height: 30px;
-  line-height: 17px;
-  
+.profile-settings-btn {
+    margin-left: 1rem;
 }
 
-#profile_update_box{
-  margin-top: 30px;
-  padding-left: 20px;
-  
+.profile-stats {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  display: flex;
+  margin-top: 2.3rem;
+  padding: 3% 0%;
+}
+.profile-stats ul {
+  margin: 0%;
 }
 
-#profile_update_user {
-  text-decoration: none;
-  border: 1px solid lightgray;
-  text-align: center;
+.profile-stats li {
+    display: inline-block;
+    line-height: 1.5;
+    margin-right: 4rem;
+    cursor: pointer;
 }
 
-#profile_update_pw{
-  text-decoration: none;
-  border: 1px solid lightgray;
-  text-align: center;
+.profile-stats li:last-of-type {
+    margin-right: 0;
 }
 
-#profile_desc_box{
-  margin-top: 20px;
+.profile-bio {
+  width: 100%;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 2.3rem;
 }
 
-#profile_desc_box_body{
-  margin-top: 10px;
+.profile-real-name,
+.profile-stat-count{
+    font-weight: 600;
+}
+.achieve-section{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 616px;
+}
+.achieve-list{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #achieve_img{
   width:100px;
   height: 100px;
+}
+.article-sections{
+  width: 100%;
+  max-width: 616px;
+}
+.request{
+  background-color: #DAD870;
 }
 
 table thead{

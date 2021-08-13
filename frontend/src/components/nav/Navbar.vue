@@ -321,12 +321,9 @@ svg{
   height: 50px;
 }
 
-.shrink {
-  height: 50px;
-}
 .logo-img{
-  height: 39px;
-  margin: 0%;
+  height: 40px;
+  margin: 15% 0%;
   padding: 0%;
 }
 @media only screen and (min-width: 800px){
