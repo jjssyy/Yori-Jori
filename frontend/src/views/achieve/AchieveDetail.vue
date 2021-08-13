@@ -2,22 +2,24 @@
   <div class="feed newsfeed">
     <div class="wrapB">
       <h1></h1>
-      <h2>{{ title }} 종류</h2>
       <b-card>
-        <label class="titlefont">칭호</label>
-        <div>
-          <img
-            id="achieve_img"
-            v-if="achieveTitleOne[0].percent == 100"
-            :title="`${achieveTitleOne[0].title}%`"
-            :src="require(`@/assets/images/${achieveTitleOne[0].clear_img}.png`)"
-          />
-          <img
-            id="achieve_img"
-            v-else
-            :title="`${achieveTitleOne[0].title} ${achieveTitleOne[0].percent}%`"
-            :src="require(`@/assets/images/${achieveTitleOne[0].fail_img}.png`)"
-          />
+        <div class="title">
+          <label class="titlefont">{{ title }}</label>
+
+          <div>
+            <img
+              id="achieve_img"
+              v-if="achieveTitleOne[0].percent == 100"
+              :title="`${achieveTitleOne[0].title}%`"
+              :src="require(`@/assets/images/${achieveTitleOne[0].clear_img}.png`)"
+            />
+            <img
+              id="achieve_img"
+              v-else
+              :title="`${achieveTitleOne[0].title} ${achieveTitleOne[0].percent}%`"
+              :src="require(`@/assets/images/${achieveTitleOne[0].fail_img}.png`)"
+            />
+          </div>
         </div>
         <div style="margin-top:50px;">
           <b-progress :max="achieveTitleOne[0].achieve_cnt" height="4rem" style="margin:30px 10px">
@@ -64,7 +66,6 @@ export default {
       title: this.$route.query.title,
     };
     this.title = this.$route.query.title;
-    this.idx = this.$route.query.idx;
     //사용
     AchieveApi.achieveTitleOne(
       data,
@@ -139,8 +140,17 @@ export default {
 .card {
   margin: 40px 0px;
 }
+.title {
+  text-align: center;
+  align-content: center;
+}
 .titlefont {
-  font-size: 28px;
+  font-size: 34px;
   margin-left: 0.3%;
+  text-align: center;
+}
+#achieve_img {
+  width: 180px;
+  height: 180px;
 }
 </style>

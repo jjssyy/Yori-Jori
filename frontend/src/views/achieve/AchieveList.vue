@@ -5,7 +5,6 @@
         <h1>업적</h1>
       </div>
       <b-card title="전체 칭호 달성도">
-        
         <b-progress :max="totalCount" height="4rem" style="margin:30px 10px">
           <b-progress-bar class="bar-color" :value="userCount">
             <span>
@@ -26,12 +25,14 @@
                 v-if="clear.percent == 100"
                 :title="`${clear.title}%`"
                 :src="require(`@/assets/images/${clear.clear_img}.png`)"
+                @click="showDetail(clear.title)"
               />
               <img
                 id="achieve_img"
                 v-else
                 :title="`${clear.title} ${clear.percent}%`"
                 :src="require(`@/assets/images/${clear.fail_img}.png`)"
+                @click="showDetail(clear.title)"
               />
             </span>
           </div>
@@ -43,7 +44,7 @@
             <div class="box">
               <h4>{{ master.title }}</h4>
             </div>
-            <div class="font" @click="showDetail(master.title, idx)">
+            <div class="font" @click="showDetail(master.title)">
               <i class="fas fa-clipboard-list"></i>
             </div>
           </div>
@@ -80,8 +81,8 @@ export default {
   },
   components: {},
   methods: {
-    showDetail(title, idx) {
-      this.$router.push({ name: 'AchieveDetail', query: { title: title, idx: idx } });
+    showDetail(title) {
+      this.$router.push({ name: 'AchieveDetail', query: { title: title } });
     },
   },
   created: function() {
@@ -98,7 +99,6 @@ export default {
           this.userCount += res.data.list[i].clear_cnt;
         }
         this.achieveTitle = res.data.list;
-        
       },
       (error) => {
         console.log(error);
