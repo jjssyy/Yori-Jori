@@ -26,7 +26,7 @@ public interface FeedService {
 	public List<FeedRecipe> getLatestFeed(String id) throws Exception;
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeHashtags(HashMap<String, Object> hash);
-	public List<Integer> getLikedPosts(String user_id) throws Exception;
+	public List<RecipeContent> getLikedPosts(Map map) throws Exception;
 	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception;
 	public int getLikeNum(int recipe_idx) throws Exception;
 	public int writeComment(SaveComment comment) throws Exception;
@@ -62,4 +62,6 @@ public interface FeedService {
 	
 	public int deleteHashtag(int hashtag_idx) throws Exception;
 	public int updateHashtag(Map map) throws Exception;
+	
+	public int getFeedCnt() throws Exception;
 }

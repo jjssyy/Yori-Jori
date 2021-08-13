@@ -21,6 +21,7 @@ import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.HashtagVO;
+import com.web.curation.model.Paging;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -117,17 +118,23 @@ public class FeedController {
 
 	// liked posts
 	@GetMapping("/likedposts")
-	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam String user_id) {
+	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
+//		System.out.println(map.keySet());
+//		System.out.println("key set");
 		try {
-			List<Integer> likedPostsIdx = feedService.getLikedPosts(user_id);
-			int length = likedPostsIdx.size();
-			List<RecipeContent> list = new ArrayList<RecipeContent>();
-			for (int i = 0; i < length; i++) {
-				list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
-			}
+
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)map.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			map.put("paging", paging);
+			System.out.println("page : " + page);
+			System.out.println("range : " + paging.getRange() + " " + paging.getListCnt());
+			System.out.println("startList : " + paging.getStartList() + " listSize : " + paging.getListSize() + "\n===\n");
+			List<RecipeContent> list = feedService.getLikedPosts(map);
 			resultMap.put("message", result);
 			resultMap.put("latestPosts", list);
 			status = HttpStatus.ACCEPTED;

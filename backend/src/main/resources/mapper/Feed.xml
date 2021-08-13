@@ -49,8 +49,13 @@
    </select>
    
    <!-- liked posts -->
-   <select id="getLikedPosts" parameterType="String" resultType="int">
-         select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+   <select id="getLikedPosts" parameterType="Map" resultType="RecipeContent">
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
+         from recipe r join recipe_like l on r.idx = l.recipe_idx
+         join recipe_content as c on r.idx = c.recipe_idx
+		 where r.idx in (select recipe_idx from recipe_like where recipe_user_id = #{user_id})
+         group by l.recipe_idx
+         LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
    <!-- get posts in range of popularity -->
@@ -69,8 +74,9 @@
    </insert>
    
    <!-- liked posts -->
-   <select id="likedPosts" parameterType="String" resultType="int">
+   <select id="likedPosts" parameterType="Map" resultType="int">
          select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+         LIMIT #{startList}, #{listSize}
    </select>
    
    <!-- get one recipe -->
@@ -188,4 +194,10 @@
 		where idx=#{hashtag_idx}
 	</update>   
    
+   <select id="getFeedCnt" resultType="int">
+   		SELECT
+   			count(*) as listCnt
+   		FROM
+   			recipe;
+   </select>
 </mapper>
