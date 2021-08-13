@@ -2,28 +2,32 @@
   <div class="write">
     <div class="write-form">
       <h1>레시피 작성</h1>
-
       <input v-model="title" id="title" placeholder="제목을 입력하세요" type="text" />
-
       <div id="image-des">
         <h2>CARDs</h2>
         <div
           v-for="(data, idx) in fields"
           :key="fields[idx].idx"
           class="write-card"
-          @click="updateCard(idx)"
         >
           <div class="check-box">
-            <div class="thumbnail" @click="isThumbnail(idx)">썸네일</div>
-            <span @click="deleteContent(idx)">
+            <div v-if="idx===thumbnailNumber" class="thumbnail" @click="isThumbnail(idx)"><i class="fas fa-thumbtack"></i></div>
+            <div v-else class="thumbnail-none" @click="isThumbnail(idx)"><i class="fas fa-thumbtack"></i></div>
+            <button @click="deleteContent(idx)">
               <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
-            </span>
+            </button>
           </div>
           <div class="image-box">
-            <img class="image" :src="data.img" />
+            <img class="image" :src="data.img" @click="updateCard(idx)"/>
           </div>
-          <div class="content-box">
-            {{ data.des }}
+          <div class="black-box" v-if="showUpdate" @click="showUpdate = !showUpdate"></div>
+          <div v-if="showUpdate" class="inbox">
+            <label for="file">
+              <img :src="tempImg || data.img" />
+            </label>
+            <input type="file" accept="image/*" id="file" @change="uploadImg" />
+            <textarea v-model="data.des"></textarea>
+            <button class="submit" @click="updateImage(idx)">수정</button>
           </div>
           <div class="leftright">
             <button @click="leftContent(idx)">
@@ -125,6 +129,7 @@ export default {
       slave_names: [],
       masterSelected: '',
       slaveSelected: '',
+      showUpdate:false
     };
   },
   mounted: function() {
@@ -223,7 +228,14 @@ export default {
       this.temphash = '';
     },
     updateCard(idx) {
-      // this.fields[idx].des = ''
+      this.showUpdate = true
+    },
+    updateImage(idx){
+      if (this.tempImg != '') {
+        this.fields[idx].img = this.tempImg
+      }
+      this.tempImg = ''
+      this.showUpdate = !this.showUpdate
     },
     isThumbnail(idx) {
       this.thumbnailNumber = idx;
@@ -330,21 +342,26 @@ export default {
   border: 1px solid #ffbe76;
   border-radius: 5px;
 }
-.thumbnail {
+.thumbnail,
+.thumbnail-none {
+  cursor: pointer;
   display: flex;
   justify-content: center;
+  margin: 5px;
+}
+.thumbnail-none svg{
+  color: rgba(155, 155, 155, 0.5);
 }
 .image-box {
   width: 90%;
-  width: 100%;
+  height: 80%;
+  overflow: hidden;
 }
 .image {
-  width: 100%;
+  object-fit:contain;
+  transform: translate(-20%);
 }
 #file {
-  width: 100%;
-}
-.content-box {
   width: 100%;
 }
 .content {

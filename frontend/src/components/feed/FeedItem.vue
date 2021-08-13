@@ -8,7 +8,7 @@
         <div class="user-name">{{ latestFeed.nickname }}</div>
       </div>
       <div class="title">
-        <h2 @click="goRecipeDetail">{{ latestFeed.title }}</h2>
+        <h2 @click="goRecipeDetail">{{ latestFeed.title | longTitle}}</h2>
       </div>
       <div class="btn-group-a">
         <div class="like">
@@ -74,6 +74,15 @@ export default {
       )
       this.lastetFeeds = newFeed
     },
+  },
+  filters:{
+    longTitle: function(title){
+      if (title.length > 8){
+        return `${title.substring(0,8)}...`
+      } else {
+        return title
+      }
+    }
   },
   computed: {
     ...mapState([
