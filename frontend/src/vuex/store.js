@@ -11,6 +11,7 @@ let state = {
     isUser: false,
     token:'',
     userId: '',
+    userImg:'',
     userNickname: '',
     sns: '',
     email:'',

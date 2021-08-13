@@ -306,7 +306,9 @@ svg{
   justify-content: center;
 }
 .nav-logout{
-  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
 }
 .menu-items{
   background-color: rgb(255, 255, 255);
