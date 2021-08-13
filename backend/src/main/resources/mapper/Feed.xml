@@ -26,7 +26,7 @@
       from recipe r left join recipe_like l on r.idx = l.recipe_idx 
       left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id} 
       where r.id = #{id} group by l.recipe_idx -->
-      select * from recipe inner join achieve on recipe.achieve_slave = achieve.achieve_slave_name where id = #{id}
+      select * from recipe where id = #{id}
    </select>
 
    <!-- title, id -->
@@ -190,10 +190,10 @@
 	
 	<select id="gethashtagRecipes" parameterType="map" resultType="RecipeContent">
 		select recipe.idx as idx, recipe.id as id, recipe.nickname as nickname, recipe.title as title, recipe.achieve_master as achieve_master, recipe.achieve_slave as achieve_slave, recipe.regdate as regdate, hashtag.tag as hashtag, recipe_content.img as img, count(recipe_like.recipe_idx) as likes
-		from recipe inner join hashtag on recipe.idx = hashtag.recipe_idx
-		inner join recipe_content on recipe.idx = recipe_content.recipe_idx 
-		left join recipe_like on recipe.idx = recipe_like.recipe_idx 
-		where hashtag.tag = #{hashtag}              	
+		from recipe left outer join hashtag on recipe.idx = hashtag.recipe_idx
+		inner join recipe_content on recipe.idx = recipe_content.recipe_idx
+		inner join recipe_like on recipe.idx = recipe_like.recipe_idx
+		where hashtag.tag = #{hashtag} group by recipe.idx;            	
    	</select>
    
 </mapper>
