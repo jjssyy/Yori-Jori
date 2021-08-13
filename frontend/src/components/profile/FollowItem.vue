@@ -1,6 +1,6 @@
 <template lang="">
   <tr>
-    <td><router-link :to="{name:'Profile', query: {user_id: follower.id}}" style="text-decoration:none; color:black;" >{{follower.nickname}}</router-link></td>
+    <td><router-link :to="{name:'Profile', params: {user_id: follower.id}}" style="text-decoration:none; color:black;" >{{follower.nickname}}</router-link></td>
     <td><button class="btn btn-secondary" @click="deleteFollower(follower, idx)"> remove </button></td>
   </tr>
 </template>
