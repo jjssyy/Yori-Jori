@@ -5,6 +5,7 @@
         <h1>업적</h1>
       </div>
       <b-card title="전체 칭호 달성도">
+        
         <b-progress :max="totalCount" height="4rem" style="margin:30px 10px">
           <b-progress-bar class="bar-color" :value="userCount">
             <span
@@ -80,6 +81,7 @@ export default {
           this.userCount += res.data.list[i].clear_cnt;
         }
         this.achieveTitle = res.data.list;
+        
       },
       (error) => {
         console.log(error);

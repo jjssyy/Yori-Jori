@@ -101,7 +101,8 @@ public class UserController {
 		try { 
 			map.put("id", map.get("email"));
 			UserVO user = userservice.login(map);
-			System.out.println(map.get("id"));
+
+
 			if(user.getSns().equals("kakao")) {
 				String email = (String) map.get("email");
 				
@@ -422,7 +423,7 @@ public class UserController {
 
 	@GetMapping("/follow_already")
 	public ResponseEntity<List<String>> follow_already(@RequestParam Map map) {
-
+		
 		List<String> result = null;
 		try {
 
