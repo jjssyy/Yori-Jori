@@ -290,7 +290,7 @@ public class FeedController {
 		String result = "SUCCESS";
 		try {
 			List<RecipeContent> recipe = feedService.getAllRecipes(id);
-
+			
 			resultMap.put("latestFeed", recipe);
 
 			if (recipe == null) {

@@ -7,13 +7,20 @@ public class RecipeContent {
 	private String title;
 	private Timestamp regdate;
 	private String nickname;
+	public String getAchieve_title_name() {
+		return achieve_title_name;
+	}
+	public void setAchieve_title_name(String achieve_title_name) {
+		this.achieve_title_name = achieve_title_name;
+	}
 	private String id;
 	private String img;
 	private int likes;
 	private boolean isLiked;
-	
 	private String achieve_master;
 	private String achieve_slave;
+	private String achieve_title_name;
+	
 	public int getIdx() {
 		return idx;
 	}

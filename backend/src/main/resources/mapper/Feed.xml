@@ -18,14 +18,15 @@
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
-      select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes, 
+      <!-- select r.idx as idx, r.title as title, r.regdate as regdate, r.id as id, r.nickname as nickname, count(l.recipe_idx) as likes, 
       CASE 
          WHEN l2.recipe_user_id IS NULL THEN false
          ELSE true
       END AS isLiked
       from recipe r left join recipe_like l on r.idx = l.recipe_idx 
       left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id} 
-      where r.id = #{id} group by l.recipe_idx
+      where r.id = #{id} group by l.recipe_idx -->
+      select * from recipe inner join achieve on recipe.achieve_slave = achieve.achieve_slave_name where id = #{id}
    </select>
 
    <!-- title, id -->
