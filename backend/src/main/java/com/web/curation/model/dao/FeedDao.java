@@ -14,7 +14,6 @@ import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
-import com.web.curation.model.SaveRecipeitem;
 import com.web.curation.model.UpdateComment;
 import com.web.curation.model.UpdateRecipeContentToDB;
 
@@ -80,5 +79,9 @@ public interface FeedDao {
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
 	
 	public List<RecipeContent> popularPosts() throws Exception;
+	
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
+
+	public int deleteHashtag(int hashtag_idx) throws Exception;
+	public int updateHashtag(Map map) throws Exception;
 }
