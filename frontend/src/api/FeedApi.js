@@ -34,7 +34,11 @@ const popularposts = (data, callback, errorCallback) => {
       params:{
           user_id : data.id,
           page: data.page
-      }}
+      }}, {
+        headers: {
+          'access-token': store.state.token
+        }
+      }
   ).then(
       res=>callback(res)
   ).catch(
@@ -42,9 +46,26 @@ const popularposts = (data, callback, errorCallback) => {
   )
 }
 
+const hashtagsearch = (data, callback, errorCallback) => {
+  http.get('/feed/hashtagsearch', {
+    params:{
+        hashtag : data.hashtag,
+    }}, {
+      headers: {
+        'access-token': store.state.token
+      }
+    }
+).then(
+    res=>callback(res)
+).catch(
+    err=>errorCallback(err)
+)
+}
+
 const FeedApi = {
   likeposts: (data, callback, errorCallback) => likeposts(data, callback, errorCallback),
   popularposts: (data, callback, errorCallback) => popularposts(data, callback, errorCallback),
+  hashtagsearch: (data, callback, errorCallback) => hashtagsearch(data, callback, errorCallback),
 }
 
 export default FeedApi

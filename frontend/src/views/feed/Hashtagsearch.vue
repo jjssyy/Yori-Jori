@@ -1,19 +1,8 @@
 <template>
-  <div class="newsfeed"
-  v-infinite-scroll="loadMore" 
-  infinite-scroll-disabled="busy" 
-  infinite-scroll-distance="10"
-  >
-    <h1>{{hashtag}}</h1>
-    <div 
-    class='feed' 
-    v-for="(latestFeed, idx) in latestFeeds" 
-    :key="idx"
-    >
-      <FeedItem
-        :latestFeed="latestFeed" 
-        :idx="idx" 
-        />
+  <div class="newsfeed">
+    <h1>#{{hashtag}}</h1>
+    <div class='feed' v-for="(hashtagfeeds, idx) in hashtagfeed" :key="idx">
+        <FeedItem :latestFeed="hashtagfeeds" :idx="idx"/>
     </div>
   </div>
 </template>
@@ -28,7 +17,7 @@ export default {
   props: ["keyword"],
   data:() => {
     return {
-      latestFeeds: [],
+      hashtagfeed: [],
       page:1,
       busy:false,
       hashtage:null,
@@ -42,7 +31,23 @@ export default {
   },
   created() {
     this.hashtag = this.$route.query.hashtag.substr(1,this.$route.query.hashtag.length-1);
-    alert(this.hashtag);
+    
+      let data ={
+        hashtag: this.hashtag,
+      }
+      FeedApi.hashtagsearch(
+      
+      data,
+      res => {
+        
+        this.hashtagfeed = res.data.hashtagfeed
+        console.log(this.hashtagfeed)
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+
   },
   computed: {
     ...mapState([
