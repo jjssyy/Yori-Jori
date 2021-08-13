@@ -55,22 +55,19 @@
           <h2>TAGs</h2>
           <div class="hash-input">
             <input type="text" v-model="temphash" @keyup.enter="createHash" placeholder="태그를 입력하세요">
-            <button @click="createHash"><i class="fas fa-pen nav-icon"></i></button>
+            <button @click="createHash"><i class="fas fa-pen hash-icon"></i></button>
           </div>
         </div>
         <div v-for="(h, idx) in HashList" :key="idx">
-          <span class="hash"># {{h.content}}</span>
+          <div class="hash">
+          <span># {{h.content}}</span>
+          <span @click="deleteHash(idx)"><i id="hashDelete" class="fas fa-times"></i></span>
+          </div>
         </div>
       </div>
       <div id="image-des">
         <h2>Challenges</h2>
         <div>
-          <select name="title_name" id="title_name" v-model="titleSelected" @change="updateTitle">
-            <option value="" selected disabled hidden> 칭호 선택 </option>
-            <option v-for="(title_name, idx) in title_names" :key="idx" :value="title_name">
-              {{ title_name }}
-            </option>
-          </select>
           <select name="master_name" id="master_name" v-model="masterSelected" @change="updateMaster">
             <option value="" selected disabled hidden> 대분류 선택 </option>
             <option v-for="(master_name, idx) in master_names" :key="idx" :value="master_name">
@@ -85,7 +82,7 @@
           </select>
         </div>
       </div>
-      <button class="submit" @click="check"><h1><i class="fas fa-pen nav-icon"></i></h1></button>
+      <button class="submit" @click="check"><h1><i class="fas fa-pen pen-icon"></i></h1></button>
     </div>
   </div>
 
@@ -114,10 +111,8 @@ export default {
       defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14",
       Achieves: [],
       Achieves_two: [],
-      title_names: [],
       master_names: [],
       slave_names: [],
-      titleSelected: '',
       masterSelected: '',
       slaveSelected: '',
     }
@@ -129,9 +124,9 @@ export default {
         console.log("칭호 가져옴")
         this.Achieves = res.data.achieveList
         for(let i = 0; i< this.Achieves.length; i++){
-          this.title_names.push(this.Achieves[i].achieve_title_name)
+          this.master_names.push(this.Achieves[i].achieve_master_name)
         }
-        this.title_names = new Set(this.title_names)
+        this.master_names = new Set(this.master_names)
       },
       err=> {
         console.log(err)
@@ -139,31 +134,17 @@ export default {
     )
   },
   methods: {
+    deleteHash(idx){
+      this.HashList.splice(idx,1)
+    },
     updateMaster(){
       this.slave_names = []
       if(this.masterSelected) {
-        for(let i = 0; i< this.Achieves_two.length; i++){
-          if(this.masterSelected == this.Achieves_two[i].achieve_master_name){
-            this.slave_names.push(this.Achieves_two[i].achieve_slave_name)
-          }
-        }
-      }
-    },
-    updateTitle(){
-      this.Achieves_two = []
-      this.master_names = []
-      this.slave_names = []
-      if(this.titleSelected) {
         for(let i = 0; i< this.Achieves.length; i++){
-          if (this.titleSelected == this.Achieves[i].achieve_title_name){
-            this.Achieves_two.push(this.Achieves[i])
+          if(this.masterSelected == this.Achieves[i].achieve_master_name){
+            this.slave_names.push(this.Achieves[i].achieve_slave_name)
           }
         }
-        console.log(this.Achieves_two)
-        for(let i = 0; i< this.Achieves_two.length; i++){
-          this.master_names.push(this.Achieves_two[i].achieve_master_name)
-        }
-        this.master_names = new Set(this.master_names)
       }
     },
     tempimage(){
@@ -274,9 +255,8 @@ export default {
 </script>
 <style scoped>
 *{
-  font-family: "Roboto", sans-serif;
+  font-family: 'NanumBarunGothic', sans-serif;
 }
-
 .write{
   margin: 0%;
   padding: 0%;
@@ -318,12 +298,12 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  border:1px solid #FF9636;
+  border:1px solid #ffbe76;
   border-radius: 3px;
 }
 .hash-input input{
   height: 70%;
-  background-color: #fafafa;
+  background-color: #ffffff;
   border: none;
   margin-right: 2px;
 }
@@ -331,6 +311,7 @@ export default {
   height: 70%;
   border-radius: 3px;
   align-items: center;
+  margin-right: 6px;
 }
 .hash-input svg{
   margin-right: 2px;
@@ -343,7 +324,7 @@ export default {
   height: 40vw;
   max-height: 250px;
   margin: 1%;
-  border: 1px solid #FF9636;
+  border: 1px solid #ffbe76;
   border-radius: 5px;
 
 }
@@ -432,7 +413,7 @@ export default {
   background-color: rgba(165, 175, 182, 0.5);
 }
 .hash{
-  background-color: #FF9636;
+  background-color: #ffbe76;
   padding: 0px 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -449,7 +430,8 @@ export default {
 .submit{
   width: 95%;
   display: inline;
-  background-color: #DAD870;
+  background-color:#ffbe76;
+  color:#ffffff;
   border-radius: 3px;
   margin-bottom: 5%;
 }
@@ -465,4 +447,19 @@ export default {
   padding-left: 2px;
   padding-right: 4px;
 }
+#hashDelete{
+  margin-top: 6px;
+  margin-left: 8px;
+  color: #fff;
+}
+.pen-icon{
+  margin-top: 7px;
+  padding-top: 4px;
+  color: #fff;
+}
+.hash-icon{
+  margin-top: 5px;
+  margin-right: 13px;
+}
+
 </style>

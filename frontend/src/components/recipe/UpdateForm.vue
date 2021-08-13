@@ -48,7 +48,7 @@ export default {
         const content = this.recipe[this.idx - 1]
         this.idx -= 1
         this.recipe_file.content_order -= 1
-        const idx = this.idx + 1
+        
         this.recipe[this.idx] = this.recipe[this.idx + 1]
         this.recipe[this.idx + 1] = content
         this.recipe[this.idx + 1].content_order += 1
