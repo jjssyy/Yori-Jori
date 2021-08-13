@@ -19,6 +19,7 @@ import Fileupload from './views/recipe/Fileupload.vue'
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
 import Likeposts from './views/feed/Likeposts.vue'
+import Hashtagsearch from './views/feed/Hashtagsearch.vue'
 import UpdateRecipe from './views/recipe/UpdateRecipe.vue'
 import AchieveList from './views/achieve/AchieveList.vue'
 import Rankinglist from './views/ranking/ranking.vue'
@@ -112,6 +113,11 @@ export default [
         path: '/feed/likes',
         name: 'Likeposts',
         component: Likeposts
+    },
+    {
+        path: '/feed/hashtag',
+        name: 'Hashtagsearch',
+        component: Hashtagsearch
     },
     {
         path: '/feed/stars',

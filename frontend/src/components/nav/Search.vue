@@ -58,6 +58,8 @@ export default {
       let data = {
         nickname : this.InputText,
       };
+
+
       if (this.InputText.length != 0) {
         UserApi.searchByNickname(
           data, 
@@ -73,9 +75,18 @@ export default {
       }
     },
     search(){
-      this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
-      this.InputText = ''
-      this.UserList = []
+
+      if(this.InputText.substr(0,1) == '#'){
+        this.$router.push({name:'Hashtagsearch', query: {hashtag: this.InputText}})
+          this.InputText = ''
+          this.UserList = []
+      }else{
+          this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
+          this.InputText = ''
+          this.UserList = []
+      }
+
+    
     },
     searchmember(id){
       this.$router.push({ name: 'Profile' , params: {user_id: id}})
