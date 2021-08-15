@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="wrapC">
+  <div class="">
     <!-- 레시피 제목 : {{ recipeTitle }} -->
     <RecipeDetailList :recipe="recipe" :recipeContent="recipeContent" :thumbnailImg="thumbnailImg"/>
   </div>
@@ -17,9 +17,9 @@ export default {
   },
   data: () => {
     return {
-      recipe: null,
+      recipe: [],
       recipeTitle: '',
-      recipeContent: null,
+      recipeContent: [],
       thumbnailImg: '',
     }
   },
