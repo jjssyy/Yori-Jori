@@ -3,7 +3,7 @@
 
       
         <button @click="kakaologin">
-           <img :src="require(`@/assets/images/kakao.jpg`)" />
+           <img :src="require(`@/assets/images/kakao.png`)" />
             <span style="margin-left:20px;margin-top:20px;color: gray; font-size:17px;">카카오톡 로그인</span>
         </button>
         

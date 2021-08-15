@@ -29,21 +29,14 @@ public class JwtInterceptor implements HandlerInterceptor{
 			throws Exception {
 		final String token = request.getHeader(HEADER_AUTH);
 		
-		
-		
-	
-			System.out.println(token);
-			return true;
-		
-		
-		
-		//if(token != null && jwtService.isUsable(token)){
-		
-		//	return true;
-		//}else{
-		//	System.out.println(token);
-		//	throw new UnauthorizedException();
-		//}
+		return true;
+//		if(token != null && jwtService.isUsable(token)){
+//			System.out.println("성공");
+//			return true;
+//		}else{
+//			System.out.println("오류");
+//			throw new UnauthorizedException();
+//		}
 		
 	}
 }

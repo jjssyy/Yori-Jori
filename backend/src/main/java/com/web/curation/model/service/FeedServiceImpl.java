@@ -64,11 +64,13 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception {
+	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getSingleRecipe(recipe_idx);
 	}
 
-	@Override
+//	@Override
+//	public int writeHashtags(HashMap<String, Object> hash) {
+//		return sqlSession.getMapper(FeedDao.class).writeHashtag(hash);
 	public int getLikeNum(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getLikeNum(recipe_idx);
 	}
@@ -175,8 +177,27 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
+	public List<RecipeContent> popularPosts() throws Exception {
+		return sqlSession.getMapper(FeedDao.class).popularPosts();
+	}
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getHashtag(recipe_idx);
+	}
+
+	@Override
+	public int deleteHashtag(int hashtag_idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).deleteHashtag(hashtag_idx);
+	}
+
+	@Override
+	public int updateHashtag(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).updateHashtag(map);
+	}
+
+	@Override
+	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception {
+		
+		return sqlSession.getMapper(FeedDao.class).gethashtagRecipes(map);
 	}
 
 }

@@ -24,7 +24,7 @@
           <i class="fas fa-share"></i>
         </div>
         <div v-if="latestFeed.id == userId">
-        <p @click="deleteRecipe">삭제</p>
+        <p @click="deleteRecipe(idx)">삭제</p>
         <p @click="updateRecipe">수정</p>
         </div>
 
@@ -50,7 +50,9 @@ export default {
     latestFeed: {
       type: [Array, Object],
     },
-  
+    latestFeeds: {
+      type: [Array, Object],
+    },
     idx: Number,
   },
   methods: {
@@ -64,8 +66,8 @@ export default {
     updateRecipe() {
       this.$router.push({name:'UpdateRecipe', params: {recipe_idx:this.latestFeed.idx}})
     },
-    deleteRecipe() {
-      const newFeed = this.latestFeeds
+    deleteRecipe(idx) {
+      var newFeed = this.latestFeeds
       console.log(newFeed)
       let data = {
         recipe_idx: this.latestFeed.idx
@@ -75,13 +77,14 @@ export default {
         res => {
           console.log(res)
           console.log("글 삭제 성공")
-          newFeed.splice(this.idx,1)
+          console.log(newFeed)
+          newFeed.splice(idx,1)
         },
         err => {
           console.log(err)
         }
       )
-      this.lastetFeeds = newFeed
+      this.latestFeeds = newFeed
     },
   },
   computed: {

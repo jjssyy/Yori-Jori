@@ -2,18 +2,30 @@
   <div class="feed newsfeed">
     <div class="wrapB">
       <h1></h1>
-      <h2>{{ master_name }} 종류</h2>
       <b-card>
+        <div class="title">
+          <label class="titlefont">{{ title }}</label>
+
+          <div>
+            <img
+              id="achieve_img"
+              v-if="achieveTitleOne[0].percent == 100"
+              :title="`${achieveTitleOne[0].title}%`"
+              :src="require(`@/assets/images/${achieveTitleOne[0].clear_img}.png`)"
+            />
+            <img
+              id="achieve_img"
+              v-else
+              :title="`${achieveTitleOne[0].title} ${achieveTitleOne[0].percent}%`"
+              :src="require(`@/assets/images/${achieveTitleOne[0].fail_img}.png`)"
+            />
+          </div>
+        </div>
         <div style="margin-top:50px;">
-          <b-progress
-            :max="userRecipeTitle[idx].achieve_cnt"
-            height="4rem"
-            style="margin:30px 10px"
-          >
-            <b-progress-bar class="bar-color" :value="userRecipeTitle[idx].clear_cnt">
+          <b-progress :max="achieveTitleOne[0].achieve_cnt" height="4rem" style="margin:30px 10px">
+            <b-progress-bar class="bar-color" :value="achieveTitleOne[0].clear_cnt">
               <span>
-                {{ master_name }} 달성도:
-                <strong>{{ userRecipeTitle[idx].percent }}%</strong>
+                <strong>{{ achieveTitleOne[0].percent }}%</strong>
               </span>
             </b-progress-bar>
           </b-progress>
@@ -21,19 +33,14 @@
       </b-card>
       <b-card title="세부 항목">
         <b-list-group>
-          <div v-for="(slave, idx) in achieveslave" :key="idx">
-            <div v-for="(userrecipe, id) in userRecipeList" :key="id">
-              <div v-show="false" v-if="slave.achieve_slave_name == userrecipe.achieve_slave">
-                {{ (achieveslave[idx].show = true) }}
-              </div>
-            </div>
-            <b-list-group-item class="menu-1" v-show="achieveslave[idx].show">
+          <div v-for="(slave, idx) in achieveTitleDetail" :key="idx">
+            <b-list-group-item class="menu-1" v-show="slave.achieve_slave != null">
               <h5 class="submenu">{{ slave.achieve_slave_name }}</h5>
               <span>
                 <i class="fas fa-utensils" />
               </span>
             </b-list-group-item>
-            <b-list-group-item class="menu-2" v-show="!achieveslave[idx].show">
+            <b-list-group-item class="menu-2" v-show="slave.achieve_slave == null">
               <h5 class="submenu">{{ slave.achieve_slave_name }}</h5>
             </b-list-group-item>
           </div>
@@ -49,47 +56,31 @@ import AchieveApi from '../../api/AchieveApi';
 export default {
   data: () => {
     return {
-      userRecipeList: [],
-      achieveslave: [],
-      userRecipeTitle: [],
+      achieveTitleOne: [],
+      achieveTitleDetail: [],
     };
   },
   created: function() {
     let data = {
       id: this.userId,
-      master: this.$route.query.master_name,
+      title: this.$route.query.title,
     };
-    this.master_name = this.$route.query.master_name;
-    this.idx = this.$route.query.idx;
+    this.title = this.$route.query.title;
     //사용
-    AchieveApi.getAchievecurrent(
+    AchieveApi.achieveTitleOne(
       data,
       (res) => {
-        this.userRecipeTitle = res.data.achieve;
+        this.achieveTitleOne = res.data.list;
       },
       (error) => {
         console.log(error);
       }
     );
     //사용
-    AchieveApi.myRecipe(
+    AchieveApi.achieveTitleDetail(
       data,
       (res) => {
-        this.userRecipeList = res.data.latestFeed;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    //사용
-    AchieveApi.AchievemasterCategoryList(
-      data,
-      (res) => {
-        this.achieveslave = res.data.slavelist;
-        this.achieveslave = res.data.list;
-        for (let i = 0; i < this.achieveslave.length; i++) {
-          this.achieveslave[i].show = false;
-        }
+        this.achieveTitleDetail = res.data.list;
       },
       (error) => {
         console.log(error);
@@ -107,7 +98,7 @@ export default {
   background-color: #ffbe76;
   color: black;
   font-size: 1.1rem;
-  min-width: 25%;
+  min-width: 9%;
 }
 .menu-1 {
   display: flex;
@@ -127,16 +118,18 @@ export default {
   padding: 10px;
   min-height: 2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 .submenu {
   margin: 10px;
   min-width: 87%;
 }
 .fa-utensils {
-  width: 100%;
-  height: 35px;
-  margin-top: 3px;
+  width: 80%;
+  height: 30px;
+  margin-top: 5px;
+  color: chocolate;
+  opacity: 0.9;
 }
 .card-title {
   font-size: 28px;
@@ -146,5 +139,18 @@ export default {
 }
 .card {
   margin: 40px 0px;
+}
+.title {
+  text-align: center;
+  align-content: center;
+}
+.titlefont {
+  font-size: 34px;
+  margin-left: 0.3%;
+  text-align: center;
+}
+#achieve_img {
+  width: 180px;
+  height: 180px;
 }
 </style>

@@ -27,7 +27,7 @@ public interface FeedService {
 	List<RecipeContent> getAllRecipes(String id) throws Exception;
 	public int writeHashtags(HashMap<String, Object> hash);
 	public List<Integer> getLikedPosts(String user_id) throws Exception;
-	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
+	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception;
 	public int getLikeNum(int recipe_idx) throws Exception;
 	public int writeComment(SaveComment comment) throws Exception;
 	public int updateComment(UpdateComment comment) throws Exception;
@@ -57,5 +57,10 @@ public interface FeedService {
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
 	
+	public List<RecipeContent> popularPosts() throws Exception;
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
+	
+	public int deleteHashtag(int hashtag_idx) throws Exception;
+	public int updateHashtag(Map map) throws Exception;
+	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception;
 }

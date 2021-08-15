@@ -1,38 +1,41 @@
-
 <template>
   <div class="write">
     <div class="write-form">
       <h1>레시피 작성</h1>
-
-      <input
-      v-model="title"
-      id="title"
-      placeholder="제목을 입력하세요"
-      type="text"
-      />
-
+      <input v-model="title" id="title" placeholder="제목을 입력하세요" type="text" />
       <div id="image-des">
         <h2>CARDs</h2>
-        <div v-for="(data, idx) in fields" :key="fields[idx].idx" class="write-card" @click="updateCard(idx)">
+        <div
+          v-for="(data, idx) in fields"
+          :key="fields[idx].idx"
+          class="write-card"
+        >
           <div class="check-box">
-          <div class="thumbnail" @click="isThumbnail(idx)">썸네일</div>
-          <span @click="deleteContent(idx)">
-            <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
-          </span>
+            <div v-if="idx===thumbnailNumber" class="thumbnail" @click="isThumbnail(idx)"><i class="fas fa-thumbtack"></i></div>
+            <div v-else class="thumbnail-none" @click="isThumbnail(idx)"><i class="fas fa-thumbtack"></i></div>
+            <button @click="deleteContent(idx)">
+              <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
+            </button>
           </div>
           <div class="image-box">
-            <img class="image" :src="data.img">
+            <img class="image" :src="data.img" @click="updateCard(idx)"/>
           </div>
-          <div class="content-box">
-            {{data.des}}
+          <div class="black-box" v-if="showUpdate" @click="showUpdate = !showUpdate"></div>
+          <div v-if="showUpdate" class="inbox">
+            <label for="file">
+              <img :src="tempImg || data.img" />
+            </label>
+            <input type="file" accept="image/*" id="file" @change="uploadImg" />
+            <textarea v-model="data.des"></textarea>
+            <button class="submit" @click="updateImage(idx)">수정</button>
           </div>
           <div class="leftright">
-          <button @click="leftContent(idx)">
-            <i class="fas fa-angle-double-left"></i> 
-          </button>
-          <button @click="rightContent(idx)">
-            <i class="fas fa-angle-double-right"></i>
-          </button>
+            <button @click="leftContent(idx)">
+              <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button @click="rightContent(idx)">
+              <i class="fas fa-angle-double-right"></i>
+            </button>
           </div>
         </div>
         <div class="addcard" id="add" @click="tempimage">
@@ -40,12 +43,12 @@
         </div>
       </div>
 
-      <div class="black-box" v-if="showcard" @click="showcard=!showcard"></div>
+      <div class="black-box" v-if="showcard" @click="showcard = !showcard"></div>
       <div v-if="showcard" class="inbox">
         <label for="file">
-          <img :src=" tempImg|| defaultImage">
+          <img :src="tempImg || defaultImage" />
         </label>
-        <input type="file" accept="image/*" id="file" @change="uploadImg">
+        <input type="file" accept="image/*" id="file" @change="uploadImg" />
         <textarea v-model="tempDes"></textarea>
         <button class="submit" @click="addimage">등록</button>
       </div>
@@ -54,24 +57,31 @@
         <div class="hash-input-group">
           <h2>TAGs</h2>
           <div class="hash-input">
-            <input type="text" v-model="temphash" @keyup.enter="createHash" placeholder="태그를 입력하세요">
-            <button @click="createHash"><i class="fas fa-pen nav-icon"></i></button>
+            <input
+              type="text"
+              v-model="temphash"
+              @keyup.enter="createHash"
+              placeholder="태그를 입력하세요"
+            />
+            <button @click="createHash"><i class="fas fa-pen hash-icon"></i></button>
           </div>
         </div>
         <div v-for="(h, idx) in HashList" :key="idx">
-          <span class="hash"># {{h.content}}</span>
+          <div class="hash">
+            <span># {{ h.content }}</span>
+            <span @click="deleteHash(idx)"><i id="hashDelete" class="fas fa-times"></i></span>
+          </div>
         </div>
       </div>
       <div id="image-des">
         <h2>Challenges</h2>
-        <div>
-          <select name="title_name" id="title_name" v-model="titleSelected" @change="updateTitle">
-            <option value="" selected disabled hidden> 칭호 선택 </option>
-            <option v-for="(title_name, idx) in title_names" :key="idx" :value="title_name">
-              {{ title_name }}
-            </option>
-          </select>
-          <select name="master_name" id="master_name" v-model="masterSelected" @change="updateMaster">
+        <div class="selectbox">
+          <select
+            name="master_name"
+            id="master_name"
+            v-model="masterSelected"
+            @change="updateMaster"
+          >
             <option value="" selected disabled hidden> 대분류 선택 </option>
             <option v-for="(master_name, idx) in master_names" :key="idx" :value="master_name">
               {{ master_name }}
@@ -85,14 +95,15 @@
           </select>
         </div>
       </div>
-      <button class="submit" @click="check"><h1><i class="fas fa-pen nav-icon"></i></h1></button>
+      <button class="submit" @click="check">
+        <h1><i class="fas fa-pen pen-icon"></i></h1>
+      </button>
     </div>
   </div>
-
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 import UserApi from '../../api/UserApi';
 import RecipeApi from '../../api/RecipeApi';
 import FirebaseApi from '../../api/FirebaseApi';
@@ -101,183 +112,167 @@ var frm = new FormData();
 export default {
   data: () => {
     return {
-      title: "",
+      title: '',
       fields: [],
       count: 0,
-      thumbnailNumber:0,
+      thumbnailNumber: 0,
       ThumbNailList: [],
-      HashList:[],
-      temphash:'',
-      showcard:false,
-      tempImg:'',
-      tempDes:'',
-      defaultImage:"https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14",
+      HashList: [],
+      temphash: '',
+      showcard: false,
+      tempImg: '',
+      tempDes: '',
+      defaultImage: 'https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14',
       Achieves: [],
       Achieves_two: [],
-      title_names: [],
       master_names: [],
       slave_names: [],
-      titleSelected: '',
       masterSelected: '',
       slaveSelected: '',
-    }
+      showUpdate:false
+    };
   },
-  mounted: function(){
+  mounted: function() {
     RecipeApi.achieveRecipe(
-      res => {
-        console.log(res)
-        console.log("칭호 가져옴")
-        this.Achieves = res.data.achieveList
-        for(let i = 0; i< this.Achieves.length; i++){
-          this.title_names.push(this.Achieves[i].achieve_title_name)
+      (res) => {
+        console.log(res);
+        console.log('칭호 가져옴');
+        this.Achieves = res.data.achieveList;
+        for (let i = 0; i < this.Achieves.length; i++) {
+          this.master_names.push(this.Achieves[i].achieve_master_name);
         }
-        this.title_names = new Set(this.title_names)
+        this.master_names = new Set(this.master_names);
       },
-      err=> {
-        console.log(err)
-      }      
-    )
+      (err) => {
+        console.log(err);
+      }
+    );
   },
   methods: {
-    updateMaster(){
-      this.slave_names = []
-      if(this.masterSelected) {
-        for(let i = 0; i< this.Achieves_two.length; i++){
-          if(this.masterSelected == this.Achieves_two[i].achieve_master_name){
-            this.slave_names.push(this.Achieves_two[i].achieve_slave_name)
+    deleteHash(idx) {
+      this.HashList.splice(idx, 1);
+    },
+    updateMaster() {
+      this.slave_names = [];
+      if (this.masterSelected) {
+        for (let i = 0; i < this.Achieves.length; i++) {
+          if (this.masterSelected == this.Achieves[i].achieve_master_name) {
+            this.slave_names.push(this.Achieves[i].achieve_slave_name);
           }
         }
       }
     },
-    updateTitle(){
-      this.Achieves_two = []
-      this.master_names = []
-      this.slave_names = []
-      if(this.titleSelected) {
-        for(let i = 0; i< this.Achieves.length; i++){
-          if (this.titleSelected == this.Achieves[i].achieve_title_name){
-            this.Achieves_two.push(this.Achieves[i])
-          }
-        }
-        console.log(this.Achieves_two)
-        for(let i = 0; i< this.Achieves_two.length; i++){
-          this.master_names.push(this.Achieves_two[i].achieve_master_name)
-        }
-        this.master_names = new Set(this.master_names)
-      }
+    tempimage() {
+      this.showcard = !this.showcard;
     },
-    tempimage(){
-      this.showcard = !this.showcard
-    },
-    check(){
+    check() {
       var frm = new FormData();
-      let l = this.fields.length
-      for (let i=0;i<this.fields.length; i++){
-        if( this.thumbnailNumber == i){
-          this.ThumbNailList.push('true')
+      let l = this.fields.length;
+      for (let i = 0; i < this.fields.length; i++) {
+        if (this.thumbnailNumber == i) {
+          this.ThumbNailList.push('true');
+        } else {
+          this.ThumbNailList.push('false');
         }
-        else{
-          this.ThumbNailList.push('false')
-        }
       }
-      frm.append("title", this.title)
-      frm.append("id", this.userId)
-      frm.append('nickname',this.userNickname)
-      frm.append('achieve_master',this.masterSelected)
-      frm.append('achieve_slave',this.slaveSelected)
-      for (let i=0; i< l; i++){
-        frm.append("des["+i+"]",this.fields[i].des)
-        frm.append("img["+i+"]",this.fields[i].img)
-        frm.append("thumbnail["+i+"]",this.ThumbNailList[i])
+      frm.append('title', this.title);
+      frm.append('id', this.userId);
+      frm.append('nickname', this.userNickname);
+      frm.append('achieve_master', this.masterSelected);
+      frm.append('achieve_slave', this.slaveSelected);
+      for (let i = 0; i < l; i++) {
+        frm.append('des[' + i + ']', this.fields[i].des);
+        frm.append('img[' + i + ']', this.fields[i].img);
+        frm.append('thumbnail[' + i + ']', this.ThumbNailList[i]);
       }
-      for (let i=0; i<this.HashList.length; i++){
-        frm.append("hashtags["+i+"]",this.HashList[i].content)
+      for (let i = 0; i < this.HashList.length; i++) {
+        frm.append('hashtags[' + i + ']', this.HashList[i].content);
       }
-      console.log(frm)
+      console.log(frm);
 
       UserApi.createRecipe(
         frm,
-        res => {
-          console.log('성공')
-          this.$router.push({ name: 'FeedMain'})
-          this.$store.dispatch('clearFormdata')
+        (res) => {
+          console.log('성공');
+          this.$router.push({ name: 'FeedMain' });
+          this.$store.dispatch('clearFormdata');
         },
-        error=> {
-          console.log(error)
-          frm = new FormData()
+        (error) => {
+          console.log(error);
+          frm = new FormData();
         }
-      )
+      );
     },
-    uploadImg(e){
+    uploadImg(e) {
       let file = e.target.files[0];
-      FirebaseApi.upLoad(
-        file,
-        res=>{
-          this.tempImg = res
-          frm.append("file",res);
-          this.$store.dispatch('uploadImg', {file: res, idx: this.idx});
-        })
+      FirebaseApi.upLoad(file, (res) => {
+        this.tempImg = res;
+        frm.append('file', res);
+        this.$store.dispatch('uploadImg', { file: res, idx: this.idx });
+      });
     },
-    addimage(){
+    addimage() {
       this.fields.push({
-        idx : this.count++,
-        img : this.tempImg,
-        des : this.tempDes
-      }) 
-      this.tempDes = ''
-      this.tempImg = ''
-      this.showcard = !this.showcard
+        idx: this.count++,
+        img: this.tempImg,
+        des: this.tempDes,
+      });
+      this.tempDes = '';
+      this.tempImg = '';
+      this.showcard = !this.showcard;
     },
-    createHash(){
+    createHash() {
       this.HashList.push({
-        content : this.temphash
-      })
-      this.temphash = ''
+        content: this.temphash,
+      });
+      this.temphash = '';
     },
-    updateCard(idx){
-      // this.fields[idx].des = ''
+    updateCard(idx) {
+      this.showUpdate = true
     },
-    isThumbnail(idx){
-      this.thumbnailNumber = idx
+    updateImage(idx){
+      if (this.tempImg != '') {
+        this.fields[idx].img = this.tempImg
+      }
+      this.tempImg = ''
+      this.showUpdate = !this.showUpdate
     },
-    deleteContent(idx){
-      this.fields.splice(idx,1)
-      console.log(this.fields)
+    isThumbnail(idx) {
+      this.thumbnailNumber = idx;
     },
-    leftContent(idx){
-      if(idx >= 1){
-        let content = this.fields[idx]
-        this.fields[idx] = this.fields[idx-1]
-        this.fields[idx].idx += 1
-        this.fields[idx-1] = content
-        this.fields[idx-1].idx -= 1
+    deleteContent(idx) {
+      this.fields.splice(idx, 1);
+      console.log(this.fields);
+    },
+    leftContent(idx) {
+      if (idx >= 1) {
+        let content = this.fields[idx];
+        this.fields[idx] = this.fields[idx - 1];
+        this.fields[idx].idx += 1;
+        this.fields[idx - 1] = content;
+        this.fields[idx - 1].idx -= 1;
       }
     },
-    rightContent(idx){
-       if(idx < this.fields.length-1){
-        let content = this.fields[idx]
-        this.fields[idx] = this.fields[idx+1]
-        this.fields[idx].idx -= 1
-        this.fields[idx+1] = content
-        this.fields[idx+1].idx += 1
+    rightContent(idx) {
+      if (idx < this.fields.length - 1) {
+        let content = this.fields[idx];
+        this.fields[idx] = this.fields[idx + 1];
+        this.fields[idx].idx -= 1;
+        this.fields[idx + 1] = content;
+        this.fields[idx + 1].idx += 1;
       }
-    }
+    },
   },
   computed: {
-    ...mapState([
-      'userId',
-      'img',
-      'userNickname'
-    ]),
-  }
-}
+    ...mapState(['userId', 'img', 'userNickname']),
+  },
+};
 </script>
 <style scoped>
-*{
-  font-family: "Roboto", sans-serif;
+* {
+  font-family: 'NanumBarunGothic', sans-serif;
 }
-
-.write{
+.write {
   margin: 0%;
   padding: 0%;
   display: flex;
@@ -285,57 +280,58 @@ export default {
   align-items: center;
   flex-direction: column;
 }
-.write-form{
+.write-form {
   width: 100%;
   max-width: 616px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#title{
+#title {
   width: 98%;
   display: inline;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 20px;
 }
-#image-des{
+#image-des {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   padding: 2%;
 }
-#image-des h2{
+#image-des h2 {
   width: 100%;
 }
-#image-des .hash-input-group{
+#image-des .hash-input-group {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.hash-input{
+.hash-input {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  border:1px solid #FF9636;
+  border: 1px solid #ffbe76;
   border-radius: 3px;
 }
-.hash-input input{
+.hash-input input {
   height: 70%;
-  background-color: #fafafa;
+  background-color: #ffffff;
   border: none;
   margin-right: 2px;
 }
-.hash-input button{
+.hash-input button {
   height: 70%;
   border-radius: 3px;
   align-items: center;
+  margin-right: 6px;
 }
-.hash-input svg{
+.hash-input svg {
   margin-right: 2px;
 }
-.write-card{
+.write-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -343,31 +339,35 @@ export default {
   height: 40vw;
   max-height: 250px;
   margin: 1%;
-  border: 1px solid #FF9636;
+  border: 1px solid #ffbe76;
   border-radius: 5px;
-
 }
-.thumbnail{
+.thumbnail,
+.thumbnail-none {
+  cursor: pointer;
   display: flex;
   justify-content: center;
+  margin: 5px;
 }
-.image-box{
+.thumbnail-none svg{
+  color: rgba(155, 155, 155, 0.5);
+}
+.image-box {
   width: 90%;
+  height: 80%;
+  overflow: hidden;
+}
+.image {
+  object-fit:contain;
+  transform: translate(-20%);
+}
+#file {
   width: 100%;
 }
-.image{
+.content {
   width: 100%;
 }
-#file{
-  width: 100%;
-}
-.content-box{
-  width: 100%;
-}
-.content{
-  width: 100%;
-}
-.addcard{
+.addcard {
   display: flex;
   margin: 5px;
   justify-content: center;
@@ -379,9 +379,8 @@ export default {
   max-height: 250px;
   border: 1px solid #191919;
   border-radius: 5px;
-
 }
-.black-box{
+.black-box {
   position: fixed;
   top: 0%;
   left: 0%;
@@ -393,13 +392,13 @@ export default {
   align-items: center;
   z-index: 2;
 }
-.inbox{
+.inbox {
   position: fixed;
   top: 50%;
   left: 50%;
   width: 90vw;
   max-width: 616px;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   padding: 10px 0px;
   background-color: #fff;
@@ -408,7 +407,7 @@ export default {
   align-items: center;
   z-index: 3;
 }
-.inbox label{
+.inbox label {
   max-width: 95%;
   max-height: 50vh;
   display: flex;
@@ -416,23 +415,23 @@ export default {
   height: 500px;
   justify-content: center;
 }
-.inbox img{
+.inbox img {
   background-color: #191919;
   min-width: 100%;
   min-height: 100%;
   margin-bottom: 20px;
   object-fit: contain;
 }
-.inbox input{
+.inbox input {
   display: none;
 }
-.inbox textarea{
+.inbox textarea {
   width: 95%;
   margin: 20px 0px;
   background-color: rgba(165, 175, 182, 0.5);
 }
-.hash{
-  background-color: #FF9636;
+.hash {
+  background-color: #ffbe76;
   padding: 0px 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -446,23 +445,56 @@ export default {
   align-items: center;
   border-radius: 25px;
 }
-.submit{
+.submit {
   width: 95%;
   display: inline;
-  background-color: #DAD870;
+  background-color: #ffbe76;
+  color: #ffffff;
   border-radius: 3px;
   margin-bottom: 5%;
 }
-.leftright{
+.leftright {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
-.check-box{
+.check-box {
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding-left: 2px;
   padding-right: 4px;
+}
+#hashDelete {
+  margin-top: 6px;
+  margin-left: 8px;
+  color: #fff;
+}
+.pen-icon {
+  margin-top: 7px;
+  padding-top: 4px;
+  color: #fff;
+}
+.hash-icon {
+  margin-top: 5px;
+  margin-right: 13px;
+}
+select {
+  width: 40%;
+  height: calc(1.5em + 0.75rem + 15px);
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0.5rem;
+  -webkit-appearance: none; /* 화살표 없애기 for chrome*/
+  -moz-appearance: none; /* 화살표 없애기 for firefox*/
+  appearance: none; /* 화살표 없애기 공통*/
+  background: url('../../assets/images/arrow.gif') no-repeat 96% 50%/15px auto;
+}
+.selectbox {
+  width: 100%;
 }
 </style>

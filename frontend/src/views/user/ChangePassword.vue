@@ -5,14 +5,13 @@
     Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
  -->
 <template>
-  <div class="wrapC">
+  <div >
     <div class="row" id="pwupdate">
       <div class="row" id="updatepw_box0">
        <img :src="require(`@/assets/images/roundlogo.png`)" />
-    </div>
+      </div>
       <div class="row" id="updatepw">
          <h1>비밀번호 변경</h1>
-   
       </div>
       <div class="row" id="updatepw_box1">
         <input v-model="oldpw" 
@@ -21,7 +20,6 @@
         placeholder="현재 비밀번호를 입력하세요." 
         :type="passwordType"  
         />
-       
         <div class="error-text" v-if="error.oldpw">{{error.oldpw}}</div>
       </div>
 
@@ -32,7 +30,6 @@
         :type="passwordType" 
         v-bind:class="{error : error.newpw, complete:!error.newpw&&newpw.length!==0}"
         placeholder="새 비밀번호를 입력하세요." />
-        
         <div class="error-text" v-if="error.newpw">{{error.newpw}}</div>
       </div>
 
@@ -204,9 +201,10 @@ export default {
 
 <style>
 #pwupdate{
-  margin-top: 250px;
-  border: 1px solid darkgray;
-  padding:50px;
+  padding:0px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 input {
@@ -235,10 +233,15 @@ input {
   text-align: center;
   margin-bottom: 30px;
 }
+#updatepw_box0{
+  display: flex;
+  justify-content: center;
+}
 
 #updatepw_box0 img{
   width:200px;
-  margin-left: 120px;
+  display: flex;
+  justify-content: center;
 }
 
 </style>

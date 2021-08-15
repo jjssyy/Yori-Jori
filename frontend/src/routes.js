@@ -5,6 +5,7 @@ import Join from './views/user/Join.vue'
 import ChangePassword from './views/user/ChangePassword.vue'
 import JoinComplete from './views/user/JoinComplete.vue'
 import FeedMain from './views/feed/Main.vue'
+import StarMain from './views/feed/Star.vue'
 import Components from './views/Components.vue'
 import Pagenotfound from './views/error/PageNotFound.vue'
 import ErrorPage from './views/error/ErrorPage.vue'
@@ -17,8 +18,9 @@ import FollowerList from './views/profile/FollowerList.vue'
 import Fileupload from './views/recipe/Fileupload.vue'
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
-import UpdateRecipe from './views/recipe/UpdateRecipe.vue'
 import Likeposts from './views/feed/Likeposts.vue'
+import Hashtagsearch from './views/feed/Hashtagsearch.vue'
+import UpdateRecipe from './views/recipe/UpdateRecipe.vue'
 import AchieveList from './views/achieve/AchieveList.vue'
 import Rankinglist from './views/ranking/ranking.vue'
 import AchieveDetail from './views/achieve/AchieveDetail.vue';
@@ -111,6 +113,16 @@ export default [
         path: '/feed/likes',
         name: 'Likeposts',
         component: Likeposts
+    },
+    {
+        path: '/feed/hashtag',
+        name: 'Hashtagsearch',
+        component: Hashtagsearch
+    },
+    {
+        path: '/feed/stars',
+        name: 'StarMain',
+        component: StarMain
     },
     {
         path: '*',

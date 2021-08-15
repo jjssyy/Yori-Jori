@@ -4,31 +4,54 @@
       <div style="margin-top:50px;">
         <h1>업적</h1>
       </div>
-      <b-card title="전체 항목 달성도">
+      <b-card title="전체 칭호 달성도">
         <b-progress :max="totalCount" height="4rem" style="margin:30px 10px">
           <b-progress-bar class="bar-color" :value="userCount">
-            <span
-              >달성도:
-              <strong style="margin-left:3px;">{{ (userCount / totalCount) * 100 }}%</strong></span
+            <span>
+              <strong style="margin-left:3px;"
+                >{{ Math.floor((userCount / totalCount) * 100) }}%</strong
+              ></span
             >
           </b-progress-bar>
         </b-progress>
+        <div class="row">
+          <div class="row">
+            <label class="titlefont">칭호</label>
+          </div>
+          <div class="row">
+            <span v-for="(clear, id) in achieveTitle" :key="id" style="width:100px; height:100px;">
+              <img
+                id="achieve_img"
+                v-if="clear.percent == 100"
+                :title="`${clear.title}%`"
+                :src="require(`@/assets/images/${clear.clear_img}.png`)"
+                @click="showDetail(clear.title)"
+              />
+              <img
+                id="achieve_img"
+                v-else
+                :title="`${clear.title} ${clear.percent}%`"
+                :src="require(`@/assets/images/${clear.fail_img}.png`)"
+                @click="showDetail(clear.title)"
+              />
+            </span>
+          </div>
+        </div>
       </b-card>
-      <b-card title="항목 달성도">
-        <div class="submenu" v-for="(master, idx) in achievemaster" :key="idx">
+      <b-card title="세부 칭호 달성도">
+        <div class="submenu" v-for="(master, idx) in achieveTitle" :key="idx">
           <div class="line">
             <div class="box">
-              <h4>{{ master.achieve_master_name }}</h4>
+              <h4>{{ master.title }}</h4>
             </div>
-            <div class="font" @click="showDetail(master.achieve_master_name, idx)">
+            <div class="font" @click="showDetail(master.title)">
               <i class="fas fa-clipboard-list"></i>
             </div>
           </div>
-          <b-progress :max="userRecipe[idx].achieve_cnt" height="3rem" style="margin:10px">
-            <b-progress-bar class="bar-color" :value="userRecipe[idx].clear_cnt">
+          <b-progress :max="master.achieve_cnt" height="3rem" style="margin:10px">
+            <b-progress-bar class="bar-color" :value="master.clear_cnt">
               <span>
-                달성도:
-                <strong>{{ userRecipe[idx].percent }}%</strong>
+                <strong>{{ master.percent }}% </strong>
               </span>
             </b-progress-bar>
           </b-progress>
@@ -51,40 +74,31 @@ export default {
   props: ['keyword'],
   data: () => {
     return {
-      achievemaster: [],
-      userRecipe: [],
+      achieveTitle: [],
       totalCount: 0,
       userCount: 0,
     };
   },
   components: {},
   methods: {
-    showDetail(master, idx) {
-      this.$router.push({ name: 'AchieveDetail', query: { master_name: master, idx: idx } });
+    showDetail(title) {
+      this.$router.push({ name: 'AchieveDetail', query: { title: title } });
     },
   },
   created: function() {
     let data = {
       id: this.userId,
     };
-    AchieveApi.AchievemasterList(
-      data,
-      (res) => {
-        this.achievemaster = res.data.masterlist;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
-    AchieveApi.getAchievecurrent(
+    AchieveApi.achieveTitle(
       data,
       (res) => {
-        this.userRecipe = res.data.achieve;
-        for (let i = 0; i < res.data.achieve.length; i++) {
-          this.totalCount += res.data.achieve[i].achieve_cnt;
-          this.userCount += res.data.achieve[i].clear_cnt;
+        console.log(res);
+        for (let i = 0; i < res.data.list.length; i++) {
+          this.totalCount += res.data.list[i].achieve_cnt;
+          this.userCount += res.data.list[i].clear_cnt;
         }
+        this.achieveTitle = res.data.list;
       },
       (error) => {
         console.log(error);
@@ -102,7 +116,7 @@ export default {
   background-color: #ffbe76;
   color: black;
   font-size: 1.1rem;
-  min-width: 22%;
+  min-width: 9%;
 }
 .line {
   display: flex;
@@ -135,5 +149,13 @@ export default {
 }
 .progress-bar bar-color {
   min-width: 80px;
+}
+#achieve_img {
+  width: 100px;
+  height: 100px;
+}
+.titlefont {
+  font-size: 28px;
+  margin-left: 0.3%;
 }
 </style>

@@ -14,7 +14,6 @@ import com.web.curation.model.RecipeInfoFromDB;
 import com.web.curation.model.RecipeDetailFromDB;
 import com.web.curation.model.SaveComment;
 import com.web.curation.model.SaveRecipeContent;
-import com.web.curation.model.SaveRecipeitem;
 import com.web.curation.model.UpdateComment;
 import com.web.curation.model.UpdateRecipeContentToDB;
 
@@ -36,9 +35,7 @@ public interface FeedDao {
 	
 	public List<Integer> getLikedPosts(String user_id) throws Exception;
 	
-	public SaveRecipeitem getSingleRecipe(int recipe_idx) throws Exception;
-	
-	public int getLikeNum(int recipe_idx) throws Exception;
+	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception;
 	
 	public int writeComment(SaveComment comment) throws Exception;
 	
@@ -66,6 +63,7 @@ public interface FeedDao {
 	
 	public int likeRecipe(Map map) throws Exception;
 	
+	public int getLikeNum(int recipe_idx) throws Exception;
 	public int cancelLikeRecipe(Map map) throws Exception;
 	
 	public int writeHashtags(HashMap<String, Object> hash);
@@ -80,5 +78,11 @@ public interface FeedDao {
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
 	
+	public List<RecipeContent> popularPosts() throws Exception;
+	
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
+
+	public int deleteHashtag(int hashtag_idx) throws Exception;
+	public int updateHashtag(Map map) throws Exception;
+	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception;
 }

@@ -1,4 +1,5 @@
 import http from '@/util/http-common';
+import store from '@/vuex/store.js'
 import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
 
@@ -10,6 +11,10 @@ const requestLogin = (data, callback, errorCallback) => {
         id: data.id,
         pw: data.pw,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -17,7 +22,11 @@ const requestLogin = (data, callback, errorCallback) => {
 
 const requestJoin = (data, callback, errorCallback) => {
   http
-    .post('/user/join', data)
+    .post('/user/join', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
@@ -28,6 +37,10 @@ const checkid = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -39,6 +52,10 @@ const checknickname = (data, callback, errorCallback) => {
       params: {
         nickname: data.nickname,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -46,28 +63,44 @@ const checknickname = (data, callback, errorCallback) => {
 
 const requestChangePassword = (data, callback, errorCallback) => {
   http
-    .post('/account/changepassword', data)
+    .post('/account/changepassword', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
 
 const changepw = (data, callback, errorCallback) => {
   http
-    .post('/user/updatepw', data)
+    .post('/user/updatepw', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
 
 const requestUpdate = (data, callback, errorCallback) => {
   http
-    .put('/user/updateuser', data)
+    .put('/user/updateuser', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
 
 const getFollow = (data, callback, errorCallback) => {
   http
-    .get('/follow', data)
+    .get('/follow', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
@@ -79,6 +112,10 @@ const emailfindpw = (data, callback, errorCallback) => {
         id: data.id,
         email: data.email,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -90,6 +127,10 @@ const getFollower = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -101,6 +142,10 @@ const getWaiter = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -112,6 +157,10 @@ const getFollowing = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -124,6 +173,10 @@ const deleteFollower = (data, callback, errorCallback) => {
         loginid: data.loginId,
         followerid: data.followerId,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -136,6 +189,10 @@ const deleteFollowing = (data, callback, errorCallback) => {
         loginid: data.loginId,
         followingid: data.followingId,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -147,6 +204,10 @@ const getUser = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -155,28 +216,10 @@ const getUser = (data, callback, errorCallback) => {
 
 const requestUser = (config, callback, errorCallback) => {
   http
-    .get('/user/updateuser', config)
-    .then((res) => callback(res))
-    .catch((err) => errorCallback(err));
-};
-
-const Follow = (data, callback, errorCallback) => {
-  http
-    .post('/user/profile', {
-      params: {
-        loginId: data.loginId,
-        profileId: data.profileId,
-      },
-    })
-    .then((res) => callback(res))
-    .catch((err) => errorCallback(err));
-};
-const fileupload = (data, callback, errorCallback) => {
-  http
-    .post('/user/fileupload', data, {
+    .get('/user/updateuser', config, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -187,6 +230,7 @@ const createRecipe = (data, callback, errorCallback) => {
     .post('/feed/write', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        'access-token': store.state.token
       },
     })
     .then((res) => callback(res))
@@ -200,6 +244,10 @@ const singleRecipe = (data, callback, errorCallback) => {
         recipe_idx: data.recipeIdx,
         recipe_user_id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -211,6 +259,10 @@ const latestFeed = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -223,6 +275,10 @@ const myAllRecipes = (data, callback, errorCallback) => {
         id: data.id,
         email: data.email,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -234,6 +290,10 @@ const getAllmember = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -241,14 +301,22 @@ const getAllmember = (data, callback, errorCallback) => {
 
 const sendfollowrequest = (data, callback, errorCallback) => {
   http
-    .post('/user/sendfollowrequest', data)
+    .post('/user/sendfollowrequest', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
 
 const sendfollowdelete = (data, callback, errorCallback) => {
   http
-    .post('/user/sendfollowdelete', data)
+    .post('/user/sendfollowdelete', data, {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
@@ -259,6 +327,10 @@ const follow_already = (data, callback, errorCallback) => {
       params: {
         id: data.id,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -270,6 +342,10 @@ const searchByNickname = (data, callback, errorCallback) => {
       params: {
         nickname: data.nickname,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -282,6 +358,10 @@ const snsLogin = (data, callback, errorCallback) => {
         nickname: data.nickname,
         email: data.email,
       },
+    }, {
+      headers: {
+        'access-token': store.state.token
+      }
     })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
@@ -289,12 +369,17 @@ const snsLogin = (data, callback, errorCallback) => {
 
 const snsregister = (data, callback, errorCallback) => {
   http
-    .post('/user/snsregister', data)
+    .post('/user/snsregister', data , {
+      headers: {
+        'access-token': store.state.token
+      }
+    })
     .then((res) => callback(res))
     .catch((err) => errorCallback(err));
 };
 
 const UserApi = {
+  
   requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
   requestJoin: (data, callback, errorCallback) => requestJoin(data, callback, errorCallback),
   requestChangePassword: (data, callback, errorCallback) =>
@@ -305,12 +390,12 @@ const UserApi = {
   requestUpdate: (data, callback, errorCallback) => requestUpdate(data, callback, errorCallback),
   getFollow: (data, callback, errorCallback) => getFollow(data, callback, errorCallback),
   emailfindpw: (data, callback, errorCallback) => emailfindpw(data, callback, errorCallback),
-  getUser: (config, data, callback, errorCallback) =>
-    getUser(config, data, callback, errorCallback),
+  getUser: (config, data, callback, errorCallback) =>getUser(config, data, callback, errorCallback),
   getFollower: (data, callback, errorCallback) => getFollower(data, callback, errorCallback),
   getFollowing: (data, callback, errorCallback) => getFollowing(data, callback, errorCallback),
   getWaiter: (data, callback, errorCallback) => getWaiter(data, callback, errorCallback),
   deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
+  deleteFollowing: (data, callback, errorCallback) => deleteFollowing(data, callback, errorCallback),
   requestUser: (data, callback, errorCallback) => requestUser(data, callback, errorCallback),
   latestFeed: (data, callback, errorCallback) => latestFeed(data, callback, errorCallback),
   createRecipe: (data, callback, errorCallback) => createRecipe(data, callback, errorCallback),

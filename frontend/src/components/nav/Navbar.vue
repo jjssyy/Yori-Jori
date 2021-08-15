@@ -126,6 +126,9 @@ hr{
   height: 1px;
   border: none;
 }
+svg{
+  color:#ffbe76
+}
 
 .navigation {
   background-color: #ffffff;
@@ -303,7 +306,9 @@ hr{
   justify-content: center;
 }
 .nav-logout{
-  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
 }
 .menu-items{
   background-color: rgb(255, 255, 255);
@@ -319,10 +324,16 @@ hr{
 }
 
 .logo-img{
-  margin: 0%;
+  height: 40px;
+  margin: 15% 0%;
   padding: 0%;
 }
-#hide-menu svg{
-  color: #ffbe76;
+@media only screen and (min-width: 800px){
+  #sidebar{
+    display: none;
+  }
+  #hide-menu svg{
+    color: #ffbe76;
+  }
 }
 </style>

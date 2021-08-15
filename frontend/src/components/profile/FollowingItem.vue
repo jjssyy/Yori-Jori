@@ -1,7 +1,7 @@
 <template lang="">
   <tr>
-    <td>{{ following.nickname }}</td>
-    <td><button class="btn btn-secondary" @click="deleteFollowing(following, idx)"> remove </button></td>
+    <td><router-link :to="{name:'Profile', params: {user_id: following.id}}" style="text-decoration:none; color:black;" >{{following.nickname}}</router-link></td>
+    <td><button class="btn btn-secondary" @click="deleteFollowing(following)"> remove </button></td>
   </tr>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   },
 
   methods: {
-    deleteFollowing: function(following, idx) {
+    deleteFollowing(following) {
       const newFollowings = this.followings
       let data = {
         loginId : this.profileId,
@@ -31,10 +31,9 @@ export default {
       UserApi.deleteFollowing(
       data,
       res => {
-        console.log(res)
-        console.log(data)
-        newFollowings.splice(idx,1)
-        console.log('삭제성공')
+        
+        this.$router.go();
+        
       },
       error=>{
         console.log(error)

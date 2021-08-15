@@ -74,6 +74,7 @@ public class UserController {
 				String token = jwtservice.create("user_id", user.getId(), "access-token");
 				resultmap.put("access-token", token);
 				resultmap.put("id", user.getId());
+				resultmap.put("nickname", user.getNickname());
 				result = "success";
 				resultmap.put("result", result);
 
@@ -100,7 +101,8 @@ public class UserController {
 		try { 
 			map.put("id", map.get("email"));
 			UserVO user = userservice.login(map);
-			System.out.println(map.get("id"));
+
+
 			if(user.getSns().equals("kakao")) {
 				String email = (String) map.get("email");
 				
@@ -382,7 +384,7 @@ public class UserController {
 		map.put("loginid", loginid);
 		map.put("followerid", followerid);
 		if (userservice.followerdelete(map) == 1) {
-			System.out.println("삭제성공");
+		
 			return new ResponseEntity<String>("Success", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
@@ -400,47 +402,6 @@ public class UserController {
 		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
 	}
 
-	@PostMapping("/profile/enrollwaiting")
-	public ResponseEntity<?> enrollwaiting(@RequestBody Waiting wait) {
-
-		String result = "";
-
-		try {
-
-			if (userservice.deletewait(wait) == true && userservice.enrollfollower(wait) == true) {
-				result = "success";
-			} else {
-				result = "fail";
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = "error";
-		}
-
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
-
-	@PostMapping("/profile/deletewaiting")
-	public ResponseEntity<String> deletewaiting(@RequestBody Waiting wait) {
-
-		String result = "";
-
-		try {
-
-			if (userservice.deletewait(wait) == true) {
-				result = "success";
-			} else {
-				result = "fail";
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = "error";
-		}
-
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-	}
 
 	@GetMapping("/getallmember")
 	public ResponseEntity<List<UserVO>> getallmember(@RequestParam Map map) {
@@ -462,7 +423,7 @@ public class UserController {
 
 	@GetMapping("/follow_already")
 	public ResponseEntity<List<String>> follow_already(@RequestParam Map map) {
-
+		
 		List<String> result = null;
 		try {
 
@@ -499,28 +460,7 @@ public class UserController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@PostMapping("/sendfollowdelete")
-	public ResponseEntity<String> sendfollowdelete(@RequestBody Requestfollow rf) {
-
-		String result = "";
-
-		
-			try {
-
-				if (userservice.deletefollowing(rf) == true) {
-					result = "success";
-				} else {
-					result = "fail";
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				result = "error";
-			}
-		
-		return new ResponseEntity<String>(result, HttpStatus.OK);
-
-	}
+	
 
 	@PostMapping("/snsregister")
 	public ResponseEntity<String> snsregister(@RequestBody Snsreg sns) {
