@@ -44,7 +44,7 @@
             <div class="box">
               <h4>{{ master.title }}</h4>
             </div>
-            <div class="font" @click="showDetail(master.title)">
+            <div @click="showDetail(master.title)">
               <i class="fas fa-clipboard-list"></i>
             </div>
           </div>
@@ -112,6 +112,19 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'BBTreeGB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+h1 {
+  font-size: 35px;
+}
+* {
+  font-family: 'BBTreeGB' !important;
+}
 .bar-color {
   background-color: #ffbe76;
   color: black;
@@ -123,6 +136,7 @@ export default {
   flex-direction: row;
 }
 .font {
+  font-family: 'BBTreeGB';
   font-size: 20px;
   text-align: right;
 }
@@ -139,7 +153,8 @@ export default {
   margin-top: 40px;
 }
 .card-title {
-  font-size: 28px;
+  font-size: 30px;
+  font-family: 'BBTreeGB';
 }
 .card-body {
   padding: 30px;
@@ -154,6 +169,8 @@ export default {
 #achieve_img {
   width: 100px;
   height: 100px;
+  padding: 2px;
+  margin: 2px;
 }
 .titlefont {
   font-size: 28px;
