@@ -1,5 +1,6 @@
 <template lang="">
   <tr>
+    <td><img :src="follower.img" alt=""></td>
     <td><router-link :to="{name:'Profile', params: {user_id: follower.id}}" style="text-decoration:none; color:black;" >{{follower.nickname}}</router-link></td>
     <td><button class="btn btn-secondary" @click="deleteFollower(follower, idx)"> remove </button></td>
   </tr>
@@ -48,7 +49,3 @@ export default {
   }
 }
 </script>
-
-<style lang="">
-  
-</style>

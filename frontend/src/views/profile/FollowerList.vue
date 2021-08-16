@@ -3,11 +3,12 @@
     <h1> 팔로워</h1>
     <table class="table">
       <thead>
+        <th>이미지</th>
         <th>닉네임</th>
         <th>비고</th>
       </thead>
       <tbody>
-      <FollowItem v-for="(follower, idx) in followers" :key="idx" :follower="follower" :idx="idx" :followers="followers" :profileId="profileId"/>
+        <FollowItem v-for="(follower, idx) in followers" :key="idx" :follower="follower" :idx="idx" :followers="followers" :profileId="profileId"/>
       </tbody>
 
     </table>
