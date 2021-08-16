@@ -139,6 +139,7 @@ export default {
 }
 .card {
   margin: 40px 0px;
+  min-width: 100%;
 }
 .title {
   text-align: center;
