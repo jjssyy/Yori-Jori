@@ -27,6 +27,11 @@
     <div class="feed-img" @click="goRecipeDetail">
       <img :src="latestFeed.img || defaultImage" alt="기본 이미지">
     </div>
+    <div class="hashList">
+      <div v-for="(hash, idx) in latestFeed.hashtags" :key="idx">
+        <span class="hash"># {{ hash }}</span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -178,5 +183,27 @@ svg{
   min-width: 100%;
   border-radius: 5px;
 }
-
+.hashList{
+  padding: 5px;
+  top: 40%;
+  left: 15px;
+  text-align: left;
+  display: flex;
+  /* overflow: auto; */
+  width: 100%;
+  flex-wrap: wrap;
+}
+.hash{
+  background-color: #FFCD58;
+  /* background-color: rgba( 255, 255, 255, 0.2); */
+  padding: 3px 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 50px;
+  border-radius: 25px;
+  }
 </style>
