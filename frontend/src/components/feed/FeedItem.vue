@@ -3,9 +3,9 @@
     <div class="top-a">
       <div class="user-infomation"  @click="goUserProfile">
         <div class="user-img">
-          <img :src="defaultProfile" height="35px" alt="">
+          <img :src="latestFeed.profileImg || defaultImage" alt="">
         </div>
-        <div class="user-name">{{ latestFeed.nickname }}</div>
+        <div class="userName">{{ latestFeed.nickname }}</div>
       </div>
       <div class="title">
         <h2 @click="goRecipeDetail">{{ latestFeed.title | longTitle}}</h2>
@@ -117,7 +117,19 @@ h2{
 svg{
   color: #ffbe76;
 }
-
+.user-img img{
+  border-radius: 50%;
+  width: 40px;
+  height:40px;
+  margin-left: 5px;
+  margin-top: 7px;
+  object-fit: cover;
+}
+.userName {
+  margin-left: 4px;
+  font-weight: 900;
+  font-size: 14px;
+}
 .feed-item{
   width: 100%;
   max-width: 616px;
