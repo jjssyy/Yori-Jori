@@ -20,9 +20,8 @@
           <li><span class="profile-stat-count">{{profileUser.recipecnt}}</span> 레시피</li>
           <li @click="showFollowerList"><span class="profile-stat-count">{{ profileUser.follower }}</span> 팔로워</li>
           <li @click="showFollowingList"><span class="profile-stat-count">{{ profileUser.following }}</span> 팔로잉</li>
-          <li><span class="profile-stat-count">{{profileUser.rankpoint}}</span> RP</li>
-          <li><span class="profile-stat-count">{{profileUser.rankpoint}}</span> 랭킹</li>
-          <!-- <button v-if="profileUser.rankpoint != rankpoint" @click="updaterank">갱신</button> -->
+          <li><span class="profile-stat-count">{{mypoint}}</span> RP</li>
+           <li><span class="profile-stat-count">{{myrank}}</span> 위</li>
         </ul>
       </div>
       <div class="profile-bio">
@@ -89,7 +88,11 @@ export default {
       recipe_comment_cnt:null,
       recipe_comment_like_cnt:null,
       recipe_like_cnt:null,
-      achieve:[]
+      achieve:[],
+       ranking:[],
+        myrank:null,
+        mypoint:null,
+        mynickname:null,
     }
   },
   created() {
@@ -110,6 +113,25 @@ export default {
         console.log(error)
       }
     )
+
+    RankApi.getRanking(
+        res => {
+            this.ranking = res.data.rankinglist
+            console.log(res);
+            for(let i = 0; i < this.ranking.length; i++){
+                if(this.ranking[i].id == this.userId){
+            this.myrank = this.ranking[i].rank
+            this.mypoint = this.ranking[i].rankpoint
+            this.mynickname = this.ranking[i].nickname
+            
+        }
+    }
+        },
+        error=>{
+        console.log(error)
+        }
+    )
+
 
     UserApi.myAllRecipes(
       data,
@@ -137,28 +159,7 @@ export default {
     data = {
       id: this.profileId
     }
-    RankApi.Myrank(
-      data,
-      res => {
-        this.recipe_cnt = res.data.myrank.recipe_cnt;
-        this.achieve_cnt =  res.data.myrank.achieve_cnt;
-        this.follower_cnt = res.data.myrank.follower_cnt;
-        this.recipe_comment_cnt = res.data.myrank.recipe_comment_cnt;
-        this.recipe_comment_like_cnt = res.data.myrank.recipe_comment_like_cnt;
-        this.recipe_like_cnt = res.data.myrank.recipe_like_cnt;
-        this.rankpoint =  this.recipe_cnt +  this.achieve_cnt + this.follower_cnt + this.recipe_comment_cnt + this.recipe_comment_like_cnt + this.recipe_like_cnt;
-
-
-        },
-      error=>{
-        console.log(error)
-      }
-    )
-
-    data = {
-      id: this.profileId
-    },
-
+    
       AchieveApi.getAchievecurrent(
       data,
       res => {
@@ -173,9 +174,11 @@ export default {
         console.log(error);
       }
     )
-    // if(this.rankpoint != this.profileUser["rankpoint"]){
-    //   alert("갱신필요");
-    // }
+
+   
+    
+
+  
 
   },
   methods: {
