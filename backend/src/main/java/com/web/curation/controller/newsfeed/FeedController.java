@@ -131,10 +131,14 @@ public class FeedController {
 			Paging paging = new Paging();
 			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
 			map.put("paging", paging);
-			System.out.println("page : " + page);
-			System.out.println("range : " + paging.getRange() + " " + paging.getListCnt());
-			System.out.println("startList : " + paging.getStartList() + " listSize : " + paging.getListSize() + "\n===\n");
+//			System.out.println("page : " + page);
+//			System.out.println("range : " + paging.getRange() + " " + paging.getListCnt());
+//			System.out.println("startList : " + paging.getStartList() + " listSize : " + paging.getListSize() + "\n===\n");
 			List<RecipeContent> list = feedService.getLikedPosts(map);
+			for(RecipeContent rc: list) {
+				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
+			}
 			resultMap.put("message", result);
 			resultMap.put("latestPosts", list);
 			status = HttpStatus.ACCEPTED;
@@ -235,7 +239,10 @@ public class FeedController {
 			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
 			params.put("paging", paging);
 			List<FeedRecipe> recipe = feedService.getLatestFeed(params);
-
+			for(FeedRecipe rc: recipe) {
+				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
+			}
 			HashMap<Object, Object> map = new HashMap<>();
 			map.put("recipe_user_id", id);
 			for (int i = 0; i < recipe.size(); i++) {
@@ -711,6 +718,10 @@ public class FeedController {
 			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
 			map.put("paging", paging);
 			list = feedService.popularPosts(map);
+			for(RecipeContent rc: list) {
+				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
+			}
 			resultMap.put("popularPosts", list);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -735,7 +746,10 @@ public class FeedController {
 			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
 			map.put("paging", paging);
 			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
-			
+			for(RecipeContent rc: recipe) {
+				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
+			}
 			resultMap.put("hashtagfeed", recipe);
 
 			if (recipe == null) {

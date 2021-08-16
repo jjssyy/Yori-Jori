@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class FeedRecipe {
 	private int idx;
@@ -9,6 +10,9 @@ public class FeedRecipe {
 	private String nickname;
 	private String id;
 	private String img;
+	private int comment;
+	private List<String> hashtags;
+	private String profileImg;
 	
 	//DB:recipe_like
 	private int like; //좋아요 수
@@ -61,6 +65,24 @@ public class FeedRecipe {
 	}
 	public void setLikecheck(boolean likecheck) {
 		this.likecheck = likecheck;
+	}
+	public int getComment() {
+		return comment;
+	}
+	public void setComment(int comment) {
+		this.comment = comment;
+	}
+	public List<String> getHashtags() {
+		return hashtags;
+	}
+	public void setHashtags(List<String> hashtags) {
+		this.hashtags = hashtags;
+	}
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 	
 }
