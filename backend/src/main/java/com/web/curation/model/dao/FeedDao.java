@@ -27,13 +27,13 @@ public interface FeedDao {
 	
 	public List<RecipeDetailFromDB> getRecipeContents(int recipe_idx) throws Exception;
 
-	public List<FeedRecipe> getLatestFeed(String id) throws Exception;
+	public List<FeedRecipe> getLatestFeed(Map params) throws Exception;
 	
 	public List<RecipeContent> getAllRecipes(String id) throws Exception;
 
 	public int writeHashtag(HashMap<String, Object> hash);
 	
-	public List<Integer> getLikedPosts(String user_id) throws Exception;
+	public List<RecipeContent> getLikedPosts(Map map) throws Exception;
 	
 	public RecipeContent getSingleRecipe(int recipe_idx) throws Exception;
 	
@@ -78,11 +78,14 @@ public interface FeedDao {
 	
 	public List<AchieveListFromDB> getAchieveListForRecipe() throws Exception;
 	
-	public List<RecipeContent> popularPosts() throws Exception;
+	public List<RecipeContent> popularPosts(Map map) throws Exception;
 	
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
 
 	public int deleteHashtag(int hashtag_idx) throws Exception;
 	public int updateHashtag(Map map) throws Exception;
+
+	public int getFeedCnt() throws Exception;
+
 	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception;
 }

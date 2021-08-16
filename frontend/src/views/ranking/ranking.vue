@@ -29,7 +29,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="(rank, idx) in ranking" :key="idx">
-                        <td>{{rank.rank}}</td>
+                        <td v-if="rank.rank == 1"><i class="fas fa-trophy" style="color:#f1c40f"></i></td>
+                        <td v-else-if="rank.rank == 2"><i class="fas fa-medal" style="color:#bdc3c7"></i></td>
+                        <td v-else-if="rank.rank == 3"><i class="fas fa-medal" style="color:#cd7f32"></i></td>
+                        <td v-else>{{rank.rank}}</td>
                         <td>{{rank.nickname}}</td>
                         <td>{{rank.rankpoint}}</td>
                     </tr>
@@ -102,9 +105,8 @@ methods: {
 #myrank{
     background-color: #ffbe76;
     border-radius: 25px;
-    height: 300px;
-    width: 95%;
-    max-width: 616px;
+    height: 250px;
+    width: 500px;
     color:white;
     margin: 10px;
     padding: 10px;

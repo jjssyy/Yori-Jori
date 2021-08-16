@@ -48,8 +48,13 @@ export default {
           const items = res.data.latestPosts.map(item => {
             return item
           })
-          this.busy = false
+          if (res.data.latestPosts.length == 0){
+            this.busy = true
+          } else {
+            this.busy = false
+          }
           this.latestFeeds = this.latestFeeds.concat(items)
+          console.log(items)
         },
         error => {
           console.log(error)
@@ -57,6 +62,7 @@ export default {
       )
     },
     loadMore(){
+      console.log("load More ! ");
       this.busy = true
       this.getPost()
     }

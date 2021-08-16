@@ -42,7 +42,12 @@ export default {
           const items = res.data.latestFeed.map(item => {
             return item
           })
-          this.busy = false
+          if (res.data.latestFeed.length == 0){
+            this.busy = true
+          } else {
+            this.busy = false
+          }
+          this.latestFeeds = this.latestFeeds.concat(items)
           this.latestFeeds = this.latestFeeds.concat(items)
         },
         error => {
