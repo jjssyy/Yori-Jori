@@ -1,18 +1,10 @@
 <template>
-  <div class="wrapC">
-    <!-- <p @click="backBack">뒤로가기</p> -->
-    <h1> 팔로잉</h1>
-    <table class="table">
-      <thead>
-        <th>이미지</th>
-        <th>닉네임</th>
-        <th>비고</th>
-      </thead>
-      <tbody>
-        <FollowingItem v-for="(following, idx) in followings" :key="idx" :following="following" :idx="idx" :followings="followings" :profileId="profileId"/>
-      </tbody>
-
-    </table>
+  <div class="follower-page"> 
+    <h1>팔로잉</h1>
+    <hr>
+    <div class="followers">
+      <FollowingItem v-for="(following, idx) in followings" :key="idx" :idx="idx" :following="following" :followings="followings" :profileId="profileId"/>
+    </div>
   </div>
 </template>
 <script>
@@ -51,29 +43,15 @@ export default {
 }
 </script>
 
-<style>
-
-table{
-  margin-top: 50px;
+<style scoped>
+.follower-page{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-table thead{
-    
-    height: 50px;
-    color: white;
-    font-size: 22px;
-    line-height: 50px;
-    text-align: center;
-    background-color: #ffbe76;
-
+.followers{
+  width: 100%;
+  max-width: 616px;
 }
-
- td{
-    
-    height: 100px;
-    font-size: 22px;
-    line-height: 80px;
-    text-align: center;
-
-}
-
 </style>

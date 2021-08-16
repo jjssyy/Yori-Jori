@@ -1,16 +1,16 @@
 <template>
   <li >
     <div class="user">
-      <div class="user-info">
+      <div class="user-info" @click="moveTo">
         <div class="user-img">
-          <img :src="defaultProfile" alt="ddd">
+          <img :src="follower.img||defaultProfile" alt="ddd">
         </div>
         <div class="user-des">
           <div class="user-id">
-            <router-link :to="{name:'Profile', params: {user_id: follower.id}}" style="text-decoration:none; color:black;" >{{follower.nickname}}</router-link>
+            {{follower.nickname}}
           </div>
           <div class="user-nickname">
-            닉네임
+            {{follower.nickname}}
           </div>
         </div>
       </div>
@@ -59,6 +59,9 @@ export default {
       }
       )
       this.followers = newFollowers
+    },
+    moveTo: function(){
+      this.$router.push({name:'Profile', params: {user_id:this.follower.id}})
     }
   },
     computed: {
@@ -103,6 +106,7 @@ li{
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
 }
 .user-des{
   flex: 1 1 70px;
