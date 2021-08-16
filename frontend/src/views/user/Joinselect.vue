@@ -1,10 +1,8 @@
 <template>
   <div class="wrapC">
     <div class="box">
-    <div class="row" id="join_box0">
-      <img class="food_line1" src="@/assets/images/food_line.png" />
-      <img class="registerlogo" :src="require(`@/assets/images/roundlogo.png`)" />
-      <img class="food_line2" src="@/assets/images/food_line2.png" />
+    <div class="row" id="join_select_box">
+      <img :src="require(`@/assets/images/registerlogo.png`)" />
     </div>
     <div class="d-flex justify-content-around" id="register">
       <div class=" row card mb-4 border-0 shadow" id="normal">
@@ -32,6 +30,7 @@
       </div>
     </div>
     <hr>
+    <br>
     </div>
 
 
@@ -232,6 +231,11 @@ export default {
 *{
    font-family: 'BBTreeGB';
 }
+img { 
+  max-width:90%; 
+  height:auto 
+}
+
 @font-face {
     font-family: 'BBTreeGB';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
@@ -241,7 +245,6 @@ export default {
 .wrapC{
   float: none;
   margin: 0 auto ;
-
 }
 
 #normal, #kakao{
@@ -252,52 +255,33 @@ export default {
 
 #normal label, #kakao label{
   padding-top: 10px;
-  font-size: 30px;
-  margin: 0 2% 0 2%;
+  font-size: 1.5rem;
+  margin: 8% 2% 0 2%;
 }
 
 #normal img{
-  width:120px;
-  height:120px;
+  width: 80%;
   margin: 5px 2% 50px 2%;
 }
 
 #kakao img{
-  width:110px;
+  width:70%;
   margin: 35px 2% 40px 2%;
 }
-#register{
-  margin-top: 60px;
-}
-
 #register p{
   color: #838383;
+  font-size: 1rem;
 }
 
-#join_box0 img{
-  margin: 0px auto 60px;
-  min-width: 150px;
-
+#join_select_box img{
+  margin: 0 auto 10%;
+  max-width: 90%;
 }
 .card{
-  max-width: 300px;
-  width: 300px;
+  max-width: 50%;
+  width: 100%;
   margin: 0 3%;
   margin-bottom: 3%;
   
-}
-.registerlogo{
-  position: absolute; left: 50%; 
-  transform: translate(-50%, -50%); 
-  text-align: center;
-  min-height: 165px;
-}
-.food_line1{
-  float: left;
-  margin-right: 30px;
-}
-.food_line2{
-  float: right;
-  margin-left: 30px;
 }
 </style>
