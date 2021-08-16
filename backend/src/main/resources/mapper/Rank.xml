@@ -6,7 +6,7 @@
 <mapper namespace="com.web.curation.model.dao.RankingDao">
 
 	<select id="recipe_cnt" parameterType="String" resultType="int">
-		select count(*) as recipe_cnt from recipe where id = 1
+		select count(*) as recipe_cnt from recipe where id = #{id}
 	</select>
 	
 	<select id="recipe_like_cnt" parameterType="String"  resultType="int">
