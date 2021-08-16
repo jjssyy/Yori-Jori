@@ -90,4 +90,6 @@ public interface FeedDao {
 	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception;
 	
 	public int getCommentNum(int idx) throws Exception;
+	
+	public List<String> getHashtagList(int idx) throws Exception;
 }

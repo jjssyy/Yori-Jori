@@ -215,4 +215,8 @@
    <select id="getCommentNum" parameterType="int" resultType="int">
    		select count(*) from recipe_comment where content_idx = #{idx};
    </select>
+   
+    <select id="getHashtagList" parameterType="int" resultType="String">
+    	select tag from hashtag where recipe_idx=#{recipe_idx}
+   </select>
 </mapper>
