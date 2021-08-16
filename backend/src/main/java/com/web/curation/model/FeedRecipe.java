@@ -12,6 +12,7 @@ public class FeedRecipe {
 	private String img;
 	private int comment;
 	private List<String> hashtags;
+	private String profileImg;
 	
 	//DB:recipe_like
 	private int like; //좋아요 수
@@ -76,6 +77,12 @@ public class FeedRecipe {
 	}
 	public void setHashtags(List<String> hashtags) {
 		this.hashtags = hashtags;
+	}
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 	
 }
