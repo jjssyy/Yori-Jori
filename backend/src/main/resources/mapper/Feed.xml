@@ -10,11 +10,12 @@
    </select>
    
    <select id="getLatestFeed" parameterType="Map" resultType="FeedRecipe">
-      select *
+      select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, u.img as profileImg
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
+      join user as u on r.id = u.id
       where c.thumbnail="true" and (r.id in (
-                           select following from follow where follower=#{id}) or id=#{id} )
+                           select following from follow where follower=#{id}) or r.id=#{id} )
       LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
@@ -51,9 +52,10 @@
    
    <!-- liked posts -->
    <select id="getLikedPosts" parameterType="Map" resultType="RecipeContent">
-   		select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes , u.img as profileImg
          from recipe r join recipe_like l on r.idx = l.recipe_idx
          join recipe_content as c on r.idx = c.recipe_idx
+         join user as u on u.id = r.id
 		 where r.idx in (select recipe_idx from recipe_like where recipe_user_id = #{user_id})
          group by l.recipe_idx
          LIMIT #{paging.startList}, #{paging.listSize}
@@ -61,9 +63,10 @@
    
    <!-- get posts in range of popularity -->
    <select id="popularPosts" parameterType="Map" resultType="RecipeContent">
-         select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx) likes
+         select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx) likes, u.img as profileImg
          from recipe r left join recipe_like l on r.idx = l.recipe_idx 
          join recipe_content as c on r.idx=c.recipe_idx
+         join user as u on u.id = r.id
          where c.thumbnail="true"
          group by l.recipe_idx order by likes desc
          LIMIT #{paging.startList}, #{paging.listSize}
