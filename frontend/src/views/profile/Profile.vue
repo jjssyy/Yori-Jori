@@ -68,6 +68,7 @@ import RankApi from '../../api/RankApi';
 import AchieveApi from '../../api/AchieveApi';
 import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
 import FirebaseApi from '../../api/FirebaseApi';
+import swal from 'sweetalert';
 
 export default {
   components: { MyRecipeItem },

@@ -24,6 +24,7 @@ import "../../components/css/user.scss";
 import UserApi from "../../api/UserApi";
 import { mapState } from 'vuex'
 import { mapActions } from 'vuex'
+import swal from 'sweetalert';
 
 
 export default {
@@ -54,18 +55,18 @@ export default {
           res => {
             console.log(res);
              if(res.data == "success"){
-            alert("이메일이 발송되었습니다.");
+            swal("이메일이 발송되었습니다.",{icon:'success'});
            this.$router.push("/");
            console.log(res.data.resultmap);
          
 
 
           }else if(res.data == "fail"){
-            alert("아이디 혹은 이메일이 틀렸습니다.");
+            swal("아이디 혹은 이메일이 틀렸습니다.",{icon:'warning'});
           
           }else{
 
-            alert("오류발생.");
+            swal("오류발생.",{icon:'error'});
 
             this.$router.push("/error");
           
@@ -73,7 +74,7 @@ export default {
           },
           error => {
             //요청이 끝나면 버튼 활성화
-            alert("에러발생");
+            swal("에러발생",{icon:'error'});
 
             this.$router.push("/error");
           }
