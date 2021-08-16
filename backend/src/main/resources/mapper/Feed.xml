@@ -10,7 +10,7 @@
    </select>
    
    <select id="getLatestFeed" parameterType="Map" resultType="FeedRecipe">
-        select *
+      select *
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
       where c.thumbnail="true" and (r.id in (
@@ -210,5 +210,9 @@
    			count(*) as listCnt
    		FROM
    			recipe;
+   </select>
+   
+   <select id="getCommentNum" parameterType="int" resultType="int">
+   		select count(*) from recipe_comment where content_idx = #{idx};
    </select>
 </mapper>

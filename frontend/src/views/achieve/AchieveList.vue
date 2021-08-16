@@ -146,6 +146,7 @@ export default {
 }
 .card {
   margin: 40px 0px;
+  min-width: 100%;
 }
 .progress-bar bar-color {
   min-width: 80px;

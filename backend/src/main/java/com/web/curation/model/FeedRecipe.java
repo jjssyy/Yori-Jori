@@ -9,6 +9,7 @@ public class FeedRecipe {
 	private String nickname;
 	private String id;
 	private String img;
+	private int comment;
 	
 	//DB:recipe_like
 	private int like; //좋아요 수
@@ -61,6 +62,12 @@ public class FeedRecipe {
 	}
 	public void setLikecheck(boolean likecheck) {
 		this.likecheck = likecheck;
+	}
+	public int getComment() {
+		return comment;
+	}
+	public void setComment(int comment) {
+		this.comment = comment;
 	}
 	
 }
