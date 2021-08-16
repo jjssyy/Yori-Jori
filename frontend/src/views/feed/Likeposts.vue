@@ -50,6 +50,7 @@ export default {
           })
           this.busy = false
           this.latestFeeds = this.latestFeeds.concat(items)
+          console.log(items)
         },
         error => {
           console.log(error)
@@ -57,6 +58,7 @@ export default {
       )
     },
     loadMore(){
+      console.log("load More ! ");
       this.busy = true
       this.getPost()
     }

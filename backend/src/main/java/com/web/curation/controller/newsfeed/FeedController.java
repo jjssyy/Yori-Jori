@@ -21,6 +21,7 @@ import com.web.curation.model.CommentFromDB;
 import com.web.curation.model.CommentToClient;
 import com.web.curation.model.FeedRecipe;
 import com.web.curation.model.HashtagVO;
+import com.web.curation.model.Paging;
 import com.web.curation.model.RecipeContent;
 import com.web.curation.model.RecipeInfo;
 import com.web.curation.model.RecipeInfoFromDB;
@@ -117,17 +118,23 @@ public class FeedController {
 
 	// liked posts
 	@GetMapping("/likedposts")
-	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam String user_id) {
+	public ResponseEntity<Map<String, Object>> getLikedPosts(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
+		System.out.println(map.keySet());
+		System.out.println("key set");
 		try {
-			List<Integer> likedPostsIdx = feedService.getLikedPosts(user_id);
-			int length = likedPostsIdx.size();
-			List<RecipeContent> list = new ArrayList<RecipeContent>();
-			for (int i = 0; i < length; i++) {
-				list.add(feedService.getSingleRecipe(likedPostsIdx.get(i)));
-			}
+
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)map.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			map.put("paging", paging);
+			System.out.println("page : " + page);
+			System.out.println("range : " + paging.getRange() + " " + paging.getListCnt());
+			System.out.println("startList : " + paging.getStartList() + " listSize : " + paging.getListSize() + "\n===\n");
+			List<RecipeContent> list = feedService.getLikedPosts(map);
 			resultMap.put("message", result);
 			resultMap.put("latestPosts", list);
 			status = HttpStatus.ACCEPTED;
@@ -215,12 +222,19 @@ public class FeedController {
 
 	// 최신피드 (메인)
 	@GetMapping("/latestfeed")
-	public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
+	public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam Map params) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
+		String id = (String)params.get("id");
+		System.out.println(params.keySet());
 		try {
-			List<FeedRecipe> recipe = feedService.getLatestFeed(id);
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)params.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			params.put("paging", paging);
+			List<FeedRecipe> recipe = feedService.getLatestFeed(params);
 
 			HashMap<Object, Object> map = new HashMap<>();
 			map.put("recipe_user_id", id);
@@ -686,12 +700,17 @@ public class FeedController {
 	}
 	
 	@GetMapping("/popularposts")
-	public ResponseEntity<Map<String, Object>> popularPosts() {
+	public ResponseEntity<Map<String, Object>> popularPosts(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.OK;
 		List<RecipeContent> list;
 		try {
-			list = feedService.popularPosts();
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)map.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			map.put("paging", paging);
+			list = feedService.popularPosts(map);
 			resultMap.put("popularPosts", list);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -707,9 +726,14 @@ public class FeedController {
 	public ResponseEntity<Map<String, Object>> hashtagsearch(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-
+		System.out.println(map.keySet());
 		String result = "SUCCESS";
 		try {
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)map.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			map.put("paging", paging);
 			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
 			
 			resultMap.put("hashtagfeed", recipe);

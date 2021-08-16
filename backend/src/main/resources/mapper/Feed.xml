@@ -9,12 +9,13 @@
       select * from recipe_content where recipe_idx = #{recipe_idx} order by content_order
    </select>
    
-   <select id="getLatestFeed" parameterType="String" resultType="FeedRecipe">
+   <select id="getLatestFeed" parameterType="Map" resultType="FeedRecipe">
         select *
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
       where c.thumbnail="true" and (r.id in (
                            select following from follow where follower=#{id}) or id=#{id} )
+      LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
    <select id="getAllRecipes" parameterType="String" resultType="RecipeContent">
@@ -49,17 +50,23 @@
    </select>
    
    <!-- liked posts -->
-   <select id="getLikedPosts" parameterType="String" resultType="int">
-         select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+   <select id="getLikedPosts" parameterType="Map" resultType="RecipeContent">
+   		select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx)  as likes
+         from recipe r join recipe_like l on r.idx = l.recipe_idx
+         join recipe_content as c on r.idx = c.recipe_idx
+		 where r.idx in (select recipe_idx from recipe_like where recipe_user_id = #{user_id})
+         group by l.recipe_idx
+         LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
    <!-- get posts in range of popularity -->
-   <select id="popularPosts" resultType="RecipeContent">
+   <select id="popularPosts" parameterType="Map" resultType="RecipeContent">
          select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx) likes
          from recipe r left join recipe_like l on r.idx = l.recipe_idx 
          join recipe_content as c on r.idx=c.recipe_idx
          where c.thumbnail="true"
          group by l.recipe_idx order by likes desc
+         LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
    <!-- hashtag -->
@@ -69,8 +76,9 @@
    </insert>
    
    <!-- liked posts -->
-   <select id="likedPosts" parameterType="String" resultType="int">
+   <select id="likedPosts" parameterType="Map" resultType="int">
          select recipe_idx from recipe_like where recipe_user_id = #{user_id}
+         LIMIT #{startList}, #{listSize}
    </select>
    
    <!-- get one recipe -->
@@ -193,7 +201,14 @@
 		from recipe left outer join hashtag on recipe.idx = hashtag.recipe_idx
 		inner join recipe_content on recipe.idx = recipe_content.recipe_idx
 		inner join recipe_like on recipe.idx = recipe_like.recipe_idx
-		where hashtag.tag = #{hashtag} group by recipe.idx;            	
+		where hashtag.tag = #{hashtag} group by recipe.idx 
+		LIMIT #{paging.startList}, #{paging.listSize};
    	</select>
    
+   <select id="getFeedCnt" resultType="int">
+   		SELECT
+   			count(*) as listCnt
+   		FROM
+   			recipe;
+   </select>
 </mapper>

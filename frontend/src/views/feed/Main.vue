@@ -39,6 +39,7 @@ export default {
       UserApi.latestFeed(
         data,
         res => {
+          console.log(res.data)
           const items = res.data.latestFeed.map(item => {
             return item
           })
