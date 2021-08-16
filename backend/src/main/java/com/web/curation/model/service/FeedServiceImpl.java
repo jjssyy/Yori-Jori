@@ -210,6 +210,11 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getCommentNum(idx);
 	}
 
+	@Override
+	public List<String> getHashtagList(int idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getHashtagList(idx);
+	}
+
 	
 
 }

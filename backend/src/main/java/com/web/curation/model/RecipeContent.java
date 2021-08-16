@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class RecipeContent {
 	private int idx;
@@ -16,6 +17,8 @@ public class RecipeContent {
 	private String achieve_title_name;
 	private String hashtag;
 	private int comment;
+	private List<String> hashtags;
+	private String profileImg;
 	
 	public String getHashtag() {
 		return hashtag;
@@ -95,5 +98,17 @@ public class RecipeContent {
 	}
 	public void setComment(int comment) {
 		this.comment = comment;
+	}
+	public List<String> getHashtags() {
+		return hashtags;
+	}
+	public void setHashtags(List<String> hashtags) {
+		this.hashtags = hashtags;
+	}
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 }
