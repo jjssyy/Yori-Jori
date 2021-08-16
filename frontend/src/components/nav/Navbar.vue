@@ -306,7 +306,9 @@ svg{
   justify-content: center;
 }
 .nav-logout{
-  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
 }
 .menu-items{
   background-color: rgb(255, 255, 255);
@@ -321,12 +323,9 @@ svg{
   height: 50px;
 }
 
-.shrink {
-  height: 50px;
-}
 .logo-img{
-  height: 39px;
-  margin: 0%;
+  height: 40px;
+  margin: 15% 0%;
   padding: 0%;
 }
 @media only screen and (min-width: 800px){

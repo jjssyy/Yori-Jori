@@ -87,6 +87,7 @@
 import UserApi from '../../api/UserApi';
 import PV from "password-validator";
 import * as EmailValidator from "email-validator";
+import swal from 'sweetalert';
 
 
 export default {
@@ -155,18 +156,18 @@ export default {
         res=>{
           console.log(res);
           if(res.data == "success"){
-            alert("사용가능합니다.");
+            swal("사용가능합니다.",{icon:'success'});
             this.error.id = false;
           }else if(res.data == "fail"){
-            alert("중복된 아이디입니다.");
+            swal("중복된 아이디입니다.",{icon:'warning'});
             this.error.id = true;
           }else{
-            alert("에러가 발생하였습니다.");
+            swal("에러가 발생하였습니다.",{icon:'error'});
             this.error.id = true;
           }
         },
         error=>{
-          alert("사용불가");
+          swal("에러가 발생하였습니다.",{icon:'error'});
           this.error.id = true;
           
         }
@@ -185,18 +186,18 @@ export default {
         res=>{
           console.log(res);
           if(res.data == "success"){
-            alert("사용가능합니다.");
+            swal("사용가능합니다.",{icon:'success'});
             this.error.nickname = false;
           }else if(res.data == "fail"){
-            alert("중복된 닉네임입니다.");
+            swal("중복된 닉네임입니다.",{icon:'warning'});
             this.error.nickname = true;
           }else{
-            alert("에러가 발생하였습니다.");
+            swal("에러가 발생하였습니다.",{icon:'error'});
             this.error.nickname = true;
           }
         },
         error=>{
-          alert("사용불가");
+          swal("에러가 발생하였습니다.",{icon:'error'});
           this.error.nickname = true;
           
         }
@@ -243,13 +244,13 @@ export default {
         res=>{
           console.log(res);
           if(res.data =="success"){
-            alert("회원가입에 성공하였습니다!");
+            swal("회원가입에 성공하였습니다!",{icon:'success'});
             this.$router.push({name:'Login'});
             this.$router.push("/user/join/complete");
           }else if(res.data =="fail"){
-            alert("회원가입에 실패하셨습니다.!");
+            swal("회원가입에 실패하셨습니다.!",{icon:'warning'});
           }else{
-            alert("에러발생");
+            swal("에러발생",{icon:'error'});
          
           this.$router.push("/error");
           }
@@ -257,7 +258,7 @@ export default {
           
         },
         error=>{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
           this.isSubmit = true;
           this.$router.push("/error");
         }

@@ -2,7 +2,7 @@
 <template>
   
     <div class="wrapC">
-      <div class="row" id="login">
+      <div class="row login-page" id="login">
       <div class="row" id="login_box1">
         <img style="width:150px; height:130px;float: none; margin:0 auto;" :src="require(`@/assets/images/mainlogo.png`)" />
       </div>
@@ -164,6 +164,12 @@ export default {
 
 
 <style>
+.login-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 #login{
   margin-top: 0px;
@@ -175,9 +181,8 @@ input {
   border : 1px solid darkgray;
 }
 
-#login_box1,#login_box2,#login_box3,#login_box4,#login_box5,#login_box6{
+#login_box2,#login_box3,#login_box4,#login_box5,#login_box6{
   margin-top: 20px;
-  margin-left: 5px;
 }
 
 #login_box4{
@@ -198,7 +203,6 @@ input {
 }
 
 #login_box1 img{
-  margin-left: 130px;
 }
 
 #login_box6{

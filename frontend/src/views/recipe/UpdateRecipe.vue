@@ -1,28 +1,38 @@
 
 <template>
-  <div>
-    <div class="wrapC">
-      <h1>글수정</h1>
+  <div class="update">
+    <div class="update-form">
+      <h1>레시피 수정</h1>
       <!-- {{recipeContent}} -->
-      {{ recipeContent}}
-      <div class="input-with-label">
-        <form>
-          <input
+        <input
           v-model="title"
           id="title"
           placeholder="제목을 입력하세요"
           type="text"
           />
-        <label for="title">제목</label>
-        </form>
-      </div> 
-
-      <div class="" id="add">
+      
+      <div id="image-des">
+        <h2>CARDs</h2>
+      <!-- <div class="" id="add">
         <button @click="addimagedes">+</button>
+      </div> -->
+
+      <div v-for="(recipe_file, idx) in recipe" :key="idx" class="write-card">
+        <update-form :recipe_file="recipe_file" :recipe="recipe" :idx="recipe_file.content_order"></update-form>
+      </div>
+        <div class="addcard" id="add" @click="tempimage">
+          +
+        </div>
       </div>
 
-      <div v-for="(recipe_file, idx) in recipe" :key="idx" class="" id="image-des" >
-        <update-form :recipe_file="recipe_file" :recipe="recipe" :idx="recipe_file.content_order"></update-form>
+      <div class="black-box" v-if="showcard" @click="showcard = !showcard"></div>
+      <div v-if="showcard" class="inbox">
+        <label for="file">
+          <img :src="tempImg || defaultImage" />
+        </label>
+        <input type="file" accept="image/*" id="file" @change="uploadImg" />
+        <textarea v-model="tempDes"></textarea>
+        <button class="submit" @click="addimagedes">등록</button>
       </div>
 
       <div id="image-des">
@@ -67,11 +77,13 @@ import { mapState } from "vuex";
 import RecipeApi from '../../api/RecipeApi';
 import UserApi from '../../api/UserApi';
 import UpdateForm from "../../components/recipe/UpdateForm.vue";
+import FirebaseApi from '../../api/FirebaseApi';
 
 export default {
   data: () => {
     return {
       recipe: null,
+      defaultImage: 'https://t1.daumcdn.net/cfile/tistory/24611E4853FDAE0B14',
       recipeContent: [],
       title: '',
       master_names: [],
@@ -80,12 +92,18 @@ export default {
       slaveSelected: '',
       deleteHashtag: [],
       temphash:'',
+      showcard: false,
+      tempImg: '',
+      tempDes:'',
     }
   },
   components:{
     UpdateForm,
   },
   methods: {
+    tempimage() {
+      this.showcard = !this.showcard;
+    },
     createHash(){
       this.recipeContent.tag.push(this.temphash)
       this.recipeContent.hashtag_idx.push(-1)
@@ -106,13 +124,22 @@ export default {
         }
       }
     },
+    uploadImg(e) {
+      let file = e.target.files[0];
+      FirebaseApi.upLoad(file, (res) => {
+        this.tempImg = res;
+      })
+    },
     addimagedes(){
       this.recipe.push({
         idx : -1,
-        img : " ",
-        des : " ",
+        img : this.tempImg,
+        des : this.tempDes,
         thumbnail: "false",
       })
+      this.tempDes = '';
+      this.tempImg = '';
+      this.showcard = !this.showcard;
     },
     check() {
       var frm = new FormData();
@@ -120,8 +147,6 @@ export default {
       frm.append("title", this.title)
       frm.append("achieve_master",this.masterSelected)
       frm.append("achieve_slave",this.slaveSelected)
-      console.log("나옴")
-      console.log(this.recipeContent.tag)
       for (let i=0; i< this.recipe.length; i++){
         frm.append("content_idx["+i+"]", this.recipe[i].idx)
         frm.append("des["+i+"]",this.recipe[i].des)
@@ -232,6 +257,24 @@ export default {
 }
 </script>
 <style scoped>
+* {
+  font-family: 'NanumBarunGothic', sans-serif;
+}
+.update {
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.update-form {
+  width: 100%;
+  max-width: 616px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #image-des{
   display: flex;
   flex-wrap: wrap;
@@ -296,5 +339,97 @@ export default {
   background-color: #DAD870;
   border-radius: 3px;
   margin-bottom: 5%;
+}
+#title {
+  width: 98%;
+  display: inline;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 20px;
+}
+.addcard {
+  display: flex;
+  margin: 5px;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 50px;
+  align-items: center;
+  width: 31%;
+  height: 40vw;
+  max-height: 250px;
+  border: 1px solid #191919;
+  border-radius: 5px;
+}
+.write-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 31%;
+  height: 40vw;
+  max-height: 250px;
+  margin: 1%;
+  border: 1px solid #ffbe76;
+  border-radius: 5px;
+}
+.black-box {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(155, 155, 155, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.inbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90vw;
+  max-width: 616px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  padding: 10px 0px;
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 3;
+}
+.inbox label {
+  max-width: 95%;
+  max-height: 50vh;
+  display: flex;
+  width: 500px;
+  height: 500px;
+  justify-content: center;
+}
+.inbox img {
+  background-color: #191919;
+  min-width: 100%;
+  min-height: 100%;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+.inbox input {
+  display: none;
+}
+.inbox textarea {
+  width: 95%;
+  margin: 20px 0px;
+  background-color: rgba(165, 175, 182, 0.5);
+}
+.submit {
+  width: 95%;
+  display: inline;
+  background-color: #ffbe76;
+  color: #ffffff;
+  border-radius: 3px;
+  margin-bottom: 5%;
+}
+#file {
+  width: 100%;
 }
 </style>

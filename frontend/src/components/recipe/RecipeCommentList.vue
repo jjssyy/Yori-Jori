@@ -1,9 +1,11 @@
 <template lang="">
-  <div>
-    <div class="commentForm">
+  <div class="comment">
+    <div class="commentForm" id="commentForm">
       <!-- {{ comments }} -->
       <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem"/>
-      <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment">
+    </div>
+    <div class="commentInput">
+      <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment" style="height: 5vh;">
       <button @click="createComment">작성</button>
     </div>
   </div>
@@ -32,7 +34,7 @@ export default {
       comment: {
         content: '',
       },
-      comments: null,
+      comments: [],
     }
   },
   mounted: function() {
@@ -54,6 +56,7 @@ export default {
           console.log("댓글 쓰기 성공")
           this.getComment()
           this.comment.content = ''
+          document.getElementById("commentForm").scrollTop   = 0;
         },
         error=> {
           console.log(error)
@@ -79,7 +82,7 @@ export default {
       res => {
         console.log('조회 성공')
         console.log(res.data.commentList)
-        this.comments = res.data.commentList
+        this.comments = res.data.commentList.reverse()
       },
       err => {
         console.log(err)
@@ -99,6 +102,47 @@ export default {
 
 <style scoped>
   .commentForm {
-    margin-top: 10px;
+    margin-top: 10px;    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 74vh;
+  }
+  .commentInput{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  }
+
+  .commentInput input{
+    border: 0px;
+    width: 59vh;
+  }
+  .commentInput button{
+    background-color: #FF9636;
+    width: 10vh;
+    height: 4vh;
+    border-radius: 15px;
+    color: #fff;
+    padding-top: 2px;
+    font-size: 18px;
+  }
+
+  .commentForm::-webkit-scrollbar {
+    width: 6px;
+  }
+  .commentForm::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  .commentForm::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: gray;
+  }
+  .commentForm::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
   }
 </style>

@@ -4,7 +4,6 @@
   infinite-scroll-disabled="busy" 
   infinite-scroll-distance="10"
   >
-    <h1>보관함</h1>
     <div 
     class='feed' 
     v-for="(latestFeed, idx) in latestFeeds" 
