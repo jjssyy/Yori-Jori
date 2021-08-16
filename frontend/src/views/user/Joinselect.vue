@@ -2,9 +2,9 @@
   <div class="wrapC">
     <div class="box">
     <div class="row" id="join_box0">
-      <img class="food_line" src="@/assets/images/food_line.png" />
-      <img :src="require(`@/assets/images/roundlogo.png`)" />
-      <img class="food_line" src="@/assets/images/food_line2.png" />
+      <img class="food_line1" src="@/assets/images/food_line.png" />
+      <img class="registerlogo" :src="require(`@/assets/images/roundlogo.png`)" />
+      <img class="food_line2" src="@/assets/images/food_line2.png" />
     </div>
     <div class="d-flex justify-content-around" id="register">
       <div class=" row card mb-4 border-0 shadow" id="normal">
@@ -240,6 +240,7 @@ export default {
 .wrapC{
   float: none;
   margin: 0 auto ;
+
 }
 
 #normal, #kakao{
@@ -264,15 +265,18 @@ export default {
   width:110px;
   margin: 35px 2% 40px 2%;
 }
+#register{
+  margin-top: 60px;
+}
 
 #register p{
   color: #838383;
 }
 
 #join_box0 img{
-  width:180px;
-  float: none;
-  margin:-80px auto 60px;
+  margin: 0px auto 60px;
+  min-width: 150px;
+
 }
 .card{
   max-width: 300px;
@@ -281,9 +285,18 @@ export default {
   margin-bottom: 3%;
   
 }
-.food_line{
-  position:relative;
-  height: 20px;
+.registerlogo{
+  position: absolute; left: 50%; 
+  transform: translate(-50%, -50%); 
+  text-align: center;
+  min-height: 165px;
 }
-
+.food_line1{
+  float: left;
+  margin-right: 30px;
+}
+.food_line2{
+  float: right;
+  margin-left: 30px;
+}
 </style>
