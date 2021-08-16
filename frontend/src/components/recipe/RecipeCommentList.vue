@@ -82,7 +82,9 @@ export default {
       res => {
         console.log('조회 성공')
         console.log(res.data.commentList)
-        this.comments = res.data.commentList.reverse()
+        if(res.data.commentList){
+          this.comments = res.data.commentList.reverse()
+        }
       },
       err => {
         console.log(err)

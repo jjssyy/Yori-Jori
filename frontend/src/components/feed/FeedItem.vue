@@ -117,10 +117,10 @@ svg{
   width: 100%;
   max-width: 616px;
   border: none;
-  margin: 20px 0px;
   padding: 0%;
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(0, 0,0, 0.1);
 }
-
 .top-a{
   width: 100%;
   height: 80px;
@@ -176,6 +176,7 @@ svg{
   margin: 0%;
   padding: 0%;
   width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 
