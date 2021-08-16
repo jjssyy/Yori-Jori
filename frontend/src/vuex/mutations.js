@@ -5,9 +5,12 @@ export default {
     const userId = res.data['id']
     const token = res.data['access-token']
     const nickname = res.data['nickname']
+    const userImg = res.data['img']
     state.token = token
     state.userId = userId
     state.userNickname = nickname
+    state.userImg = userImg
+    console.log(userImg);
   },
   LOGOUT: function(state){
     state.token = ''

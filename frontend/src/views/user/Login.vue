@@ -122,6 +122,7 @@ export default {
            this.$store.dispatch("login",res);
 
               this.$store.state.userId = data.id
+              
               this.$router.push({name:'FeedMain'});
             }else if(res.data.result == "fail"){
               swal({title:"로그인 실패.",icon:'error'});

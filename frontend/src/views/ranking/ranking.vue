@@ -7,7 +7,7 @@
             </div>
             <div id="myrank-content">
                 <div id="myrank_img">
-                    <img src="" alt="">
+                    <img :src="profileUser.img" alt="">
                 </div>
                 <div id="myrank_des">
                     <p>닉네임 : {{mynickname}}</p>
@@ -57,19 +57,65 @@ export default {
         myrank:null,
         mypoint:null,
         mynickname:null,
+        rankpoint:null,
+        achieve_cnt:null,
+        follower_cnt:null,
+        recipe_cnt:null,
+        recipe_comment_cnt:null,
+        recipe_comment_like_cnt:null,
+        recipe_like_cnt:null,
+        profileUser: null,
     }
     },
 created() {
+    let data = {
+      id: this.userId
+      
+    }
+    
+    UserApi.getUser(
+      data,
+      res => {
+        this.profileUser = res.data
 
-    RankApi.getRanking(
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+
+     RankApi.Myrank(
+      data,
+      res => {
+        this.recipe_cnt = res.data.myrank.recipe_cnt;
+        this.achieve_cnt =  res.data.myrank.achieve_cnt;
+        this.follower_cnt = res.data.myrank.follower_cnt;
+        this.recipe_comment_cnt = res.data.myrank.recipe_comment_cnt;
+        this.recipe_comment_like_cnt = res.data.myrank.recipe_comment_like_cnt;
+        this.recipe_like_cnt = res.data.myrank.recipe_like_cnt;
+        this.rankpoint =  this.recipe_cnt +  this.achieve_cnt + this.follower_cnt + this.recipe_comment_cnt + this.recipe_comment_like_cnt + this.recipe_like_cnt;
+      
+            data = {
+              id : this.userId,
+              rankpoint : this.rankpoint
+            }
+            
+            RankApi.Updatemyrank(
+              data,
+              res => {
+                if(res.data == "success"){
+                    
+                 RankApi.getRanking(
         res => {
             this.ranking = res.data.rankinglist
-            console.log(res);
+            
             for(let i = 0; i < this.ranking.length; i++){
                 if(this.ranking[i].id == this.userId){
             this.myrank = this.ranking[i].rank
             this.mypoint = this.ranking[i].rankpoint
             this.mynickname = this.ranking[i].nickname
+
+            
             
         }
     }
@@ -78,8 +124,27 @@ created() {
         console.log(error)
         }
     )
+                }else if(res.data == "fail"){
+                  alert("랭킹포인트에 문제가 있습니다.")
+                }else{
+                  alert("에러발생");
+                }
+              },
+              error=>{
+                alert("에러발생");
+              }
+            )
+        
 
-   
+        },
+      error=>{
+        console.log(error)
+      }
+    )
+    
+
+    
+
 
     },
 methods: {

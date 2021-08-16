@@ -4,6 +4,7 @@
     <h1> 팔로잉</h1>
     <table class="table">
       <thead>
+        <th>이미지</th>
         <th>닉네임</th>
         <th>비고</th>
       </thead>
