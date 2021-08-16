@@ -22,7 +22,7 @@
             <label>카카오 가입</label>
             <div style="margin-top:10px;">
             <p>카카오 API를 이용한 회원가입</p>
-              <kakaoregister></kakaoregister>
+            <img :src="require(`@/assets/images/kakao.jpg`)" />
           </div>
           </div>
 
@@ -44,9 +44,6 @@ import Kakaoregister from "../../components/user/snsLogin/KakaoRegister.vue";
 import swal from 'sweetalert';
 
 export default {
-   components: {
-    Kakaoregister, 
-  },
   created(){
     this.passwordSchema
       .is()
@@ -227,7 +224,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 *{
    font-family: 'BBTreeGB';
 }
