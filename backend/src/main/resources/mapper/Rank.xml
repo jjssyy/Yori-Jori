@@ -6,7 +6,7 @@
 <mapper namespace="com.web.curation.model.dao.RankingDao">
 
 	<select id="recipe_cnt" parameterType="String" resultType="int">
-		select count(*) as recipe_cnt from recipe where id = 1
+		select count(*) as recipe_cnt from recipe where id = #{id}
 	</select>
 	
 	<select id="recipe_like_cnt" parameterType="String"  resultType="int">
@@ -34,7 +34,17 @@
 	</update>
 	
 	<select id="getrankinglist" resultType="Rankinglist">
-		select rank() over(order by rankpoint desc) as rank, rankpoint, nickname, id  from user order by rankpoint desc
+		WITH total as(
+		select recipe.id as id, count(*) as cnt from recipe inner join recipe_like on recipe.idx = recipe_like.recipe_idx group by id
+		union
+		select following as id, count(*) as cnt from follow group by id
+		union
+		select recipe.id as id, count(*) as cnt from recipe inner join achieve on recipe.achieve_slave = achieve.achieve_slave_name group by id
+		union
+		select id , count(*) as cnt from recipe_comment group by id
+		union
+		select recipe_comment.id as id ,count(*) as cnt from recipe_comment_like inner join recipe_comment  on recipe_comment_like.comment_idx = recipe_comment.idx group by id
+		) select rank() over(order by rankpoint desc) as rank,  total.id, SUM(cnt) as rankpoint, user.nickname as nickname from total left join user on total.id = user.id group by total.id order by rankpoint desc
 	</select>
 	
 </mapper>
