@@ -94,6 +94,13 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'BBTreeGB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 .bar-color {
   background-color: #ffbe76;
   color: black;
@@ -104,21 +111,19 @@ export default {
   display: flex;
   flex-direction: row;
   background-color: #ffbe76;
-  margin: 4%;
+  margin: 5%;
   padding: 10px;
   min-height: 2rem;
   border: none;
-  border-radius: 5px;
 }
 .menu-2 {
   display: flex;
   flex-direction: row;
   background-color: #b2bec3;
-  margin: 4%;
+  margin: 5%;
   padding: 10px;
   min-height: 2rem;
   border: none;
-  border-radius: 8px;
 }
 .submenu {
   margin: 10px;

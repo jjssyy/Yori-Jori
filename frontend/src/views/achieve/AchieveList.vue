@@ -93,7 +93,6 @@ export default {
     AchieveApi.achieveTitle(
       data,
       (res) => {
-        console.log(res);
         for (let i = 0; i < res.data.list.length; i++) {
           this.totalCount += res.data.list[i].achieve_cnt;
           this.userCount += res.data.list[i].clear_cnt;
@@ -112,6 +111,13 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'BBTreeGB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 .bar-color {
   background-color: #ffbe76;
   color: black;
@@ -152,8 +158,8 @@ export default {
   min-width: 80px;
 }
 #achieve_img {
-  width: 100px;
-  height: 100px;
+  min-width: 95px;
+  min-height: 95px;
 }
 .titlefont {
   font-size: 28px;
