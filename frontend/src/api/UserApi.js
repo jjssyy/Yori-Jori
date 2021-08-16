@@ -258,6 +258,7 @@ const latestFeed = (data, callback, errorCallback) => {
     .get('/feed/latestfeed', {
       params: {
         id: data.id,
+        page: data.page
       },
     }, {
       headers: {
