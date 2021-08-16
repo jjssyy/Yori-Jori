@@ -66,6 +66,7 @@
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import PV from "password-validator";
+import swal from 'sweetalert';
 
 export default {
   created(){
@@ -163,16 +164,16 @@ export default {
         res=>{
           
           if(res.data =="success"){
-            alert("비밀번호 변경에 성공하였습니다!");
+            swal("비밀번호 변경에 성공하였습니다!",{icon:'success'});
             this.$router.push("/");
           }else if(res.data =="fail2"){
-            alert("비밀번호 변경에 실패하셨습니다!");
+            swal("비밀번호 변경에 실패하셨습니다!",{icon:'warning'});
           }
           else if(res.data =="fail1"){
-            alert("현재 비밀번호가 아닙니다.");
+            swal("현재 비밀번호가 아닙니다.",{icon:'warning'});
           }
           else{
-            alert("에러발생");
+            swal("에러발생",{icon:'error'});
          
           this.$router.push("/error");
           }
@@ -180,7 +181,7 @@ export default {
           
         },
         error=>{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
           this.isSubmit = true;
           this.$router.push("/error");
         }
