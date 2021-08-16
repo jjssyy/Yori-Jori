@@ -1,18 +1,11 @@
-<template lang="">
-    <div class="wrapC"> 
+<template>
+  <div class="follower-page"> 
     <h1> 팔로워</h1>
-    <table class="table">
-      <thead>
-        <th>이미지</th>
-        <th>닉네임</th>
-        <th>비고</th>
-      </thead>
-      <tbody>
-        <FollowItem v-for="(follower, idx) in followers" :key="idx" :follower="follower" :idx="idx" :followers="followers" :profileId="profileId"/>
-      </tbody>
-
-    </table>
+    <hr>
+    <div class="followers">
+      <FollowItem v-for="(follower, idx) in followers" :key="idx" :follower="follower" :idx="idx" :followers="followers" :profileId="profileId"/>
     </div>
+  </div>
 </template>
 <script>
 import UserApi from '../../api/UserApi';
@@ -50,28 +43,15 @@ export default {
 }
 </script>
 
-<style>
-
-table{
-  margin-top: 50px;
+<style scoped>
+.follower-page{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-table thead{
-    
-    height: 50px;
-    color: white;
-    font-size: 22px;
-    line-height: 50px;
-    text-align: center;
-    background-color: #ffbe76;
-
-}
-
- td{
-    
-    height: 100px;
-    font-size: 22px;
-    line-height: 80px;
-    text-align: center;
-
+.followers{
+  width: 100%;
+  max-width: 616px;
 }
 </style>
