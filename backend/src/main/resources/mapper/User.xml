@@ -57,11 +57,11 @@
 	</select>
 	
 	<select id="followinglist" parameterType="String" resultType="FollowInfo">
-		select id, nickname from user where id in ( select following from follow where follower=#{id})
+		select id, nickname , imgfrom user where id in ( select following from follow where follower=#{id})
 	</select>
 	
 	<select id="followerlist" parameterType="String" resultType="FollowInfo">
-		select id, nickname from user where id in ( select follower from follow where following=#{id})
+		select id, nickname, img from user where id in ( select follower from follow where following=#{id})
 	</select>
 	
 	<select id="waitlist" parameterType="String" resultType="FollowInfo">
