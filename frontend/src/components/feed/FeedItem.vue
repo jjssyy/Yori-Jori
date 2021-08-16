@@ -3,7 +3,7 @@
     <div class="top-a">
       <div class="user-infomation"  @click="goUserProfile">
         <div class="user-img">
-          <img :src="latestFeed.profileImg || defaultImage" alt="">
+          <img :src="latestFeed.profileImg ||  defaultProfile" alt="">
         </div>
         <div class="userName">{{ latestFeed.nickname }}</div>
       </div>
@@ -28,7 +28,7 @@
       <img :src="latestFeed.img || defaultImage" alt="기본 이미지">
     </div>
     <div class="hashList">
-      <div v-for="(hash, idx) in latestFeed.hashtags" :key="idx">
+      <div v-for="(hash, idx) in latestFeed.hashtags" :key="idx" style="margin-top: 3px;">
         <span class="hash"># {{ hash }}</span>
       </div>
     </div>
@@ -192,7 +192,7 @@ svg{
 .feed-img>img{
   margin: 0%;
   padding: 0%;
-  min-width: 100%;
+  width: 100%;
   border-radius: 5px;
 }
 .hashList{
