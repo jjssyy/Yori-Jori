@@ -1,36 +1,42 @@
 <template lang="">
   <div>
-    <div v-if="update == false">
-      {{ commentItem }}
-      <div>
+    <div class="comment">
+      <!-- {{ commentItem }} -->
+      <div class="commentContent_header">
         <!-- {{ commentItem }} -->
-      <p>닉네임 : {{ commentItem.nickname }} 
-         코멘트 : {{ commentItem.comment }}</p>
-      <p>좋아요 갯수 : {{ commentItem.like }}</p>
+        <div class="commentContent_left">
+          <p style="margin-left:5px;">{{ commentItem.nickname }}</p>
+          <p style="font-size:11px; margin-left:6px; margin-top:4px;">{{ commentItem.regdate | timeFor }}</p>
+          <div v-if="update == false">
+            <div v-if="commentItem.id == userId && update==false">
+              <button @click="update = true">수정</button>
+              <button @click="deleteComment(idx)">삭제</button>
+            </div>
+          </div>
+          <div v-if="update">
+            <button @click="update = false">완료</button>
+          </div>
+        </div>
+        <div class="commentContent_right">
+          <span v-show="commentItem.likecheck == false">
+            <button class="submit" @click="like">
+             <i class="far fa-thumbs-up"></i>
+            </button>
+          </span>
+          <span v-show="commentItem.likecheck">
+            <button class="submit" @click="unlike">
+              <i class="fas fa-thumbs-up"></i>
+            </button>   
+          </span>
+          <p style="margin-left: 2px; margin-right: 10px;">{{ commentItem.like }}</p>
+        </div>
       </div>
-      <span v-if="commentItem.likecheck == false">
-          <button class="submit btn btn-secondary" @click="like">
-             좋아요
-          </button>
-      </span>
-      <span v-else>
-          <button class="submit btn btn-secondary" @click="unlike">
-            좋아요 취소
-          </button>   
-      </span>
-    </div>
-    <div v-if="update == false">
-      <div v-if="commentItem.id == userId">
-        <button @click="update = true">Update</button>
-        <button @click="deleteComment(idx)">Delete</button>
-      </div>
+      <p v-if="update==false" class="comment_des">{{ commentItem.comment }}</p>
     </div>
     <div v-if="update">
-      <input type="text" v-model.trim="commentItem.comment">
+      <input style="margin-left: 5px;" type="text" v-model.trim="commentItem.comment">
     </div>
-    <div v-if="update">
-      <button @click="update = false">Update완료</button>
-    </div>
+    <hr>
   </div>
 </template>
 
@@ -124,6 +130,18 @@ export default {
       this.comments = newComments
     },
   },
+  filters : {
+    timeFor : function(created_at){
+      var a = created_at.slice(0,4)
+      a += '.'
+      a += created_at.slice(5,7)
+      a += '.'
+      a += created_at.slice(8,10)
+      a += ' '
+      a += created_at.slice(11,16)
+      return a
+    }
+  },
   computed: {
     ...mapState([
       'userId',
@@ -133,6 +151,40 @@ export default {
 }
 </script>
 
-<style lang="">
-  
+<style scoped>
+.comment{
+  padding: 5px;
+}
+.comment p{
+  margin: 0px;
+}
+.commentContent_header{
+  display:flex;
+  justify-content: space-between;
+}
+.commentContent_left{
+  display: flex;
+}
+.commentContent_right{
+  display: flex;
+}
+.comment_des{
+  padding: 7px; 
+  display: flex; 
+  flex-wrap: wrap;
+  word-break: normal;
+}
+hr {
+    background: gray;
+    margin: 0.5rem 0;
+}
+.commentContent_left button{
+  background: rgba(0,0,0,0.5);
+  width: 30px;
+  height: 20px;
+  border-radius: 3px;
+  font-size: 14px;
+  margin-left:4px;
+  color: #fff;
+}
 </style>

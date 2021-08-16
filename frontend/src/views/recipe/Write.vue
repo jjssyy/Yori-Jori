@@ -17,8 +17,8 @@
               <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
             </button>
           </div>
-          <div class="image-box">
-            <img class="image" :src="data.img" @click="updateCard(idx)"/>
+          <div class="image-box" :style="{ backgroundImage: `url(${data.img})` }" @click="updateCard(idx)">
+            <!-- <img class="image" :src="data.img" @click="updateCard(idx)"/> -->
           </div>
           <div class="black-box" v-if="showUpdate" @click="showUpdate = !showUpdate"></div>
           <div v-if="showUpdate" class="inbox">
@@ -353,9 +353,12 @@ export default {
   color: rgba(155, 155, 155, 0.5);
 }
 .image-box {
-  width: 90%;
+  width: 100%;
   height: 80%;
   overflow: hidden;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 .image {
   object-fit:contain;
