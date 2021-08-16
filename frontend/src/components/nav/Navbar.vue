@@ -23,7 +23,7 @@
           <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-home nav-icon"></i>Home</span></li>
           </router-link>
-          <router-link :to="{name:'StarMain'}" active-class="active" tag="button">
+          <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
             <li class="nav-text"><span><i class="fas fa-star nav-icon"></i>star</span></li>
           </router-link>
           <router-link :to="{name:'Recipewrite'}" active-class="active" tag="button">
@@ -324,14 +324,14 @@ svg{
 .shrink {
   height: 50px;
 }
-
+.logo-img{
+  height: 39px;
+  margin: 0%;
+  padding: 0%;
+}
 @media only screen and (min-width: 800px){
   #sidebar{
     display: none;
-  }
-  .logo-img{
-    margin: 0%;
-    padding: 0%;
   }
   #hide-menu svg{
     color: #ffbe76;
