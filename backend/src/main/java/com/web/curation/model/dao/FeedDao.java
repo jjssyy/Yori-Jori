@@ -27,7 +27,7 @@ public interface FeedDao {
 	
 	public List<RecipeDetailFromDB> getRecipeContents(int recipe_idx) throws Exception;
 
-	public List<FeedRecipe> getLatestFeed(String id) throws Exception;
+	public List<FeedRecipe> getLatestFeed(Map params) throws Exception;
 	
 	public List<RecipeContent> getAllRecipes(String id) throws Exception;
 
@@ -84,6 +84,8 @@ public interface FeedDao {
 
 	public int deleteHashtag(int hashtag_idx) throws Exception;
 	public int updateHashtag(Map map) throws Exception;
-	
+
 	public int getFeedCnt() throws Exception;
+
+	public List<RecipeContent> gethashtagRecipes(Map map) throws Exception;
 }

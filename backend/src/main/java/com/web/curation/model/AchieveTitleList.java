@@ -7,6 +7,8 @@ public class AchieveTitleList {
 	Integer clear_cnt;
 	Integer achieve_cnt;
 	Integer percent;
+	String clear_img;
+	String fail_img;
 	public String getId() {
 		return id;
 	}
@@ -36,6 +38,18 @@ public class AchieveTitleList {
 	}
 	public void setPercent(Integer percent) {
 		this.percent = percent;
+	}
+	public String getClear_img() {
+		return clear_img;
+	}
+	public void setClear_img(String clear_img) {
+		this.clear_img = clear_img;
+	}
+	public String getFail_img() {
+		return fail_img;
+	}
+	public void setFail_img(String fail_img) {
+		this.fail_img = fail_img;
 	}
 	
 	

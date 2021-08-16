@@ -122,8 +122,8 @@ public class FeedController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
-//		System.out.println(map.keySet());
-//		System.out.println("key set");
+		System.out.println(map.keySet());
+		System.out.println("key set");
 		try {
 
 			int listCnt = feedService.getFeedCnt();
@@ -222,12 +222,19 @@ public class FeedController {
 
 	// 최신피드 (메인)
 	@GetMapping("/latestfeed")
-	public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam String id) {
+	public ResponseEntity<Map<String, Object>> latestFeed(@RequestParam Map params) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
+		String id = (String)params.get("id");
+		System.out.println(params.keySet());
 		try {
-			List<FeedRecipe> recipe = feedService.getLatestFeed(id);
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)params.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			params.put("paging", paging);
+			List<FeedRecipe> recipe = feedService.getLatestFeed(params);
 
 			HashMap<Object, Object> map = new HashMap<>();
 			map.put("recipe_user_id", id);
@@ -523,9 +530,9 @@ public class FeedController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("recipe_idx", recipe.getRecipe_idx());
 		map.put("title", recipe.getTitle());
-		map.put("achieve_master", recipe.getAchieve_master_name());
-		map.put("achieve_slave", recipe.getAchieve_slave_name());
-
+		map.put("achieve_master", recipe.getAchieve_master());
+		map.put("achieve_slave", recipe.getAchieve_slave());
+		System.out.println(recipe.getAchieve_master());
 		try {
 			if (feedService.updateRecipeInfo(map) == 1) {
 				System.out.println("제목 변경 성공");
@@ -709,4 +716,33 @@ public class FeedController {
 		resultMap.put("status", status);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	
+	@GetMapping("/hashtagsearch")
+	public ResponseEntity<Map<String, Object>> hashtagsearch(@RequestParam Map map) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+
+		String result = "SUCCESS";
+		try {
+			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
+			
+			resultMap.put("hashtagfeed", recipe);
+
+			if (recipe == null) {
+				result = "FAIL";
+			} else {
+				result = "SUCCESS";
+			}
+
+			resultMap.put("message", result);
+			status = HttpStatus.ACCEPTED;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+
 }
