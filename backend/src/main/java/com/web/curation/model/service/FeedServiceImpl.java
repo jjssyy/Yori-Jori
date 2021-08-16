@@ -177,8 +177,8 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<RecipeContent> popularPosts() throws Exception {
-		return sqlSession.getMapper(FeedDao.class).popularPosts();
+	public List<RecipeContent> popularPosts(Map map) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).popularPosts(map);
 	}
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception {
 		return sqlSession.getMapper(FeedDao.class).getHashtag(recipe_idx);

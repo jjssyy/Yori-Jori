@@ -700,12 +700,17 @@ public class FeedController {
 	}
 	
 	@GetMapping("/popularposts")
-	public ResponseEntity<Map<String, Object>> popularPosts() {
+	public ResponseEntity<Map<String, Object>> popularPosts(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.OK;
 		List<RecipeContent> list;
 		try {
-			list = feedService.popularPosts();
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)map.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			map.put("paging", paging);
+			list = feedService.popularPosts(map);
 			resultMap.put("popularPosts", list);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -721,9 +726,14 @@ public class FeedController {
 	public ResponseEntity<Map<String, Object>> hashtagsearch(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-
+		System.out.println(map.keySet());
 		String result = "SUCCESS";
 		try {
+			int listCnt = feedService.getFeedCnt();
+			int page = Integer.parseInt((String)map.get("page"));
+			Paging paging = new Paging();
+			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
+			map.put("paging", paging);
 			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
 			
 			resultMap.put("hashtagfeed", recipe);

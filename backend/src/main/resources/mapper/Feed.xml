@@ -60,12 +60,13 @@
    </select>
    
    <!-- get posts in range of popularity -->
-   <select id="popularPosts" resultType="RecipeContent">
+   <select id="popularPosts" parameterType="Map" resultType="RecipeContent">
          select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, count(l.recipe_idx) likes
          from recipe r left join recipe_like l on r.idx = l.recipe_idx 
          join recipe_content as c on r.idx=c.recipe_idx
          where c.thumbnail="true"
          group by l.recipe_idx order by likes desc
+         LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
    <!-- hashtag -->
@@ -200,7 +201,8 @@
 		from recipe left outer join hashtag on recipe.idx = hashtag.recipe_idx
 		inner join recipe_content on recipe.idx = recipe_content.recipe_idx
 		inner join recipe_like on recipe.idx = recipe_like.recipe_idx
-		where hashtag.tag = #{hashtag} group by recipe.idx;            	
+		where hashtag.tag = #{hashtag} group by recipe.idx 
+		LIMIT #{paging.startList}, #{paging.listSize};
    	</select>
    
    <select id="getFeedCnt" resultType="int">
