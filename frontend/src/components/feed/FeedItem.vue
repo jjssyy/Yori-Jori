@@ -3,9 +3,9 @@
     <div class="top-a">
       <div class="user-infomation"  @click="goUserProfile">
         <div class="user-img">
-          <img :src="defaultProfile" height="35px" alt="">
+          <img :src="latestFeed.profileImg ||  defaultProfile" alt="">
         </div>
-        <div class="user-name">{{ latestFeed.nickname }}</div>
+        <div class="userName">{{ latestFeed.nickname }}</div>
       </div>
       <div class="title">
         <h2 @click="goRecipeDetail">{{ latestFeed.title | longTitle}}</h2>
@@ -17,7 +17,7 @@
         </div>
         <div class="comment">
           <i class="fas fa-comment-alt full"></i>
-          <span>0</span>
+          <span>{{ latestFeed.comment }}</span>
         </div>
         <div class="share">
           <i class="fas fa-share"></i>
@@ -26,6 +26,11 @@
     </div>
     <div class="feed-img" @click="goRecipeDetail">
       <img :src="latestFeed.img || defaultImage" alt="기본 이미지">
+    </div>
+    <div class="hashList">
+      <div v-for="(hash, idx) in latestFeed.hashtags" :key="idx" style="margin-top: 3px;">
+        <span class="hash"># {{ hash }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -112,15 +117,27 @@ h2{
 svg{
   color: #ffbe76;
 }
-
+.user-img img{
+  border-radius: 50%;
+  width: 40px;
+  height:40px;
+  margin-left: 5px;
+  margin-top: 7px;
+  object-fit: cover;
+}
+.userName {
+  margin-left: 4px;
+  font-weight: 900;
+  font-size: 14px;
+}
 .feed-item{
   width: 100%;
   max-width: 616px;
   border: none;
-  margin: 20px 0px;
   padding: 0%;
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(0, 0,0, 0.1);
 }
-
 .top-a{
   width: 100%;
   height: 80px;
@@ -178,5 +195,27 @@ svg{
   width: 100%;
   border-radius: 5px;
 }
-
+.hashList{
+  padding: 5px;
+  top: 40%;
+  left: 15px;
+  text-align: left;
+  display: flex;
+  /* overflow: auto; */
+  width: 100%;
+  flex-wrap: wrap;
+}
+.hash{
+  background-color: #FFCD58;
+  /* background-color: rgba( 255, 255, 255, 0.2); */
+  padding: 3px 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 50px;
+  border-radius: 25px;
+  }
 </style>

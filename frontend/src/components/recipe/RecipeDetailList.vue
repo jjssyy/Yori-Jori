@@ -168,7 +168,9 @@ export default {
   },
   filters : {
     timeFor : function(created_at){
-      var a = created_at.slice(0,4)
+      if(created_at){
+      var a = ''
+      a = created_at.slice(0,4)
       a += '.'
       a += created_at.slice(5,7)
       a += '.'
@@ -176,6 +178,7 @@ export default {
       a += ' '
       a += created_at.slice(11,16)
       return a
+      }
     }
   },
   methods: {
@@ -255,8 +258,6 @@ export default {
         }
       )
     },
-  },
-  filter: {
   },
   computed: {
     ...mapState([
