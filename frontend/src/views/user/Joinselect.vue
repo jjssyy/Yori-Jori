@@ -1,35 +1,37 @@
 <template>
   <div class="wrapC">
-    <div class="row" id="register">
-
-      <div class="col-md-4" id="normal">
-        <div class="row">
-           <label>일반 가입</label>
-        </div>
-        <div class="row" style="margin-top:30px;">
-          <p>아이디, 비밀번호 등을 활용한 회원가입</p>
-        </div>
-       <div class="row">
-        <router-link to="/user/join" class="btn--text">
+    <div class="box">
+    <div class="row" id="join_box0">
+      <img class="food_line" src="@/assets/images/food_line.png" />
+      <img :src="require(`@/assets/images/roundlogo.png`)" />
+      <img class="food_line" src="@/assets/images/food_line2.png" />
+    </div>
+    <div class="d-flex justify-content-around" id="register">
+      <div class=" row card mb-4 border-0 shadow" id="normal">
+        <div class="col-xs-3">
+          <label>일반 가입</label>
+          <div style="margin-top:10px;">
+          <p>아이디, 비밀번호 등을 활용한 <br>회원가입</p>
+          <router-link to="/user/join" class="btn--text">
           <img :src="require(`@/assets/images/user.png`)" />
         </router-link>
-       </div>
-    
+        </div>
+        </div>
       </div>
-      <div class="col-md-4"></div>
-        <div class="col-md-4" id="kakao">
-          <div class="row">
-            <label>카카오가입</label>
-          </div>
-          <div class="row" style="margin-top:30px;">
+
+        <div class="row card mb-4 border-0 shadow" id="kakao">
+          <div class="col-xs-3">
+            <label>카카오 가입</label>
+            <div style="margin-top:10px;">
             <p>카카오 API를 이용한 회원가입</p>
+              <kakaoregister></kakaoregister>
           </div>
-          <div class="row">
-            <kakaoregister></kakaoregister>
           </div>
+
       </div>
       </div>
-    
+    </div>
+    <hr>
     </div>
 
 
@@ -226,33 +228,62 @@ export default {
 </script>
 
 <style>
-
-#register{
-  margin-top: 200px;
+*{
+   font-family: 'BBTreeGB';
+}
+@font-face {
+    font-family: 'BBTreeGB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.wrapC{
+  float: none;
+  margin: 0 auto ;
 }
 
 #normal, #kakao{
   text-align: center;
+  margin:0 3% 0 3%;
   
 }
 
 #normal label, #kakao label{
-  font-size: 40px;
+  padding-top: 10px;
+  font-size: 30px;
+  margin: 0 2% 0 2%;
 }
 
 #normal img{
-  width:350px;
-  height:250px;
-  margin: 80px 0px 50px -100px;
+  width:120px;
+  height:120px;
+  margin: 5px 2% 50px 2%;
 }
 
 #kakao img{
-  width:200px;
-  margin: 120px 0px 50px -20px;
+  width:110px;
+  margin: 35px 2% 40px 2%;
 }
 
 #register p{
-  color: #ffbe76;
+  color: #838383;
+}
+
+#join_box0 img{
+  width:180px;
+  float: none;
+  margin:-80px auto 60px;
+}
+.card{
+  max-width: 300px;
+  width: 300px;
+  margin: 0 3%;
+  margin-bottom: 3%;
+  
+}
+.food_line{
+  position:relative;
+  height: 20px;
 }
 
 </style>
