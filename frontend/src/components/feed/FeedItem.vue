@@ -17,7 +17,7 @@
         </div>
         <div class="comment">
           <i class="fas fa-comment-alt full"></i>
-          <span>0</span>
+          <span>{{ latestFeed.comment }}</span>
         </div>
         <div class="share">
           <i class="fas fa-share"></i>
