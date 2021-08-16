@@ -23,7 +23,7 @@
             <p class="recipe_content_nickname" style="color:white; margin-bottom:0px;" @click="goProfile">작성자 : {{ recipeContent.nickname}}</p>
             <p class="time" style="color:white;">{{ recipeContent.regdate | timeFor }}</p>
           </div>
-          <h1 style="color:white;">{{ recipeContent.title}}</h1>
+          <h1 class="title" style="color:white;">{{ recipeContent.title}}</h1>
           <div class="hashlist">
             <div v-for="(h, idx) in recipeContent.tag" :key="idx">
               <span class="hash"># {{h}}</span>
@@ -56,6 +56,9 @@
         </div>
       </slide>
       <slide class="contents" v-for="(recipeItem, idx) in recipe" :key="idx">
+        <span v-if="recipe.length === idx+1" class="out" @click="$router.go(-1)">
+          <i class="fas fa-sign-out-alt"></i>
+        </span>
         <!-- {{ recipeItem }} -->
         <!-- {{ idx+1 }} -->
         <div class="recipe">
@@ -92,9 +95,7 @@
             </p>
           </div>
         </div>
-        <!-- <RecipeCommentList :recipeItem="recipeItem" :recipeContent="recipeContent"/> -->
       </slide>
-      <!-- <hooper-progress slot="hooper-addons"></hooper-progress> -->
       <hooper-navigation v-if="showComment == false" slot="hooper-addons"></hooper-navigation>
     </hooper>
     </div>
@@ -150,7 +151,7 @@ export default {
       RecipeApi.recipeItemComments(
         data,
         res => {
-          this.commentCount += res.data.commentList.length
+          // this.commentCount += res.data.commentList.length
           if(res.data.commentList.length){
             this.commentCountList.push(res.data.commentList.length)
           }
@@ -279,6 +280,14 @@ export default {
     z-index:1000;
     color: #fff;
   }
+  .out{
+    z-index: 1000;
+    display: flex;
+    position: absolute;
+    right: 0px;
+    margin: 7px 9px 0px 0px;
+    font-size: 25px;
+  }
   .back {
     margin-top: 7px;
     margin-left: 9px;
@@ -383,7 +392,10 @@ export default {
     /* overflow: auto; */
     width: 100%;
     flex-wrap: wrap;
-    
+  }
+  .title {
+    word-break: normal;
+    margin-right: 40px;
   }
   .hash{
   background-color: rgba(0, 0, 0, 0.5);
