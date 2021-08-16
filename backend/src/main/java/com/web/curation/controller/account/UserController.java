@@ -75,6 +75,7 @@ public class UserController {
 				resultmap.put("access-token", token);
 				resultmap.put("id", user.getId());
 				resultmap.put("nickname", user.getNickname());
+				resultmap.put("put",user.getImg());
 				result = "success";
 				resultmap.put("result", result);
 
