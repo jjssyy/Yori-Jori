@@ -101,6 +101,10 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+
+* {
+  font-family: 'BBTreeGB' !important;
+}
 .bar-color {
   background-color: #ffbe76;
   color: black;
@@ -128,6 +132,7 @@ export default {
 .submenu {
   margin: 10px;
   min-width: 87%;
+  font-size: 24px;
 }
 .fa-utensils {
   width: 80%;
@@ -137,7 +142,7 @@ export default {
   opacity: 0.9;
 }
 .card-title {
-  font-size: 28px;
+  font-size: 30px;
 }
 .card-body {
   padding: 30px;
@@ -151,7 +156,7 @@ export default {
   align-content: center;
 }
 .titlefont {
-  font-size: 34px;
+  font-size: 38px;
   margin-left: 0.3%;
   text-align: center;
 }
