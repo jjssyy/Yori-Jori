@@ -15,7 +15,7 @@ public class RecipeContent {
 	private String achieve_slave;
 	private String achieve_title_name;
 	private String hashtag;
-	
+	private int comment;
 	
 	public String getHashtag() {
 		return hashtag;
@@ -89,5 +89,11 @@ public class RecipeContent {
 	}
 	public void setAchieve_slave(String achieve_slave) {
 		this.achieve_slave = achieve_slave;
+	}
+	public int getComment() {
+		return comment;
+	}
+	public void setComment(int comment) {
+		this.comment = comment;
 	}
 }
