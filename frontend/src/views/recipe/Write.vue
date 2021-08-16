@@ -5,19 +5,23 @@
       <input v-model="title" id="title" placeholder="제목을 입력하세요" type="text" />
       <div id="image-des">
         <h2>CARDs</h2>
-        <div
-          v-for="(data, idx) in fields"
-          :key="fields[idx].idx"
-          class="write-card"
-        >
+        <div v-for="(data, idx) in fields" :key="fields[idx].idx" class="write-card">
           <div class="check-box">
-            <div v-if="idx===thumbnailNumber" class="thumbnail" @click="isThumbnail(idx)"><i class="fas fa-thumbtack"></i></div>
-            <div v-else class="thumbnail-none" @click="isThumbnail(idx)"><i class="fas fa-thumbtack"></i></div>
+            <div v-if="idx === thumbnailNumber" class="thumbnail" @click="isThumbnail(idx)">
+              <i class="fas fa-thumbtack"></i>
+            </div>
+            <div v-else class="thumbnail-none" @click="isThumbnail(idx)">
+              <i class="fas fa-thumbtack"></i>
+            </div>
             <button @click="deleteContent(idx)">
               <i class="fas fa-minus-circle" style="color:#FF5C4D;"></i>
             </button>
           </div>
-          <div class="image-box" :style="{ backgroundImage: `url(${data.img})` }" @click="updateCard(idx)">
+          <div
+            class="image-box"
+            :style="{ backgroundImage: `url(${data.img})` }"
+            @click="updateCard(idx)"
+          >
             <!-- <img class="image" :src="data.img" @click="updateCard(idx)"/> -->
           </div>
           <div class="black-box" v-if="showUpdate" @click="showUpdate = !showUpdate"></div>
@@ -107,6 +111,8 @@ import { mapState } from 'vuex';
 import UserApi from '../../api/UserApi';
 import RecipeApi from '../../api/RecipeApi';
 import FirebaseApi from '../../api/FirebaseApi';
+import swal from 'sweetalert';
+
 var frm = new FormData();
 
 export default {
@@ -129,7 +135,7 @@ export default {
       slave_names: [],
       masterSelected: '',
       slaveSelected: '',
-      showUpdate:false
+      showUpdate: false,
     };
   },
   mounted: function() {
@@ -222,20 +228,36 @@ export default {
       this.showcard = !this.showcard;
     },
     createHash() {
+      if (this.temphash.length == 0) {
+        swal({ title: '글자를 입력해주세요', icon: 'warning' });
+        return;
+      }
+      if (this.temphash.length > 10) {
+        swal({ title: '10글자 이하로 입력해주세요', icon: 'warning' });
+        this.temphash = '';
+        return;
+      }
+      for (let i = 0; i < this.HashList.length; i++) {
+        if (this.HashList[i].content == this.temphash) {
+          swal({ title: '이미 등록된 해시태그 입니다.', icon: 'warning' });
+          this.temphash = '';
+          return;
+        }
+      }
       this.HashList.push({
         content: this.temphash,
       });
       this.temphash = '';
     },
     updateCard(idx) {
-      this.showUpdate = true
+      this.showUpdate = true;
     },
-    updateImage(idx){
+    updateImage(idx) {
       if (this.tempImg != '') {
-        this.fields[idx].img = this.tempImg
+        this.fields[idx].img = this.tempImg;
       }
-      this.tempImg = ''
-      this.showUpdate = !this.showUpdate
+      this.tempImg = '';
+      this.showUpdate = !this.showUpdate;
     },
     isThumbnail(idx) {
       this.thumbnailNumber = idx;
@@ -349,19 +371,19 @@ export default {
   justify-content: center;
   margin: 5px;
 }
-.thumbnail-none svg{
+.thumbnail-none svg {
   color: rgba(155, 155, 155, 0.5);
 }
 .image-box {
   width: 100%;
   height: 80%;
   overflow: hidden;
-  background-size:cover;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
 .image {
-  object-fit:contain;
+  object-fit: contain;
   transform: translate(-20%);
 }
 #file {
