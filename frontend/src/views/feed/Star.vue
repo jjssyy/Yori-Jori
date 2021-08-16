@@ -41,7 +41,6 @@ export default {
   }, 
   methods: {
     getPost(){
-      console.log(this.page)
       let data = {
         id: this.userId,
         page: this.page++
@@ -49,11 +48,14 @@ export default {
       FeedApi.popularposts(
         data,
         res => {
-          console.log(res.data)
           const items = res.data.popularPosts.map(item => {
             return item
           })
-          this.busy = false
+          if (res.data.popularPosts.length == 0){
+            this.busy = true
+          } else {
+            this.busy = false
+          }
           this.latestFeeds = this.latestFeeds.concat(items)
         },
         error => {

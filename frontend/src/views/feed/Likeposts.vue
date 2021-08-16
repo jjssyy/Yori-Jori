@@ -48,7 +48,11 @@ export default {
           const items = res.data.latestPosts.map(item => {
             return item
           })
-          this.busy = false
+          if (res.data.latestPosts.length == 0){
+            this.busy = true
+          } else {
+            this.busy = false
+          }
           this.latestFeeds = this.latestFeeds.concat(items)
           console.log(items)
         },
