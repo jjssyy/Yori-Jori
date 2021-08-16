@@ -3,7 +3,7 @@
     <div class="wrapC" id="findpw">
       <div class="row" id="findpw_box0">
        <img :src="require(`@/assets/images/roundlogo.png`)" />
-    </div>
+      </div>
       <div class="row" id="findpw_box1">
         <h1>비밀번호 찾기</h1>
       </div>
@@ -96,10 +96,17 @@ export default {
 <style>
 
 #findpw{
-  margin-top: 250px;
   border: 1px solid darkgray;
   padding:50px;
+  max-width: 580px;
+  width: 100%;
+  margin: 0 auto;
 
+}
+@media (max-width: 580px) {
+  #findpw{
+    border: none;
+  }
 }
 
 input {
@@ -129,11 +136,14 @@ input {
   margin-bottom: 30px;
 }
 
-#findpw_box0 img{
-  width:200px;
-  margin-left: 150px;
+#findpw_box0{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+#findpw_box0 img{
+  width: 200px;
+}
 
 </style>
 
