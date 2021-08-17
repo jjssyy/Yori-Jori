@@ -3,8 +3,28 @@
     <div class="wrapC">
       
       <h1>유저 목록</h1>
-
-      <table class="table" id="searchmember_table">
+      <li   v-for="(member, idx) in members" :key="idx">
+        <div v-if="member && member.nickname.includes(searchnickname)" class="user">
+          <div class="user-info" @click="moveTo">
+            <div class="user-img">
+              <img :src="member.img||defaultProfile" alt="ddd">
+            </div>
+            <div class="user-des">
+              <div class="user-id">
+                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" >{{member.nickname}}</router-link>
+              </div>
+              <div class="user-nickname">
+                {{member.des}}
+              </div>
+            </div>
+          </div>
+          <div class="delete">
+            <button  v-if="follow_already.includes(member.id)" @click="senddeletefollow(member)">이미 등록됨</button>
+            <button  v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">신청</button>
+          </div>
+        </div>
+      </li>
+      <!-- <table class="table" id="searchmember_table">
         <thead>
           <tr>
             <th>닉네임</th>
@@ -22,7 +42,7 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
   </div>
 </template>
@@ -33,15 +53,17 @@ import UserApi from '../../api/UserApi';
 import "../../components/css/feed/feed-item.scss";
 import "../../components/css/feed/newsfeed.scss";
 import swal from 'sweetalert';
-
+import defaultProfile from "../../assets/images/profile_default.png";
 export default {
   props: ["keyword"],
 
   data: ()=>{
     return{
+      defaultProfile,
       profileId: null,
       members: {
       type: [Array, Object],
+      
     },
   
      member: {
@@ -52,6 +74,7 @@ export default {
     follow_wait:[],
     follow_already:[],
     }
+    
   },
 
   components: {  },
@@ -153,29 +176,91 @@ export default {
 };
 </script>
 
-<style>
-  #searchmember_table  thead{
-    
-    height: 50px;
-    color: white;
-    font-size: 22px;
-    line-height: 50px;
-    text-align: center;
-    background-color: #ffbe76;
-
+<style scoped>
+li{
+  display: flex;
+  padding: 8px 16px;
 }
-
-#searchmember_table{
+.user{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.user-info{
+  align-items: center;
+  display: flex;
+  flex: 1 1 100px;
+  flex-direction: row;
+  overflow: hidden;
+}
+.user-img{
+  align-items: center;
+  align-self: center;
+  display: block;
+  flex: none;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: gray;
+  margin: 4px;
+  margin-right: 13px;
+  border-radius: 50%;
+}
+.user-img img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-des{
+  flex: 1 1 70px;
+  justify-content: center;
+  min-width: 70px;
+}
+.user-id{
+  align-content: center;
+  display: flex;
+  flex-direction: row;
+}
+.user-nickname{
+  color: rgba(var(--f52,142,142,142),1);
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.delete{
+  display: flex;
+  align-content: center;
+  flex: 0 0 auto;
+  justify-content: center;
+  margin-left: 15px;
+}
+.delete button{
+  appearance: none;
+  background: 0 0;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  font-weight: 600;
+  padding: 0px 9px;
   text-align: center;
-}
-
-  #searchmember_table  td{
-    
-    height: 100px;
-    font-size: 22px;
-    line-height: 80px;
-    text-align: center;
-
+  text-transform: inherit;
+  text-overflow: ellipsis;
+  width: auto;
+  appearance: auto;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-indent: 0px;
+  text-align: center;
+  align-items: flex-start;
+  font: 400 13.3333px Arial;
+  border: 1px solid rgba(var(--ca6,219,219,219),1);
+  border-radius: 4px;
 }
 </style>
-
