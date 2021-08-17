@@ -48,7 +48,6 @@ export default {
             this.busy = false
           }
           this.latestFeeds = this.latestFeeds.concat(items)
-          console.log(this.latestFeeds)
         },
         error => {
           console.log(error)

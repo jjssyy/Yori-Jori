@@ -113,7 +113,6 @@
 <script>
 import { mapState } from 'vuex'
 import RecipeApi from '../../api/RecipeApi';
-import UserApi from '../../api/UserApi';
 import FirebaseApi from '../../api/FirebaseApi';
 import RecipeCommentList from "../../components/recipe/RecipeCommentList.vue";
 import { Hooper, Slide, Navigation as HooperNavigation } from "hooper";
@@ -188,7 +187,6 @@ export default {
     },
     showCommentFunc(idx){
       this.selectedContent = idx
-      console.log(idx)
       this.showComment = true
     },
     goProfile(){
