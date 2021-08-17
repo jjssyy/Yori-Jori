@@ -32,6 +32,7 @@ import { mapState } from "vuex";
 import UserApi from '../../api/UserApi';
 import "../../components/css/feed/feed-item.scss";
 import "../../components/css/feed/newsfeed.scss";
+import swal from 'sweetalert';
 
 export default {
   props: ["keyword"],
@@ -73,16 +74,16 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우 신청을 보냈습니다.")
+          swal("팔로우 신청을 보냈습니다.",{icon:'success'})
             this.$router.go();
         }else if(res.data == "fail"){
-          alert("팔로우 신청이 보내지지 않았습니다.")
+          swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
         }
       },
       error=>{
-         alert("에러발생");
+         swal("에러발생",{icon:'error'});
       }
     )
      
@@ -101,16 +102,16 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우를 취소했습니다..")
+          swal("팔로우를 취소했습니다..",{icon:'success'})
             this.$router.go();
         }else if(res.data == "fail"){
-          alert("팔로우 취소신청이 보내지지 않았습니다.")
+          swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
         }
       },
       error=>{
-        alert("에러발생");
+        swal("에러발생",{icon:'error'});
       }
     )
     },

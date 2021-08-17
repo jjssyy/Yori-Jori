@@ -1,8 +1,12 @@
 <template>
-  <div class="newsfeed">
+  <div class="newsfeed"
+  v-infinite-scroll="loadMore" 
+  infinite-scroll-disabled="busy" 
+  infinite-scroll-distance="20"
+  >
     <h1>#{{hashtag}}</h1>
-    <div class='feed' v-for="(hashtagfeeds, idx) in hashtagfeed" :key="idx">
-        <FeedItem :latestFeed="hashtagfeeds" :idx="idx"/>
+    <div class='feed' v-for="(latestFeed, idx) in hashtagfeed" :key="idx">
+        <FeedItem :latestFeed="latestFeed" :idx="idx"/>
     </div>
   </div>
 </template>
@@ -27,27 +31,39 @@ export default {
     FeedItem,
   },
   methods: {
- 
+    getPost(){
+      this.hashtag = this.$route.query.hashtag.substr(1,this.$route.query.hashtag.length-1);
+      
+        let data ={
+          hashtag: this.hashtag,
+          page: this.page++
+        }
+        FeedApi.hashtagsearch(
+        data,
+        res => {
+          console.log(res.data)
+          const items = res.data.hashtagfeed.map(item => {
+            return item
+          })
+          if (res.data.hashtagfeed.length == 0){
+            this.busy = true
+          } else {
+            this.busy = false
+          }
+          this.hashtagfeed = this.hashtagfeed.concat(items)
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+    },
+    loadMore(){
+      this.busy = true
+      this.getPost()
+    }
   },
   created() {
-    this.hashtag = this.$route.query.hashtag.substr(1,this.$route.query.hashtag.length-1);
-    
-      let data ={
-        hashtag: this.hashtag,
-      }
-      FeedApi.hashtagsearch(
-      
-      data,
-      res => {
-        
-        this.hashtagfeed = res.data.hashtagfeed
-        console.log(this.hashtagfeed)
-      },
-      error=>{
-        console.log(error)
-      }
-    )
-
+    this.getPost()
   },
   computed: {
     ...mapState([
