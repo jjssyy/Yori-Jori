@@ -50,6 +50,7 @@ const hashtagsearch = (data, callback, errorCallback) => {
   http.get('/feed/hashtagsearch', {
     params:{
         hashtag : data.hashtag,
+        page: data.page
     }}, {
       headers: {
         'access-token': store.state.token

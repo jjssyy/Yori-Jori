@@ -5,7 +5,7 @@
     Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
  -->
 <template>
-  <div >
+  <div class="pwchange-page">
     <div class="row" id="pwupdate">
       <div class="row" id="updatepw_box0">
        <img :src="require(`@/assets/images/roundlogo.png`)" />
@@ -201,11 +201,15 @@ export default {
 </script>
 
 <style>
+.pwchange-page{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #pwupdate{
   padding:0px 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  max-width: 616px;
 }
 
 input {
