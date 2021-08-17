@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
 import UserApi from "../../../api/UserApi";
     export default {
        
@@ -41,20 +42,20 @@ import UserApi from "../../../api/UserApi";
                             data,
                             res => {
                                 if(res.data == "success"){
-                                    alert("회원가입에 성공하였습니다.");
+                                    swal("회원가입에 성공하였습니다!",{icon:'success'});
                                     this.$router.push({name:'Login'});
                                  
                                 }else if(res.data == "fail"){
-                                    alert("회원가입에 실패하였습니다.");
+                                    swal("회원가입에 실패하셨습니다.!",{icon:'warning'});
                                     
                                 }else{
-                                    alert("에러가 발생하였습니다.");
+                                    swal("에러발생",{icon:'error'});
                                     
                                 }
                             },
                             error => {
                                 //요청이 끝나면 버튼 활성화
-                                alert("에러가 발생하였습니다.");
+                                swal("에러발생",{icon:'error'});
                                 
 
                                 this.$router.push({name:'ErrorPage'});

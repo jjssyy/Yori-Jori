@@ -60,6 +60,7 @@ import SearchBox from './Search.vue'
 import Notification from './Notice.vue'
 import { mapState } from 'vuex'
 import logo from '@/assets/logo.png'
+import swal from 'sweetalert';
 
 export default {
   components:{
@@ -105,7 +106,7 @@ export default {
     },
     logout(event){
       event.preventDefault()
-      alert('로그아웃 되었습니다.');
+      swal({title : '로그아웃 되었습니다.', icon:'success'});
       this.$store.dispatch('logout');
       this.$router.push({name:'Login'});
     },

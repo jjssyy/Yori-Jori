@@ -11,9 +11,10 @@
 </template>
 
 <script>
-   
+import swal from 'sweetalert';
 import UserApi from "../../../api/UserApi";
 import { mapState } from 'vuex'
+
     export default {
        
         methods: {
@@ -40,23 +41,23 @@ import { mapState } from 'vuex'
                             res => {
 
                                 if(res.data.result == "success"){
-                                alert("로그인 되었습니다.");
+                                swal({title:"로그인 되었습니다.",icon:'success'});
                                 this.$store.dispatch("login",res);
                                 this.$store.state.userId = res.data.id
                                 console.log(res.data.id );
                                 this.$router.push({name:'FeedMain'});
                                 }else if(res.data.result == "fail"){
-                                alert("로그인 실패.");
+                                swal({title:"로그인 실패.",icon:'error'});
                             
                                 }else{
-                                alert("회원가입 되어있지않습니다.");
+                                swal("로그인 실패","아이디가 존재하지 않거나 비밀번호가 틀렸습니다.",'error');
                                 this.$router.push({name:'ErrorPage'});
 
                                 }
                             },
                             error => {
                                 //요청이 끝나면 버튼 활성화
-                                alert("회원가입 되어있지않습니다.");
+                                swal("로그인 실패","아이디가 존재하지 않거나 비밀번호가 틀렸습니다.",'error');
 
                                 this.$router.push({name:'ErrorPage'});
                             }

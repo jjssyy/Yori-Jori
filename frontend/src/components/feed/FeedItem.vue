@@ -53,6 +53,7 @@ export default {
   methods: {
     goRecipeDetail() {
       this.$router.push({name:'RecipeDetail', params: {recipe_idx:this.latestFeed.idx}})
+      this.$store.dispatch('countComment', this.latestFeed.comment)
     },
     goUserProfile() {
       this.$router.push({name:'Profile', params: {user_id: this.latestFeed.id}})
