@@ -134,36 +134,10 @@ export default {
   },
   data: () => {
     return {
-      commentCount: 0,
       commentCountList: [],
       showComment: false,
       selectedContent: 0,
       showMenu: false,
-    }
-  },
-  mounted: function() {
-    for(var content of this.recipe){
-      let data = {
-        content_idx: content.idx,
-        id: this.userId,
-      }
-      console.log(data)
-      RecipeApi.recipeItemComments(
-        data,
-        res => {
-          // this.commentCount += res.data.commentList.length
-          if(res.data.commentList.length){
-            this.commentCountList.push(res.data.commentList.length)
-          }
-          else{
-            this.commentCountList += [0]
-          }
-          console.log(this.commentCountList)
-        },
-        err => {
-          console.log(err)
-        }
-      ) 
     }
   },
   filters : {
@@ -264,6 +238,7 @@ export default {
       'userId',      
       'userNickname',
       'selectRecipeId',
+      'commentCount'
     ])
   }
 }

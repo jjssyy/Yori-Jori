@@ -22,5 +22,8 @@ export default {
   },
   deleteContent({commit},res){
     commit('DELETECONTENT',res)
+  },
+  countComment({commit},res){
+    commit('COUNTCOMMENT',res)
   }
 }
