@@ -2,13 +2,13 @@
   <div class="profile-page" v-if="profileUser">
     <div class="profile" v-if="profileUser">
       <div class="profile-image">
-        <img :src="profileUser.img" alt="">
+        <img :src="profileUser.img||defaultProfile" alt="">
       </div>
       <div class="profile-user-settings">
-        <h1 class="profile-user-name">{{ profileUser.id }}</h1>
+        <h1 class="profile-user-name">{{ profileUser.nickname }}</h1>
         <div v-if="profileUser.id == userId">
-          <router-link style="text-decoration:none; color:black;" to="/user/update" class="profile-edit-btn">회원정보</router-link>
-          <router-link style="text-decoration:none; color:black;" to="/user/changepassword" class="profile-edit-btn">비밀번호</router-link>
+          <router-link style="text-decoration:none; border:none; color:black;" to="/user/update" class="profile-edit-btn">회원정보</router-link>/
+          <router-link style="text-decoration:none; border:none; color:black;" to="/user/changepassword" class="profile-edit-btn">비밀번호</router-link>
         </div>
         <div v-else>
           <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button>
@@ -25,12 +25,12 @@
         </ul>
       </div>
       <div class="profile-bio">
-        <p><span class="profile-real-name">{{ profileUser.nickname }}</span> {{profileUser.des}}</p>
+        <p><span class="profile-real-name">소개 : </span> {{profileUser.des}}</p>
       </div>
     </div>
-    <div class="achieve-section">
+    <div class="achieve-section" style="margin-top:30px;">
       <div class="achieve-title">
-        <h4><i class="fas fa-medal"></i>칭호</h4>
+        <h4 style="margin-bottom:10px;"><i class="fas fa-medal"></i>칭호</h4>
       </div>
       <div class="achieve-list" style="margin-bottom:100px;">
         <span v-for="(clear, idx) in achieve" :key="idx" style="width:100px; height:100px;">
@@ -40,15 +40,15 @@
       </div>
     </div>
     <div class="article-sections">
-      <div class="article-title">
-        <h4><i class="fas fa-pen"></i>요리책</h4>
+      <div class="article-title" >
+        <h4 style="margin-bottom:10px;"><i class="fas fa-pen"></i>요리책</h4>
       </div>
       <div class="article-list">
         <table class="table">
           <thead>
             <th>no</th>
             <th>제목</th>
-            <th>업적</th>
+            <th>분류</th>
             <th>좋아요</th>
           </thead>
           <tbody>
@@ -68,11 +68,13 @@ import AchieveApi from '../../api/AchieveApi';
 import MyRecipeItem from '../../components/profile/MyRecipeItem.vue';
 import FirebaseApi from '../../api/FirebaseApi';
 import swal from 'sweetalert';
+import defaultProfile from "../../assets/images/profile_default.png";
 
 export default {
   components: { MyRecipeItem },
   data: () => {
     return {
+      defaultProfile,
       profileUser: null,
       profileId: null,
       follower: null,

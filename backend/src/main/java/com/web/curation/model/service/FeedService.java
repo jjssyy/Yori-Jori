@@ -69,4 +69,5 @@ public interface FeedService {
 
 	public int getCommentNum(int idx) throws Exception;
 	public List<String> getHashtagList(int idx) throws Exception;
+	public int getTotalCommentNum(int idx) throws Exception;
 }
