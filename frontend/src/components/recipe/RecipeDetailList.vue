@@ -101,11 +101,11 @@
     </div>
         <div class="comment_box" v-if="showComment">
           <div class="comment_header">
-            <span class="comment_back" @click="showComment = false">
+            <span class="comment_back" @click="backComment">
               <i class="fas fa-arrow-left"></i>
             </span>
           </div>
-          <RecipeCommentList :recipeItem="recipe[selectedContent]" :recipeContent="recipeContent"/>
+          <RecipeCommentList :recipeItem="recipe[selectedContent]" :recipeContent="recipeContent" :selectedContent="selectedContent"/>
     </div>
     </div>
 </template>
@@ -155,6 +155,9 @@ export default {
     }
   },
   methods: {
+    backComment() {
+      this.showComment = false
+    },
     updateRecipe() {
       this.$router.push({name:'UpdateRecipe', params: {recipe_idx:this.recipe[0].recipe_idx}})
     },

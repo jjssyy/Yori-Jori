@@ -25,5 +25,11 @@ export default {
   },
   countComment({commit},res){
     commit('COUNTCOMMENT',res)
+  },
+  getCommentCountList({commit},res){
+    commit('GETCOMMENTCOUNTLIST',res)
+  },
+  getCommentCount({commit},res){
+    commit('GETCOMMENTCOUNT',res)
   }
 }

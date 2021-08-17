@@ -27,7 +27,8 @@ export default {
     },
     recipeContent: {
       type: [Array, Object]
-    }
+    },
+    selectedContent: Number,
   },
   data: function() {
     return {
@@ -85,6 +86,7 @@ export default {
         if(res.data.commentList){
           this.comments = res.data.commentList.reverse()
         }
+        this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: this.comments.length})
       },
       err => {
         console.log(err)

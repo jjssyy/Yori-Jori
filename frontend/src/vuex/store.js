@@ -21,6 +21,7 @@ let state = {
     deleteContents: [],
     selectRecipeId: '',
     commentCount: 0,
+    commentCountList: [],
 }
 
 export default new Vuex.Store({

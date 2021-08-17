@@ -35,6 +35,7 @@ export default {
         this.recipe = res.data.recipeContent.recipe_contents
         this.recipeContent =  res.data.recipeContent
         this.recipeTitle = res.data.recipeContent.title
+        this.$store.dispatch('getCommentCountList',res.data.recipeContent.commentCount)
         console.log('레시피')
         for (let i=0; i<this.recipe.length; i++){
           if(this.recipe[i].thumbnail === "true"){
