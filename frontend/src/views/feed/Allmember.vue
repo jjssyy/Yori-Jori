@@ -4,7 +4,7 @@
       
       <h1>유저 목록</h1>
       <li   v-for="(member, idx) in members" :key="idx">
-        <div v-if="member && member.nickname.includes(searchnickname)" class="user">
+        <div v-if="member " class="user">
           <div class="user-info">
             <div class="user-img">
                 <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" > <img :src="member.img||defaultProfile" alt="ddd"></router-link>
@@ -12,10 +12,10 @@
             </div>
             <div class="user-des">
               <div class="user-id">
-                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" >{{member.nickname}}</router-link>
+                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" >{{member.id}}</router-link>
               </div>
               <div class="user-nickname">
-                {{member.des}}
+                {{member.nickname}}
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@
         </div>
         <div class="user-des">
           <div class="user-id">
-            {{following.nickname}}
+            {{following.id}}
           </div>
           <div class="user-nickname">
             {{following.nickname}}
