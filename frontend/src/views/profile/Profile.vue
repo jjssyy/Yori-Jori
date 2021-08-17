@@ -21,7 +21,7 @@
           <li @click="showFollowerList"><span class="profile-stat-count">{{ profileUser.follower }}</span> 팔로워</li>
           <li @click="showFollowingList"><span class="profile-stat-count">{{ profileUser.following }}</span> 팔로잉</li>
           <li><span class="profile-stat-count">{{mypoint}}</span> RP</li>
-           <li><span class="profile-stat-count">{{myrank}}</span> 위</li>
+          <li><span class="profile-stat-count">{{myrank}}</span> 위</li>
         </ul>
       </div>
       <div class="profile-bio">
