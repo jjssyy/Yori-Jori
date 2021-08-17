@@ -24,12 +24,20 @@ export default {
     commit('DELETECONTENT',res)
   },
   countComment({commit},res){
-    commit('COUNTCOMMENT',res)
+    var commentSum = 0
+    for (var comment of res){
+      commentSum += comment
+    }
+    commit('COUNTCOMMENT',commentSum)
   },
-  getCommentCountList({commit},res){
+  getCommentCountList({commit,dispatch},res){
     commit('GETCOMMENTCOUNTLIST',res)
+    dispatch('countComment',res)
   },
   getCommentCount({commit},res){
     commit('GETCOMMENTCOUNT',res)
+  },
+  getComments({commit},res){
+    commit('GETCOMMENTS',res)
   }
 }

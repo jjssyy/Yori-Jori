@@ -22,6 +22,7 @@ let state = {
     selectRecipeId: '',
     commentCount: 0,
     commentCountList: [],
+    comments: [],
 }
 
 export default new Vuex.Store({

@@ -57,6 +57,9 @@ export default {
     commentItem: {
       type: [Array, Object],
     },
+    recipeItem: {
+      type: [Array, Object],
+    },
     idx: Number,
   },
   methods: {
@@ -122,12 +125,27 @@ export default {
         res => {
           console.log("댓글 삭제 성공")
           newComments.splice(idx,1)
+          this.getComment()
         },
         error=> {
           console.log(error)
         }
       )
       this.comments = newComments
+    },
+    getComment() {
+      let data = {
+      content_idx: this.recipeItem.idx,
+      id: this.userId,
+    }
+    RecipeApi.recipeItemComments(
+      data,
+      res => {
+        console.log('조회 성공')
+        console.log(res.data.commentList)
+        this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: this.commentList[this.selectedContent].length})
+      }
+    )
     },
   },
   filters : {
@@ -148,6 +166,7 @@ export default {
     ...mapState([
       'userId',
       'userNickname',
+      'selectedContent'
     ])
   }
 }

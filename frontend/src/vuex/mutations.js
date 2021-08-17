@@ -45,5 +45,8 @@ export default {
   },
   GETCOMMENTCOUNT(state,res){
     state.commentCountList[res.idx] = res.count
+  },
+  GETCOMMENTS(state,res){
+    state.comments = res
   }
 }
