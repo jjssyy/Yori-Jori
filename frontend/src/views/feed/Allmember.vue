@@ -108,7 +108,7 @@ export default {
             }
             FirebaseApi.noticeAdd(notice)
             swal("팔로우 신청을 보냈습니다.",{icon:'success'})
-            this.$router.go();
+          
           }else if(res.data == "fail"){
             swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
           }else{
@@ -136,7 +136,7 @@ export default {
       res => {
         if(res.data == "success"){
           swal("팔로우를 취소했습니다..",{icon:'success'})
-           
+          
         }else if(res.data == "fail"){
           swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{

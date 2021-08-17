@@ -121,7 +121,7 @@ export default {
             this.ranking = res.data.rankinglist
             console.log(res);
             for(let i = 0; i < this.ranking.length; i++){
-                if(this.ranking[i].id == this.userId){
+                if(this.ranking[i].id == this.profileId){
             this.myrank = this.ranking[i].rank
             this.mypoint = this.ranking[i].rankpoint
             this.mynickname = this.ranking[i].nickname
