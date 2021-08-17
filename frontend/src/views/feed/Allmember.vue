@@ -5,9 +5,10 @@
       <h1>유저 목록</h1>
       <li   v-for="(member, idx) in members" :key="idx">
         <div v-if="member && member.nickname.includes(searchnickname)" class="user">
-          <div class="user-info" @click="moveTo">
+          <div class="user-info">
             <div class="user-img">
-              <img :src="member.img||defaultProfile" alt="ddd">
+                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" > <img :src="member.img||defaultProfile" alt="ddd"></router-link>
+             
             </div>
             <div class="user-des">
               <div class="user-id">
@@ -141,9 +142,9 @@ export default {
   },
 
   created() {
-
     this.profileId = this.$route.query.user_id
     this.searchnickname = this.$route.query.searchname
+
     let data = {
       id: this.profileId
     }
