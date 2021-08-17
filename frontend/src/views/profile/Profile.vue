@@ -205,6 +205,7 @@ export default {
         if(res.data == "success"){
           swal("팔로우 목록에 등록했습니다.",{icon:'success'});
           this.follow_already.push(this.profileUser.id)
+          this.profileUser.follower ++
         }else if(res.data == "fail"){
           swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
@@ -238,6 +239,7 @@ export default {
               i--;
             }
           }
+          this.profileUser.follower --
         }else if(res.data == "fail"){
           swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
