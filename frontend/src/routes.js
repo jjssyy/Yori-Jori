@@ -8,14 +8,12 @@ import FeedMain from './views/feed/Main.vue'
 import StarMain from './views/feed/Star.vue'
 import Components from './views/Components.vue'
 import Pagenotfound from './views/error/PageNotFound.vue'
-import ErrorPage from './views/error/ErrorPage.vue'
 import Profile from './views/profile/Profile.vue'
 import Update from './views/user/Update.vue'
 import Findpw from './views/user/Findpw.vue'
 import Recipewrite from './views/recipe/Write.vue'
 import FollowingList from './views/profile/FollowingList.vue'
 import FollowerList from './views/profile/FollowerList.vue'
-import Fileupload from './views/recipe/Fileupload.vue'
 import RecipeDetail from './views/recipe/RecipeDetail.vue'
 import Allmember from './views/feed/Allmember.vue'
 import Likeposts from './views/feed/Likeposts.vue'
@@ -90,11 +88,6 @@ export default [
         component: Profile
     },
     {
-        path: '/recipe/fileupload/:user_id',
-        name: 'Fileupload',
-        component: Fileupload
-    },
-    {
         path: '/recipe/:recipe_idx',
         name: 'RecipeDetail',
         component: RecipeDetail
@@ -131,11 +124,6 @@ export default [
     {
         path: '/404',
         component:Pagenotfound
-    },
-    {
-        path:'/error',
-        name:'ErrorPage',
-        component:ErrorPage
     },
     {
         path:'/achievelist',
