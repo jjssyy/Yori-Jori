@@ -461,7 +461,31 @@ public class UserController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	
+	@PostMapping("/sendfollowdelete")
+	public ResponseEntity<String> sendfollowdelete(@RequestBody Requestfollow rf) {
+
+		String result = "";
+
+		if (jwtservice.isUsable(rf.getToken())) {
+			try {
+
+				if (userservice.deletefollowing(rf) == true) {
+					result = "success";
+				} else {
+					result = "fail";
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		} else {
+			result = "error";
+		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+
+	}
+
 
 	@PostMapping("/snsregister")
 	public ResponseEntity<String> snsregister(@RequestBody Snsreg sns) {
