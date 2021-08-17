@@ -23,6 +23,7 @@ public class RecipeDetailToClient {
 	private List<Integer> hashtag_idx;
 	private List<String> tag;
 	
+	
 	public List<Integer> getHashtag_idx() {
 		return hashtag_idx;
 	}
