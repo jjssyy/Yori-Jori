@@ -25,6 +25,8 @@
 import UserApi from '../../api/UserApi';
 import defaultProfile from "../../assets/images/profile_default.png";
 import { mapState } from 'vuex'
+import swal from 'sweetalert';
+
 export default {
   data:()=>{
     return {
@@ -78,7 +80,7 @@ export default {
 
       if(this.InputText.substr(0,1) == '#'){
         if(this.InputText.length < 2){
-          alert("해시태그를 똑바로 입력해주세요")
+          swal({title:"해시태그를 똑바로 입력해주세요", icon:"warning"})
         }else{
           this.$router.push({name:'Hashtagsearch', query: {hashtag: this.InputText}})
           this.InputText = ''
