@@ -2,6 +2,6 @@ module.exports = {
     publicPath: '',
     devServer: {
         disableHostCheck: true,
-        overlay:true
+        proxy: 'http://i5c205.p.ssafy.io:8080/'
     }
 }
