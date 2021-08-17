@@ -19,7 +19,7 @@
       <ul class="notification-list" v-on:click="show = !show">
         <li class="notification-item" v-for="(user,idx) of unreadnotice.slice().reverse()" :key="idx">
           <div class="img-left" @click="searchmember(user.ReqUser)">
-            <img class="user-photo" alt="User Photo" v-bind:src="defaultProfile" />
+            <img class="user-photo" alt="User Photo" v-bind:src="user.img ||defaultProfile" />
           </div>
           <div class="user-content" v-if="user.type === 'comment'" @click="[toRecipe(user.articleID),deleteDoc(user.date)]">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 댓글을 달았습니다.</p>
@@ -29,7 +29,7 @@
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 게시글을 좋아합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
-          <div class="user-content" v-if="user.type === 'follow'">
+          <div class="user-content" v-if="user.type === 'follow'" @click="[deleteDoc(user.date)]">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 팔로우합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
