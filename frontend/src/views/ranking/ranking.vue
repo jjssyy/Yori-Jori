@@ -1,18 +1,20 @@
 <template>
     <div class="ranking">
-        <h1>랭킹</h1>
+        <h1>My Rank</h1>
         <div  id="myrank">
-            <div  id="myrank_head">
-                <p>My Rank</p>
-            </div>
             <div id="myrank-content">
-                <div id="myrank_img">
-                    <img :src="userImg" alt="">
+                <div  id="myrank_head">
+                    <!-- <p>My Rank</p> -->
+                    <div id="myrank_img">
+                        <img :src="userImg" alt="">
+                    </div>
+                    <p>{{ mynickname }}</p>
                 </div>
                 <div id="myrank_des">
-                    <p>닉네임 : {{mynickname}}</p>
-                    <p>순위 : {{myrank}}</p>
-                    <p>포인트 : {{mypoint}}</p>
+                    <!-- <p>닉네임 : {{mynickname}}</p> -->
+                    <p>나의 순위는..</p>
+                    <p class="rank">{{myrank}}위</p>
+                    <p class="point">{{mypoint}}포인트</p>
                 </div>
             </div>
         </div>
@@ -103,23 +105,35 @@ methods: {
     margin: 0%;
 }
 #myrank{
+    margin: 10px;
     background-color: #ffbe76;
     border-radius: 25px;
-    height: 250px;
-    width: 500px;
+    height: 30%;
+    width: 94%;
+    max-width: 616px;
     color:white;
-    margin: 10px;
     padding: 10px;
 }
-
+.rank{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.point{
+    font-size: 1.5rem;
+}
 #myrank_head{
-    font-size: 35px;
+    font-size: 2rem;
     height: 20px;
-    display: inline;
+    max-width: 200px;
+    /* display: inline; */
+}
+#myrank_head p{
+    margin-left: 9px;
 }
 #myrank-content{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    height: 100%;
 }
 #myrank_img{
     height: 152px;
@@ -133,16 +147,20 @@ methods: {
 #myrank_img img{
     padding: 0%;
     margin: 0%;
-    width: 152px;
-    height: 152px;
+    max-width: 100%;
+    height: width;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
     border: none;
 }
 #myrank_des{
-    font-size: 20px;
-    padding: 10px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 1.2rem;
+    padding: 10px;
+    align-items: center;
 }
 
 #top100_head{
