@@ -25,7 +25,7 @@
 import defaultProfile from "../../assets/images/profile_default.png";
 import UserApi from '../../api/UserApi';
 import { mapState } from 'vuex'
-
+import swal from 'sweetalert';
 export default {
   data: () => {
     return { defaultProfile };
