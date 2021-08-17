@@ -129,14 +129,12 @@ export default {
           
             }else{
               swal("로그인 실패","아이디가 존재하지 않거나 비밀번호가 틀렸습니다.",'error');
-              this.$router.push({name:'ErrorPage'});
 
             }
           },
           error => {
             //요청이 끝나면 버튼 활성화
             swal("로그인 실패","아이디가 존재하지 않거나 비밀번호가 틀렸습니다.",'error');
-            this.$router.push({name:'ErrorPage'});
           }
         );
       }
