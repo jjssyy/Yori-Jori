@@ -51,6 +51,8 @@ export default {
   computed: {
     ...mapState([
       'userId',
+      'commentCount',
+      'commentCountList'
     ]),
   }
 }
