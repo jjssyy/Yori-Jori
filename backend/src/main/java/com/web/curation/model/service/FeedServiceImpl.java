@@ -215,6 +215,11 @@ public class FeedServiceImpl implements FeedService {
 		return sqlSession.getMapper(FeedDao.class).getHashtagList(idx);
 	}
 
+	@Override
+	public int getTotalCommentNum(int idx) throws Exception {
+		return sqlSession.getMapper(FeedDao.class).getTotalCommentNum(idx);
+	}
+
 	
 
 }

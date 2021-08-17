@@ -23,6 +23,7 @@ public class RecipeDetailToClient {
 	private List<Integer> hashtag_idx;
 	private List<String> tag;
 	
+	
 	private List<Integer> commentCount;
 	
 	public List<Integer> getCommentCount() {

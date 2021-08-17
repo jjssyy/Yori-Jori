@@ -136,7 +136,7 @@ public class FeedController {
 //			System.out.println("startList : " + paging.getStartList() + " listSize : " + paging.getListSize() + "\n===\n");
 			List<RecipeContent> list = feedService.getLikedPosts(map);
 			for(RecipeContent rc: list) {
-				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
 				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
 			}
 			resultMap.put("message", result);
@@ -246,7 +246,7 @@ public class FeedController {
 			params.put("paging", paging);
 			List<FeedRecipe> recipe = feedService.getLatestFeed(params);
 			for(FeedRecipe rc: recipe) {
-				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
 				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
 			}
 			HashMap<Object, Object> map = new HashMap<>();
@@ -725,7 +725,9 @@ public class FeedController {
 			map.put("paging", paging);
 			list = feedService.popularPosts(map);
 			for(RecipeContent rc: list) {
-				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				System.out.println(rc.getIdx());
+				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
+				System.out.println("comment : " + rc.getComment());
 				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
 			}
 			resultMap.put("popularPosts", list);
@@ -753,7 +755,7 @@ public class FeedController {
 			map.put("paging", paging);
 			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
 			for(RecipeContent rc: recipe) {
-				rc.setComment(feedService.getCommentNum(rc.getIdx()));
+				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
 				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
 			}
 			resultMap.put("hashtagfeed", recipe);

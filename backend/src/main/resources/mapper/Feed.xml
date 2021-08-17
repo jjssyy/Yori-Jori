@@ -222,4 +222,12 @@
     <select id="getHashtagList" parameterType="int" resultType="String">
     	select tag from hashtag where recipe_idx=#{recipe_idx}
    </select>
+   
+   <select id="getTotalCommentNum" parameterType="int" resultType="int">
+	   	select count(recipe_comment.comment) from recipe left outer join recipe_content
+		on recipe.idx = recipe_content.recipe_idx 
+		left outer join recipe_comment on recipe_content.idx = recipe_comment.content_idx 
+		where recipe.idx = #{idx}
+		group by recipe.idx;
+   </select>
 </mapper>
