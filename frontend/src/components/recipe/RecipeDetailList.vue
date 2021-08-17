@@ -77,7 +77,7 @@
             <span class="comment_icon">
               <i class="fas fa-comment-dots"></i>
             </span>
-            <p class="comment_name2">{{ commentCountList[idx] }}</p>
+            <p class="comment_name2">{{ recipeContent.commentCount[idx] }}</p>
           </div>
           <div class="like2">
             <span v-show="recipeContent.likecheck == false">
@@ -134,7 +134,6 @@ export default {
   },
   data: () => {
     return {
-      commentCountList: [],
       showComment: false,
       selectedContent: 0,
       showMenu: false,
@@ -455,6 +454,7 @@ export default {
     font-size: 15px;
   }
   .comment2{
+    margin-top: 2px;
     display: flex;
     justify-content: center;
     /* height: 100%; */
