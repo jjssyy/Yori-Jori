@@ -20,6 +20,8 @@ let state = {
     thumbnailNumber: 0,
     deleteContents: [],
     selectRecipeId: '',
+    commentCount: 0,
+    commentCountList: [],
 }
 
 export default new Vuex.Store({

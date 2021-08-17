@@ -22,5 +22,14 @@ export default {
   },
   deleteContent({commit},res){
     commit('DELETECONTENT',res)
+  },
+  countComment({commit},res){
+    commit('COUNTCOMMENT',res)
+  },
+  getCommentCountList({commit},res){
+    commit('GETCOMMENTCOUNTLIST',res)
+  },
+  getCommentCount({commit},res){
+    commit('GETCOMMENTCOUNT',res)
   }
 }

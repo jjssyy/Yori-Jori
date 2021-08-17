@@ -77,7 +77,7 @@
             <span class="comment_icon">
               <i class="fas fa-comment-dots"></i>
             </span>
-            <p class="comment_name2">{{ commentCountList[idx] }}</p>
+            <p class="comment_name2">{{ recipeContent.commentCount[idx] }}</p>
           </div>
           <div class="like2">
             <span v-show="recipeContent.likecheck == false">
@@ -101,11 +101,11 @@
     </div>
         <div class="comment_box" v-if="showComment">
           <div class="comment_header">
-            <span class="comment_back" @click="showComment = false">
+            <span class="comment_back" @click="backComment">
               <i class="fas fa-arrow-left"></i>
             </span>
           </div>
-          <RecipeCommentList :recipeItem="recipe[selectedContent]" :recipeContent="recipeContent"/>
+          <RecipeCommentList :recipeItem="recipe[selectedContent]" :recipeContent="recipeContent" :selectedContent="selectedContent"/>
     </div>
     </div>
 </template>
@@ -134,41 +134,16 @@ export default {
   },
   data: () => {
     return {
-      commentCount: 0,
-      commentCountList: [],
       showComment: false,
       selectedContent: 0,
       showMenu: false,
     }
   },
-  mounted: function() {
-    for(var content of this.recipe){
-      let data = {
-        content_idx: content.idx,
-        id: this.userId,
-      }
-      console.log(data)
-      RecipeApi.recipeItemComments(
-        data,
-        res => {
-          // this.commentCount += res.data.commentList.length
-          if(res.data.commentList.length){
-            this.commentCountList.push(res.data.commentList.length)
-          }
-          else{
-            this.commentCountList += [0]
-          }
-          console.log(this.commentCountList)
-        },
-        err => {
-          console.log(err)
-        }
-      ) 
-    }
-  },
   filters : {
     timeFor : function(created_at){
-      var a = created_at.slice(0,4)
+      if(created_at){
+      var a = ''
+      a = created_at.slice(0,4)
       a += '.'
       a += created_at.slice(5,7)
       a += '.'
@@ -176,9 +151,13 @@ export default {
       a += ' '
       a += created_at.slice(11,16)
       return a
+      }
     }
   },
   methods: {
+    backComment() {
+      this.showComment = false
+    },
     updateRecipe() {
       this.$router.push({name:'UpdateRecipe', params: {recipe_idx:this.recipe[0].recipe_idx}})
     },
@@ -256,13 +235,12 @@ export default {
       )
     },
   },
-  filter: {
-  },
   computed: {
     ...mapState([
       'userId',      
       'userNickname',
       'selectRecipeId',
+      'commentCount'
     ])
   }
 }
@@ -479,6 +457,7 @@ export default {
     font-size: 15px;
   }
   .comment2{
+    margin-top: 2px;
     display: flex;
     justify-content: center;
     /* height: 100%; */

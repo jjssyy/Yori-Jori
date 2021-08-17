@@ -94,6 +94,17 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'BBTreeGB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: 'BBTreeGB' !important;
+}
 .bar-color {
   background-color: #ffbe76;
   color: black;
@@ -104,25 +115,24 @@ export default {
   display: flex;
   flex-direction: row;
   background-color: #ffbe76;
-  margin: 4%;
+  margin: 5%;
   padding: 10px;
   min-height: 2rem;
   border: none;
-  border-radius: 5px;
 }
 .menu-2 {
   display: flex;
   flex-direction: row;
   background-color: #b2bec3;
-  margin: 4%;
+  margin: 5%;
   padding: 10px;
   min-height: 2rem;
   border: none;
-  border-radius: 8px;
 }
 .submenu {
   margin: 10px;
   min-width: 87%;
+  font-size: 24px;
 }
 .fa-utensils {
   width: 80%;
@@ -132,7 +142,7 @@ export default {
   opacity: 0.9;
 }
 .card-title {
-  font-size: 28px;
+  font-size: 30px;
 }
 .card-body {
   padding: 30px;
@@ -146,7 +156,7 @@ export default {
   align-content: center;
 }
 .titlefont {
-  font-size: 34px;
+  font-size: 38px;
   margin-left: 0.3%;
   text-align: center;
 }

@@ -24,6 +24,14 @@ public class RecipeDetailToClient {
 	private List<String> tag;
 	
 	
+	private List<Integer> commentCount;
+	
+	public List<Integer> getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(List<Integer> commentCount) {
+		this.commentCount = commentCount;
+	}
 	public List<Integer> getHashtag_idx() {
 		return hashtag_idx;
 	}

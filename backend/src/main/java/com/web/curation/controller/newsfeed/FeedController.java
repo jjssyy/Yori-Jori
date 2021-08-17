@@ -159,7 +159,13 @@ public class FeedController {
 
 		try {
 			List<RecipeDetailFromDB> recipeDetailFromDB = feedService.getRecipeContents(recipe_idx);
-
+			List<Integer> commentCount = new ArrayList<>();
+			for(int i=0; i<recipeDetailFromDB.size(); i++) {
+				int content_idx = recipeDetailFromDB.get(i).getIdx();
+				commentCount.add(feedService.getCommentNum(content_idx));
+				System.out.println("content_idx:"+content_idx+"commentcount:"+commentCount.get(i));
+			}
+			
 			if (recipeDetailFromDB == null) {
 				resultMap.put("message", "FAIL");
 				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NO_CONTENT);
@@ -167,7 +173,7 @@ public class FeedController {
 
 			RecipeDetailToClient recipeDetailToClient = new RecipeDetailToClient();
 			recipeDetailToClient.setRecipe_contents(recipeDetailFromDB);
-
+			recipeDetailToClient.setCommentCount(commentCount);
 			// recipe 정보 : title, id, regdate, nickname
 			RecipeInfoFromDB recipeInfoFromDB = feedService.getRecipeInfo(recipe_idx);
 

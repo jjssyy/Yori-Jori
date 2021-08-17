@@ -7,7 +7,7 @@
             </div>
             <div id="myrank-content">
                 <div id="myrank_img">
-                    <img src="" alt="">
+                    <img :src="userImg" alt="">
                 </div>
                 <div id="myrank_des">
                     <p>닉네임 : {{mynickname}}</p>
@@ -88,7 +88,7 @@ methods: {
     },
     computed: {
     ...mapState([
-        'userId',
+        'userId','userImg'
     ]),
     }
 }

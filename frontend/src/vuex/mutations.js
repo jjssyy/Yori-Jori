@@ -36,5 +36,14 @@ export default {
   },
   DELETECONTENT(state,res){
     state.deleteContents.push(res)
+  },
+  COUNTCOMMENT(state,res){
+    state.commentCount = res
+  },
+  GETCOMMENTCOUNTLIST(state,res){
+    state.commentCountList = res
+  },
+  GETCOMMENTCOUNT(state,res){
+    state.commentCountList[res.idx] = res.count
   }
 }
