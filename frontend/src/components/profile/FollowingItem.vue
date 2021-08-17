@@ -51,7 +51,7 @@ export default {
       UserApi.deleteFollowing(
       data,
       res => {
-        
+        swal("팔로우를 취소했습니다..",{icon:'success'})
         this.$router.go();
         
       },
