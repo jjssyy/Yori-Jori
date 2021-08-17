@@ -19,7 +19,7 @@
           <i class="fas fa-comment-alt full"></i>
           <span>{{ latestFeed.comment }}</span>
         </div>
-        <div class="share">
+        <div class="share" @click="clip()">
           <i class="fas fa-share"></i>
         </div>
       </div>
@@ -39,6 +39,7 @@ import defaultImage from "../../assets/images/img-placeholder.png";
 import defaultProfile from "../../assets/images/profile_default.png";
 import RecipeApi from '../../api/RecipeApi';
 import { mapState } from "vuex";
+import swal from 'sweetalert';
 
 export default {  
   data: () => {
@@ -80,6 +81,18 @@ export default {
       )
       this.lastetFeeds = newFeed
     },
+    clip(){
+      var url = '';
+      var textarea = document.createElement("textarea");
+      document.body.appendChild(textarea);
+      url = window.document.location.origin;
+      textarea.value = url+`/recipe/${this.latestFeed.idx}`;
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      swal({title:"URL이 복사되었습니다.",icon:'success'})
+
+    }
   },
   filters:{
     longTitle: function(title){
@@ -179,6 +192,9 @@ svg{
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.share{
+  cursor: pointer;
 }
 .like svg{
   margin-right: 5px;
