@@ -99,6 +99,7 @@ export default {
         data,
         res => {
           if(res.data == "success"){
+            swal("팔로우 신청을 보냈습니다.",{icon:'success'})
             let notice = {
               user:member.id,
               img:this.$store.state.userImg,
@@ -107,8 +108,8 @@ export default {
               articleID:0
             }
             FirebaseApi.noticeAdd(notice)
-            swal("팔로우 신청을 보냈습니다.",{icon:'success'})
-          
+            this.follow_already.push(member.id)
+            // this.$router.go();
           }else if(res.data == "fail"){
             swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
           }else{
@@ -136,7 +137,12 @@ export default {
       res => {
         if(res.data == "success"){
           swal("팔로우를 취소했습니다..",{icon:'success'})
-          
+          for(let i = 0; i < this.follow_already.length; i++) {
+            if(this.follow_already[i] === data.memberid)  {
+              this.follow_already.splice(i, 1);
+              i--;
+            }
+          }
         }else if(res.data == "fail"){
           swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
