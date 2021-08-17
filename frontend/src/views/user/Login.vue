@@ -203,9 +203,6 @@ input {
   margin-bottom: 30px;
 }
 
-#login_box1 img{
-}
-
 #login_box6{
   text-align: center;
 }
