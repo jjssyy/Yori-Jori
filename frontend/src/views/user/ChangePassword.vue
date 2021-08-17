@@ -175,7 +175,6 @@ export default {
           else{
             swal("에러발생",{icon:'error'});
          
-          this.$router.push("/error");
           }
 
           
@@ -183,7 +182,6 @@ export default {
         error=>{
           swal("에러발생",{icon:'error'});
           this.isSubmit = true;
-          this.$router.push("/error");
         }
       );
       }

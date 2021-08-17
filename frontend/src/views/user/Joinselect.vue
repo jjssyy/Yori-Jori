@@ -204,7 +204,6 @@ export default {
           }else{
             alert("에러발생");
          
-          this.$router.push("/error");
           }
 
           
@@ -212,7 +211,6 @@ export default {
         error=>{
           alert("에러발생");
           this.isSubmit = true;
-          this.$router.push("/error");
         }
       );
       }

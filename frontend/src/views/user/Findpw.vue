@@ -67,16 +67,12 @@ export default {
           }else{
 
             swal("오류발생.",{icon:'error'});
-
-            this.$router.push("/error");
           
           }
           },
           error => {
             //요청이 끝나면 버튼 활성화
             swal("에러발생",{icon:'error'});
-
-            this.$router.push("/error");
           }
         );
       //}
