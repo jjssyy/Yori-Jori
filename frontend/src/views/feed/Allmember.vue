@@ -51,6 +51,7 @@
 <script>
 import { mapState } from "vuex";
 import UserApi from '../../api/UserApi';
+import FirebaseApi from '../../api/FirebaseApi';
 import "../../components/css/feed/feed-item.scss";
 import "../../components/css/feed/newsfeed.scss";
 import swal from 'sweetalert';
@@ -95,21 +96,28 @@ export default {
         
       }
       UserApi.sendfollowrequest(
-      data,
-      res => {
-        if(res.data == "success"){
-          swal("팔로우 신청을 보냈습니다.",{icon:'success'})
-            this.$router.go();
-        }else if(res.data == "fail"){
-          swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
-        }else{
+        data,
+        res => {
+          if(res.data == "success"){
+            let notice = {
+              user:member.id,
+              img:this.$store.state.userImg,
+              ReqUser:this.$store.state.userId,
+              type:'follow',
+              articleID:0
+            }
+            FirebaseApi.noticeAdd(notice)
+            swal("팔로우 신청을 보냈습니다.",{icon:'success'})
+          }else if(res.data == "fail"){
+            swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
+          }else{
+            swal("에러발생",{icon:'error'});
+          }
+        },
+        error=>{
           swal("에러발생",{icon:'error'});
         }
-      },
-      error=>{
-         swal("에러발생",{icon:'error'});
-      }
-    )
+      )
      
     },
 

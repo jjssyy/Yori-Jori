@@ -97,7 +97,7 @@ export default {
   filters:{
     longTitle: function(title){
       if (title.length > 8){
-        return `${title.substring(0,8)}...`
+        return `${title.substring(0,7)}...`
       } else {
         return title
       }
@@ -174,7 +174,7 @@ svg{
   width: 70%;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 5px;
 }
 .title>h1{
   margin: 0%;
