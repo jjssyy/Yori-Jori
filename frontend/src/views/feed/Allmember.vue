@@ -5,9 +5,10 @@
       <h1>유저 목록</h1>
       <li   v-for="(member, idx) in members" :key="idx">
         <div v-if="member && member.nickname.includes(searchnickname)" class="user">
-          <div class="user-info" @click="moveTo">
+          <div class="user-info">
             <div class="user-img">
-              <img :src="member.img||defaultProfile" alt="ddd">
+                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" > <img :src="member.img||defaultProfile" alt="ddd"></router-link>
+             
             </div>
             <div class="user-des">
               <div class="user-id">
@@ -50,6 +51,7 @@
 <script>
 import { mapState } from "vuex";
 import UserApi from '../../api/UserApi';
+import FirebaseApi from '../../api/FirebaseApi';
 import "../../components/css/feed/feed-item.scss";
 import "../../components/css/feed/newsfeed.scss";
 import swal from 'sweetalert';
@@ -94,21 +96,28 @@ export default {
         
       }
       UserApi.sendfollowrequest(
-      data,
-      res => {
-        if(res.data == "success"){
-          swal("팔로우 신청을 보냈습니다.",{icon:'success'})
-            this.$router.go();
-        }else if(res.data == "fail"){
-          swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
-        }else{
+        data,
+        res => {
+          if(res.data == "success"){
+            let notice = {
+              user:member.id,
+              img:this.$store.state.userImg,
+              ReqUser:this.$store.state.userId,
+              type:'follow',
+              articleID:0
+            }
+            FirebaseApi.noticeAdd(notice)
+            swal("팔로우 신청을 보냈습니다.",{icon:'success'})
+          }else if(res.data == "fail"){
+            swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
+          }else{
+            swal("에러발생",{icon:'error'});
+          }
+        },
+        error=>{
           swal("에러발생",{icon:'error'});
         }
-      },
-      error=>{
-         swal("에러발생",{icon:'error'});
-      }
-    )
+      )
      
     },
 
@@ -141,9 +150,9 @@ export default {
   },
 
   created() {
-
     this.profileId = this.$route.query.user_id
     this.searchnickname = this.$route.query.searchname
+
     let data = {
       id: this.profileId
     }

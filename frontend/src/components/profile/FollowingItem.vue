@@ -25,7 +25,7 @@
 import defaultProfile from "../../assets/images/profile_default.png";
 import UserApi from '../../api/UserApi';
 import { mapState } from 'vuex'
-
+import swal from 'sweetalert';
 export default {
   data: () => {
     return { defaultProfile };
@@ -51,7 +51,7 @@ export default {
       UserApi.deleteFollowing(
       data,
       res => {
-        
+        swal("팔로우를 취소했습니다..",{icon:'success'})
         this.$router.go();
         
       },
