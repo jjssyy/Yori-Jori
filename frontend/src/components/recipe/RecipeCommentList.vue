@@ -2,7 +2,7 @@
   <div class="comment">
     <div class="commentForm" id="commentForm">
       <!-- {{ comments }} -->
-      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem" :recipeItem="recipeItem"/>
+      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem" :recipeItem="recipeItem" :selectedContent="selectedContent"/>
     </div>
     <div class="commentInput">
       <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment" style="height: 5vh;">

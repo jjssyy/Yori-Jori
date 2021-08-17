@@ -60,6 +60,7 @@ export default {
     recipeItem: {
       type: [Array, Object],
     },
+    selectedContent: Number,
     idx: Number,
   },
   methods: {
@@ -142,8 +143,8 @@ export default {
       data,
       res => {
         console.log('조회 성공')
-        console.log(res.data.commentList)
-        this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: this.commentList[this.selectedContent].length})
+        this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: res.data.commentList.length})
+        this.$store.dispatch('countComment',this.commentCountList)
       }
     )
     },
@@ -166,7 +167,7 @@ export default {
     ...mapState([
       'userId',
       'userNickname',
-      'selectedContent'
+      'commentCountList'
     ])
   }
 }
