@@ -167,7 +167,7 @@ export default {
         if(res.data.message == "SUCCESS"){
           this.achieve = res.data.achieve;
         }else if(res.data.message == "error"){
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
         }
       },
       error=>{
@@ -201,16 +201,16 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우 목록에 등록했습니다.");
-            this.$router.go();
+          swal("팔로우 목록에 등록했습니다.",{icon:'success'});
+          this.$router.go();
         }else if(res.data == "fail"){
-          alert("팔로우 신청이 보내지지 않았습니다.")
+          swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'});
         }else{
-          alert("에러발생");
+          swal("에러가 발생하였습니다.",{icon:'error'});
         }
         },
         error=>{
-          alert("에러발생");
+          swal("에러가 발생하였습니다.",{icon:'error'});
         }
       )
 
@@ -229,16 +229,16 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우를 취소했습니다..")
+          swal("팔로우를 취소했습니다..",{icon:'success'});
             this.$router.go();
         }else if(res.data == "fail"){
-          alert("팔로우 취소신청이 보내지지 않았습니다.")
+          swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'});
         }else{
-          alert("에러발생");
+          swal("에러가 발생하였습니다.",{icon:'error'});
         }
       },
       error=>{
-        alert("에러발생");
+        swal("에러가 발생하였습니다.",{icon:'error'});
       }
     )
     },
@@ -253,16 +253,16 @@ export default {
         data,
         res => {
           if(res.data == "success"){
-            alert("갱신되었습니다.")
+            swal("갱신되었습니다.",{icon:'success'});
             this.$router.go();
           }else if(res.data == "fail"){
-            alert("갱신에 실패하였습니다.")
+            swal("갱신에 실패하였습니다.",{icon:'warning'});
           }else{
-            alert("에러발생");
+            swal("에러가 발생하였습니다.",{icon:'error'});
           }
         },
         error=>{
-          alert("에러발생");
+          swal("에러가 발생하였습니다.",{icon:'error'});
         }
       )
     },
