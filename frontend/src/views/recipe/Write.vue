@@ -172,42 +172,46 @@ export default {
       this.showcard = !this.showcard;
     },
     check() {
-      var frm = new FormData();
-      let l = this.fields.length;
-      for (let i = 0; i < this.fields.length; i++) {
-        if (this.thumbnailNumber == i) {
-          this.ThumbNailList.push('true');
-        } else {
-          this.ThumbNailList.push('false');
+      if (this.title.length === 0) {
+        swal('글작성','제목이 없습니다','warning')
+      } else {
+        var frm = new FormData();
+        let l = this.fields.length;
+        for (let i = 0; i < this.fields.length; i++) {
+          if (this.thumbnailNumber == i) {
+            this.ThumbNailList.push('true');
+          } else {
+            this.ThumbNailList.push('false');
+          }
         }
-      }
-      frm.append('title', this.title);
-      frm.append('id', this.userId);
-      frm.append('nickname', this.userNickname);
-      frm.append('achieve_master', this.masterSelected);
-      frm.append('achieve_slave', this.slaveSelected);
-      for (let i = 0; i < l; i++) {
-        frm.append('des[' + i + ']', this.fields[i].des);
-        frm.append('img[' + i + ']', this.fields[i].img);
-        frm.append('thumbnail[' + i + ']', this.ThumbNailList[i]);
-      }
-      for (let i = 0; i < this.HashList.length; i++) {
-        frm.append('hashtags[' + i + ']', this.HashList[i].content);
-      }
-      console.log(frm);
-
-      UserApi.createRecipe(
-        frm,
-        (res) => {
-          console.log('성공');
-          this.$router.push({ name: 'FeedMain' });
-          this.$store.dispatch('clearFormdata');
-        },
-        (error) => {
-          console.log(error);
-          frm = new FormData();
+        frm.append('title', this.title);
+        frm.append('id', this.userId);
+        frm.append('nickname', this.userNickname);
+        frm.append('achieve_master', this.masterSelected);
+        frm.append('achieve_slave', this.slaveSelected);
+        for (let i = 0; i < l; i++) {
+          frm.append('des[' + i + ']', this.fields[i].des);
+          frm.append('img[' + i + ']', this.fields[i].img);
+          frm.append('thumbnail[' + i + ']', this.ThumbNailList[i]);
         }
-      );
+        for (let i = 0; i < this.HashList.length; i++) {
+          frm.append('hashtags[' + i + ']', this.HashList[i].content);
+        }
+        console.log(frm);
+  
+        UserApi.createRecipe(
+          frm,
+          (res) => {
+            console.log('성공');
+            this.$router.push({ name: 'FeedMain' });
+            this.$store.dispatch('clearFormdata');
+          },
+          (error) => {
+            console.log(error);
+            frm = new FormData();
+          }
+        );
+      }
     },
     uploadImg(e) {
       let file = e.target.files[0];

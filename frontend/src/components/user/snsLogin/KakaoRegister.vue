@@ -2,7 +2,7 @@
     <div id="kakao-login">
 
         <button @click="kakaologin">
-              <img sytle="width:300px; height:300px;" :src="require(`@/assets/images/kakao.jpg`)" />
+              <img :src="require(`@/assets/images/kakao.jpg`)" />
         </button>
     </div>
 </template>
