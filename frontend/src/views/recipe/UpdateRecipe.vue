@@ -76,7 +76,7 @@
           </select>
         </div>
       </div>
-      <button class="submit" @click="check">
+      <button class="submit pen" @click="check">
         <h1><i class="fas fa-pen nav-icon"></i></h1>
       </button>
     </div>
@@ -126,8 +126,9 @@ export default {
         this.temphash = '';
         return;
       }
-      for (let i = 0; i < this.HashList.length; i++) {
-        if (this.HashList[i].content == this.temphash) {
+      console.log(this.recipeContent)
+      for (let i = 0; i < this.recipeContent.tag.length; i++) {
+        if (this.recipeContent.tag[i] === this.temphash) {
           swal({ title: '이미 등록된 해시태그 입니다.', icon: 'warning' });
           this.temphash = '';
           return;
@@ -333,7 +334,8 @@ export default {
   align-items: center;
 }
 .hash-input svg {
-  margin-right: 2px;
+    margin-top: 5px;
+  margin-right: 13px;
 }
 
 .hash {
@@ -472,5 +474,10 @@ select {
 }
 .selectbox {
   width: 100%;
+}
+.pen svg {
+  margin-top: 7px;
+  padding-top: 4px;
+  color: #fff;
 }
 </style>

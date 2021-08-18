@@ -27,10 +27,10 @@
           <div class="black-box" v-if="showUpdate" @click="showUpdate = !showUpdate"></div>
           <div v-if="showUpdate" class="inbox">
             <label for="file">
-              <img :src="tempImg || data.img" />
+              <img :src="fields[tempidx].img" />
             </label>
-            <input type="file" accept="image/*" id="file" @change="uploadImg" />
-            <textarea v-model="data.des"></textarea>
+            <input type="file" accept="image/*" id="file" @change="updateImg" />
+            <textarea v-model="fields[tempidx].des"></textarea>
             <button class="submit" @click="updateImage(idx)">수정</button>
           </div>
           <div class="leftright">
@@ -136,6 +136,7 @@ export default {
       masterSelected: '',
       slaveSelected: '',
       showUpdate: false,
+      tempidx: 0,
     };
   },
   mounted: function() {
@@ -255,11 +256,20 @@ export default {
     },
     updateCard(idx) {
       this.showUpdate = true;
+      this.tempidx = idx
+    },
+    updateImg(e) {
+      let file = e.target.files[0];
+      FirebaseApi.upLoad(file, (res) => {
+        this.fields[this.tempidx].img = res;
+        frm.append('file', res);
+        this.$store.dispatch('uploadImg', { file: res, idx: this.idx });
+      });
     },
     updateImage(idx) {
-      if (this.tempImg != '') {
-        this.fields[idx].img = this.tempImg;
-      }
+      // if (this.tempImg != '') {
+      //   this.fields[idx].img = this.tempImg;
+      // }
       this.tempImg = '';
       this.showUpdate = !this.showUpdate;
     },
