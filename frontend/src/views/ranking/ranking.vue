@@ -140,8 +140,8 @@ methods: {
     height: 100%;
 }
 #myrank_img{
-    width: 100%;
-    height: width;
+    width: 150px;
+    height: 150px;
     display: flex;
     justify-content: center;
     margin-right: 3rem;
@@ -152,8 +152,8 @@ methods: {
 #myrank_img img{
     /* padding: 0%; */
     /* margin: 0%; */
-    max-width: 100%;
-    height: width;
+    max-width: 150px;
+    max-height: 150px;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
