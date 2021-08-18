@@ -159,35 +159,47 @@ export default {
   created() {
     this.profileId = this.$route.query.user_id
     this.searchnickname = this.$route.query.searchname
-
-    let data = {
-      id: this.profileId
+    if (this.searchnickname){
+      UserApi.searchByNickname(
+        {nickname:this.searchnickname}, 
+        res=>{
+          this.members = res.data.nicknameList
+        },
+        error=>{
+          console.log(error)
+        }
+      )
     }
-
-
-
-    UserApi.getAllmember(
-      
-      data,
-      res => {
-        this.members = res.data
+    else {
+      let data = {
+        id: this.profileId
+      }
+  
+  
+  
+      UserApi.getAllmember(
         
-      },
-      error=>{
-        console.log(error)
-      }
-    )
-    UserApi.follow_already(
-      data,
-      res => {
-        this.follow_already = res.data;
-            
-     
-      },
-      error=>{
-        console.log(error)
-      }
-    )
+        data,
+        res => {
+          this.members = res.data
+          
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+      UserApi.follow_already(
+        data,
+        res => {
+          this.follow_already = res.data;
+              
+       
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+    }
   },
 };
 </script>
