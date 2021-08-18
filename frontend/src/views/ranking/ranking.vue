@@ -125,14 +125,16 @@ methods: {
 }
 #myrank_head{
     font-size: 2rem;
-    max-width: 200px;
+    max-width: 150px;
     
     /* display: inline; */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 #myrank_head p{
+    padding-top: 10px;
 }
 #myrank-content{
     display: flex;
@@ -140,20 +142,21 @@ methods: {
     height: 100%;
 }
 #myrank_img{
-    width: 150px;
-    height: 150px;
+    max-width: 130px;
+    height: 130px;
     display: flex;
     justify-content: center;
-    margin-right: 3rem;
+    /* margin-right: 3rem; */
     overflow: hidden;
     border: none;
-    margin-top: 1.2rem;
+    margin-top: 1.5rem;
+    padding: 0.5rem;
 }
 #myrank_img img{
     /* padding: 0%; */
     /* margin: 0%; */
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
