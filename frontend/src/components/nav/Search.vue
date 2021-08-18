@@ -2,7 +2,7 @@
   <div class="navigation-search-container">
     <i class="fa fa-search"></i>
     <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput" @keyup.enter="search">
-    <div class="search-container">
+    <div v-if="InputText" class="search-container">
       <div class="search-container-box">
         <div class="search-results">
           <ul v-for="(user,idx) in UserList" :key="idx">
@@ -42,6 +42,7 @@ export default {
     }
   },
   mounted(){
+    this.UserList=[]
     $(document).on("scroll", function () {
       if ($(document).scrollTop() > 50) {
         $(".search-container").addClass("shrink");
@@ -54,6 +55,9 @@ export default {
         $(".to-profile").removeClass("scb-scroll");
       }
     });
+  },
+  created(){
+    this.UserList=[]
   },
   methods:{
     searchInput(){
@@ -78,19 +82,20 @@ export default {
       }
     },
     search(){
-      this.UserList = []
-      
+      this.UserList=[]
       if(this.InputText.substr(0,1) == '#'){
         if(this.InputText.length < 2){
           swal({title:"해시태그를 똑바로 입력해주세요", icon:"warning"})
         }else{
           this.$router.push({name:'Hashtagsearch', query: {hashtag: this.InputText}})
           this.InputText = ''
+          this.UserList=[]
         }
         
       }else{
         this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
         this.InputText = ''
+        this.UserList=[]
       }
     },
     searchmember(id){

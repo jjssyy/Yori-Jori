@@ -169,6 +169,17 @@ export default {
           console.log(error)
         }
       )
+      UserApi.follow_already(
+        {id: this.profileId},
+        res => {
+          this.follow_already = res.data;
+              
+       
+        },
+        error=>{
+          console.log(error)
+        }
+      )
     }
     else {
       let data = {
