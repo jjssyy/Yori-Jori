@@ -42,8 +42,8 @@
           <i class="fas fa-2x fa-arrow-left"></i>
         </span>
         <div class="input-box">
-          <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput" >
-          <router-link @click.native="searchShow()" :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}" >검색</router-link>
+          <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput" @keyup.enter="search">
+          <button @click="search" >검색</button>
         </div>
       </div>
         <div class="search-mid">
@@ -166,6 +166,32 @@ export default {
       }
       this.InputText = ''
       this.UserList = []
+    },
+    search(){
+      const Search = document.querySelector('#search')
+      if (this.isShow==false){
+        Search.classList.add('active')
+        this.isShow = true
+      } else {
+        Search.classList.remove('active')
+        this.isShow = false
+      }
+      if(this.InputText.substr(0,1) == '#'){
+        if(this.InputText.length < 2){
+          swal({title:"해시태그를 똑바로 입력해주세요", icon:"warning"})
+        }else{
+          this.$router.push({name:'Hashtagsearch', query: {hashtag: this.InputText}})
+          this.InputText = ''
+          this.UserList = []
+        }
+        
+      }else{
+          this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
+          this.InputText = ''
+          this.UserList = []
+      }
+
+    
     },
     toRecipe(idx){
       this.$router.push({ name: 'RecipeDetail' , params: {recipe_idx: idx}})
@@ -422,6 +448,17 @@ span.name {
 }
 .user-list{
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-list img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.user-list span{
+  padding-right: 20px;
 }
 .search-bottom{
   width: 100%;
