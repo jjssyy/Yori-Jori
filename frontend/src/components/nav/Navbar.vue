@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div id="navbar">  
     <div class="navigation">
       <div class="logo">
         <a href="#" class="menu-bars" id="show-menu" @click="sideShow">
@@ -21,25 +21,25 @@
         </div>
         <div class="nav-section" @click="sideShow">
           <router-link :to="{name:'FeedMain'}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-home nav-icon"></i>Home</span></li>
+            <li class="nav-text"><span><i width="100px" class="fas fa-home nav-icon"></i>Home</span></li>
           </router-link>
           <router-link :to="{name:'StarMain'}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-star nav-icon"></i>star</span></li>
+            <li class="nav-text"><span><i class="fas fa-star nav-icon"></i>인기글</span></li>
           </router-link>
           <router-link :to="{name:'Recipewrite'}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-pen nav-icon"></i>Write</span></li>
+            <li class="nav-text"><span><i class="fas fa-pen nav-icon"></i>레시피 작성</span></li>
           </router-link>
           <router-link :to="{name:'Likeposts'}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-heart nav-icon"></i>Likes</span></li>
+            <li class="nav-text"><span><i class="fas fa-heart nav-icon"></i>보관함</span></li>
           </router-link>
           <router-link :to="{name:'Achievelist', params:{user_id: userId}}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-medal nav-icon"></i>Achieve</span></li>
+            <li class="nav-text"><span><i class="fas fa-medal nav-icon"></i>업적</span></li>
           </router-link>
           <router-link :to="{name:'Rankinglist', params:{user_id: userId}}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-trophy nav-icon"></i>Rank</span></li>
+            <li class="nav-text"><span><i class="fas fa-trophy nav-icon"></i>순위</span></li>
           </router-link>
           <router-link :to="{name:'Profile',params: {user_id: userId}}" active-class="active" tag="button">
-            <li class="nav-text"><span><i class="fas fa-fire nav-icon"></i>Profile</span></li>
+            <li class="nav-text"><span><i class="fas fa-fire nav-icon"></i>프로필</span></li>
           </router-link>
         </div>
         <div class="nav-section nav-logout">
@@ -121,6 +121,15 @@ export default {
 
 
 <style>
+@font-face {
+    font-family: 'BBTreeGB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+  font-family: 'BBTreeGB';
+}
 
 hr{
   background-color: #ffbe76;
@@ -128,9 +137,8 @@ hr{
   border: none;
 }
 svg{
-  color:#ffbe76
+  color:#ffbe76;
 }
-
 .navigation {
   background-color: #ffffff;
   height: 80px;
@@ -169,7 +177,7 @@ svg{
   position: relative;
   color: #464646;
   font-size: 30px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'BBTreeGB';
   text-decoration: none;
 }
 
@@ -258,7 +266,6 @@ svg{
   font-size: 1.2rem;
   margin-left: 1rem;
 }
-
 .nav-text:hover {
   background-color: rgba(144, 144, 144, 0.219);
   cursor: pointer;
@@ -293,7 +300,7 @@ svg{
   position: relative;
   color: #000000;
   font-size: 30px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'BBTreeGB';
   text-decoration: none;
 }
 .fa-bars{

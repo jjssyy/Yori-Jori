@@ -297,7 +297,8 @@ svg{
 }
 
 *{
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: 'BBTreeGB';
+  font-weight: 100;
 }
 .profile-page{
   display: flex;
@@ -367,7 +368,11 @@ svg{
   padding: 3% 0%;
 }
 .profile-stats ul {
+  width: 100%;
+  padding: 0% 5%;
   margin: 0%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .profile-stats li {
@@ -375,6 +380,7 @@ svg{
     line-height: 1.5;
     margin-right: 4rem;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 @media (max-width: 555px) {
   .profile-stats ul {
@@ -424,6 +430,7 @@ svg{
 }
 .request{
   background-color: #ffbe76;
+  color: #fafafa;
 }
 
 table thead{
