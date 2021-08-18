@@ -204,7 +204,7 @@ svg{
 
 .feed-img{
   width: 100%;
-  max-height: 454px;
+  height: 64vh;
 }
 .feed-img>img{
   margin: 0%;
