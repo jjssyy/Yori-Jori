@@ -196,6 +196,9 @@ export default {
   margin-top: 100px;
   border: 1px solid darkgray;
   padding:50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 input {
@@ -249,10 +252,14 @@ label{
   text-align: center;
   margin-bottom: 30px;
 }
-
+#userupdatebox0{
+  display: flex;
+  justify-content: center;
+}
 #userupdatebox0 img{
+  padding: 0%;
+  margin: 0%;
   width:200px;
-  margin-left: 130px;
 }
 
 </style>
