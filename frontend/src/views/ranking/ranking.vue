@@ -123,12 +123,14 @@ methods: {
 }
 #myrank_head{
     font-size: 2rem;
-    height: 20px;
     max-width: 200px;
+    
     /* display: inline; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 #myrank_head p{
-    margin-left: 9px;
 }
 #myrank-content{
     display: flex;
@@ -136,23 +138,25 @@ methods: {
     height: 100%;
 }
 #myrank_img{
-    height: 152px;
+    width: 100%;
     height: width;
     display: flex;
     justify-content: center;
     margin-right: 3rem;
     overflow: hidden;
     border: none;
+    margin-top: 1.2rem;
 }
 #myrank_img img{
-    padding: 0%;
-    margin: 0%;
+    /* padding: 0%; */
+    /* margin: 0%; */
     max-width: 100%;
     height: width;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
     border: none;
+
 }
 #myrank_des{
     display: flex;
@@ -161,6 +165,7 @@ methods: {
     font-size: 1.2rem;
     padding: 10px;
     align-items: center;
+    margin-top: 1rem;
 }
 
 #top100_head{
