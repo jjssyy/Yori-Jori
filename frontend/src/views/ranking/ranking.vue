@@ -6,9 +6,9 @@
                 <div  id="myrank_head">
                     <!-- <p>My Rank</p> -->
                     <div id="myrank_img">
-                        <img :src="userImg" alt="">
+                        <img :src="userImg||defaultProfile" alt="">
                     </div>
-                    <p>{{ mynickname }}</p>
+                    <p>{{ userNickname }}</p>
                 </div>
                 <div id="myrank_des">
                     <!-- <p>닉네임 : {{mynickname}}</p> -->
@@ -49,15 +49,16 @@
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import RankApi from '../../api/RankApi';
-
+import defaultProfile from "../../assets/images/profile_default.png";
 
 export default {
     components: { },
     data: () => {
     return {
+        defaultProfile,
         ranking:[],
-        myrank:null,
-        mypoint:null,
+        myrank:0,
+        mypoint:0,
         mynickname:null,
     }
     },
@@ -90,7 +91,8 @@ methods: {
     },
     computed: {
     ...mapState([
-        'userId','userImg'
+        'userId','userImg',
+        'userNickname',
     ]),
     }
 }
@@ -123,12 +125,16 @@ methods: {
 }
 #myrank_head{
     font-size: 2rem;
-    height: 20px;
-    max-width: 200px;
+    max-width: 150px;
+    
     /* display: inline; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 #myrank_head p{
-    margin-left: 9px;
+    padding-top: 10px;
 }
 #myrank-content{
     display: flex;
@@ -136,23 +142,26 @@ methods: {
     height: 100%;
 }
 #myrank_img{
-    height: 152px;
-    height: width;
+    max-width: 130px;
+    height: 130px;
     display: flex;
     justify-content: center;
-    margin-right: 3rem;
+    /* margin-right: 3rem; */
     overflow: hidden;
     border: none;
+    margin-top: 1.5rem;
+    padding: 0.5rem;
 }
 #myrank_img img{
-    padding: 0%;
-    margin: 0%;
+    /* padding: 0%; */
+    /* margin: 0%; */
     max-width: 100%;
-    height: width;
+    max-height: 100%;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
     border: none;
+
 }
 #myrank_des{
     display: flex;
@@ -161,6 +170,7 @@ methods: {
     font-size: 1.2rem;
     padding: 10px;
     align-items: center;
+    margin-top: 1rem;
 }
 
 #top100_head{

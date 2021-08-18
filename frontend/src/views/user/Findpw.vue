@@ -14,7 +14,7 @@
         <input v-model="email" @keyup.enter="findpw" id="email" placeholder="이메일을 입력하세요." type="text"/>
       </div>
       <div class="row" id="findpw_box4">
-          <button class="btn btn--back btn--login" @click="findpw" :disabled="isSubmit" :class="{disabled : !isSubmit}">비밀번호 찾기</button>
+          <button class="btn btn--back btn--login" @click="findpw">비밀번호 찾기</button>
       </div>
     </div>
 </template>
