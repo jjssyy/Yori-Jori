@@ -102,15 +102,17 @@ public class FeedController {
 
 			feedService.writeRecipeContent(content);
 		}
-
-		int size = hashtagList.size();
-		HashMap<String, Object> hash = new HashMap<String, Object>();
-		for (int i = 0; i < size; i++) {
-			hash.put("recipe_idx", recipe_idx);
-			hash.put("hashtag", hashtagList.get(i));
-			feedService.writeHashtags(hash);
-
-			hash.clear();
+		
+		if(hashtagList!=null) {
+			int size = hashtagList.size();
+			HashMap<String, Object> hash = new HashMap<String, Object>();
+			for (int i = 0; i < size; i++) {
+				hash.put("recipe_idx", recipe_idx);
+				hash.put("hashtag", hashtagList.get(i));
+				feedService.writeHashtags(hash);
+				
+				hash.clear();
+			}
 		}
 
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
