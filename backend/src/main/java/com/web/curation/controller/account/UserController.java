@@ -110,6 +110,7 @@ public class UserController {
 				String token = jwtservice.create("user_email", email, "access-token");
 				resultmap.put("access-token", token);
 				resultmap.put("id", user.getId());
+				resultmap.put("nickname",user.getNickname());
 				result = "success";
 				resultmap.put("result", result);
 			}else {
