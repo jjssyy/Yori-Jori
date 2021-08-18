@@ -45,7 +45,6 @@ import { mapState } from 'vuex'
                                 this.$store.dispatch("login",res);
                                 this.$store.state.userId = res.data.id
                                 console.log(res.data.id );
-                                this.getUser()
                                 this.$router.push({name:'FeedMain'});
                                 }else if(res.data.result == "fail"){
                                 swal({title:"로그인 실패.",icon:'error'});
@@ -70,23 +69,6 @@ import { mapState } from 'vuex'
                         
                     } 
                 });
-
-            },
-
-            getUser() {
-                let data = {
-                    id: this.userId
-                }
-    
-                UserApi.getUser(
-                  data,
-                  res => {
-                      this.$store.state.userNickname = res.data.nickname
-                  },
-                  error=>{
-                    console.log(error)
-                  }
-                )
 
             },
         },
