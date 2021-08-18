@@ -2,12 +2,12 @@
   <div class="navigation-search-container">
     <i class="fa fa-search"></i>
     <input class="search-field" type="text" placeholder="Search" v-model="InputText" @keyup="searchInput" @keyup.enter="search">
-    <div class="search-container">
+    <div v-if="InputText" class="search-container">
       <div class="search-container-box">
         <div class="search-results">
           <ul v-for="(user,idx) in UserList" :key="idx">
             <li class="user-list" v-if="user.id != userId" @click="searchmember(user.id)">
-              <img :src=defaultProfile alt="최고">
+              <img :src="user.img||defaultProfile" alt="최고">
               <span class="to-profile">{{user.nickname}}</span>
             </li>
           </ul>
@@ -42,6 +42,7 @@ export default {
     }
   },
   mounted(){
+    this.UserList=[]
     $(document).on("scroll", function () {
       if ($(document).scrollTop() > 50) {
         $(".search-container").addClass("shrink");
@@ -55,6 +56,9 @@ export default {
       }
     });
   },
+  created(){
+    this.UserList=[]
+  },
   methods:{
     searchInput(){
       let data = {
@@ -63,6 +67,7 @@ export default {
 
 
       if (this.InputText.length != 0) {
+        this.UserList=[]
         UserApi.searchByNickname(
           data, 
           res=>{
@@ -77,23 +82,21 @@ export default {
       }
     },
     search(){
-
+      this.UserList=[]
       if(this.InputText.substr(0,1) == '#'){
         if(this.InputText.length < 2){
           swal({title:"해시태그를 똑바로 입력해주세요", icon:"warning"})
         }else{
           this.$router.push({name:'Hashtagsearch', query: {hashtag: this.InputText}})
           this.InputText = ''
-          this.UserList = []
+          this.UserList=[]
         }
         
       }else{
-          this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
-          this.InputText = ''
-          this.UserList = []
+        this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
+        this.InputText = ''
+        this.UserList=[]
       }
-
-    
     },
     searchmember(id){
       this.$router.push({ name: 'Profile' , params: {user_id: id}})
@@ -156,6 +159,8 @@ export default {
 
 .user-list img{
   height: 30px;
+  width: 30px;
+  object-fit: cover;
   border-radius: 50px;
 }
 

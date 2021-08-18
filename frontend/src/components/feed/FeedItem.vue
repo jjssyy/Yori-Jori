@@ -54,7 +54,6 @@ export default {
   methods: {
     goRecipeDetail() {
       this.$router.push({name:'RecipeDetail', params: {recipe_idx:this.latestFeed.idx}})
-      this.$store.dispatch('countComment', this.latestFeed.comment)
     },
     goUserProfile() {
       this.$router.push({name:'Profile', params: {user_id: this.latestFeed.id}})
@@ -97,7 +96,7 @@ export default {
   filters:{
     longTitle: function(title){
       if (title.length > 8){
-        return `${title.substring(0,8)}...`
+        return `${title.substring(0,7)}...`
       } else {
         return title
       }
@@ -174,7 +173,7 @@ svg{
   width: 70%;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 5px;
 }
 .title>h1{
   margin: 0%;
@@ -205,12 +204,15 @@ svg{
 
 .feed-img{
   width: 100%;
+  height: 64vh;
 }
 .feed-img>img{
   margin: 0%;
   padding: 0%;
   width: 100%;
+  height: 100%;
   border-radius: 5px;
+  object-fit: cover;
 }
 .hashList{
   padding: 5px;

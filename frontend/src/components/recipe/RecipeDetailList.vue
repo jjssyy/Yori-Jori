@@ -211,9 +211,10 @@ export default {
       )
       let notice = {
         user:this.recipeContent.id,
-        img:this.$store.state.userId,
+        img:this.$store.state.userImg,
         ReqUser:this.$store.state.userId,
-        type:'like'
+        type:'like',
+        articleID:this.recipe[0].recipe_idx
       }
       FirebaseApi.noticeAdd(notice)
     },

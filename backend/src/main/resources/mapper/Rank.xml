@@ -37,9 +37,9 @@
 		WITH total as(
 		select recipe.id as id, count(*) as cnt from recipe inner join recipe_like on recipe.idx = recipe_like.recipe_idx group by id
 		union
-		select following as id, count(*) as cnt from follow group by id
+		select following as id, count(*) * 10 as cnt from follow group by id
 		union
-		select recipe.id as id, count(*) as cnt from recipe inner join achieve on recipe.achieve_slave = achieve.achieve_slave_name group by id
+		select recipe.id as id, count(*) * 50 as cnt from recipe inner join achieve on recipe.achieve_slave = achieve.achieve_slave_name group by id
 		union
 		select id , count(*) as cnt from recipe_comment group by id
 		union

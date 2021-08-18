@@ -4,23 +4,24 @@
       
       <h1>유저 목록</h1>
       <li   v-for="(member, idx) in members" :key="idx">
-        <div v-if="member && member.nickname.includes(searchnickname)" class="user">
-          <div class="user-info" @click="moveTo">
+        <div v-if="member " class="user">
+          <div class="user-info">
             <div class="user-img">
-              <img :src="member.img||defaultProfile" alt="ddd">
+                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" > <img :src="member.img||defaultProfile" alt="ddd"></router-link>
+             
             </div>
             <div class="user-des">
               <div class="user-id">
-                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" >{{member.nickname}}</router-link>
+                <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" >{{member.id}}</router-link>
               </div>
               <div class="user-nickname">
-                {{member.des}}
+                {{member.nickname}}
               </div>
             </div>
           </div>
           <div class="delete">
             <button  v-if="follow_already.includes(member.id)" @click="senddeletefollow(member)">이미 등록됨</button>
-            <button  v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">신청</button>
+            <button  v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">팔로우</button>
           </div>
         </div>
       </li>
@@ -50,6 +51,7 @@
 <script>
 import { mapState } from "vuex";
 import UserApi from '../../api/UserApi';
+import FirebaseApi from '../../api/FirebaseApi';
 import "../../components/css/feed/feed-item.scss";
 import "../../components/css/feed/newsfeed.scss";
 import swal from 'sweetalert';
@@ -94,21 +96,30 @@ export default {
         
       }
       UserApi.sendfollowrequest(
-      data,
-      res => {
-        if(res.data == "success"){
-          swal("팔로우 신청을 보냈습니다.",{icon:'success'})
-            this.$router.go();
-        }else if(res.data == "fail"){
-          swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
-        }else{
+        data,
+        res => {
+          if(res.data == "success"){
+            swal("팔로우 신청을 보냈습니다.",{icon:'success'})
+            let notice = {
+              user:member.id,
+              img:this.$store.state.userImg,
+              ReqUser:this.$store.state.userId,
+              type:'follow',
+              articleID:0
+            }
+            FirebaseApi.noticeAdd(notice)
+            this.follow_already.push(member.id)
+            // this.$router.go();
+          }else if(res.data == "fail"){
+            swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
+          }else{
+            swal("에러발생",{icon:'error'});
+          }
+        },
+        error=>{
           swal("에러발생",{icon:'error'});
         }
-      },
-      error=>{
-         swal("에러발생",{icon:'error'});
-      }
-    )
+      )
      
     },
 
@@ -126,7 +137,12 @@ export default {
       res => {
         if(res.data == "success"){
           swal("팔로우를 취소했습니다..",{icon:'success'})
-            this.$router.go();
+          for(let i = 0; i < this.follow_already.length; i++) {
+            if(this.follow_already[i] === data.memberid)  {
+              this.follow_already.splice(i, 1);
+              i--;
+            }
+          }
         }else if(res.data == "fail"){
           swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
@@ -141,37 +157,60 @@ export default {
   },
 
   created() {
-
     this.profileId = this.$route.query.user_id
     this.searchnickname = this.$route.query.searchname
-    let data = {
-      id: this.profileId
+    if (this.searchnickname){
+      UserApi.searchByNickname(
+        {nickname:this.searchnickname}, 
+        res=>{
+          this.members = res.data.nicknameList
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+      UserApi.follow_already(
+        {id: this.profileId},
+        res => {
+          this.follow_already = res.data;
+              
+       
+        },
+        error=>{
+          console.log(error)
+        }
+      )
     }
-
-
-
-    UserApi.getAllmember(
-      
-      data,
-      res => {
-        this.members = res.data
+    else {
+      let data = {
+        id: this.profileId
+      }
+  
+  
+  
+      UserApi.getAllmember(
         
-      },
-      error=>{
-        console.log(error)
-      }
-    )
-    UserApi.follow_already(
-      data,
-      res => {
-        this.follow_already = res.data;
-            
-     
-      },
-      error=>{
-        console.log(error)
-      }
-    )
+        data,
+        res => {
+          this.members = res.data
+          
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+      UserApi.follow_already(
+        data,
+        res => {
+          this.follow_already = res.data;
+              
+       
+        },
+        error=>{
+          console.log(error)
+        }
+      )
+    }
   },
 };
 </script>

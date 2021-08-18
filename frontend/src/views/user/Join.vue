@@ -315,10 +315,13 @@ input {
   text-align: center;
   margin-bottom: 30px;
 }
+#join_box0{
+  display: flex;
+  justify-content: center;
+}
 
 #join_box0 img{
   width:200px;
-  margin-left: 150px;
 }
 
 </style>

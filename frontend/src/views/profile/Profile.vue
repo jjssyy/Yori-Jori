@@ -12,7 +12,7 @@
         </div>
         <div v-else>
           <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button>
-          <button class="profile-edit-btn request" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">신청</button>
+          <button class="profile-edit-btn request" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">팔로우</button>
         </div>
       </div>
       <div class="profile-stats">
@@ -21,7 +21,7 @@
           <li @click="showFollowerList"><span class="profile-stat-count">{{ profileUser.follower }}</span> 팔로워</li>
           <li @click="showFollowingList"><span class="profile-stat-count">{{ profileUser.following }}</span> 팔로잉</li>
           <li><span class="profile-stat-count">{{mypoint}}</span> RP</li>
-           <li><span class="profile-stat-count">{{myrank}}</span> 위</li>
+          <li><span class="profile-stat-count">{{myrank}}</span> 위</li>
         </ul>
       </div>
       <div class="profile-bio">
@@ -55,7 +55,7 @@
             <my-recipe-item v-for="(myRecipe, idx) in myRecipes" :key="idx" :myRecipe="myRecipe" :idx="idx"></my-recipe-item>
           </tbody>
         </table>
-      </div>  
+      </div>
     </div>
   </div>
 </template>
@@ -121,7 +121,7 @@ export default {
             this.ranking = res.data.rankinglist
             console.log(res);
             for(let i = 0; i < this.ranking.length; i++){
-                if(this.ranking[i].id == this.userId){
+                if(this.ranking[i].id == this.profileId){
             this.myrank = this.ranking[i].rank
             this.mypoint = this.ranking[i].rankpoint
             this.mynickname = this.ranking[i].nickname
@@ -169,7 +169,7 @@ export default {
         if(res.data.message == "SUCCESS"){
           this.achieve = res.data.achieve;
         }else if(res.data.message == "error"){
-          alert("에러발생");
+          swal("에러발생");
         }
       },
       error=>{
@@ -187,7 +187,7 @@ export default {
     sendrequest(member){
       let notice = {
         user:this.$route.params.user_id,
-        img:this.userId,
+        img:this.$store.state.userImg,
         ReqUser:this.$store.state.userId,
         type:'follow',
         articleID:0
@@ -203,16 +203,17 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우 목록에 등록했습니다.");
-            this.$router.go();
+          swal("팔로우 목록에 등록했습니다.",{icon:'success'});
+          this.follow_already.push(this.profileUser.id)
+          this.profileUser.follower ++
         }else if(res.data == "fail"){
-          alert("팔로우 신청이 보내지지 않았습니다.")
+          swal("팔로우 신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
         }
         },
         error=>{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
         }
       )
 
@@ -231,16 +232,22 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          alert("팔로우를 취소했습니다..")
-            this.$router.go();
+          swal("팔로우를 취소했습니다.",{icon:'success'})
+          for(let i = 0; i < this.follow_already.length; i++) {
+            if(this.follow_already[i] === this.profileUser.id)  {
+              this.follow_already.splice(i, 1);
+              i--;
+            }
+          }
+          this.profileUser.follower --
         }else if(res.data == "fail"){
-          alert("팔로우 취소신청이 보내지지 않았습니다.")
+          swal("팔로우 취소신청이 보내지지 않았습니다.",{icon:'warning'})
         }else{
-          alert("에러발생");
+          swal("에러발생",{icon:'error'});
         }
       },
       error=>{
-        alert("에러발생");
+        swal("에러발생",{icon:'error'});
       }
     )
     },
@@ -255,16 +262,16 @@ export default {
         data,
         res => {
           if(res.data == "success"){
-            alert("갱신되었습니다.")
+            swal("갱신되었습니다.")
             this.$router.go();
           }else if(res.data == "fail"){
-            alert("갱신에 실패하였습니다.")
+            swal("갱신에 실패하였습니다.")
           }else{
-            alert("에러발생");
+            swal("에러발생");
           }
         },
         error=>{
-          alert("에러발생");
+          swal("에러발생");
         }
       )
     },
@@ -290,7 +297,8 @@ svg{
 }
 
 *{
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: 'BBTreeGB';
+  font-weight: 100;
 }
 .profile-page{
   display: flex;
@@ -360,7 +368,11 @@ svg{
   padding: 3% 0%;
 }
 .profile-stats ul {
+  width: 100%;
+  padding: 0% 5%;
   margin: 0%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .profile-stats li {
@@ -368,8 +380,20 @@ svg{
     line-height: 1.5;
     margin-right: 4rem;
     cursor: pointer;
+    font-size: 1.2rem;
 }
-
+@media (max-width: 555px) {
+  .profile-stats ul {
+    width: 100%;
+    padding: 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .profile-stats li{
+    margin-right: 1rem;
+  }
+}
 .profile-stats li:last-of-type {
     margin-right: 0;
 }
@@ -405,7 +429,8 @@ svg{
   max-width: 616px;
 }
 .request{
-  background-color: #DAD870;
+  background-color: #ffbe76;
+  color: #fafafa;
 }
 
 table thead{

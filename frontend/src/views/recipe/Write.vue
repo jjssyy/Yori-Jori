@@ -27,10 +27,10 @@
           <div class="black-box" v-if="showUpdate" @click="showUpdate = !showUpdate"></div>
           <div v-if="showUpdate" class="inbox">
             <label for="file">
-              <img :src="tempImg || data.img" />
+              <img :src="fields[tempidx].img" />
             </label>
-            <input type="file" accept="image/*" id="file" @change="uploadImg" />
-            <textarea v-model="data.des"></textarea>
+            <input type="file" accept="image/*" id="file" @change="updateImg" />
+            <textarea v-model="fields[tempidx].des"></textarea>
             <button class="submit" @click="updateImage(idx)">수정</button>
           </div>
           <div class="leftright">
@@ -136,6 +136,7 @@ export default {
       masterSelected: '',
       slaveSelected: '',
       showUpdate: false,
+      tempidx: 0,
     };
   },
   mounted: function() {
@@ -172,42 +173,46 @@ export default {
       this.showcard = !this.showcard;
     },
     check() {
-      var frm = new FormData();
-      let l = this.fields.length;
-      for (let i = 0; i < this.fields.length; i++) {
-        if (this.thumbnailNumber == i) {
-          this.ThumbNailList.push('true');
-        } else {
-          this.ThumbNailList.push('false');
+      if (this.title.length === 0) {
+        swal('글작성','제목이 없습니다','warning')
+      } else {
+        var frm = new FormData();
+        let l = this.fields.length;
+        for (let i = 0; i < this.fields.length; i++) {
+          if (this.thumbnailNumber == i) {
+            this.ThumbNailList.push('true');
+          } else {
+            this.ThumbNailList.push('false');
+          }
         }
-      }
-      frm.append('title', this.title);
-      frm.append('id', this.userId);
-      frm.append('nickname', this.userNickname);
-      frm.append('achieve_master', this.masterSelected);
-      frm.append('achieve_slave', this.slaveSelected);
-      for (let i = 0; i < l; i++) {
-        frm.append('des[' + i + ']', this.fields[i].des);
-        frm.append('img[' + i + ']', this.fields[i].img);
-        frm.append('thumbnail[' + i + ']', this.ThumbNailList[i]);
-      }
-      for (let i = 0; i < this.HashList.length; i++) {
-        frm.append('hashtags[' + i + ']', this.HashList[i].content);
-      }
-      console.log(frm);
-
-      UserApi.createRecipe(
-        frm,
-        (res) => {
-          console.log('성공');
-          this.$router.push({ name: 'FeedMain' });
-          this.$store.dispatch('clearFormdata');
-        },
-        (error) => {
-          console.log(error);
-          frm = new FormData();
+        frm.append('title', this.title);
+        frm.append('id', this.userId);
+        frm.append('nickname', this.userNickname);
+        frm.append('achieve_master', this.masterSelected);
+        frm.append('achieve_slave', this.slaveSelected);
+        for (let i = 0; i < l; i++) {
+          frm.append('des[' + i + ']', this.fields[i].des);
+          frm.append('img[' + i + ']', this.fields[i].img);
+          frm.append('thumbnail[' + i + ']', this.ThumbNailList[i]);
         }
-      );
+        for (let i = 0; i < this.HashList.length; i++) {
+          frm.append('hashtags[' + i + ']', this.HashList[i].content);
+        }
+        console.log(frm);
+  
+        UserApi.createRecipe(
+          frm,
+          (res) => {
+            console.log('성공');
+            this.$router.push({ name: 'FeedMain' });
+            this.$store.dispatch('clearFormdata');
+          },
+          (error) => {
+            console.log(error);
+            frm = new FormData();
+          }
+        );
+      }
     },
     uploadImg(e) {
       let file = e.target.files[0];
@@ -251,11 +256,20 @@ export default {
     },
     updateCard(idx) {
       this.showUpdate = true;
+      this.tempidx = idx
+    },
+    updateImg(e) {
+      let file = e.target.files[0];
+      FirebaseApi.upLoad(file, (res) => {
+        this.fields[this.tempidx].img = res;
+        frm.append('file', res);
+        this.$store.dispatch('uploadImg', { file: res, idx: this.idx });
+      });
     },
     updateImage(idx) {
-      if (this.tempImg != '') {
-        this.fields[idx].img = this.tempImg;
-      }
+      // if (this.tempImg != '') {
+      //   this.fields[idx].img = this.tempImg;
+      // }
       this.tempImg = '';
       this.showUpdate = !this.showUpdate;
     },
@@ -292,7 +306,13 @@ export default {
 </script>
 <style scoped>
 * {
-  font-family: 'NanumBarunGothic', sans-serif;
+  font-family: 'BBTreeGB';
+}
+@font-face {
+    font-family: 'BBTreeGB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 .write {
   margin: 0%;
@@ -315,6 +335,7 @@ export default {
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 20px;
+  font-family: 'NanumBarunGothic', sans-serif;
 }
 #image-des {
   display: flex;
@@ -343,6 +364,7 @@ export default {
   background-color: #ffffff;
   border: none;
   margin-right: 2px;
+  font-family: 'NanumBarunGothic', sans-serif;
 }
 .hash-input button {
   height: 70%;
@@ -518,6 +540,7 @@ select {
   -moz-appearance: none; /* 화살표 없애기 for firefox*/
   appearance: none; /* 화살표 없애기 공통*/
   background: url('../../assets/images/arrow.gif') no-repeat 96% 50%/15px auto;
+  font-family: 'NanumBarunGothic', sans-serif;
 }
 .selectbox {
   width: 100%;

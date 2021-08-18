@@ -2,7 +2,7 @@
   <div class="comment">
     <div class="commentForm" id="commentForm">
       <!-- {{ comments }} -->
-      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem"/>
+      <RecipeCommentItem v-for="(commentItem, idx) in comments" :comments="comments" :key="idx" :idx="idx" :commentItem="commentItem" :recipeItem="recipeItem" :selectedContent="selectedContent"/>
     </div>
     <div class="commentInput">
       <input type="text" placeholder="댓글을 입력하시오" v-model.trim="comment.content" @keypress.enter="createComment" style="height: 5vh;">
@@ -66,7 +66,7 @@ export default {
       this.comments = newComments
       let notice = {
         user:this.recipeContent.id,
-        img:this.$store.state.userId,
+        img:this.$store.state.userImg,
         ReqUser:this.$store.state.userId,
         type:'comment',
         articleID:this.recipeContent.recipe_contents[0].recipe_idx
@@ -87,6 +87,7 @@ export default {
           this.comments = res.data.commentList.reverse()
         }
         this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: this.comments.length})
+        this.$store.dispatch('countComment',this.commentCountList)
       },
       err => {
         console.log(err)
@@ -99,6 +100,7 @@ export default {
       'userId',
       'userNickname',
       'selectRecipeId',
+      'commentCountList'
     ])
   }
 }

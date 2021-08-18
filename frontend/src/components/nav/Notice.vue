@@ -19,7 +19,7 @@
       <ul class="notification-list" v-on:click="show = !show">
         <li class="notification-item" v-for="(user,idx) of unreadnotice.slice().reverse()" :key="idx">
           <div class="img-left" @click="searchmember(user.ReqUser)">
-            <img class="user-photo" alt="User Photo" v-bind:src="defaultProfile" />
+            <img class="user-photo" alt="User Photo" v-bind:src="user.img ||defaultProfile" />
           </div>
           <div class="user-content" v-if="user.type === 'comment'" @click="[toRecipe(user.articleID),deleteDoc(user.date)]">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 댓글을 달았습니다.</p>
@@ -29,7 +29,7 @@
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 게시글을 좋아합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
-          <div class="user-content" v-if="user.type === 'follow'">
+          <div class="user-content" v-if="user.type === 'follow'" @click="[deleteDoc(user.date)]">
             <p class="user-info"><span class="name">{{user.ReqUser}}</span>님이 팔로우합니다.</p>
             <p class="time">{{user.date | timeFor}}</p>
           </div>
@@ -42,8 +42,8 @@
           <i class="fas fa-2x fa-arrow-left"></i>
         </span>
         <div class="input-box">
-          <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput" >
-          <router-link @click.native="searchShow()" :to="{name:'Allmember', query: {searchname: InputText,user_id: userId}}" >검색</router-link>
+          <input class="search-field" type="text" placeholder="검색" v-model="InputText" @keyup="searchInput" @keyup.enter="search">
+          <button @click="search" >검색</button>
         </div>
       </div>
         <div class="search-mid">
@@ -166,6 +166,32 @@ export default {
       }
       this.InputText = ''
       this.UserList = []
+    },
+    search(){
+      const Search = document.querySelector('#search')
+      if (this.isShow==false){
+        Search.classList.add('active')
+        this.isShow = true
+      } else {
+        Search.classList.remove('active')
+        this.isShow = false
+      }
+      if(this.InputText.substr(0,1) == '#'){
+        if(this.InputText.length < 2){
+          swal({title:"해시태그를 똑바로 입력해주세요", icon:"warning"})
+        }else{
+          this.$router.push({name:'Hashtagsearch', query: {hashtag: this.InputText}})
+          this.InputText = ''
+          this.UserList = []
+        }
+        
+      }else{
+          this.$router.push({name:'Allmember', query: {searchname: this.InputText,user_id: this.userId}})
+          this.InputText = ''
+          this.UserList = []
+      }
+
+    
     },
     toRecipe(idx){
       this.$router.push({ name: 'RecipeDetail' , params: {recipe_idx: idx}})
@@ -422,6 +448,17 @@ span.name {
 }
 .user-list{
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-list img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.user-list span{
+  padding-right: 20px;
 }
 .search-bottom{
   width: 100%;

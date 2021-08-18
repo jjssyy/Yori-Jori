@@ -110,6 +110,7 @@ public class UserController {
 				String token = jwtservice.create("user_email", email, "access-token");
 				resultmap.put("access-token", token);
 				resultmap.put("id", user.getId());
+				resultmap.put("nickname",user.getNickname());
 				result = "success";
 				resultmap.put("result", result);
 			}else {
@@ -461,7 +462,31 @@ public class UserController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	
+	@PostMapping("/sendfollowdelete")
+	public ResponseEntity<String> sendfollowdelete(@RequestBody Requestfollow rf) {
+
+		String result = "";
+
+		if (jwtservice.isUsable(rf.getToken())) {
+			try {
+
+				if (userservice.deletefollowing(rf) == true) {
+					result = "success";
+				} else {
+					result = "fail";
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = "error";
+			}
+		} else {
+			result = "error";
+		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+
+	}
+
 
 	@PostMapping("/snsregister")
 	public ResponseEntity<String> snsregister(@RequestBody Snsreg sns) {
