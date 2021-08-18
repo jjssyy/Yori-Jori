@@ -266,17 +266,20 @@ export default {
     right: 0px;
     margin: 7px 9px 0px 0px;
     font-size: 25px;
+    cursor: pointer;
   }
   .back {
     margin-top: 7px;
     margin-left: 9px;
     font-size: 25px;
+    cursor: pointer;
   }
   .menu {
     margin-top: 7px;
     margin-right: 9px;
     font-size: 25px;
     position: relative;
+    cursor: pointer;
   }
   .dropdown {
     position: absolute;
@@ -285,6 +288,7 @@ export default {
     background: rgba(0, 0, 0, 0.5);
     color: #fff;
     padding: 0px;
+    cursor: pointer;
   }
   .dropdown li {
     margin: 5px 7px 5px 7px;
@@ -358,6 +362,9 @@ export default {
     left: 20px;
     text-align: left;
   }
+  .recipe_content_nickname {
+    cursor: pointer;
+  }
   .time {
     font-size: 12px;
   }
@@ -410,6 +417,7 @@ export default {
     color: #fff;
     margin-top: 5px;
     font-size: 20px;
+    cursor: pointer;
   }
   .like_count {
     margin-bottom: 0px;
@@ -462,6 +470,7 @@ export default {
     display: flex;
     justify-content: center;
     /* height: 100%; */
+    cursor: pointer;
   }
   .comment_name2{
     margin: 8px 0px 0px 0px;
@@ -497,7 +506,7 @@ export default {
       position: absolute;
       top:50%;
       left: 50%;
-      transform: translate(-50%, 0%);   
+      transform: translate(-50%, 0%);
   }
   .comment_header{
     width: 100%;
@@ -507,5 +516,6 @@ export default {
     padding-top: 5px;
     margin-left: 4px;
     font-size: 25px;
+    cursor: pointer;
   }
 </style>

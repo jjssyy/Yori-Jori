@@ -164,6 +164,7 @@ svg{
   justify-content: center;
   align-items: center;
   padding: 0px 15px;
+  cursor: pointer;
 }
 .user-name{
   font-size: 0.8rem;
@@ -174,6 +175,7 @@ svg{
   justify-content: flex-start;
   align-items: center;
   padding-left: 5px;
+  cursor: pointer;
 }
 .title>h1{
   margin: 0%;
@@ -205,6 +207,7 @@ svg{
 .feed-img{
   width: 100%;
   height: 64vh;
+  cursor: pointer;
 }
 .feed-img>img{
   margin: 0%;

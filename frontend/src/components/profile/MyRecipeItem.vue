@@ -1,7 +1,7 @@
 <template lang="">
   <tr style="text-align:center;">
       <td>{{ idx+1}}</td>
-      <td  @click="goRecipeDetail"> {{ myRecipe.title|longTitle }}</td>
+      <td class="title" @click="goRecipeDetail"> {{ myRecipe.title|longTitle }}</td>
       <td  v-if="myRecipe.achieve_slave != null"> {{ myRecipe.achieve_slave }}</td>
       <td  v-else> </td>
       <td > {{ myRecipe.likes }}</td>
@@ -34,6 +34,9 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
+.title{
+  cursor: pointer;
+}
   
 </style>
