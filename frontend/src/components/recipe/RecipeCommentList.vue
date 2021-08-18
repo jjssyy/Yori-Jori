@@ -66,7 +66,7 @@ export default {
       this.comments = newComments
       let notice = {
         user:this.recipeContent.id,
-        img:this.$store.state.userId,
+        img:this.$store.state.userImg,
         ReqUser:this.$store.state.userId,
         type:'comment',
         articleID:this.recipeContent.recipe_contents[0].recipe_idx
