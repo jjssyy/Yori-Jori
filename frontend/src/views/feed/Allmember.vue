@@ -21,7 +21,7 @@
           </div>
           <div class="delete">
             <button  v-if="follow_already.includes(member.id)" @click="senddeletefollow(member)">이미 등록됨</button>
-            <button  v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">신청</button>
+            <button  v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">팔로우</button>
           </div>
         </div>
       </li>
