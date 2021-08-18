@@ -14,7 +14,7 @@
             </div>
           </div>
           <div v-if="update">
-            <button @click="update = false">완료</button>
+            <button @click="update = false" >완료</button>
           </div>
         </div>
         <div class="commentContent_right">
@@ -34,7 +34,7 @@
       <p v-if="update==false" class="comment_des">{{ commentItem.comment }}</p>
     </div>
     <div v-if="update">
-      <input style="margin-left: 5px;" type="text" v-model.trim="commentItem.comment">
+      <input style="margin-left: 5px;" @keyup.enter="update=false" type="text" v-model.trim="commentItem.comment">
     </div>
     <hr>
   </div>
@@ -143,7 +143,12 @@ export default {
       data,
       res => {
         console.log('조회 성공')
+        if(res.data){
         this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: res.data.commentList.length})
+        }
+        else{
+        this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: 0})
+        }
         this.$store.dispatch('countComment',this.commentCountList)
       }
     )
