@@ -142,7 +142,7 @@ methods: {
     height: 100%;
 }
 #myrank_img{
-    max-width: 130px;
+    width: 130px;
     height: 130px;
     display: flex;
     justify-content: center;
@@ -153,10 +153,10 @@ methods: {
     padding: 0.5rem;
 }
 #myrank_img img{
-    /* padding: 0%; */
-    /* margin: 0%; */
-    max-width: 100%;
-    max-height: 100%;
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
