@@ -6,9 +6,9 @@
                 <div  id="myrank_head">
                     <!-- <p>My Rank</p> -->
                     <div id="myrank_img">
-                        <img :src="userImg" alt="">
+                        <img :src="userImg||defaultProfile" alt="">
                     </div>
-                    <p>{{ mynickname }}</p>
+                    <p>{{ userNickname }}</p>
                 </div>
                 <div id="myrank_des">
                     <!-- <p>닉네임 : {{mynickname}}</p> -->
@@ -49,15 +49,16 @@
 import { mapState } from 'vuex'
 import UserApi from '../../api/UserApi';
 import RankApi from '../../api/RankApi';
-
+import defaultProfile from "../../assets/images/profile_default.png";
 
 export default {
     components: { },
     data: () => {
     return {
+        defaultProfile,
         ranking:[],
-        myrank:null,
-        mypoint:null,
+        myrank:0,
+        mypoint:0,
         mynickname:null,
     }
     },
@@ -90,7 +91,8 @@ methods: {
     },
     computed: {
     ...mapState([
-        'userId','userImg'
+        'userId','userImg',
+        'userNickname',
     ]),
     }
 }
