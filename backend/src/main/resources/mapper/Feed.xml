@@ -16,6 +16,7 @@
       join user as u on r.id = u.id
       where c.thumbnail="true" and (r.id in (
                            select following from follow where follower=#{id}) or r.id=#{id} )
+      order by r.regdate desc
       LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
@@ -58,6 +59,7 @@
          join user as u on u.id = r.id
 		 where r.idx in (select recipe_idx from recipe_like where recipe_user_id = #{user_id})
          group by l.recipe_idx
+         order by r.regdate desc
          LIMIT #{paging.startList}, #{paging.listSize}
    </select>
    
@@ -205,6 +207,7 @@
 		inner join recipe_content on recipe.idx = recipe_content.recipe_idx
 		inner join recipe_like on recipe.idx = recipe_like.recipe_idx
 		where hashtag.tag = #{hashtag} group by recipe.idx 
+		order by recipe.regdate desc
 		LIMIT #{paging.startList}, #{paging.listSize};
    	</select>
    
