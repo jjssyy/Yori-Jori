@@ -3,6 +3,7 @@ package com.web.curation.model;
 import java.sql.Timestamp;
 
 public class CommentFromDB {
+	
 	private int idx;
 	private String comment;
 	private Timestamp regdate;

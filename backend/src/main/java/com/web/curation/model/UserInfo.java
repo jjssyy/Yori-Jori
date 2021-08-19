@@ -9,7 +9,6 @@ public class UserInfo {
 	private String des;
 	private String role;
 	private Date regdate;
-	
 	private Integer follower;
 	private Integer following;
 	private Integer waiting;
@@ -29,7 +28,6 @@ public class UserInfo {
 	public void setRankpoint(int rankpoint) {
 		this.rankpoint = rankpoint;
 	}
-
 	public String getId() {
 		return id;
 	}

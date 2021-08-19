@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class SaveLikeRecipe {
+	
 	private int recipe_idx;
 	private String recipe_user_id;
 	

@@ -3,6 +3,7 @@ package com.web.curation.model;
 import java.util.List;
 
 public class SaveRecipeitem {
+	
 	private String title;
 	private String id;
 	private String nickname;
@@ -11,7 +12,6 @@ public class SaveRecipeitem {
 	private List<String> thumbnail;
 	private List<String> hashtags;
 	private int likes;
-	
 	private String achieve_master;
 	private String achieve_slave;
 

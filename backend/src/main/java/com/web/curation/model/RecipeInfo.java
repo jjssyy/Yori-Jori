@@ -1,10 +1,10 @@
 package com.web.curation.model;
 
 public class RecipeInfo {
+	
 	private String id;
 	private String nickname;
 	private String title;
-
 	private String achieve_master;
 	private String achieve_slave;
 
