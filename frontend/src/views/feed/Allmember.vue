@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="delete">
-            <button  v-if="follow_already.includes(member.id)" @click="senddeletefollow(member)">이미 등록됨</button>
+            <button  v-if="follow_already.includes(member.id)" @click="senddeletefollow(member)">팔로잉</button>
             <button  v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">팔로우</button>
           </div>
         </div>
@@ -80,7 +80,6 @@ export default {
         data,
         res => {
           if(res.data == "success"){
-            swal("팔로우 신청을 보냈습니다.",{icon:'success'})
             let notice = {
               user:member.id,
               img:this.$store.state.userImg,

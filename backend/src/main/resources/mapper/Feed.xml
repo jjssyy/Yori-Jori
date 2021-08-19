@@ -29,7 +29,7 @@
       from recipe r left join recipe_like l on r.idx = l.recipe_idx 
       left join recipe_like l2 on r.idx = l2.recipe_idx and l2.recipe_user_id = #{id} 
       where r.id = #{id} group by l.recipe_idx -->
-      select * from recipe where id = #{id}
+      select id, title, achieve_slave, count(*) as likes from recipe left outer join recipe_like on recipe.idx = recipe_like.recipe_idx where id = #{id} group by recipe.idx
    </select>
 
    <!-- title, id -->
