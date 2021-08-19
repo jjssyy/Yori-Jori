@@ -144,6 +144,7 @@ methods: {
     height: 100%;
 }
 #myrank_img { 
+    margin-top: 30px;
     position: relative; 
     width: 130px; 
 } 
