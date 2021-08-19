@@ -30,13 +30,7 @@ public class JwtInterceptor implements HandlerInterceptor{
 		final String token = request.getHeader(HEADER_AUTH);
 		
 		return true;
-//		if(token != null && jwtService.isUsable(token)){
-//			System.out.println("성공");
-//			return true;
-//		}else{
-//			System.out.println("오류");
-//			throw new UnauthorizedException();
-//		}
+
 		
 	}
 }
