@@ -58,8 +58,7 @@ export default {
       this.busy = true
       setTimeout(()=> {
         this.getPost()
-        this.busy= false;
-      }, 1000);
+      }, 500);
     }
   },
   created: function() {

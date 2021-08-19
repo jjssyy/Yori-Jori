@@ -202,10 +202,10 @@
 	</update>   
 	
 	<select id="gethashtagRecipes" parameterType="map" resultType="RecipeContent">
-select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, u.img as profileImg, count(l.recipe_idx)  as likes 
+select r.idx, r.title, r.regdate, r.nickname, r.id, c.img, u.img as profileImg, count(r.idx)  as likes 
       from recipe as r join recipe_content as c
       on r.idx=c.recipe_idx
-      join recipe_like l on r.idx = l.recipe_idx
+      left join recipe_like l on r.idx = l.recipe_idx
       join user as u on r.id = u.id
       join hashtag on r.idx = hashtag.recipe_idx
       where c.thumbnail="true" and hashtag.tag = #{hashtag}
