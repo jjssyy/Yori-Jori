@@ -204,19 +204,6 @@ svg{
   color: #ffbe76;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 650px) {
-  /* Navigation */
-  .navigation {
-    padding: 0 20px;
-    justify-content: space-between;
-  }
-  .navigation-search-container {
-    display: none;
-  }
-  .notification {
-    display: flex;
-  }
-}
 
 .navigation-search-container input:focus {
   outline: none;
@@ -228,7 +215,7 @@ svg{
 
 .menu-bars{
   margin-right: 1rem;
-  margin-left: 2rem;
+  margin-left: 1.5rem;
   font-size: 2rem;
   color: #464646;
 }
@@ -336,12 +323,34 @@ svg{
   margin: 15% 0%;
   padding: 0%;
 }
+.nav-toggle svg{
+  margin: 0%;
+}
 @media only screen and (min-width: 800px){
   #sidebar{
     display: none;
   }
   #hide-menu svg{
     color: #ffbe76;
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 650px) {
+  /* Navigation */
+  .navigation {
+    padding: 0 20px;
+    justify-content: space-between;
+  }
+  .navigation-search-container {
+    display: none;
+  }
+  .notification {
+    display: flex;
+  }
+  .menu-bars{
+    margin: 0%;
+  }
+  .nav-toggle{
+    padding-left: 30px;
   }
 }
 </style>
