@@ -59,6 +59,9 @@ export default {
     loadMore(){
       this.busy = true
       this.getPost()
+      setTimeout(()=> {
+        this.busy= false;
+      }, 1000);
     }
   },
   created() {

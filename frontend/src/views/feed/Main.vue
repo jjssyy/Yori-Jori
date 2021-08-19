@@ -59,7 +59,7 @@ export default {
       this.getPost()
       setTimeout(()=> {
         this.busy= false;
-      }, 500);
+      }, 1000);
     }
   },
   created: function() {
