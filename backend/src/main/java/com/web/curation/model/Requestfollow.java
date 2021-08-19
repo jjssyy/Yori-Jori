@@ -6,7 +6,6 @@ public class Requestfollow {
 	private String memberid;
 	private String token;
 	
-	
 	public String getToken() {
 		return token;
 	}

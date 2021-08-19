@@ -4,6 +4,7 @@ public class Waiting {
 	
 	private String loginid;
 	private String waitingid;
+	
 	public String getLoginid() {
 		return loginid;
 	}

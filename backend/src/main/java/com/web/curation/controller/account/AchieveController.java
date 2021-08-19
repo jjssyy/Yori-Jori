@@ -240,12 +240,7 @@ public class AchieveController {
 		try {
 			List<AchieveTitleDetail> TitleDetail = achieveservice.getTitleDetail(map);
 			
-			for (int i = 0; i < TitleDetail.size(); i++) {
-				System.out.println(TitleDetail.get(i).getId());
-				System.out.println(TitleDetail.get(i).getTitle());
-				System.out.println(TitleDetail.get(i).getAchieve_slave());
-				System.out.println(TitleDetail.get(i).getAchieve_slave_name());
-			}
+
 			
 			resultMap.put("list", TitleDetail);
 

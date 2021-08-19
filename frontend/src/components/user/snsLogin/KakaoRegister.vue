@@ -40,6 +40,7 @@ import UserApi from "../../../api/UserApi";
                             res => {
                                 if(res.data == "success"){
                                     swal("회원가입에 성공하였습니다!",{icon:'success'});
+                                    console.log("??");
                                     this.$router.push({name:'Login'});
                                  
                                 }else if(res.data == "fail"){

@@ -3,14 +3,13 @@ package com.web.curation.model;
 import java.sql.Timestamp;
 
 public class CommentToClient {
+	
 	private int idx;
 	private String comment;
 	private Timestamp regdate;
 	private String id;
 	private String nickname;
-	//좋아요 수
 	private int like;
-	//내가 이 댓글에 좋아요를 눌렀는지 확인
 	private boolean likecheck;
 
 	

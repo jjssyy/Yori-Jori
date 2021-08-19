@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class FollowInfo {
+	
 	private String id;
 	private String nickname;
 	private String img;

@@ -6,6 +6,7 @@ public class AchieveTitleDetail {
 	String title;
 	String achieve_slave_name;
 	String achieve_slave;
+	
 	public String getId() {
 		return id;
 	}

@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class HashtagVO {
+	
 	private int idx;
 	private String tag;
 	

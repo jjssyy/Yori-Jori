@@ -5,6 +5,7 @@ public class Achieve {
 	
 	private String achieve_master_name;
 	private String achieve_slave_name;
+	
 	public String getAchieve_master_name() {
 		return achieve_master_name;
 	}

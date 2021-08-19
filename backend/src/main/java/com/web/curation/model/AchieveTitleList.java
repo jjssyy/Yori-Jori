@@ -9,6 +9,7 @@ public class AchieveTitleList {
 	Integer percent;
 	String clear_img;
 	String fail_img;
+	
 	public String getId() {
 		return id;
 	}
