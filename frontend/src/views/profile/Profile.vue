@@ -119,7 +119,6 @@ export default {
     RankApi.getRanking(
         res => {
             this.ranking = res.data.rankinglist
-            console.log(res);
             for(let i = 0; i < this.ranking.length; i++){
                 if(this.ranking[i].id == this.profileId){
             this.myrank = this.ranking[i].rank
@@ -165,7 +164,6 @@ export default {
       AchieveApi.getAchievecurrent(
       data,
       res => {
-        console.log(res);
         if(res.data.message == "SUCCESS"){
           this.achieve = res.data.achieve;
         }else if(res.data.message == "error"){

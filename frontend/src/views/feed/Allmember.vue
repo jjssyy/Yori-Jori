@@ -25,25 +25,6 @@
           </div>
         </div>
       </li>
-      <!-- <table class="table" id="searchmember_table">
-        <thead>
-          <tr>
-            <th>닉네임</th>
-            <th>팔로우</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  v-for="(member, idx) in members" :key="idx">
-            <td v-if="member && member.nickname.includes(searchnickname)">
-              <router-link :to="{name:'Profile', params: {user_id: member.id}}" style="text-decoration:none; color:black;" >{{member.nickname}}</router-link>
-            </td>
-            <td v-if="member && member.nickname.includes(searchnickname)">
-              <button class="btn btn-secondary" v-if="follow_already.includes(member.id)" @click="senddeletefollow(member)">이미 등록됨</button>
-              <button class="btn btn-primary" v-if="!follow_already.includes(member.id)" @click="sendrequest(member)">신청</button>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
     </div>
   </div>
 </template>

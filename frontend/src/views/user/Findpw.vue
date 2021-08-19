@@ -42,9 +42,6 @@ export default {
   methods: {
     
     findpw() {
-      //alert(this.isSubmit);
-      //if (this.isSubmit) {
-      
         let data = {
           id : this.id,
           email : this.email
@@ -53,11 +50,9 @@ export default {
        UserApi.emailfindpw(
           data,
           res => {
-            console.log(res);
              if(res.data == "success"){
             swal("이메일이 발송되었습니다.",{icon:'success'});
            this.$router.push("/");
-           console.log(res.data.resultmap);
          
 
 
@@ -92,7 +87,6 @@ export default {
 <style>
 
 #findpw{
-  border: 1px solid darkgray;
   padding:50px;
   max-width: 580px;
   width: 100%;

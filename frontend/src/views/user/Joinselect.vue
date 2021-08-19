@@ -105,7 +105,6 @@ export default {
         UserApi.checkid(
         data,
         res=>{
-          console.log(res);
           if(res.data == "success"){
             swal("사용가능합니다.",{icon:'success'});
             this.error.id = false;
@@ -135,7 +134,6 @@ export default {
         UserApi.checknickname(
         data,
         res=>{
-          console.log(res);
           if(res.data == "success"){
             swal("사용가능합니다.",{icon:'success'});
             this.error.nickname = false;
@@ -193,22 +191,21 @@ export default {
       UserApi.requestJoin(
         data,
         res=>{
-          console.log(res);
           if(res.data =="success"){
-            alert("회원가입에 성공하였습니다!");
+            swal("회원가입에 성공하였습니다!",{icon:'success'});
             this.$router.push({name:'Login'});
             this.$router.push("/user/join/complete");
           }else if(res.data =="fail"){
-            alert("회원가입에 실패하셨습니다.!");
+            swal("회원가입에 실패하셨습니다.!",{icon:'warning'});
           }else{
-            alert("에러발생");
+            swal("에러가 발생하였습니다.",{icon:'error'});
          
           }
 
           
         },
         error=>{
-          alert("에러발생");
+          swal("에러가 발생하였습니다.",{icon:'error'});
           this.isSubmit = true;
         }
       );
@@ -230,9 +227,6 @@ export default {
         url:'/v2/user/me',
         success: res=> {
           const kakao_account = res.kakao_account;
-          console.log(kakao_account.profile.nickname);
-          console.log(kakao_account.email);
-          console.log(kakao_account.birthday);
 
           let data = {
             email : kakao_account.email,

@@ -16,7 +16,6 @@ const storage = firebase.storage()
 
 const noticeAdd = (data) => {
   const now = Date.now()
-  console.log("notice"+data.user)
   db.collection("notice"+data.user).doc(now.toString()).set({
     date:now,
     img:data.img,
@@ -25,7 +24,6 @@ const noticeAdd = (data) => {
     articleID:data.articleID
   })
   .then((docRef) => {
-    console.log("Document written");
   })
 }
 
@@ -38,11 +36,9 @@ const upLoad = (file,callback) => {
   upload.on('state_changed',
   null,
   (e)=>{
-    console.log(e)
   },
   ()=>{
     upload.snapshot.ref.getDownloadURL().then((url)=>{
-      console.log(`업로드된 경로: ${url}`)
       callback(url)
     })
   })
@@ -55,11 +51,9 @@ const upLoadProfile = (file,callback) => {
   upload.on('state_changed',
   null,
   (e)=>{
-    console.log(e)
   },
   ()=>{
     upload.snapshot.ref.getDownloadURL().then((url)=>{
-      console.log(`업로드된 경로: ${url}`)
       callback(url)
     })
   })

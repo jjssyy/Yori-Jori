@@ -6,7 +6,9 @@
                 <div  id="myrank_head">
                     <!-- <p>My Rank</p> -->
                     <div id="myrank_img">
-                        <img :src="userImg||defaultProfile" alt="">
+                        <div>
+                        <img :src="userImg||defaultProfile" alt=""  width="100%" height="100%" style="border-radius: 50%;">
+                        </div>
                     </div>
                     <p>{{ userNickname }}</p>
                 </div>
@@ -67,7 +69,6 @@ created() {
     RankApi.getRanking(
         res => {
             this.ranking = res.data.rankinglist
-            console.log(res);
             for(let i = 0; i < this.ranking.length; i++){
                 if(this.ranking[i].id == this.userId){
             this.myrank = this.ranking[i].rank
@@ -133,6 +134,7 @@ methods: {
     align-items: center;
     justify-content: center;
 }
+
 #myrank_head p{
     padding-top: 10px;
 }
@@ -141,28 +143,41 @@ methods: {
     justify-content: space-evenly;
     height: 100%;
 }
-#myrank_img{
-    width: 130px;
+#myrank_img { 
+    position: relative; 
+    width: 130px; 
+} 
+#myrank_img:before { 
+    content: ""; 
+    display: block; 
+    padding-top: 100%; 
+} 
+#myrank_img > div { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+} 
+/* #myrank_img{
+    max-width: 130px;
     height: 130px;
     display: flex;
     justify-content: center;
-    /* margin-right: 3rem; */
     overflow: hidden;
     border: none;
     margin-top: 1.5rem;
     padding: 0.5rem;
 }
 #myrank_img img{
-    padding: 0%;
-    margin: 0%;
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 50%;
     background-color: #fafafa;
     object-fit: cover;
     border: none;
 
-}
+} */
 #myrank_des{
     display: flex;
     flex-direction: column;

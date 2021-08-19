@@ -32,7 +32,6 @@ export default {
     UserApi.getFollowing(
       data,
       res => {
-        console.log(res.data)
         this.followings = res.data
       },
       error=>{

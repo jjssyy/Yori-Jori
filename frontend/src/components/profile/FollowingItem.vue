@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="delete">
+      <div v-if="userId == profileId" class="delete">
         <button @click="deleteFollowing(following)"> remove </button>
       </div>
     </div>

@@ -44,7 +44,6 @@ import { mapState } from 'vuex'
                                 swal({title:"로그인 되었습니다.",icon:'success'});
                                 this.$store.dispatch("login",res);
                                 this.$store.state.userId = res.data.id
-                                console.log(res.data.id );
                                 this.$router.push({name:'FeedMain'});
                                 }else if(res.data.result == "fail"){
                                 swal({title:"로그인 실패.",icon:'error'});
