@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     createComment() {
-      console.log(this.comment.content)
       const newComments = this.comments
       let data = {
         content_idx: this.recipeItem.idx,
@@ -54,13 +53,11 @@ export default {
       RecipeApi.writeComment(
         data,
         res => {
-          console.log("댓글 쓰기 성공")
           this.getComment()
           this.comment.content = ''
           document.getElementById("commentForm").scrollTop   = 0;
         },
         error=> {
-          console.log(error)
         }
       )
       this.comments = newComments
@@ -81,8 +78,6 @@ export default {
     RecipeApi.recipeItemComments(
       data,
       res => {
-        console.log('조회 성공')
-        console.log(res.data.commentList)
         if(res.data.commentList){
           this.comments = res.data.commentList.reverse()
         }

@@ -41,7 +41,6 @@ export default {
         FeedApi.hashtagsearch(
         data,
         res => {
-          console.log(res.data)
           const items = res.data.hashtagfeed.map(item => {
             return item
           })

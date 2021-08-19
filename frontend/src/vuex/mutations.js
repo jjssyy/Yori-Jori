@@ -10,7 +10,6 @@ export default {
     state.userId = userId
     state.userNickname = nickname
     state.userImg = userImg
-    console.log(userImg);
   },
   LOGOUT: function(state){
     state.token = ''

@@ -154,7 +154,6 @@ export default {
         UserApi.checkid(
         data,
         res=>{
-          console.log(res);
           if(res.data == "success"){
             swal("사용가능합니다.",{icon:'success'});
             this.error.id = false;
@@ -184,7 +183,6 @@ export default {
         UserApi.checknickname(
         data,
         res=>{
-          console.log(res);
           if(res.data == "success"){
             swal("사용가능합니다.",{icon:'success'});
             this.error.nickname = false;
@@ -242,7 +240,6 @@ export default {
       UserApi.requestJoin(
         data,
         res=>{
-          console.log(res);
           if(res.data =="success"){
             swal("회원가입에 성공하였습니다!",{icon:'success'});
             this.$router.push({name:'Login'});
@@ -272,8 +269,6 @@ export default {
 
 <style>
 #join{
-  margin-top: 100px;
-  border: 1px solid darkgray;
   padding:50px;
 }
 

@@ -69,11 +69,9 @@ export default {
         comment_idx: this.commentItem.idx,
         id: this.userId
       }
-      console.log(data.id)
       RecipeApi.commentLike(
         data,
         res => {
-          console.log("좋아요 성공")
           this.commentItem.likecheck = true
           this.commentItem.like += 1
         },
@@ -87,11 +85,9 @@ export default {
         comment_idx: this.commentItem.idx,
         id: this.userId
       }
-      console.log(data)
       RecipeApi.commentUnlike(
         data,
         res => {
-          console.log("좋아요 취소 성공")
           this.commentItem.likecheck = false
           this.commentItem.like -= 1
         },
@@ -108,7 +104,6 @@ export default {
       RecipeApi.updateComment(
         data,
         res => {
-          console.log("댓글 수정 성공")
         },
         error=> {
           console.log(error)
@@ -124,7 +119,6 @@ export default {
       RecipeApi.deleteComment(
         data,
         res => {
-          console.log("댓글 삭제 성공")
           newComments.splice(idx,1)
           this.getComment()
         },
@@ -142,7 +136,6 @@ export default {
     RecipeApi.recipeItemComments(
       data,
       res => {
-        console.log('조회 성공')
         if(res.data){
         this.$store.dispatch('getCommentCount',{idx: this.selectedContent, count: res.data.commentList.length})
         }

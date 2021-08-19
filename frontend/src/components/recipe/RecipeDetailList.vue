@@ -168,8 +168,6 @@ export default {
       RecipeApi.deleteRecipe(
         data,
         res => {
-          console.log(res)
-          console.log("글 삭제 성공")
           this.$router.push({name:'FeedMain'})
         },
         err => {
@@ -197,11 +195,9 @@ export default {
         recipe_idx: this.recipe[0].recipe_idx,
         recipe_user_id: this.userId
       }
-      console.log(data)
       RecipeApi.likeRecipe(
         data,
         res => {
-          console.log("글 좋아요 성공")
           this.recipeContent.like += 1
           this.recipeContent.likecheck = true
         },
@@ -226,7 +222,6 @@ export default {
       RecipeApi.unlikeRecipe(
         data,
         res => {
-          console.log("글 좋아요 취소 성공")
           this.recipeContent.like -= 1
           this.recipeContent.likecheck = false
         },

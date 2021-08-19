@@ -124,7 +124,6 @@ export default {
         fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '')
       }
       this.address1 = fullAddress
-      console.log(this.address1) // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     },
     uploadImg(e){
       let file = {
@@ -147,7 +146,6 @@ export default {
       UserApi.requestUser(
         config,
         res=>{
-          console.log(res.data.userInfo);
           this.userId = res.data.userInfo.id
           this.nickName = res.data.userInfo.nickname
           this.des = res.data.userInfo.des
@@ -157,7 +155,7 @@ export default {
           this.userImg = res.data.userInfo.img
         },
         error=>{
-          alert('회원정보 요청에 실패하였습니다.')
+          swal("회원정보 요청에 실패하셨습니다.",{icon:'warning'});
         }
       )
     },
@@ -193,8 +191,6 @@ export default {
 </script>
 <style>
 #userupdate{
-  margin-top: 100px;
-  border: 1px solid darkgray;
   padding:50px;
   display: flex;
   align-items: center;

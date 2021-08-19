@@ -63,15 +63,12 @@ export default {
     },
     deleteRecipe() {
       const newFeed = this.latestFeeds
-      console.log(newFeed)
       let data = {
         recipe_idx: this.latestFeed.idx
       }
       RecipeApi.deleteRecipe(
         data,
         res => {
-          console.log(res)
-          console.log("글 삭제 성공")
           newFeed.splice(this.idx,1)
         },
         err => {

@@ -50,7 +50,12 @@
       <div class="black-box" v-if="showcard" @click="showcard = !showcard"></div>
       <div v-if="showcard" class="inbox">
         <label for="file">
-          <img :src="tempImg || defaultImage" />
+          <img v-if="tempImg" :src="tempImg" style="cursor: pointer;"/>
+          <img
+              v-else
+              :src="require(`@/assets/images/write_img.png`)"
+              style="object-fit:cover; border: 0.1px solid darkgray; cursor: pointer;"
+            />
         </label>
         <input type="file" accept="image/*" id="file" @change="uploadImg" />
         <textarea v-model="tempDes"></textarea>
@@ -142,8 +147,6 @@ export default {
   mounted: function() {
     RecipeApi.achieveRecipe(
       (res) => {
-        console.log(res);
-        console.log('칭호 가져옴');
         this.Achieves = res.data.achieveList;
         for (let i = 0; i < this.Achieves.length; i++) {
           this.master_names.push(this.Achieves[i].achieve_master_name);
@@ -198,12 +201,10 @@ export default {
         for (let i = 0; i < this.HashList.length; i++) {
           frm.append('hashtags[' + i + ']', this.HashList[i].content);
         }
-        console.log(frm);
   
         UserApi.createRecipe(
           frm,
           (res) => {
-            console.log('성공');
             this.$router.push({ name: 'FeedMain' });
             this.$store.dispatch('clearFormdata');
           },
@@ -278,7 +279,6 @@ export default {
     },
     deleteContent(idx) {
       this.fields.splice(idx, 1);
-      console.log(this.fields);
     },
     leftContent(idx) {
       if (idx >= 1) {
