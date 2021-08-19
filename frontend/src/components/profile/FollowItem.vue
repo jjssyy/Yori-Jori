@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="delete">
+      <div v-if="userId == profileId" class="delete">
         <button @click="deleteFollower(follower, idx)"> remove </button>
       </div>
     </div>
@@ -52,7 +52,6 @@ export default {
       data,
       res => {
         this.$router.go();
-        console.log('삭제성공')
       },
       error=>{
         console.log(error)

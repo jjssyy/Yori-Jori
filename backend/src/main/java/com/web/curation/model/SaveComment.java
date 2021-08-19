@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class SaveComment {
+	
 	private String comment;
 	private int content_idx;
 	private String id;

@@ -93,7 +93,6 @@ export default {
     AchieveApi.achieveTitle(
       data,
       (res) => {
-        console.log(res);
         for (let i = 0; i < res.data.list.length; i++) {
           this.totalCount += res.data.list[i].achieve_cnt;
           this.userCount += res.data.list[i].clear_cnt;

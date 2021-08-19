@@ -143,13 +143,11 @@ export default {
           title: "확인",
           highlight: true,
           onClick: () => {
-            console.log("클릭");
           }
         },
         {
           title: "취소",
           onClick: () => {
-            console.log("클릭");
           }
         }
       ],

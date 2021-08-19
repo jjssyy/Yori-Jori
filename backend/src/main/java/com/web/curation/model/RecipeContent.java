@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class RecipeContent {
+	
 	private int idx;
 	private String title;
 	private Timestamp regdate;

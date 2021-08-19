@@ -22,10 +22,7 @@
 import UserApi from '../../api/UserApi';
 import FeedApi from '../../api/FeedApi';
 import { mapState } from "vuex";
-// import "../../components/css/feed/feed-item.scss";
-// import "../../components/css/feed/newsfeed.scss";
 import FeedItem from "../../components/feed/FeedItem.vue";
-import LatestFeed from "../../components/feed/LatestFeed.vue";
 
 export default {
   props: ["keyword"],

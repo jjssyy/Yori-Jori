@@ -18,8 +18,6 @@ import io.jsonwebtoken.*;
 @Component
 public class JwtServiceImpl implements JwtService {
 
-	//public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
-
 	private static final String TK = "ssafySecret";
 	private static final int EXPIRE_MINUTES = 60;
 
@@ -36,11 +34,9 @@ public class JwtServiceImpl implements JwtService {
 		try {
 			key = TK.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-//			if (logger.isInfoEnabled()) {
+
 				e.printStackTrace();
-//			} else {
-//				logger.error("Making JWT Key Error ::: {}", e.getMessage());
-//			}
+
 		}
 
 		return key;
@@ -66,35 +62,14 @@ public class JwtServiceImpl implements JwtService {
 		try {
 			claims = Jwts.parser().setSigningKey(TK.getBytes("UTF-8")).parseClaimsJws(jwt);
 		} catch (Exception e) {
-//			if (logger.isInfoEnabled()) {
-//				e.printStackTrace();
-//			} else {
-				//logger.error(e.getMessage());
-//			}
+
 			throw new UnauthorizedException();
-//			개발환경
-//			Map<String,Object> testMap = new HashMap<>();
-//			testMap.put("userid", userid);
-//			return testMap;
+
 		}
 		Map<String, Object> value = claims.getBody();
-		//logger.info("value : {}", value);
+
 		return value;
 	}
 
-//	@Override
-//	public User getUser() {
-//		Map<String, String> usermap = (Map<String, String>)this.get().get("user");
-//		User user = new User();
-//		user.setUser_name((String) usermap.get("user_name"));
-//		user.setUser_password(usermap.get("userpwd"));
-//		user.setUser_id(usermap.get("user_id"));
-//		user.setUser_sex(usermap.get("user_sex"));
-//		user.setUser_age(Integer.parseInt(String.valueOf(usermap.get("user_age"))));
-//		user.setUser_phone_number(usermap.get("user_phone_number"));
-//		user.setUser_email(usermap.get("user_email"));
-//		return user;
-//	}
-	
-	
+
 }

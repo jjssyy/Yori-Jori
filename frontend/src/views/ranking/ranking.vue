@@ -6,7 +6,9 @@
                 <div  id="myrank_head">
                     <!-- <p>My Rank</p> -->
                     <div id="myrank_img">
-                        <img :src="userImg||defaultProfile" alt="">
+                        <div>
+                        <img :src="userImg || defaultProfile" alt=""  width="100%" height="100%" style="border-radius: 50%;">
+                        </div>
                     </div>
                     <p>{{ userNickname }}</p>
                 </div>
@@ -35,7 +37,7 @@
                         <td v-else-if="rank.rank == 2"><i class="fas fa-medal" style="color:#bdc3c7"></i></td>
                         <td v-else-if="rank.rank == 3"><i class="fas fa-medal" style="color:#cd7f32"></i></td>
                         <td v-else>{{rank.rank}}</td>
-                        <td>{{rank.nickname}}</td>
+                        <td @click="goProfile(rank)" style="cursor:pointer;">{{rank.nickname}}</td>
                         <td>{{rank.rankpoint}}</td>
                     </tr>
                 </tbody>
@@ -67,7 +69,6 @@ created() {
     RankApi.getRanking(
         res => {
             this.ranking = res.data.rankinglist
-            console.log(res);
             for(let i = 0; i < this.ranking.length; i++){
                 if(this.ranking[i].id == this.userId){
             this.myrank = this.ranking[i].rank
@@ -86,6 +87,9 @@ created() {
 
     },
 methods: {
+    goProfile(rank) {
+        this.$router.push({name:'Profile', params: {user_id: rank.id}})
+    }
 
 
     },
@@ -133,6 +137,7 @@ methods: {
     align-items: center;
     justify-content: center;
 }
+
 #myrank_head p{
     padding-top: 10px;
 }
@@ -141,32 +146,27 @@ methods: {
     justify-content: space-evenly;
     height: 100%;
 }
-#myrank_img{
-    width: 130px;
-    height: 130px;
-    display: flex;
-    justify-content: center;
-    /* margin-right: 3rem; */
-    overflow: hidden;
-    border: none;
-    margin-top: 1.5rem;
-    padding: 0.5rem;
-}
-#myrank_img img{
-    padding: 0%;
-    margin: 0%;
-    width: 100%;
+#myrank_img { 
+    margin-top: 30px;
+    position: relative; 
+    width: 130px; 
+} 
+#myrank_img:before { 
+    content: ""; 
+    display: block; 
+    padding-top: 100%; 
+} 
+#myrank_img > div { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
     height: 100%;
-    border-radius: 50%;
-    background-color: #fafafa;
-    object-fit: cover;
-    border: none;
-
-}
+} 
 #myrank_des{
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     font-size: 1.2rem;
     padding: 10px;
     align-items: center;

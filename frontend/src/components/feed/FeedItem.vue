@@ -63,15 +63,12 @@ export default {
     },
     deleteRecipe() {
       const newFeed = this.latestFeeds
-      console.log(newFeed)
       let data = {
         recipe_idx: this.latestFeed.idx
       }
       RecipeApi.deleteRecipe(
         data,
         res => {
-          console.log(res)
-          console.log("글 삭제 성공")
           newFeed.splice(this.idx,1)
         },
         err => {
@@ -164,6 +161,7 @@ svg{
   justify-content: center;
   align-items: center;
   padding: 0px 15px;
+  cursor: pointer;
 }
 .user-name{
   font-size: 0.8rem;
@@ -174,6 +172,7 @@ svg{
   justify-content: flex-start;
   align-items: center;
   padding-left: 5px;
+  cursor: pointer;
 }
 .title>h1{
   margin: 0%;
@@ -205,6 +204,7 @@ svg{
 .feed-img{
   width: 100%;
   height: 64vh;
+  cursor: pointer;
 }
 .feed-img>img{
   margin: 0%;

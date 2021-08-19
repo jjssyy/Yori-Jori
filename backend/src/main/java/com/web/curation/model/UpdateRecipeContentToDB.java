@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class UpdateRecipeContentToDB {
+	
 	private int content_idx;
 	private String img;
 	private String des;

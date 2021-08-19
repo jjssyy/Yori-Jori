@@ -126,7 +126,6 @@ export default {
         this.temphash = '';
         return;
       }
-      console.log(this.recipeContent)
       for (let i = 0; i < this.recipeContent.tag.length; i++) {
         if (this.recipeContent.tag[i] === this.temphash) {
           swal({ title: '이미 등록된 해시태그 입니다.', icon: 'warning' });
@@ -204,20 +203,10 @@ export default {
           frm.append('deletehashtag[' + i + ']', this.deleteHashtag[i]);
         }
       }
-      // FormData의 key 확인
-      for (let key of frm.keys()) {
-        console.log(key);
-      }
-
-      // FormData의 value 확인
-      for (let value of frm.values()) {
-        console.log(value);
-      }
 
       RecipeApi.updateRecipe(
         frm,
         (res) => {
-          console.log('글 수정 성공');
           this.$router.push({ name: 'FeedMain' });
           this.$store.dispatch('clearFormdata');
         },
@@ -236,7 +225,6 @@ export default {
     UserApi.singleRecipe(
       data,
       (res) => {
-        console.log(res);
         this.recipe = res.data.recipeContent.recipe_contents;
         this.recipeContent = res.data.recipeContent;
         this.title = res.data.recipeContent.title;
@@ -248,32 +236,25 @@ export default {
       }
     );
     this.$store.dispatch('clearFormdata');
-    console.log(this.masterSelected);
     RecipeApi.achieveRecipe(
       (res) => {
-        console.log(res);
-        console.log('칭호 가져옴');
         this.Achieves = res.data.achieveList;
 
         for (let achieve of this.Achieves) {
           this.master_names.push(achieve.achieve_master_name);
         }
         this.master_names = new Set(this.master_names);
-        console.log(this.masterSelected);
 
         for (let achieve of this.Achieves) {
           if (this.masterSelected == achieve.achieve_master_name) {
-            console.log(achieve.achieve_master_name);
             this.slave_names.push(achieve.achieve_slave_name);
           }
         }
-        console.log(this.slave_names);
       },
       (err) => {
         console.log(err);
       }
     );
-    console.log(this.masterSelected);
   },
   computed: {
     ...mapState(['deleteContents']),

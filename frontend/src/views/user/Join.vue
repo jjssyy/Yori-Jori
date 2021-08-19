@@ -8,9 +8,9 @@
     </div>
     <div class="row" id="join_box2">
       <div class="row">
-        <input class="col-md-9" v-model="id" id="id" placeholder="아이디를 입력하세요." type="text"/>
-        <div class="col-md-3">
-          <button class="btn" @click="checkid">중복체크</button>
+        <input class="col-md-10" v-model="id" id="id" placeholder="아이디를 입력하세요." type="text"/>
+        <div class="col-md-2 p-0 d-flex justify-content-end" >
+          <button class="btn d-flex align-items-center" style="font-size:14px; margin-left: 0px;" @click="checkid">중복체크</button>
         </div>
         
       </div>
@@ -20,9 +20,9 @@
     </div>
       <div class="row" id="join_box3">
       <div class="row">
-        <input class="col-md-9" v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />  
-        <div class="col-md-3">
-        <button class="btn" @click="checknickname">중복체크</button>
+        <input class="col-md-10" v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />  
+        <div class="col-md-2 p-0 d-flex justify-content-end" >
+          <button class="btn d-flex align-items-center" style="font-size:14px; margin-left: 0px;" @click="checkid">중복체크</button>
         </div>
       
       </div>
@@ -154,7 +154,6 @@ export default {
         UserApi.checkid(
         data,
         res=>{
-          console.log(res);
           if(res.data == "success"){
             swal("사용가능합니다.",{icon:'success'});
             this.error.id = false;
@@ -184,7 +183,6 @@ export default {
         UserApi.checknickname(
         data,
         res=>{
-          console.log(res);
           if(res.data == "success"){
             swal("사용가능합니다.",{icon:'success'});
             this.error.nickname = false;
@@ -242,16 +240,13 @@ export default {
       UserApi.requestJoin(
         data,
         res=>{
-          console.log(res);
           if(res.data =="success"){
             swal("회원가입에 성공하였습니다!",{icon:'success'});
             this.$router.push({name:'Login'});
-            this.$router.push("/user/join/complete");
           }else if(res.data =="fail"){
             swal("회원가입에 실패하셨습니다.!",{icon:'warning'});
           }else{
             swal("에러발생",{icon:'error'});
-         
           }
 
           
@@ -272,8 +267,6 @@ export default {
 
 <style>
 #join{
-  margin-top: 100px;
-  border: 1px solid darkgray;
   padding:50px;
 }
 

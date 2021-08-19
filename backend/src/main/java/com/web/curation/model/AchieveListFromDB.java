@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class AchieveListFromDB {
+	
 	private String achieve_master_name;
 	private String achieve_slave_name;
 	

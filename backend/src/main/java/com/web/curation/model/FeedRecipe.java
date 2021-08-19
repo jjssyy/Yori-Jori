@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class FeedRecipe {
+	
 	private int idx;
 	private String title;
 	private Timestamp regdate;
@@ -13,10 +14,8 @@ public class FeedRecipe {
 	private int comment;
 	private List<String> hashtags;
 	private String profileImg;
-	
-	//DB:recipe_like
-	private int like; //좋아요 수
-	private boolean likecheck; //내가 이 레시피에 좋아요를 눌렀는지 확인
+	private int like; 
+	private boolean likecheck; 
 	
 	public int getIdx() {
 		return idx;

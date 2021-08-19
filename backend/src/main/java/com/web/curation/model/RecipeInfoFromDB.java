@@ -3,6 +3,7 @@ package com.web.curation.model;
 import java.sql.Timestamp;
 
 public class RecipeInfoFromDB {
+	
 	private String title;
 	private Timestamp regdate;
 	private String id;

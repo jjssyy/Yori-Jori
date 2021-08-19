@@ -111,6 +111,7 @@ public class UserController {
 				resultmap.put("access-token", token);
 				resultmap.put("id", user.getId());
 				resultmap.put("nickname",user.getNickname());
+				resultmap.put("img",user.getImg());
 				result = "success";
 				resultmap.put("result", result);
 			}else {
@@ -185,7 +186,7 @@ public class UserController {
 	public ResponseEntity<String> checknickname(@RequestParam Map map) {
 
 		String result = "success";
-		// System.out.println(map.get("nickname"));
+		
 		try {
 
 			String findnickname = userservice.checknickname(map);
@@ -303,9 +304,6 @@ public class UserController {
 				String pass = passwordencoder.encode(newpassword);
 
 				map.put("newpw", pass);
-				System.out.println(newpassword);
-				userservice.findpw(map);
-				userservice.emailsend(email, newpassword);
 				result = "success";
 
 			} else {
@@ -349,23 +347,14 @@ public class UserController {
 	@GetMapping("/profile/followinglist")
 	public ResponseEntity<List<FollowInfo>> followinglist(@RequestParam String id) throws Exception {
 		List<FollowInfo> result = userservice.followinglist(id);
-		System.out.println("팔로잉 리스트");
-		for (FollowInfo s : result) {
-			System.out.println(s.getNickname() + " " + s.getId());
 
-		}
-		System.out.println("-------------");
 		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/profile/followerlist")
 	public ResponseEntity<List<FollowInfo>> followerlist(@RequestParam String id) throws Exception {
 		List<FollowInfo> result = userservice.followerlist(id);
-		System.out.println("--팔로워 리스트--");
-		for (FollowInfo s : result) {
-			System.out.println(s.getNickname() + " " + s.getId());
-		}
-		System.out.println("-------------");
+	
 		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
 	}
 
@@ -390,18 +379,6 @@ public class UserController {
 			return new ResponseEntity<String>("Success", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Fail", HttpStatus.NO_CONTENT);
-	}
-
-	@GetMapping("/profile/waitlist")
-	public ResponseEntity<List<FollowInfo>> waitlist(@RequestParam String id) throws Exception {
-
-		List<FollowInfo> result = userservice.waitlist(id);
-		System.out.println("--신청자 리스트--");
-		for (FollowInfo s : result) {
-			System.out.println(s.getNickname() + " " + s.getId());
-		}
-		System.out.println("-------------");
-		return new ResponseEntity<List<FollowInfo>>(result, HttpStatus.OK);
 	}
 
 
@@ -508,59 +485,5 @@ public class UserController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-//	@GetMapping("/snslogin")
-//	public ResponseEntity<?> snslogin(@RequestParam Map map) {
-//
-//		String result = "";
-//
-//		Map resultmap = new HashMap<>();
-//		try {
-//			map.put("id", map.get("email"));
-//			UserVO user = userservice.login(map);
-//			System.out.println(map.get("id"));
-//			if (user.getSns().equals("kakao")) {
-//				String email = (String) map.get("email");
-//
-//				String token = jwtservice.create("user_email", email, "access-token");
-//				resultmap.put("access-token", token);
-//
-//				result = "success";
-//				resultmap.put("result", result);
-//			} else {
-//				result = "fail";
-//				resultmap.put("result", result);
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			result = "error";
-//			resultmap.put("result", result);
-//		}
-//	 	
-//	 	  @PostMapping("/snsregister")
-//	 	   public ResponseEntity<String> snsregister(@RequestBody Snsreg sns){
-//	 		   
-//	 		   String result = "";
-//	 		   
-//	 			  try {
-//	 					if(userservice.kakaoreg(sns) == true) {
-//	 						result = "success";
-//	 					}else {
-//	 						result = "fail";
-//	 					}
-//	 						
-//	 					
-//	 				} catch (Exception e) {
-//	 					e.printStackTrace();
-//	 					result = "error";
-//	 				}
-//	 				
-//	 		    
-//	 		  
-//	 		   return new ResponseEntity<String>(result,HttpStatus.OK);
-//	 	   }
-//
-//		return new ResponseEntity<Map>(resultmap, HttpStatus.OK);
-//	}
 
 }

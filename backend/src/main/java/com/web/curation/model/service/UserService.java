@@ -23,8 +23,6 @@ public interface UserService {
 	public String checknickname(Map map) throws Exception;
 	
 	public boolean updateuser(UserVO user) throws Exception;
-	
-//	public boolean kakaoreg(Snsreg sns) throws Exception;
 
 	public boolean updatepw(Changepw changepw) throws Exception;
 	
@@ -37,17 +35,23 @@ public interface UserService {
 	public UserVO userInfo(String id) throws Exception;
 	
 	public Integer countfollowing(String id) throws Exception;
+	
 	public Integer countfollower(String id) throws Exception;
+	
 	public Integer countwaiting(String id) throws Exception;
 	
 	public List<FollowInfo> followinglist(String id) throws Exception;
+	
 	public List<FollowInfo> followerlist(String id) throws Exception;
+	
 	public List<FollowInfo> waitlist(String id) throws Exception;
 	
 	public int followingdelete(Map map) throws Exception;
+	
 	public int followerdelete(Map map) throws Exception;
 	
 	public boolean enrollfollower(Waiting wait) throws Exception;
+	
 	public boolean deletewait(Waiting wait) throws Exception;
 	
 	public List<UserVO> getallmember(Map map) throws Exception;

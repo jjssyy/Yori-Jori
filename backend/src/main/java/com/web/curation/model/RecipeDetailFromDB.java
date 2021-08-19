@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class RecipeDetailFromDB {
+	
 	private int idx;
 	private String img;
 	private String des;

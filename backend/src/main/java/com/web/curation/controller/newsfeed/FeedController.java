@@ -124,8 +124,6 @@ public class FeedController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
-		System.out.println(map.keySet());
-		System.out.println("key set");
 		try {
 
 			int listCnt = feedService.getFeedCnt();
@@ -133,9 +131,6 @@ public class FeedController {
 			Paging paging = new Paging();
 			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
 			map.put("paging", paging);
-//			System.out.println("page : " + page);
-//			System.out.println("range : " + paging.getRange() + " " + paging.getListCnt());
-//			System.out.println("startList : " + paging.getStartList() + " listSize : " + paging.getListSize() + "\n===\n");
 			List<RecipeContent> list = feedService.getLikedPosts(map);
 			for(RecipeContent rc: list) {
 				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
@@ -165,7 +160,6 @@ public class FeedController {
 			for(int i=0; i<recipeDetailFromDB.size(); i++) {
 				int content_idx = recipeDetailFromDB.get(i).getIdx();
 				commentCount.add(feedService.getCommentNum(content_idx));
-				System.out.println("content_idx:"+content_idx+"commentcount:"+commentCount.get(i));
 			}
 			
 			if (recipeDetailFromDB == null) {
@@ -217,7 +211,7 @@ public class FeedController {
 				
 				hashtag_idx.add(idx);
 				tag.add(hashtag);
-				System.out.println(tag.get(i));
+		
 			}
 			recipeDetailToClient.setHashtag_idx(hashtag_idx);
 			recipeDetailToClient.setTag(tag);
@@ -239,7 +233,6 @@ public class FeedController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String result = "SUCCESS";
 		String id = (String)params.get("id");
-		System.out.println(params.keySet());
 		try {
 			int listCnt = feedService.getFeedCnt();
 			int page = Integer.parseInt((String)params.get("page"));
@@ -344,7 +337,7 @@ public class FeedController {
 	public ResponseEntity<String> writeComment(@RequestBody SaveComment comment) {
 		try {
 			if (feedService.writeComment(comment) == 1) {
-				System.out.println("댓글 작성 성공");
+				
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -360,7 +353,7 @@ public class FeedController {
 	public ResponseEntity<String> updateComment(@RequestBody UpdateComment comment) {
 		try {
 			if (feedService.updateComment(comment) == 1) {
-				System.out.println("댓글 수정 성공");
+				
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -376,7 +369,7 @@ public class FeedController {
 	public ResponseEntity<String> deleteComment(@RequestParam int idx) {
 		try {
 			if (feedService.deleteComment(idx) == 1) {
-				System.out.println("댓글 삭제 성공");
+				
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -396,11 +389,11 @@ public class FeedController {
 
 		try {
 			if (feedService.checkLikeComment(map) > 0) {
-				System.out.println("이미 좋아요 누른 댓글");
+				
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 			}
 			if (feedService.likeComment(map) == 1) {
-				System.out.println("댓글 좋아요 성공");
+				
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -420,7 +413,7 @@ public class FeedController {
 
 		try {
 			if (feedService.cancelLikeComment(map) == 1) {
-				System.out.println("댓글 좋아요 취소 성공");
+
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -466,7 +459,7 @@ public class FeedController {
 			}
 			resultMap.put("commentList", commentToClient);
 			resultMap.put("message", "Success");
-			System.out.println("댓글 조회 성공");
+		
 
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 
@@ -483,7 +476,7 @@ public class FeedController {
 
 		try {
 			if (feedService.deleteRecipe(idx) == 1) {
-				System.out.println("레시피 삭제 성공");
+			
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -503,11 +496,11 @@ public class FeedController {
 
 		try {
 			if (feedService.checkLikeRecipe(map) > 0) {
-				System.out.println("이미 좋아요 누른 레시피");
+			
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 			}
 			if (feedService.likeRecipe(map) == 1) {
-				System.out.println("레시피 좋아요 성공");
+				
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -527,7 +520,7 @@ public class FeedController {
 
 		try {
 			if (feedService.cancelLikeRecipe(map) == 1) {
-				System.out.println("레시피 좋아요 취소 성공");
+			
 				return new ResponseEntity<String>("Success", HttpStatus.OK);
 			} else {
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
@@ -547,12 +540,12 @@ public class FeedController {
 		map.put("title", recipe.getTitle());
 		map.put("achieve_master", recipe.getAchieve_master());
 		map.put("achieve_slave", recipe.getAchieve_slave());
-		System.out.println(recipe.getAchieve_master());
+		
 		try {
 			if (feedService.updateRecipeInfo(map) == 1) {
-				System.out.println("제목 변경 성공");
+				
 			} else {
-				System.out.println("제목 변경 실패");
+			
 				return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
@@ -566,9 +559,9 @@ public class FeedController {
 			for (int i = 0; i < deleteContents.size(); i++) {
 				try {
 					if (feedService.deleteRecipeContent(deleteContents.get(i)) == 1) {
-						System.out.println("content 삭제 성공");
+						
 					} else {
-						System.out.println("content 삭제 실패");
+					
 						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
@@ -599,9 +592,9 @@ public class FeedController {
 
 				try {
 					if (feedService.writeRecipeContent(content) == 1) {
-						System.out.println("content 삽입 성공");
+						
 					} else {
-						System.out.println("content 삽입 실패");
+						
 						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
@@ -620,9 +613,9 @@ public class FeedController {
 
 				try {
 					if (feedService.updateRecipeContent(recipeContent) == 1) {
-						System.out.println("content 수정 성공");
+						
 					} else {
-						System.out.println("content 수정 실패");
+						
 						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
@@ -638,9 +631,9 @@ public class FeedController {
 				int hashtag_idx = deletehashtag.get(i);
 				try {
 					if(feedService.deleteHashtag(hashtag_idx)==1) {
-						System.out.println("해시태그 삭제 성공");
+					
 					}else {
-						System.out.println("해시태그 삭제 실패");
+						
 						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
@@ -661,9 +654,9 @@ public class FeedController {
 				map.put("hashtag", tag.get(i));
 				try {
 					if(feedService.writeHashtags(map)==1) {
-						System.out.println("해시태그 수정 성공");
+						
 					}else {
-						System.out.println("해시태그 수정 실패");
+						
 						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
@@ -676,9 +669,9 @@ public class FeedController {
 				
 				try {
 					if(feedService.updateHashtag(map)==1) {
-						System.out.println("해시태그 수정 성공");
+						
 					}else {
-						System.out.println("해시태그 수정 실패");
+						
 						return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
 					}
 				} catch (Exception e) {
@@ -727,9 +720,9 @@ public class FeedController {
 			map.put("paging", paging);
 			list = feedService.popularPosts(map);
 			for(RecipeContent rc: list) {
-				System.out.println(rc.getIdx());
+				
 				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
-				System.out.println("comment : " + rc.getComment());
+				
 				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));
 			}
 			resultMap.put("popularPosts", list);
@@ -747,7 +740,6 @@ public class FeedController {
 	public ResponseEntity<Map<String, Object>> hashtagsearch(@RequestParam Map map) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		System.out.println(map.keySet());
 		String result = "SUCCESS";
 		try {
 			int listCnt = feedService.getFeedCnt();
@@ -756,6 +748,7 @@ public class FeedController {
 			paging.pageInfo(page, (page-1) * paging.getRangeSize(), listCnt);
 			map.put("paging", paging);
 			List<RecipeContent> recipe = feedService.gethashtagRecipes(map);
+			
 			for(RecipeContent rc: recipe) {
 				rc.setComment(feedService.getTotalCommentNum(rc.getIdx()));
 				rc.setHashtags(feedService.getHashtagList(rc.getIdx()));

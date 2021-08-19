@@ -27,9 +27,6 @@ import UserApi from "../../../api/UserApi";
                     url:'/v2/user/me',
                     success: res=> {
                         const kakao_account = res.kakao_account;
-                        console.log(kakao_account.profile.nickname);
-                        console.log(kakao_account.email);
-                        console.log(kakao_account.birthday);
 
                         let data = {
                             email : kakao_account.email,

@@ -3,6 +3,10 @@ package com.web.curation.model;
 public class Rankinglist {
 	
 	private int rank;
+	private int rankpoint;
+	private String nickname;
+	private String id;
+	
 	public int getRank() {
 		return rank;
 	}
@@ -27,8 +31,6 @@ public class Rankinglist {
 	public void setId(String id) {
 		this.id = id;
 	}
-	private int rankpoint;
-	private String nickname;
-	private String id;
+
 
 }

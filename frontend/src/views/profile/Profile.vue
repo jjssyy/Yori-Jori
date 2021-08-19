@@ -11,7 +11,7 @@
           <router-link style="text-decoration:none; border:none; color:black;" to="/user/changepassword" class="profile-edit-btn">비밀번호</router-link>
         </div>
         <div v-else>
-          <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button>
+          <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">팔로잉</button>
           <button class="profile-edit-btn request" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">팔로우</button>
         </div>
       </div>
@@ -119,7 +119,6 @@ export default {
     RankApi.getRanking(
         res => {
             this.ranking = res.data.rankinglist
-            console.log(res);
             for(let i = 0; i < this.ranking.length; i++){
                 if(this.ranking[i].id == this.profileId){
             this.myrank = this.ranking[i].rank
@@ -165,7 +164,6 @@ export default {
       AchieveApi.getAchievecurrent(
       data,
       res => {
-        console.log(res);
         if(res.data.message == "SUCCESS"){
           this.achieve = res.data.achieve;
         }else if(res.data.message == "error"){
@@ -203,7 +201,6 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          swal("팔로우 목록에 등록했습니다.",{icon:'success'});
           this.follow_already.push(this.profileUser.id)
           this.profileUser.follower ++
         }else if(res.data == "fail"){

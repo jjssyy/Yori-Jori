@@ -1,6 +1,7 @@
 package com.web.curation.model;
 
 public class UpdateComment {
+	
 	private int idx;
 	private String comment;
 	

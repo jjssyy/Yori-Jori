@@ -3,19 +3,17 @@ package com.web.curation.model;
 import java.util.List;
 
 public class UpdateRecipeFromClient {
+	
    private int recipe_idx;
    private String title;
-
-   private List<Integer> content_idx; //-1이면 삽입, 아니면 수정
+   private List<Integer> content_idx;
    private List<String> img;
    private List<String> des;
    private List<String> thumbnail;
    private List<Integer> content_order;
-   private List<Integer> deleteContents; //삭제한 content들의 idx들
-   
+   private List<Integer> deleteContents;
    private String achieve_master;
    private String achieve_slave;
-   
    private List<Integer> hashtag_idx;
    private List<String> tag;
    private List<Integer> deletehashtag;

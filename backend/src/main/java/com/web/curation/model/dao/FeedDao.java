@@ -64,6 +64,7 @@ public interface FeedDao {
 	public int likeRecipe(Map map) throws Exception;
 	
 	public int getLikeNum(int recipe_idx) throws Exception;
+	
 	public int cancelLikeRecipe(Map map) throws Exception;
 	
 	public int writeHashtags(HashMap<String, Object> hash);
@@ -83,6 +84,7 @@ public interface FeedDao {
 	public List<HashtagVO> getHashtag(int recipe_idx) throws Exception;
 
 	public int deleteHashtag(int hashtag_idx) throws Exception;
+	
 	public int updateHashtag(Map map) throws Exception;
 
 	public int getFeedCnt() throws Exception;

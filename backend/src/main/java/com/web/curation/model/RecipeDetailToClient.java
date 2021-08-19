@@ -4,26 +4,18 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class RecipeDetailToClient {
-	//DB:recipe_content
+
 	private List<RecipeDetailFromDB> recipe_contents;
-	
-	//DB:recipe_like
-	private int like; //좋아요 수
-	private boolean likecheck; //내가 이 레시피에 좋아요를 눌렀는지 확인
-	
-	//DB:recipe
+	private int like;
+	private boolean likecheck;
 	private String title;
 	private Timestamp regdate;
 	private String id;
 	private String nickname;
 	private String achieve_master;
 	private String achieve_slave;
-	
-	//DB:hashtag
 	private List<Integer> hashtag_idx;
 	private List<String> tag;
-	
-	
 	private List<Integer> commentCount;
 	
 	public List<Integer> getCommentCount() {
