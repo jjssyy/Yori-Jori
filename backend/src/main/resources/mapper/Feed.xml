@@ -57,7 +57,7 @@
          from recipe r join recipe_like l on r.idx = l.recipe_idx
          join recipe_content as c on r.idx = c.recipe_idx
          join user as u on u.id = r.id
-		 where r.idx in (select recipe_idx from recipe_like where recipe_user_id = #{user_id})
+		 where c.thumbnail="true" and r.idx in (select recipe_idx from recipe_like where recipe_user_id = #{user_id})
          group by l.recipe_idx
          order by r.regdate desc
          LIMIT #{paging.startList}, #{paging.listSize}
