@@ -10,7 +10,7 @@
       <div class="row">
         <input class="col-md-10" v-model="id" id="id" placeholder="아이디를 입력하세요." type="text"/>
         <div class="col-md-2 p-0 d-flex justify-content-end" >
-          <button class="btn" style="font-size:14px; margin-left: 0px;" @click="checkid">중복체크</button>
+          <button class="btn d-flex align-items-center" style="font-size:14px; margin-left: 0px;" @click="checkid">중복체크</button>
         </div>
         
       </div>
@@ -22,7 +22,7 @@
       <div class="row">
         <input class="col-md-10" v-model="nickname" id="nickname" placeholder="닉네임을 입력하세요." type="text" />  
         <div class="col-md-2 p-0 d-flex justify-content-end" >
-          <button class="btn" style="font-size:14px; margin-left: 0px;" @click="checkid">중복체크</button>
+          <button class="btn d-flex align-items-center" style="font-size:14px; margin-left: 0px;" @click="checkid">중복체크</button>
         </div>
       
       </div>
@@ -243,12 +243,10 @@ export default {
           if(res.data =="success"){
             swal("회원가입에 성공하였습니다!",{icon:'success'});
             this.$router.push({name:'Login'});
-            this.$router.push("/user/join/complete");
           }else if(res.data =="fail"){
             swal("회원가입에 실패하셨습니다.!",{icon:'warning'});
           }else{
             swal("에러발생",{icon:'error'});
-         
           }
 
           

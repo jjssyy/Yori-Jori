@@ -7,7 +7,7 @@
                     <!-- <p>My Rank</p> -->
                     <div id="myrank_img">
                         <div>
-                        <img :src="userImg||defaultProfile" alt=""  width="100%" height="100%" style="border-radius: 50%;">
+                        <img :src="userImg || defaultProfile" alt=""  width="100%" height="100%" style="border-radius: 50%;">
                         </div>
                     </div>
                     <p>{{ userNickname }}</p>
@@ -37,7 +37,7 @@
                         <td v-else-if="rank.rank == 2"><i class="fas fa-medal" style="color:#bdc3c7"></i></td>
                         <td v-else-if="rank.rank == 3"><i class="fas fa-medal" style="color:#cd7f32"></i></td>
                         <td v-else>{{rank.rank}}</td>
-                        <td>{{rank.nickname}}</td>
+                        <td @click="goProfile(rank)" style="cursor:pointer;">{{rank.nickname}}</td>
                         <td>{{rank.rankpoint}}</td>
                     </tr>
                 </tbody>
@@ -87,6 +87,9 @@ created() {
 
     },
 methods: {
+    goProfile(rank) {
+        this.$router.push({name:'Profile', params: {user_id: rank.id}})
+    }
 
 
     },
@@ -160,29 +163,10 @@ methods: {
     width: 100%; 
     height: 100%;
 } 
-/* #myrank_img{
-    max-width: 130px;
-    height: 130px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    border: none;
-    margin-top: 1.5rem;
-    padding: 0.5rem;
-}
-#myrank_img img{
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 50%;
-    background-color: #fafafa;
-    object-fit: cover;
-    border: none;
-
-} */
 #myrank_des{
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     font-size: 1.2rem;
     padding: 10px;
     align-items: center;

@@ -11,7 +11,7 @@
           <router-link style="text-decoration:none; border:none; color:black;" to="/user/changepassword" class="profile-edit-btn">비밀번호</router-link>
         </div>
         <div v-else>
-          <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">이미 등록됨</button>
+          <button class="profile-edit-btn" v-if="follow_already.includes(profileUser.id) " @click="senddeletefollow(profileUser)">팔로잉</button>
           <button class="profile-edit-btn request" v-if="!follow_already.includes(profileUser.id)  " @click="sendrequest(profileUser)">팔로우</button>
         </div>
       </div>
@@ -201,7 +201,6 @@ export default {
       data,
       res => {
         if(res.data == "success"){
-          swal("팔로우 목록에 등록했습니다.",{icon:'success'});
           this.follow_already.push(this.profileUser.id)
           this.profileUser.follower ++
         }else if(res.data == "fail"){
