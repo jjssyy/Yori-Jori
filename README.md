@@ -18,15 +18,6 @@
 
 ## 프로젝트 명세
 
-### 배포 환경
-
-- **URL** : http://i5c205.p.ssafy.io/
-- **배포 여부** : O
-- **접속 가능** : 접속 가능
-- **HTTPS 적용** : X
-- **PORT** : // 3rd Party에서 사용하는 포트가 있다면 기입해주세요.
-
-
 
 ### 개발 환경
 
@@ -89,13 +80,4 @@
 <img src="README.assets/noodle_clear.png" style="zoom:25%;" />|<img src="README.assets/ramen_clear.png" style="zoom:25%;" />|<img src="README.assets/salad_clear.png" style="zoom:25%;" />|<img src="README.assets/seafood_clear.png" style="zoom:25%;" />|<img src="README.assets/stew_clear.png" style="zoom:25%;" />
 
 
-
-
-
-### 핵심 라이브러리
-
-기본 제공하는 라이브러리 외 핵심 기능 구현에 사용한 라이브러리가 있다면 작성해주세요.
- 예시 ) VR/AR 라이브러리, 애니메이션 라이브러리, 텍스트/사진/동영상 지원, 편집 라이브러리 등
-
-- 
 
